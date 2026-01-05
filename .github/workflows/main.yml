@@ -1,0 +1,19 @@
+name: Deploy to OpenDroid Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [opendroid]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy files to /var/www/opendroid
+        run: |
+          sudo mkdir -p /var/www/opendroid
+          sudo rsync -av --delete ./ /var/www/opendroid/
