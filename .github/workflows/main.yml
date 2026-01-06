@@ -13,6 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Convert root folder names to lowercase
+        run: |
+          for dir in */; do
+            base="${dir%/}"
+            lower=$(echo "$base" | tr '[:upper:]' '[:lower:]')
+
+            if [ "$base" != "$lower" ]; then
+              mv "$base" "$lower"
+            fi
+          done
+
       - name: Deploy files to /var/www/opendroid
         run: |
           sudo mkdir -p /var/www/opendroid
