@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonded Logistics Inc. | Strategic Robotics Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--text-main);
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .highlight-green { color: var(--success); }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        /* Roadmap Steps */
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .step-number {
+            background: var(--accent);
+            color: white;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .step-content h4 {
+            margin: 0 0 5px 0;
+            color: var(--text-main);
+            font-size: 1.2rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p style="color: var(--accent); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Open Droids Intelligence</p>
+        <h1>BONDED LOGISTICS INC.</h1>
+        <p>Strategic Automation & Robotics Research Report</p>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Target ROI</span>
+            <span class="metric-value highlight-green">&lt; 22 Mo</span>
+            <span class="metric-label">Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Efficiency Gain</span>
+            <span class="metric-value">+35%</span>
+            <span class="metric-label">Throughput Velocity</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Labor Optimization</span>
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Opex Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Accuracy</span>
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Inventory Precision</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>01. Executive Summary</h2>
+        <p>Bonded Logistics Inc. operates in a high-demand 3PL environment where flexibility is currency. The strategic recommendation is not static automation, but a modular, scalable robotics fleet. By integrating Autonomous Mobile Robots (AMRs) and AI-driven logic, Bonded can decouple revenue growth from labor headcount, ensuring scalability during peak seasons in the Charlotte metro area.</p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="card">
+        <h2>02. Opportunity Pathways</h2>
+        
+        <h3>Pathway A: AMRs for Internal Transport</h3>
+        <p>Replacing long-haul manual forklift travel with pallet-moving AMRs. This targets the 50% of operator time currently spent driving empty. <strong>Impact:</strong> Higher safety scores and optimized labor allocation.</p>
+        
+        <h3>Pathway B: Robotic Piece Picking</h3>
+        <p>Deployment of Locus/6 River style bots for e-commerce fulfillment contracts. This reduces walking time for pickers and increases pick rates from 100 UPH (Units Per Hour) to 350+ UPH.</p>
+        
+        <h3>Pathway C: AI Predictive Logistics</h3>
+        <p>Utilizing Computer Vision for dock management and algorithmic slotting to place high-velocity items in the most accessible locations automatically.</p>
+    </div>
+
+    <!-- Data Visualization -->
+    <div class="charts-container">
+        <div class="card">
+            <h3 style="margin-top:0">5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0">Throughput Comparison</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>03. Implementation Roadmap</h2>
+        
+        <div class="roadmap-step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+                <h4>Year 1: The Pilot</h4>
+                <p>Deploy transport AMRs in a single 200k sq ft facility. Establish WMS handshake protocols.</p>
+            </div>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+                <h4>Year 2: Expansion & Picking</h4>
+                <p>Roll out to 2 additional sites. Introduce assisted picking bots for high-volume retail clients.</p>
+            </div>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+                <h4>Year 3-5: The Autonomous Ecosystem</h4>
+                <p>Full fleet interoperability and AI-driven inventory slotting. Achievement of "Dark Shift" capabilities.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>GENERATED BY OPEN DROIDS RESEARCH DIVISION | CONFIDENTIAL</p>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 1.8, 3.5, 6.2, 9.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pallet Moves', 'Case Picking', 'Putaway'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [60, 100, 50],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [95, 350, 85],
+                    backgroundColor: '#10b981',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' }, title: {display: true, text: 'Units Per Hour', color: '#94a3b8'} },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
