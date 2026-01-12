@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.H. Rose Logistics | Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-top: 0;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .brand-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Roadmap Steps */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .step {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 2px solid var(--accent-purple);
+        }
+
+        .step-year {
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <span class="brand-badge">OPEN DROIDS RESEARCH</span>
+                <h1>J.H. Rose Logistics</h1>
+                <p>Strategic Automation & Robotics Feasibility Report</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; font-weight: 600;">Status: CONFIDENTIAL</p>
+                <p style="margin: 0; font-size: 0.9rem;">Date: Oct 2023</p>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Vision</h2>
+            <p>J.H. Rose Logistics is poised to bridge the gap between legacy specialized hauling and modern digital warehousing. By integrating robotics, the organization can reduce dwell times, optimize labor in high-turnover hubs, and secure a leadership position in the tech-forward logistics sector.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Projected Labor Savings</div>
+                <div class="metric-value">40%</div>
+                <span class="trend-up">▲ OPEX Reduction</span>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Throughput Increase</div>
+                <div class="metric-value">35%</div>
+                <span class="trend-up">▲ Pallets / Hour</span>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Target Payback</div>
+                <div class="metric-value">22</div>
+                <span class="trend-up">Months</span>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Est. CAPEX (Pilot)</div>
+                <div class="metric-value">$475k</div>
+                <span style="color: #94a3b8; font-size: 0.8rem;">Station + Fleet</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Net Savings ($)</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3>Manual vs. Robotic Throughput</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>02. Strategic Pathways</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div>
+                    <h3>Pathway A: AMRs</h3>
+                    <p>Deployment of heavy-payload Autonomous Mobile Robots for cross-docking. Focus on reducing forklift lease costs and transit time.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: AI Logistics</h3>
+                    <p>Computer vision at dock doors to automate freight scanning, dimensioning, and damage detection.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: ASRS</h3>
+                    <p>High-density automated storage for "Value-Added Services" divisions, increasing storage capacity by 40%.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>03. Implementation Roadmap</h2>
+            <div class="roadmap-grid">
+                <div class="step">
+                    <span class="step-year">YEAR 1</span>
+                    Pilot 5 AMRs at Santa Fe Springs Hub.
+                </div>
+                <div class="step">
+                    <span class="step-year">YEAR 2</span>
+                    Scale to secondary hubs & integrate Dock AI.
+                </div>
+                <div class="step">
+                    <span class="step-year">YEAR 3</span>
+                    Optimize WMS integration & Predictive Maint.
+                </div>
+                <div class="step">
+                    <span class="step-year">YEAR 4-5</span>
+                    Full Autonomy & "Lights-out" shift capability.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($)',
+                    data: [-475000, 180000, 420000, 850000, 1400000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: savingsGradient,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cross-Dock', 'Pallet Putaway', 'Picking', 'Loading'],
+                datasets: [
+                    {
+                        label: 'Manual (Pallets/Hr)',
+                        data: [20, 15, 25, 18],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic (Pallets/Hr)',
+                        data: [35, 28, 45, 30],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
