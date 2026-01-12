@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Integrated Logistics | Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* KPI Dashboard */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .kpi-sub {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col { grid-template-columns: 1fr; }
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div style="font-size: 0.9rem; color: var(--accent-purple); font-weight: 600; margin-bottom: 5px;">OPEN DROIDS RESEARCH</div>
+            <h1>Brown Integrated Logistics</h1>
+        </div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            CONFIDENTIAL REPORT<br>
+            Automated Logistics Strategy
+        </div>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Payback Period</div>
+            <div class="kpi-value">18.5 MO</div>
+            <div class="kpi-sub">Target: < 24 Months</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Labor Savings</div>
+            <div class="kpi-value">35%</div>
+            <div class="kpi-sub">Reduction in OPEX</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Est. CAPEX</div>
+            <div class="kpi-value">$1.0M</div>
+            <div class="kpi-sub">Per Pilot Facility</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Accuracy</div>
+            <div class="kpi-value">99.9%</div>
+            <div class="kpi-sub">With AMR Integration</div>
+        </div>
+    </div>
+
+    <div class="grid-2-col">
+        <!-- Main Research Summary -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>Brown Integrated Logistics is positioned to transition from traditional warehousing to a high-velocity, automated fulfillment model. By integrating Autonomous Mobile Robots (AMRs) for internal transport and leveraging AI for predictive inbound logistics, Brown can decouple throughput from labor market volatility.</p>
+            <p><strong>The Opportunity:</strong> Replace long-haul forklift travel with autonomous units, allowing human operators to focus on high-value supervisory tasks.</p>
+            
+            <h2 style="margin-top: 30px;">Implementation Roadmap</h2>
+            <div class="roadmap-step">
+                <div class="step-number">1</div>
+                <div><strong>Pilot Phase (Year 1)</strong><br><span style="color:var(--text-muted)">Deploy 10 AMRs and WMS Integration in highest volume hub.</span></div>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-number">2</div>
+                <div><strong>Expansion (Year 2-3)</strong><br><span style="color:var(--text-muted)">Rollout to regional hubs &amp; High Density Storage implementation.</span></div>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-number">3</div>
+                <div><strong>Network Optimization (Year 4-5)</strong><br><span style="color:var(--text-muted)">Full AI orchestration and "Brown Automated Fulfillment" service launch.</span></div>
+            </div>
+        </div>
+
+        <!-- Charts Column -->
+        <div>
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($ Millions)',
+                data: [-1.0, 0.2, 1.8, 3.8, 6.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Assist'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [120, 280],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
