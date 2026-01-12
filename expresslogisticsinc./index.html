@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Logistics Inc. | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .header span {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+
+        p {
+            color: #cbd5e1;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .year-marker {
+            color: var(--accent);
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span>Strategic Research Report</span>
+        <h1>Express Logistics Inc.</h1>
+        <p>Prepared by Open Droids Consultation Division</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Target Payback</div>
+            <div class="metric-value">&lt; 24 Mo</div>
+            <div class="metric-label">ROI Timeline</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Savings</div>
+            <div class="metric-value">35%</div>
+            <div class="metric-label">OPEX Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Throughput</div>
+            <div class="metric-value">2.5x</div>
+            <div class="metric-label">Units Per Hour</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Accuracy</div>
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label">Order Fulfillment</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Org Profile -->
+    <div class="glass-card">
+        <h2>01. Executive Summary & Profile</h2>
+        <p>Express Logistics Inc. is positioned to transition from a manual 3PL provider to a tech-enabled leader. By decoupling revenue growth from headcount through AMRs and AI, the company will secure scalability for peak seasons.</p>
+        <p><strong>Operational Scale:</strong> 500k sq ft across Tier 1 Hubs (Chicago, Atlanta, NJ).</p>
+        <p><strong>Current Bottleneck:</strong> 45 UPH average due to high travel time and manual sorting.</p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings ($M)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput Comparison (UPH)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div>
+                <h3 style="color: var(--accent);">Pathway A: AMRs</h3>
+                <p><strong>Focus:</strong> Internal Transport</p>
+                <p>Goods-to-Person robots reduce travel time by 50%, keeping pickers in zones.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent);">Pathway B: Piece Picking</h3>
+                <p><strong>Focus:</strong> Accuracy & Density</p>
+                <p>ASRS implementation reduces storage footprint by 40% and ensures 99.9% accuracy.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent);">Pathway C: AI Logistics</h3>
+                <p><strong>Focus:</strong> Predictive Efficiency</p>
+                <p>Dynamic slotting and dock optimization reduces dwell time by 25%.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="year-marker">Year 1</div>
+            <div><strong>Pilot & Foundation:</strong> Atlanta Facility AMR deployment and WMS integration.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-marker">Year 2</div>
+            <div><strong>Standardization:</strong> Rollout to Chicago/NJ. Begin ASRS in Atlanta.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-marker">Year 3</div>
+            <div><strong>Optimization:</strong> Activate AI Logistics and centralized cloud analytics.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-marker">Year 4</div>
+            <div><strong>Scaling:</strong> Expand fleet size by 50% to match market growth.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-marker">Year 5</div>
+            <div><strong>Full Autonomy:</strong> "Dark Warehouse" capabilities for night shifts.</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Open Droids | Warehouse & Logistics Automation Research</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 2.2, 4.8, 8.5, 13.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: 'white' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Picking', 'Sorting', 'Packing'],
+            datasets: [
+                {
+                    label: 'Manual (Current)',
+                    data: [45, 60, 55],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic (Target)',
+                    data: [120, 150, 110],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: 'white' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    title: { display: true, text: 'Units Per Hour', color: '#94a3b8'} 
+                },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
