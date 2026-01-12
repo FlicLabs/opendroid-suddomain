@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Beanery | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg);
+            animation: shine 6s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathways Section */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-top: 2px solid var(--accent-purple);
+            padding-top: 20px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--text-muted);
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .milestone {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-color);
+            padding: 10px;
+            border: 1px solid var(--accent-purple);
+            border-radius: 8px;
+            width: 18%;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .milestone strong {
+            display: block;
+            color: var(--accent-glow);
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <h1>COFFEE BEANERY</h1>
+            <div style="color: var(--text-muted); font-size: 1.1rem; margin-top: 5px;">
+                Strategic Automation Research & ROI Analysis
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <h2>01 // Executive Vision</h2>
+            <p style="font-size: 1.1rem; max-width: 900px;">
+                To preserve the "Roast-to-Order" philosophy while scaling operations, Coffee Beanery must transition from manual handling to a <strong>Flexible Automation Ecosystem</strong>. By integrating AMRs for bulk transport and AI-driven sorting for high-SKU variety, we project a 40% reduction in order cycle times and guaranteed scalability for holiday demand spikes.
+            </p>
+        </section>
+
+        <!-- Financial Dashboard -->
+        <section class="glass-card">
+            <h2>02 // Financial Projection Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <span class="metric-value">35%</span>
+                    <span class="metric-label">Labor Cost Reduction</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">22mo</span>
+                    <span class="metric-label">ROI Payback Period</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">99.9%</span>
+                    <span class="metric-label">Picking Accuracy</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">$500k</span>
+                    <span class="metric-label">Est. Initial CAPEX</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts -->
+        <section class="glass-card">
+            <h2>03 // Performance Visualization</h2>
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pathways -->
+        <section class="glass-card">
+            <h2>04 // Strategic Pathways</h2>
+            <div class="pathways-grid">
+                <div class="pathway-item">
+                    <h3>Pathway A: AMRs</h3>
+                    <p style="color: var(--text-muted)">Internal Transport</p>
+                    <p>Deployment of heavy-duty AMRs to move green coffee sacks and roasted bulk bins. Reduces forklift incidents by 90%.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway B: ASRS</h3>
+                    <p style="color: var(--text-muted)">Robotic Picking</p>
+                    <p>Goods-to-Person systems for high-mix franchise orders. Vertical storage utilization reduces footprint by 45%.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway C: AI</h3>
+                    <p style="color: var(--text-muted)">Predictive Logistics</p>
+                    <p>Machine learning integration to predict roast schedules and dynamic slotting for seasonal flavors.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section class="glass-card">
+            <h2>05 // Implementation Roadmap</h2>
+            <div class="roadmap">
+                <div class="milestone">
+                    <strong>YEAR 1</strong>
+                    Pilot AMRs & WMS Upgrade
+                </div>
+                <div class="milestone">
+                    <strong>YEAR 2</strong>
+                    Goods-to-Person Station Install
+                </div>
+                <div class="milestone">
+                    <strong>YEAR 3</strong>
+                    AI Slotting & Scale Fleet
+                </div>
+                <div class="milestone">
+                    <strong>YEAR 4</strong>
+                    Auto-Packaging Integration
+                </div>
+                <div class="milestone">
+                    <strong>YEAR 5</strong>
+                    Full Eco-System Maturity
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            OPEN DROIDS CONSULTATION | CONFIDENTIAL RESEARCH
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($)',
+                    data: [-500000, -100000, 450000, 1200000, 2100000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } },
+                    title: { display: true, text: '5-Year ROI Trajectory', color: '#f8fafc', padding: 20 }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Picking', 'Robotic Assist'],
+                datasets: [{
+                    label: 'Orders Processed Per Hour',
+                    data: [85, 210],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        'rgba(16, 185, 129, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#10b981'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Throughput Efficiency', color: '#f8fafc', padding: 20 }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#f8fafc', font: {size: 14} } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
