@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrett Distribution | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        .metric-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+        }
+
+        .pathway-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .pathway-item:last-child { border-bottom: none; }
+
+        .pathway-title { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 5px;}
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid { display: flex; flex-direction: column; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Barrett Distribution</h1>
+                <div class="sub-header">Strategic Automation Intelligence Report</div>
+            </div>
+            <div style="text-align: right; color: var(--accent-purple); font-weight: 600;">
+                OPEN DROIDS RESEARCH
+            </div>
+        </header>
+
+        <!-- FINANCIAL DASHBOARD -->
+        <div class="grid">
+            <div class="card metric-card col-4">
+                <div class="metric-value">$100k</div>
+                <div class="metric-label">Max Capex Per Station</div>
+            </div>
+            <div class="card metric-card col-4">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Target OPEX Reduction</div>
+            </div>
+            <div class="card metric-card col-4">
+                <div class="metric-value">&lt;24 Mo</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+        </div>
+
+        <!-- CHARTS ROW -->
+        <div class="grid">
+            <div class="card col-8">
+                <h2>5-Year Cumulative Savings (Projected)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card col-4">
+                <h2>Throughput Velocity</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT CONTENT ROW -->
+        <div class="grid">
+            <div class="card col-6">
+                <h2>Robotics Opportunity Pathways</h2>
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY A: AMRs (Internal Transport)</span>
+                    Focus on collaborative robots to reduce human travel time by 50%. Ideal for 3PL flexibility.
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY B: Piece Picking & ASRS</span>
+                    High-density storage and robotic arms for health/beauty verticals. Increases storage density by 4x.
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY C: AI Logistics</span>
+                    Predictive inbound/outbound modeling to optimize slotting and reduce shipping costs.
+                </div>
+            </div>
+            
+            <div class="card col-6">
+                <h2>Implementation Roadmap</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; font-weight: bold; color: var(--accent-purple);">Year 1</div>
+                        <div>Pilot AMR Fleet & AI Slotting Integration</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; font-weight: bold; color: var(--accent-purple);">Year 2</div>
+                        <div>Scale AMRs to West/Midwest Hubs</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; font-weight: bold; color: var(--accent-purple);">Year 3</div>
+                        <div>Install ASRS in High-Cost Real Estate Zones</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; font-weight: bold; color: var(--accent-purple);">Year 4</div>
+                        <div>Network-wide AI & Predictive Labor</div>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 60px; font-weight: bold; color: var(--accent-purple);">Year 5</div>
+                        <div>Autonomous Ecosystem (70% Auto-Transport)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Global Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        const throughputChart = new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [60, 145],
+                    backgroundColor: ['rgba(148, 163, 184, 0.5)', '#38bdf8'],
+                    borderColor: ['transparent', '#38bdf8'],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: false }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
