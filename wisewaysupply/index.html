@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiseway Supply | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.5);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        p, ul {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 1px solid var(--glass-border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Research</div>
+            <h1>Wiseway Supply</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Automation Strategy</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Oct 2023</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-label">Estimated CAPEX</div>
+            <div class="metric-value">$1.2M</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">Mid-sized Pilot</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">22 MO</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">Break-even Point</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Savings</div>
+            <div class="metric-value">35%</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">OpEx Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Accuracy</div>
+            <div class="metric-value">99.9%</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">With ASRS/GTP</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-container">
+        <div class="card">
+            <h2>Cumulative Savings Projection</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Comparison (Lines/Hour)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>The wholesale distribution sector is shifting from manual legacy operations to automated fulfillment. For Wiseway Supply, the strategic vision is to maintain regional leadership by integrating a hybrid robotic ecosystem. The objective is to decouple revenue growth from labor dependency, allowing for later order cut-off times and reduced return rates caused by picking errors.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <div class="card">
+            <h2>Robotics Pathways</h2>
+            <h3>Pathway A: AMRs (Internal Transport)</h3>
+            <p>Deployment of Autonomous Mobile Robots to handle long-haul transport of pipe, wire, and pallets. Reduces "dead walking time" by keeping associates in their zones.</p>
+            
+            <h3>Pathway B: Piece Picking & ASRS</h3>
+            <p>Implementation of Goods-to-Person systems for small electrical/plumbing components. Increases storage density by 60% and accuracy to 99.9%.</p>
+
+            <h3>Pathway C: AI Logistics</h3>
+            <p>Predictive route planning and cross-docking optimization to reduce dock-to-stock time.</p>
+        </div>
+
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1: Foundation</strong><br>Clean WMS data, standardizing SKU metrics, and deploying a 5-unit AMR pilot.</li>
+                <li><strong>Year 2: High-Density Integration</strong><br>Installation of ASRS grid for top 20% of small-part SKUs.</li>
+                <li><strong>Year 3: Expansion</strong><br>Scaling AMRs to 15 units and integrating AI packing algorithms.</li>
+                <li><strong>Year 4-5: Autonomous Ecosystem</strong><br>Moving toward "Dark Warehouse" capabilities for night shifts.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [-1.2, -0.4, 0.8, 2.5, 4.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist', 'Full Automation'],
+            datasets: [{
+                label: 'Lines Per Hour',
+                data: [120, 240, 380],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.6)',
+                    'rgba(124, 58, 237, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
