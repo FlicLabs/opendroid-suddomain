@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wing Aviation | Automation Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 20%);
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            border-left: 4px solid var(--sky-blue);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .year-badge {
+            background: var(--aviation-orange);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .roadmap-content {
+            color: #cbd5e1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            color: var(--sky-blue);
+        }
+
+        .highlight {
+            color: var(--aviation-orange);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>WING AVIATION</h1>
+        <div class="subtitle">Automated Cleaning & Maintenance Strategic Report</div>
+        <p style="color: var(--sky-blue); font-weight: 600; margin-top: 10px;">PREPARED BY OPEN DROIDS</p>
+    </header>
+
+    <!-- EFFICIENCY DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">38%</span>
+            <span class="metric-label">Proj. OPEX Reduction</span>
+        </div>
+        <div class="glass-card metric-card" style="border-color: var(--aviation-orange);">
+            <span class="metric-value">19 Mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$155</span>
+            <span class="metric-label">Savings Per Turnaround</span>
+        </div>
+        <div class="glass-card metric-card" style="border-color: var(--aviation-orange);">
+            <span class="metric-value">50+</span>
+            <span class="metric-label">Robotic Units Planned</span>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY & PROFILE -->
+    <div class="glass-card">
+        <h2>Executive Summary & Fleet Profile</h2>
+        <p>Wing Aviation is positioned to transition from manual operations to a <strong>Hybrid Autonomous Operational System</strong>. With a fleet of <strong>85 aircraft</strong> operating out of Teterboro, Van Nuys, and Dallas, the introduction of robotics addresses critical bottlenecks in turnaround time and hygiene consistency.</p>
+        <p><strong>Primary Goal:</strong> Reduce average ground time while increasing sanitization standards to hospital-grade levels using UV-C technology.</p>
+    </div>
+
+    <!-- CHARTS ROW 1 -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Turnaround Time (Minutes)</h3>
+            <div class="chart-wrapper">
+                <canvas id="tatChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPPORTUNITY PATHWAYS -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3>Pathway A: Cabin Automation</h3>
+                <p>Autonomous vacuums and waste collection bots operating during the 20-minute disembarkation window.</p>
+            </div>
+            <div>
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>High-intensity UV-C towers to destroy pathogens without chemical residue, ensuring 99.9% sterilization.</p>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Gantry and crawler systems using 90% less water, protecting sensors and reducing corrosion risks.</p>
+            </div>
+            <div>
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Drone-based visual inspection for predictive maintenance, reducing AOG time from 4 hours to 45 mins.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINANCIALS & LABOR CHART -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>Financial Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Process</th>
+                        <th>Robotic Process</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cost Per Turn</td>
+                        <td>$350.00</td>
+                        <td class="highlight">$195.00</td>
+                    </tr>
+                    <tr>
+                        <td>Labor Component</td>
+                        <td>100%</td>
+                        <td>40%</td>
+                    </tr>
+                    <tr>
+                        <td>Consistency</td>
+                        <td>Variable</td>
+                        <td>Exact Standard</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="glass-card">
+            <h3>Post-Automation Labor Redistribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="year-badge">Year 1</div>
+            <div class="roadmap-content"><strong>Pilot Program (TEB):</strong> Deployment of 4 Cabin Bots & 2 UV-C Units. Data collection phase.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-badge">Year 2</div>
+            <div class="roadmap-content"><strong>Regional Expansion:</strong> Rollout to VNY & DAL. Exterior washing initiated at Wichita base.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-badge">Year 3</div>
+            <div class="roadmap-content"><strong>Fleet Standardization:</strong> 35% reduction in manual contracts. Standardized Robotic SOPs.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-badge">Year 4</div>
+            <div class="roadmap-content"><strong>Advanced AI:</strong> Predictive maintenance drone integration for overnight layovers.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-badge">Year 5</div>
+            <div class="roadmap-content"><strong>Full Autonomy:</strong> Carbon-neutral cleaning certification and autonomous charging cycles.</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Open Droids Consultation Unit | Confidential Research for Wing Aviation</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cost Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 1.8, 3.5, 5.8, 8.2],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Turnaround Time
+    const ctx2 = document.getElementById('tatChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Prep', 'Sanitization', 'Inspection', 'Total Time'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [25, 15, 45, 85],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [12, 5, 10, 27],
+                    backgroundColor: 'rgba(249, 115, 22, 0.7)',
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Repetitive Cleaning', 'High-Value Detailing', 'Robot Oversight', 'Maintenance'],
+            datasets: [{
+                data: [15, 35, 20, 30],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.2)',
+                    '#0ea5e9',
+                    '#f97316',
+                    '#38bdf8'
+                ],
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'right', labels: { color: 'white' } } 
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
