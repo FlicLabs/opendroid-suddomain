@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leki Aviation | Automation Intelligence Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 20%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-weight: 800;
+            font-size: 2rem;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--sky-blue);
+        }
+
+        .report-meta {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sky-blue);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        @media (max-width: 768px) {
+            .col-4, .col-6, .col-8 { grid-column: span 12; }
+        }
+
+        /* Typography & Metrics */
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--aviation-orange);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+        }
+
+        .metric {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--sky-blue);
+            margin-top: 5px;
+            display: block;
+        }
+
+        .text-content p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--aviation-orange);
+        }
+
+        .pathway-item h4 { margin: 0 0 5px 0; font-size: 1rem; }
+        .pathway-item p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1>LEKI <span>AVIATION</span></h1>
+            <div style="font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">SMART MRO AUTOMATION STUDY</div>
+        </div>
+        <div class="report-meta">
+            PREPARED BY: OPEN DROIDS<br>
+            STATUS: CONFIDENTIAL<br>
+            DATE: OCT 2023
+        </div>
+    </header>
+
+    <!-- Executive Summary & Key Metrics -->
+    <div class="dashboard">
+        <div class="card col-8 text-content">
+            <h2>Executive Vision</h2>
+            <h3>The Transition to "Smart MRO"</h3>
+            <p>Leki Aviation is poised to pivot from traditional supply chain consolidation to a technology-first Service Provider. By integrating Open Droids' autonomous robotics, Leki can reduce client operational costs while establishing high-margin revenue streams through Robotics-as-a-Service (RaaS).</p>
+        </div>
+        <div class="card col-4">
+            <h2>Est. Annual Savings</h2>
+            <div class="metric">$11.8M</div>
+            <span class="metric-sub">Across 75 Aircraft Fleet</span>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="dashboard">
+        <div class="card col-4">
+            <h2>Turnaround Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; text-align: center; margin-top: 10px; color: #94a3b8;">Target: 70% Reduction in Idle Time</p>
+        </div>
+        <div class="card col-4">
+            <h2>Labor Redistribution</h2>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; text-align: center; margin-top: 10px; color: #94a3b8;">From Cleaning to Skilled Maintenance</p>
+        </div>
+        <div class="card col-4">
+            <h2>Cost Per Turn ($)</h2>
+            <div class="metric">270 <span style="font-size: 1.5rem;">Saved</span></div>
+            <div style="margin-top: 15px; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span>Manual:</span> <span>$450</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; color: var(--sky-blue); font-weight: bold;">
+                    <span>Robotic:</span> <span>$180</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways & Financials -->
+    <div class="dashboard">
+        <div class="card col-6">
+            <h2>Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <h4>A. Cabin Autonomy</h4>
+                    <p>LiDAR Vacuum & Electrostatic Spraying.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>B. UV-C Hygiene</h4>
+                    <p>99.9% Pathogen Kill Rate & Digital Audit.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>C. Exterior Care</h4>
+                    <p>90% Water Savings via Gantry-free bots.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>D. AI Inspection</h4>
+                    <p>Auto-requisition parts via Leki Supply.</p>
+                </div>
+            </div>
+        </div>
+        <div class="card col-6">
+            <h2>5-Year Financial Projection</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="dashboard">
+        <div class="card col-12">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; text-align: center; margin-top: 20px;">
+                <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="color:var(--sky-blue);">Year 1</h4>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Pilot Hub Launch</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="color:var(--sky-blue);">Year 2</h4>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Regional Expansion</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="color:var(--sky-blue);">Year 3</h4>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Fleet Integration</p>
+                </div>
+                <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="color:var(--aviation-orange);">Year 4</h4>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Data Monetization</p>
+                </div>
+                <div style="flex: 1;">
+                    <h4 style="color:var(--aviation-orange);">Year 5</h4>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">Full Autonomy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Configuration for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Turnaround Time Bar Chart
+    const ctxTurn = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctxTurn, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Swarm'],
+            datasets: [{
+                label: 'Minutes per Aircraft',
+                data: [45, 12],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', 'rgba(14, 165, 233, 0.8)'],
+                borderColor: ['rgba(148, 163, 184, 1)', '#0ea5e9'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } }
+        }
+    });
+
+    // 2. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Low-Skill Cleaning', 'High-Skill MRO', 'Tech Supervision'],
+            datasets: [{
+                data: [15, 65, 20],
+                backgroundColor: ['#334155', '#0ea5e9', '#f97316'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { boxWidth: 10 } } }
+        }
+    });
+
+    // 3. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [2.5, 14.3, 26.1, 37.9, 59.1], // Cumulative progression
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: true } },
+            scales: { y: { grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } }
+        }
+    });
+</script>
+
+</body>
+</html>
