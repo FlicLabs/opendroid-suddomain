@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Taco Mac Strategic Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .brand h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .client-name {
+            font-weight: 300;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: #4ade80; /* Green for positive growth */
+            margin-top: 5px;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .section-title {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid, .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand">
+                <h1>OPEN<span>DROIDS</span></h1>
+            </div>
+            <div class="client-name">Project: Taco Mac Restaurant Group</div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <div class="metric-title">Projected Annual Savings</div>
+                <div class="metric-value">$1.95M</div>
+                <div class="metric-sub">Across 30 Locations</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-title">Table Velocity Increase</div>
+                <div class="metric-value">18.5%</div>
+                <div class="metric-sub">Faster Turns During Games</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-title">ROI Break-Even</div>
+                <div class="metric-value">11 Mo.</div>
+                <div class="metric-sub">Capital Recovery</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Strategic Narrative -->
+            <div class="glass-card">
+                <div class="section-title">Strategic Vision: The Hybrid Sports Bar</div>
+                <p>Taco Mac sits at a critical intersection of high-volume casual dining and sports entertainment. Our research indicates that the "Game Day Bottleneck"—where kitchen output and server logistics fail to meet peak demand—costs the group approximately 12-15% in lost potential sales per major event.</p>
+                <p><strong>The Solution:</strong> By offloading low-skill transport tasks (food running) and dangerous repetition (wing frying) to automation, human staff can focus on the "Brewniversity" guest experience and beverage upselling.</p>
+                
+                <div class="section-title" style="margin-top: 30px;">Implementation Roadmap</div>
+                <ul>
+                    <li><strong>Year 1:</strong> Pilot 2 Servi robots in Atlanta Flagship stores.</li>
+                    <li><strong>Year 2:</strong> Chain-wide FOH rollout; Kitchen automation pilot.</li>
+                    <li><strong>Year 3:</strong> Full AI-Voice integration for takeout/delivery.</li>
+                </ul>
+            </div>
+
+            <!-- Chart 1: Turnover -->
+            <div class="glass-card">
+                <div class="section-title">Table Turnover Rate</div>
+                <p>Impact of automated food runners on table availability per hour.</p>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Cumulative Savings -->
+            <div class="glass-card full-width">
+                <div class="section-title">5-Year Cumulative Labor Cost Savings</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Table Turnover (Bar)
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Current Manual', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Table Turns Per Hour',
+                    data: [1.1, 1.45],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.2)',
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Cumulative Savings (Line)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.4, 1.9, 4.2, 6.8, 9.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#7c3aed',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.y + ' Million';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
