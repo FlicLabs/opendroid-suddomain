@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eastern Airlines LLC | Automation Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 20%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+        }
+
+        .logo span { color: var(--sky-blue); }
+        .client-name { color: var(--aviation-orange); font-weight: 600; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-large {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--sky-blue);
+            margin-top: 0.25rem;
+        }
+
+        /* Grid Spans */
+        .col-3 { grid-column: span 3; }
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        /* Tablet/Mobile Response */
+        @media (max-width: 1024px) {
+            .col-3, .col-4, .col-6, .col-8 { grid-column: span 12; }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        h2 { font-weight: 600; margin-bottom: 1.5rem; }
+        
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(14, 165, 233, 0.2);
+            color: var(--sky-blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="client-name">EASTERN AIRLINES LLC</div>
+    </header>
+
+    <div style="margin-bottom: 2rem;">
+        <h2>Aviation Efficiency Dashboard</h2>
+        <p style="color: var(--text-muted); max-width: 600px;">
+            Strategic analysis for widebody fleet automation (B767/B777). 
+            Targeting reduced ground time and increased sanitization compliance for charter operations.
+        </p>
+    </div>
+
+    <!-- Top Metrics Row -->
+    <div class="dashboard-grid">
+        <div class="card col-3">
+            <div class="card-header">Projected ROI</div>
+            <div class="metric-large">18 <span style="font-size: 1rem; font-weight:400;">Months</span></div>
+            <div class="metric-sub">Full Fleet Breakeven</div>
+        </div>
+        <div class="card col-3">
+            <div class="card-header">CAPEX Estimate</div>
+            <div class="metric-large">$1.5M</div>
+            <div class="metric-sub">12 Widebody Units</div>
+        </div>
+        <div class="card col-3">
+            <div class="card-header">Labor Reduction</div>
+            <div class="metric-large">40%</div>
+            <div class="metric-sub">Cleaning Man-Hours</div>
+        </div>
+        <div class="card col-3">
+            <div class="card-header">Status</div>
+            <div class="metric-large">Phase 1</div>
+            <div class="status-pill">Analysis Complete</div>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="dashboard-grid">
+        <div class="card col-8">
+            <div class="card-header">5-Year Cumulative Cost Savings</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-4">
+            <div class="card-header">Labor Redistribution</div>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="dashboard-grid">
+        <div class="card col-6">
+            <div class="card-header">Turnaround Time: B777 Deep Clean</div>
+            <div class="chart-container">
+                <canvas id="timeChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-6">
+            <div class="card-header">Opportunity Pathways</div>
+            <div style="display: flex; flex-direction: column; justify-content: space-around; height: 100%;">
+                <div style="border-left: 3px solid var(--sky-blue); padding-left: 1rem;">
+                    <strong style="color: white;">Pathway A:</strong> Autonomous Cabin Vacuuming
+                </div>
+                <div style="border-left: 3px solid var(--aviation-orange); padding-left: 1rem;">
+                    <strong style="color: white;">Pathway B:</strong> UV-C Disinfection (Mil-Spec)
+                </div>
+                <div style="border-left: 3px solid var(--sky-blue); padding-left: 1rem;">
+                    <strong style="color: white;">Pathway C:</strong> Ext. Fuselage Washing (Drag Reduction)
+                </div>
+                <div style="border-left: 3px solid var(--aviation-orange); padding-left: 1rem;">
+                    <strong style="color: white;">Pathway D:</strong> AI Predictive Inspection
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 2. Labor Redistribution Pie
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Active Cleaning', 'Tech Supervision', 'Maintenance', 'Logistics'],
+                datasets: [{
+                    data: [25, 35, 20, 20],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)', // Active Cleaning (Reduced)
+                        '#0ea5e9',                  // Supervision (Increased)
+                        '#f97316',                  // Maintenance
+                        '#64748b'                   // Logistics
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: { legend: { position: 'right', labels: { boxWidth: 10 } } }
+            }
+        });
+
+        // 3. Turnaround Time Bar
+        const ctxTime = document.getElementById('timeChart').getContext('2d');
+        new Chart(ctxTime, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Crew', 'Robotic Assist'],
+                datasets: [{
+                    label: 'Minutes',
+                    data: [110, 65],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#f97316'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
