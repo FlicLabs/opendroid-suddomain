@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avmax Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 20%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sky-blue);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--aviation-orange);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .highlight-orange { color: var(--aviation-orange); }
+        .highlight-blue { color: var(--sky-blue); }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--aviation-orange);
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="subtitle">Open Droids Intelligence Unit</div>
+        <h1>AVMAX GROUP: AUTOMATION ASSESSMENT</h1>
+        <p style="color: var(--text-muted);">Deep Strategic Research & Implementation Roadmap</p>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value highlight-blue">40%</span>
+            <span class="metric-label">Reduction in Turnaround Time</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value highlight-orange">18mo</span>
+            <span class="metric-label">Projected Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$240k</span>
+            <span class="metric-label">Annual Savings Per Hub</span>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Turnaround Efficiency (MRO Prep)</h3>
+            <div class="chart-wrapper">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Labor Redistribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Summary</h2>
+        <p>The aviation industry is pivoting toward automated ground support equipment. For Avmax Group, integrating robotics offers a dual advantage: streamlining labor-intensive heavy maintenance cleaning and enhancing asset value through certified sanitization. This strategy targets a transition from manual dependency to an AI-driven fleet maintenance model.</p>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Cabin Auto-Clean</h3>
+                <p>LiDAR-mapped vacuuming robots for charter turnarounds. Reduces interior cleaning crew size by 66%.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Hospital-grade sanitization for lease returns. Provides "Bio-Safety Certificate" for new lessees.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Exterior Systems</h3>
+                <p>Automated washing gantries for MRO. Reduces wash time from 6 hours to 45 mins per Regional Jet.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Drone-based optical inspection for dent/buckle analysis during C/D checks.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financials & Roadmap -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h2>03. Financial Model (Pilot)</h2>
+            <ul>
+                <li><strong>CAPEX:</strong> ~$300,000 (Full suite for YYC Hub)</li>
+                <li><strong>OPEX Impact:</strong> Target $210k annual reduction</li>
+                <li><strong>Cost Per Event:</strong> $1,200 (Manual) vs $350 (Robotic)</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <h2>04. Roadmap</h2>
+            <ul>
+                <li><strong>Year 1:</strong> YYC Pilot (Interior + Exterior)</li>
+                <li><strong>Year 2:</strong> Expand to GTF & JAX MROs</li>
+                <li><strong>Year 3:</strong> Global Fleet Standardization</li>
+                <li><strong>Year 5:</strong> "Lights Out" Night Ops</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Savings Line Chart
+    new Chart(document.getElementById('savingsChart'), {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [240000, 580000, 1100000, 1800000, 2750000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // 2. Turnaround Bar Chart
+    new Chart(document.getElementById('turnaroundChart'), {
+        type: 'bar',
+        data: {
+            labels: ['MRO Wash', 'Cabin Detail', 'Inspection'],
+            datasets: [{
+                label: 'Manual (Mins)',
+                data: [360, 120, 240],
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: '#ffffff',
+                borderWidth: 1
+            },
+            {
+                label: 'Robotic (Mins)',
+                data: [45, 30, 60],
+                backgroundColor: '#f97316',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // 3. Labor Pie Chart
+    new Chart(document.getElementById('laborChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Cleaning/Labor', 'Technical Maintenance', 'Supervision'],
+            datasets: [{
+                data: [15, 65, 20],
+                backgroundColor: ['#0ea5e9', 'rgba(255,255,255,0.1)', '#f97316'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                title: { display: true, text: 'Post-Automation Labor Focus' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
