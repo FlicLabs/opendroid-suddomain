@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine Air Express | Automation Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #0f172a, #000000);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--aviation-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sky-blue);
+        }
+
+        /* Grid Layouts */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Metric Typography */
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--sky-blue);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Text Content */
+        h2 {
+            color: var(--aviation-orange);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-left: 4px solid var(--sky-blue);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--aviation-orange);
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="sub-header">Open Droids Research</div>
+            <h1>Alpine Air Express</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Report Status:</div>
+            <div style="color: var(--sky-blue); font-weight: bold;">READY FOR REVIEW</div>
+        </div>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card">
+            <div class="metric-value">45%</div>
+            <div class="metric-label">Proj. Labor Reduction</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-value">19 Mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-value">$68</div>
+            <div class="metric-label">Robotic Turnaround Cost</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-value">1.5%</div>
+            <div class="metric-label">Fuel Savings (Drag Red.)</div>
+        </div>
+    </div>
+
+    <!-- Main Content & Charts -->
+    <div class="content-grid">
+        
+        <!-- Left Column: Strategy -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>Alpine Air Express is positioned to revolutionize regional cargo logistics by integrating a Predictive Automated Ecosystem. By automating cargo hold cleaning and exterior washing, Alpine can significantly improve fleet longevity and turnaround times at hubs like Provo and Billings.</p>
+            
+            <br>
+            <h2>Robotics Pathways</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Pathway A: Cabin/Cargo</h3>
+                    <p>Automated vacuuming & debris removal for high-speed cargo turnaround.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: Exterior</h3>
+                    <p>Precision washing to reduce drag and save 1.5% on fuel costs annually.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: UV-C Sanitization</h3>
+                    <p>Hospital-grade disinfection for mixed-cargo health compliance.</p>
+                </div>
+                <div>
+                    <h3>Pathway D: AI Inspection</h3>
+                    <p>Thermal imaging to detect micro-cracks in aging airframes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Chart 1 -->
+        <div class="glass-card">
+            <h3>Turnaround Time Comparison</h3>
+            <div class="chart-container">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; text-align: center; margin-top: 10px; color: var(--text-muted);">Minutes per Aircraft (Cargo Configuration)</p>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column: Chart 2 -->
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Right Column: Financials -->
+        <div class="glass-card">
+            <h2>Financial Model</h2>
+            <ul>
+                <li><strong>CAPEX:</strong> ~$900k (8 Unit Pilot)</li>
+                <li><strong>Current Manual Cost:</strong> $145/cycle</li>
+                <li><strong>Robotic Cost:</strong> $68/cycle</li>
+                <li><strong>Annual Savings:</strong> $292,500</li>
+            </ul>
+            <hr style="border-color: var(--glass-border); margin: 20px 0;">
+            <h3>Labor Redistribution</h3>
+            <div class="chart-container" style="height: 200px;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card full-width">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--sky-blue);">Year 1: Pilot</h3>
+                <p>Deploy 2 Exterior & 2 Cargo bots at Provo Hub. Establish baseline fuel data.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--sky-blue);">Year 2: Expansion</h3>
+                <p>Rollout to Billings & Sioux Falls. Integrate AI Inspection bots.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--sky-blue);">Year 3: Integration</h3>
+                <p>Full fleet-wide command center. Specialized UV-C contracts.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--aviation-orange);">Year 5: Autonomy</h3>
+                <p>"Dark Hangar" operations with unsupervised nightly maintenance cycles.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Turnaround Bar Chart
+    const ctxTurnaround = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctxTurnaround, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic System'],
+            datasets: [{
+                label: 'Minutes per Cycle',
+                data: [45, 18],
+                backgroundColor: ['#64748b', '#0ea5e9'],
+                borderRadius: 8,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 450000, 850000, 1350000, 2100000],
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Menial Cleaning', 'Tech Maintenance', 'Robot Oversight'],
+            datasets: [{
+                data: [15, 60, 25], // Post-automation distribution
+                backgroundColor: ['#64748b', '#0ea5e9', '#f97316'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
