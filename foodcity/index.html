@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Food City Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 60%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+        }
+
+        h1 span {
+            color: var(--accent-color);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Grid */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 15px var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* Roadmap List */
+        .roadmap-item {
+            border-left: 3px solid var(--accent-color);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .roadmap-year {
+            font-weight: 800;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>OPEN <span>DROIDS</span></h1>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">SENIOR CONSULTATION REPORT</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-weight: 600;">Client: FOOD CITY</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Status: Strategic Review</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Target ROI Payback</span>
+            <span class="metric-value">20 Mo</span>
+            <span style="color: #4ade80; font-size: 0.8rem;">▼ rapid recovery</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Labor Reduction</span>
+            <span class="metric-value">35%</span>
+            <span style="color: #4ade80; font-size: 0.8rem;">▼ variable cost</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Pilot CapEx</span>
+            <span class="metric-value">$1.25M</span>
+            <span style="color: var(--accent-color); font-size: 0.8rem;">initial investment</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Picking Accuracy</span>
+            <span class="metric-value">99.9%</span>
+            <span style="color: #4ade80; font-size: 0.8rem;">▲ via automation</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01 // Executive Summary</h2>
+        <p>
+            Food City is positioned to revolutionize its regional distribution network by transitioning from traditional warehousing to a <strong>Hybrid Fulfillment Model</strong>. By integrating Autonomous Mobile Robots (AMRs) and AI-driven slotting, Food City can decouple throughput from labor availability constraints. This strategy secures operational continuity against labor shortages while enabling high-velocity replenishment for the growing network of 130+ stores.
+        </p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-container">
+        <div class="glass-card">
+            <h3>Cumulative Savings (5-Year Projection)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput Velocity (Units Per Hour)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>02 // Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div>
+                <span class="tag">PATHWAY A</span>
+                <h3>AMR Transport Fleet</h3>
+                <p>Replacing manual forklift travel. Associates remain in zones while robots handle the long-haul transit of pallets from receiving to reserve. Reduces non-value-added walking time by 45%.</p>
+            </div>
+            <div>
+                <span class="tag">PATHWAY B</span>
+                <h3>Robotic Piece Picking</h3>
+                <p>Automated Storage and Retrieval (ASRS) for slow-moving and HBC items. High-density storage releases floor space for expanded cold chain capacity. Target accuracy: 99.9%.</p>
+            </div>
+            <div>
+                <span class="tag">PATHWAY C</span>
+                <h3>AI Inbound Logistics</h3>
+                <p>Predictive slotting utilizing WMS data. AI positions high-velocity seasonal goods near shipping docks <em>before</em> the demand surge hits, optimizing flow.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>03 // Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 1: FOUNDATION</div>
+            <p>Wi-Fi 6 Network Upgrades & Deployment of 10 AMRs for dunnage/trash transport.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 2: EXPANSION</div>
+            <p>Goods-to-Person stations for Health & Beauty. Full 20-unit AMR fleet active.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 3: COLD CHAIN</div>
+            <p>Introduction of cold-rated robotics for freezer environments to improve worker safety.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 5: DARK WAREHOUSE</div>
+            <p>Evaluation of "Lights-Out" overnight replenishment shifts.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.8rem;">
+        Open Droids Confidential Research &copy; 2023. Prepared for Food City.
+    </div>
+</div>
+
+<script>
+    // Configuration for Chart.js
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.9, 1.8, 3.2, 5.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist', 'Full Automation'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [120, 350, 600],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.6)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
