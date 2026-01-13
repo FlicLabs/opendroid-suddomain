@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSW Hospitality Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-muted);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-year {
+            background: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>GSW AUTOMATION</h1>
+            <div class="subtitle">Open Droids Consultation // Chase Center</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">STATUS: STRATEGIC RESEARCH</div>
+            <div style="color: var(--accent); font-weight: bold;">CONFIDENTIAL</div>
+        </div>
+    </header>
+
+    <!-- KPI DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="card metric-card">
+            <div class="metric-value">22%</div>
+            <div class="metric-label">Proj. Labor Cost Reduction</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-value">11mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-value">+1.5k</div>
+            <div class="metric-label">Addt'l Transactions / Night</div>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="card">
+        <h2>Executive Vision</h2>
+        <p style="line-height: 1.6;">
+            The Golden State Warriors must transition Chase Center into a <strong>Hybrid Automated Hospitality</strong> ecosystem. 
+            By deploying robotics to handle high-friction tasks (food running and frying), the arena can solve the "Halftime Crunch" bottleneck. 
+            This strategy shifts human capital from low-skill transport to high-value VIP experiences, ensuring the arena remains the technological pinnacle of the NBA.
+        </p>
+    </div>
+
+    <!-- PATHWAYS -->
+    <div class="pathways-grid">
+        <div class="card">
+            <span class="pathway-icon">A</span>
+            <h3 style="margin-top:0;">FOH: Premium Runners</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Autonomous shelf-robots handling long-haul delivery to Suites and Clubs. Allows servers to remain with VIPs for upselling.
+            </p>
+        </div>
+        <div class="card">
+            <span class="pathway-icon">B</span>
+            <h3 style="margin-top:0;">BOH: Auto-Frying</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Robotic arms for chicken/fries in General Admission. Ensures safety and consistency during the 15-minute halftime rush.
+            </p>
+        </div>
+        <div class="card">
+            <span class="pathway-icon">C</span>
+            <h3 style="margin-top:0;">AI: Voice Kiosks</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">
+                Noise-cancelling AI ordering terminals. Increases upsell attachment rate from 15% (human) to 100% (AI).
+            </p>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-container">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Transactions Per Hour (Halftime)</h2>
+            <div class="chart-wrapper">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINANCIALS & ROADMAP -->
+    <div class="charts-container">
+        <div class="card">
+            <h2>Financial Snapshot</h2>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Est. CAPEX (Pilot)</td>
+                    <td>$450,000</td>
+                </tr>
+                <tr>
+                    <td>Maint. Costs/Mo</td>
+                    <td>$2,500</td>
+                </tr>
+                <tr>
+                    <td>Break-Even Point</td>
+                    <td>< 1 NBA Season</td>
+                </tr>
+            </table>
+        </div>
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-step">
+                <span class="step-year">Year 1</span>
+                <span>Pilot: JP Morgan Club (Runners) & GA (1 Fryer).</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">Year 2</span>
+                <span>Expansion: All Premium Suites & Voice AI.</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">Year 3</span>
+                <span>Optimization: 30% BOH Staff Reduction.</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">Year 5</span>
+                <span>Ecosystem: Predictive Inventory & Prep.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    
+    // 1. Cumulative Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($M)',
+                data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 2. Turnover/Transaction Rate Chart
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Hybrid (Robot Assisted)'],
+            datasets: [{
+                label: 'Transactions/Hour',
+                data: [320, 580], // Hypothetical arena concession data
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { display: false }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
