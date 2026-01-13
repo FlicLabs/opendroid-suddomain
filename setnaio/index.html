@@ -1,0 +1,387 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setna IO | Automation Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(249, 115, 22, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--sky-blue), var(--aviation-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--sky-blue);
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        /* Chart Grid */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Section */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .pathway-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .timeline-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 10px;
+            border-top: 3px solid var(--sky-blue);
+            margin-right: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 0 0 8px 8px;
+        }
+        .timeline-step:last-child {
+            margin-right: 0;
+            border-top: 3px solid var(--aviation-orange);
+        }
+
+        @media (max-width: 768px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="margin-bottom: 40px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <div style="color: var(--aviation-orange); font-weight: 600; letter-spacing: 2px; margin-bottom: 5px;">OPEN DROIDS INTELLIGENCE</div>
+                <h1>Strategic Research: Setna IO</h1>
+                <p>Automated Solutions for Aviation Maintenance & Asset Recovery</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="background: var(--sky-blue); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; display:inline-block;">CONFIDENTIAL</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Metrics Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Projected OPEX Reduction</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">16 Mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$3.3k</span>
+            <span class="metric-label">Savings Per Asset</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">99%</span>
+            <span class="metric-label">AI Inspection Accuracy</span>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="chart-row">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Turnaround Time (Hours)</h2>
+            <div class="chart-container">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Setna IO is positioned to revolutionize the aftermarket aviation sector by integrating autonomous robotics into the asset intake and teardown process. By moving from manual labor to automated cleaning and AI-driven inspection, Setna IO can drastically reduce the time required to process aircraft for resale or parts harvesting, ensuring higher safety standards and precise asset valuation.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Cabin Automation</h3>
+                <p>Autonomous mobile robots for rapid debris removal and vacuuming, preparing interiors for component harvesting 3x faster than manual crews.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Ensures biological safety for mechanics entering retired airframes, reducing health liabilities and operational downtime.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Exterior Systems</h3>
+                <p>Automated gantry/drone washing uses 90% less water, revealing surface defects for accurate assessment.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Computer vision drones scan fuselages for micro-fractures and corrosion, providing data-backed asset valuation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financials & Chart Row 2 -->
+    <div class="chart-row">
+        <div class="glass-card">
+            <h2>Labor Hour Redistribution</h2>
+            <p style="font-size: 0.9rem;">Shifting from low-skill cleaning to high-value maintenance.</p>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-step">
+                    <strong>Year 1</strong><br><span style="color:var(--text-muted); font-size:0.8rem;">Pilot Program<br>(Tempe HQ)</span>
+                </div>
+                <div class="timeline-step">
+                    <strong>Year 2</strong><br><span style="color:var(--text-muted); font-size:0.8rem;">ERP Integration<br>& Chicago Exp.</span>
+                </div>
+                <div class="timeline-step">
+                    <strong>Year 3</strong><br><span style="color:var(--text-muted); font-size:0.8rem;">Global Rollout<br>(UK Hubs)</span>
+                </div>
+                <div class="timeline-step">
+                    <strong>Year 5</strong><br><span style="color:var(--text-muted); font-size:0.8rem;">Lights-Out<br>Autonomy</span>
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                <strong>CAPEX Estimate:</strong> $75k - $150k per unit.<br>
+                <strong>Target:</strong> Full fleet automation by 2029.
+            </p>
+        </div>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+        &copy; 2023 Open Droids Consultation. Prepared exclusively for Setna IO.
+    </footer>
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.33, 0.85, 1.5, 2.2, 3.1],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#f97316'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Turnaround Time Bar Chart
+    const ctxTurnaround = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctxTurnaround, {
+        type: 'bar',
+        data: {
+            labels: ['Intake Cleaning', 'Safety Inspection', 'Surface Washing'],
+            datasets: [{
+                label: 'Manual Process',
+                data: [8, 12, 6],
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: '#94a3b8',
+                borderWidth: 1
+            },
+            {
+                label: 'Robotic Process',
+                data: [1.5, 2, 1],
+                backgroundColor: '#f97316',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Allocation Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning (Eliminated)', 'System Supervision', 'High-Value Maintenance'],
+            datasets: [{
+                data: [50, 10, 40],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.05)',
+                    '#0ea5e9',
+                    '#f97316'
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+```
