@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Jet Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--sky-blue), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.1rem;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.05));
+            border: 1px solid var(--sky-blue);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--aviation-orange);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Grid Layouts */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media(min-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--aviation-orange);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--sky-blue);
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .timeline-step {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        
+        .timeline-step:hover {
+            border-color: var(--aviation-orange);
+            transform: translateY(-5px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>NORTHERN JET</h1>
+            <div class="sub-header">Strategic Automation & Robotics Research | Prepared by Open Droids</div>
+        </header>
+
+        <!-- Dashboard Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">40%</span>
+                <span class="metric-label">Faster Turnaround</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$190</span>
+                <span class="metric-label">Savings Per Turn</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">16 Mo</span>
+                <span class="metric-label">ROI Payback</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">99.9%</span>
+                <span class="metric-label">Pathogen Kill Rate</span>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Executive Summary -->
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p>Northern Jet is positioned to revolutionize private aviation maintenance by integrating an Automated Aviation Hygiene Ecosystem. This strategic pivot addresses the critical need for rapid turnaround in fractional ownership models while elevating health standards to clinical levels.</p>
+                <p>Our research indicates that robotics can solve the variability in manual detailing across hubs (GRR, MCO, TEB) and significantly reduce long-term operational expenditures.</p>
+            </div>
+
+            <!-- Organizational Profile -->
+            <div class="glass-card">
+                <h2>Fleet Profile</h2>
+                <table style="margin-top: 10px;">
+                    <tr>
+                        <th>Fleet Size</th>
+                        <td>~45 Aircraft</td>
+                    </tr>
+                    <tr>
+                        <th>Key Models</th>
+                        <td>Learjet 45XR/75, Challenger 300</td>
+                    </tr>
+                    <tr>
+                        <th>Primary Hubs</th>
+                        <td>Grand Rapids (GRR), Orlando (MCO)</td>
+                    </tr>
+                    <tr>
+                        <th>Pain Points</th>
+                        <td>Labor costs, Turnaround consistency</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <h3>Pathway A: Cabin Interior</h3>
+                    <p>Slim-profile vacuum units for narrow Learjet aisles. Frees staff for high-value detailing.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway B: UV-C Disinfection</h3>
+                    <p>Clinical-grade sanitization. Marketing leverage for "Certified Biosafe" luxury travel.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway C: Exterior Wash</h3>
+                    <p>Dry-wash "skimmer" bots. Reduces water usage by 95% and ensures streak-free polish.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway D: Inspection AI</h3>
+                    <p>Visual inspection drones for overnight maintenance checks and predictive safety.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="content-grid">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Turnaround Time (Minutes)</h2>
+                <div class="chart-container">
+                    <canvas id="tatChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid" style="grid-template-columns: 1fr 2fr;">
+            <div class="glass-card">
+                <h2>Labor Hour Redistribution</h2>
+                <div class="chart-container">
+                    <canvas id="laborChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                <div class="timeline" style="margin-top: 40px;">
+                    <div class="timeline-step">
+                        <h3 style="margin:0;">Year 1</h3>
+                        <p style="font-size:0.8rem; color:#ccc;">GRR Pilot Program</p>
+                    </div>
+                    <div class="timeline-step">
+                        <h3 style="margin:0;">Year 2</h3>
+                        <p style="font-size:0.8rem; color:#ccc;">Expansion to FL Hubs</p>
+                    </div>
+                    <div class="timeline-step">
+                        <h3 style="margin:0;">Year 3</h3>
+                        <p style="font-size:0.8rem; color:#ccc;">Fleet Standardization</p>
+                    </div>
+                    <div class="timeline-step">
+                        <h3 style="margin:0;">Year 4-5</h3>
+                        <p style="font-size:0.8rem; color:#ccc;">Full Automation</p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3 style="border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Financial Summary</h3>
+                    <div style="display: flex; justify-content: space-between; padding-top: 10px;">
+                        <div>
+                            <span style="display:block; font-size: 0.8rem; color: var(--text-muted);">Est. Unit CAPEX</span>
+                            <span style="font-weight: bold; color: var(--sky-blue);">$75k - $120k</span>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size: 0.8rem; color: var(--text-muted);">OPEX Reduction</span>
+                            <span style="font-weight: bold; color: var(--aviation-orange);">35%</span>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size: 0.8rem; color: var(--text-muted);">Break-even</span>
+                            <span style="font-weight: bold; color: #fff;">16 Months</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (USD Millions)',
+                    data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 2. TAT Chart
+        const ctxTat = document.getElementById('tatChart').getContext('2d');
+        new Chart(ctxTat, {
+            type: 'bar',
+            data: {
+                labels: ['Cleaning', 'Disinfection', 'Inspection', 'Total TAT'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 20, 30, 95],
+                        backgroundColor: '#64748b'
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [25, 5, 15, 45],
+                        backgroundColor: '#f97316'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Minutes' } }
+                }
+            }
+        });
+
+        // 3. Labor Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Manual Cleaning', 'Robot Supervision', 'Detailing (High Value)', 'Maintenance'],
+                datasets: [{
+                    data: [15, 20, 45, 20],
+                    backgroundColor: [
+                        '#64748b',
+                        '#0ea5e9',
+                        '#f97316',
+                        '#0f172a'
+                    ],
+                    borderColor: 'transparent'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    </script>
+</body>
+</html>
