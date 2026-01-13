@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duncan Aviation | Automation Feasibility Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--sky-blue), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--aviation-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            border-top: 4px solid var(--sky-blue);
+        }
+
+        .metric-card.accent {
+            border-top: 4px solid var(--aviation-orange);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Layout */
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Content Sections */
+        .section-title {
+            color: var(--sky-blue);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: "▹";
+            color: var(--aviation-orange);
+            position: absolute;
+            left: 0;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .pathway-grid { grid-template-columns: 1fr; }
+            .charts-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DUNCAN AVIATION</h1>
+        <div class="subtitle">Strategic Automation & Robotics Feasibility Report</div>
+
+        <!-- DASHBOARD METRICS -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Proj. Labor Reduction</div>
+                <div class="metric-value">42%</div>
+                <div class="metric-label">Detailing & Wash Ops</div>
+            </div>
+            <div class="glass-card metric-card accent">
+                <div class="metric-label">ROI Timeline</div>
+                <div class="metric-value">18</div>
+                <div class="metric-label">Months to Break Even</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Cost Savings</div>
+                <div class="metric-value">66%</div>
+                <div class="metric-label">Per Heavy Jet Turnaround</div>
+            </div>
+            <div class="glass-card metric-card accent">
+                <div class="metric-label">Water Conservation</div>
+                <div class="metric-value">60%</div>
+                <div class="metric-label">Gallons Saved Per Wash</div>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <div class="charts-row">
+            <div class="glass-card">
+                <h3 class="section-title">5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3 class="section-title">Turnaround Time: Manual vs. Robot</h3>
+                <div class="chart-container">
+                    <canvas id="timeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="charts-row" style="margin-bottom: 0;">
+                <div style="flex: 1;">
+                    <h3 class="section-title">Executive Summary</h3>
+                    <p>Duncan Aviation is positioned to revolutionize the MRO industry by integrating autonomous robotics into cleaning and inspection workflows. This shift addresses critical labor shortages while enhancing the precision and consistency required for high-net-worth business jet clients.</p>
+                    <p><strong>Primary Goal:</strong> Transition from labor-intensive manual detailing to "Total Asset Preservation" via automation.</p>
+                </div>
+                <div style="flex: 1; min-height: 250px;">
+                     <h3 class="section-title">Labor Redistribution</h3>
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="laborChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRATEGIC PATHWAYS -->
+        <div class="pathway-grid">
+            <div class="glass-card">
+                <h3 class="section-title">Pathway A: Cabin Automation</h3>
+                <p>Deploying compact vacuuming and wiping bots designed for business jet aisle widths.</p>
+                <ul>
+                    <li>Reduces interior detailing time by 40%.</li>
+                    <li>Allows staff to focus on leather care and woodwork.</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h3 class="section-title">Pathway B: UV-C Disinfection</h3>
+                <p>Hospital-grade sanitation for VIP hygiene assurance using slim-profile emitters.</p>
+                <ul>
+                    <li>Chemical-free sanitization for sensitive veneers.</li>
+                    <li>"Certified Sanitized" seal for charter clients.</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h3 class="section-title">Pathway C: Exterior Systems</h3>
+                <p>Semi-autonomous crawler units for exterior washing prior to paint or maintenance.</p>
+                <ul>
+                    <li>Eliminates fall risks from high tail sections.</li>
+                    <li>Critical pre-paint surface preparation.</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h3 class="section-title">Pathway D: AI Inspection</h3>
+                <p>Drone and crawler bots for fuselage scanning upon MRO induction.</p>
+                <ul>
+                    <li>Micro-fracture and corrosion detection.</li>
+                    <li>Digitized, immutable aircraft condition records.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IMPLEMENTATION TABLE -->
+        <div class="glass-card">
+            <h3 class="section-title">Phased Implementation Roadmap</h3>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; color: #cbd5e1;">
+                    <tr style="border-bottom: 1px solid var(--glass-border); text-align: left;">
+                        <th style="padding: 15px; color: var(--sky-blue);">Phase</th>
+                        <th style="padding: 15px;">Hub Location</th>
+                        <th style="padding: 15px;">Key Initiative</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 15px;">Year 1</td>
+                        <td style="padding: 15px;">Lincoln (LNK)</td>
+                        <td style="padding: 15px;">Pilot Launch: Exterior Wash & Drone Inspection</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 15px;">Year 2</td>
+                        <td style="padding: 15px;">Battle Creek (BTL)</td>
+                        <td style="padding: 15px;">Expansion of Wash Bots; Intro of Cabin Bots at LNK</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 15px;">Year 3</td>
+                        <td style="padding: 15px;">Provo (PVU)</td>
+                        <td style="padding: 15px;">Full Suite Integration & Work Order System Sync</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CHART 1: CUMULATIVE SAVINGS
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.8, 2.1, 4.5, 7.2, 10.5],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#f97316',
+                    pointBorderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#94a3b8' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // CHART 2: TURNAROUND TIME
+        const ctxTime = document.getElementById('timeChart').getContext('2d');
+        new Chart(ctxTime, {
+            type: 'bar',
+            data: {
+                labels: ['Exterior Wash', 'Interior Detail', 'Safety Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual (Hours)',
+                        data: [12, 8, 6],
+                        backgroundColor: '#f97316',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Robotic (Hours)',
+                        data: [4, 4.5, 1.5],
+                        backgroundColor: '#0ea5e9',
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#94a3b8' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // CHART 3: LABOR REDISTRIBUTION
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Repetitive Cleaning', 'High-Value Tech Work', 'Supervision'],
+                datasets: [{
+                    data: [20, 65, 15],
+                    backgroundColor: ['#64748b', '#0ea5e9', '#f97316'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { position: 'right', labels: { color: '#94a3b8' } } 
+                }
+            }
+        });
+    </script>
+</body>
+</html>
