@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Jet | Automation Feasibility Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.08) 0%, transparent 20%);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--aviation-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 25px;
+            border-top: 3px solid var(--sky-blue);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--sky-blue);
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 2px solid var(--aviation-orange);
+        }
+
+        .pathway-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .roadmap-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .roadmap-step::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: -1;
+        }
+
+        .roadmap-step:last-child::after {
+            display: none;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            background: var(--aviation-orange);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            line-height: 30px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid, .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+            .roadmap {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .roadmap-step::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Consultation</div>
+            <h1>Prime Jet Automation Strategy</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="color: var(--text-dim);">Report ID: OD-PJ-2023</div>
+            <div style="color: var(--aviation-orange);">Confidential</div>
+        </div>
+    </header>
+
+    <!-- EXECUTIVE DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="card metric-card">
+            <div class="metric-label">Est. CAPEX Investment</div>
+            <div class="metric-value">$437,500</div>
+            <div style="color: var(--aviation-orange);">Fleet-wide Rollout</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">OPEX Reduction</div>
+            <div class="metric-value">38%</div>
+            <div style="color: var(--sky-blue);">Labor & Consumables</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">16 Mo.</div>
+            <div style="color: var(--text-dim);">Payback Period</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Labor Saved / Turn</div>
+            <div class="metric-value">11.5 Hrs</div>
+            <div style="color: var(--sky-blue);">Per Heavy Clean</div>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="chart-grid">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card">
+            <h2>Manual vs. Robotic Turnaround (Hours)</h2>
+            <canvas id="turnaroundChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Labor Redistribution Post-Automation</h2>
+        <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap;">
+            <div style="width: 300px;">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+            <div style="max-width: 500px;">
+                <p style="color: var(--text-dim); margin-bottom: 15px;">
+                    Automation does not eliminate the need for skilled labor; it shifts the focus. 
+                    By automating repetitive heavy cleaning (exterior wash and vacuuming), 
+                    staff hours are reallocated to high-value tasks.
+                </p>
+                <div class="pathways-grid">
+                    <div class="pathway-item">
+                        <div class="pathway-title">VIP Hospitality</div>
+                        <div style="font-size: 0.9rem; color: var(--text-dim);">Focus on cabin prep and catering presentation.</div>
+                    </div>
+                    <div class="pathway-item">
+                        <div class="pathway-title">Predictive Maint.</div>
+                        <div style="font-size: 0.9rem; color: var(--text-dim);">Analyzing robotic inspection data.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROBOTICS PATHWAYS TEXT -->
+    <div class="card">
+        <h2>Strategic Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item" style="border-left-color: var(--sky-blue);">
+                <div class="pathway-title">Pathway A: Cabin Autonomy</div>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Deployment of compact autonomous vacuums for Gulfstream aisle widths. Reduces grooming time by 40%.</p>
+            </div>
+            <div class="pathway-item" style="border-left-color: var(--sky-blue);">
+                <div class="pathway-title">Pathway B: UV-C Sanitation</div>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Hospital-grade disinfection for VIP health assurance. 99.9% pathogen elimination.</p>
+            </div>
+            <div class="pathway-item" style="border-left-color: var(--aviation-orange);">
+                <div class="pathway-title">Pathway C: Exterior Dry Wash</div>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Waterless robotic buffing systems. Protects paint asset value and ensures showroom finish.</p>
+            </div>
+            <div class="pathway-item" style="border-left-color: var(--aviation-orange);">
+                <div class="pathway-title">Pathway D: AI Inspection</div>
+                <p style="font-size: 0.9rem; color: var(--text-dim);">Drone/Crawler micro-crack detection feeding directly into maintenance tracking software.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap">
+            <div class="roadmap-step">
+                <div class="step-circle">1</div>
+                <h3 style="color: var(--sky-blue);">Pilot (VNY)</h3>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Deploy 1 Wash Bot<br>Train Lead Techs</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-circle">2</div>
+                <h3 style="color: var(--sky-blue);">Integration</h3>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Link Data Logs<br>Paint Analysis</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-circle">3</div>
+                <h3 style="color: var(--sky-blue);">Expansion</h3>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Rollout to TEB & OPF<br>Inspection Drones</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-circle">4</div>
+                <h3 style="color: var(--sky-blue);">Full Autonomy</h3>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Fleet-wide Standard<br>80% Contract Reduction</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>OPEN DROIDS AVIATION AUTOMATION RESEARCH © 2023</p>
+        <p>Generated for Prime Jet Operations</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Projected Cumulative Savings ($)',
+                data: [120000, 350000, 780000, 1400000, 2100000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#f97316'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Turnaround Time Comparison
+    const ctx2 = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Exterior Wash', 'Cabin Grooming', 'Safety Inspection'],
+            datasets: [
+                {
+                    label: 'Manual Process (Min)',
+                    data: [240, 90, 120],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process (Min)',
+                    data: [45, 40, 20],
+                    backgroundColor: '#0ea5e9',
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Pie Chart
+    const ctx3 = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Cleaning (Manual)', 'VIP Services', 'Technical Maint.'],
+            datasets: [{
+                label: 'Labor Allocation',
+                data: [15, 50, 35],
+                backgroundColor: [
+                    'rgba(255,255,255,0.1)',
+                    '#0ea5e9',
+                    '#f97316'
+                ],
+                borderColor: 'transparent'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
