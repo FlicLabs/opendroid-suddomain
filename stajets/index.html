@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STA Jets Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(at 0% 0%, #1e293b 0px, transparent 50%),
+                              radial-gradient(at 100% 0%, #0f172a 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--sky-blue), var(--aviation-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--sky-blue);
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--aviation-orange);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+            gap: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>STA JETS: AUTOMATION STRATEGY</h1>
+        <div class="subtitle">Prepared by Open Droids Consultation Unit</div>
+    </header>
+
+    <!-- Aviation Efficiency Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value" style="color: var(--aviation-orange)">40%</div>
+            <div class="metric-label">Reduction in Labor Costs</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value" style="color: var(--sky-blue)">18mo</div>
+            <div class="metric-label">Projected ROI Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label">Pathogen Elimination (UV-C)</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Summary</h2>
+        <p>This strategic initiative outlines the integration of robotic automation into STA Jets' fleet management. By deploying autonomous cleaning and inspection units, STA Jets will enhance charter availability, ensure hospital-grade hygiene for VIP clients, and achieve significant operational cost reductions within 24 months.</p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Turnaround Time (Minutes)</h3>
+            <div class="chart-wrapper">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Labor Hour Redistribution</h3>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="pathway-grid">
+        <div class="glass-card">
+            <h2>Pathway A: Cabin Automation</h2>
+            <p><strong>Focus:</strong> Efficiency & Debris Removal</p>
+            <p>Deployment of compact vacuuming units to navigate luxury cabin aisles. Reduces basic cleaning time, allowing human staff to focus on white-glove detailing.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Pathway B: UV-C Disinfection</h2>
+            <p><strong>Focus:</strong> Health Compliance</p>
+            <p>Robotic arms utilizing UV-C light to sterilize surfaces without chemicals. Protects expensive interior fabrics and ensures VIP client safety.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Pathway C: Exterior Systems</h2>
+            <p><strong>Focus:</strong> Water Conservation</p>
+            <p>Dry-wash crawling robots designed to clean fuselages while adhering to strict California water usage regulations.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Pathway D: AI Inspection</h2>
+            <p><strong>Focus:</strong> Predictive Maintenance</p>
+            <p>Optical scanning bots detecting micro-fractures and paint defects during the cleaning cycle to reduce AOG time.</p>
+        </div>
+    </div>
+
+    <!-- Financials -->
+    <div class="glass-card">
+        <h2>04. Financial Impact</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <h3>CAPEX Estimates</h3>
+                <p>Unit Cost: $75k - $150k</p>
+                <p>Pilot Program: ~$350k</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3>OPEX Savings</h3>
+                <p>Turnaround Cost: $260 (Robotic) vs $450 (Manual)</p>
+                <p>Chemical Reduction: 35%</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        CONFIDENTIAL REPORT FOR STA JETS | OPEN DROIDS RESEARCH
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($)',
+                data: [120000, 350000, 750000, 1200000, 1800000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#94a3b8' } } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Turnaround Time
+    const ctx2 = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Hybrid'],
+            datasets: [{
+                label: 'Minutes per Aircraft',
+                data: [90, 55],
+                backgroundColor: ['#f97316', '#0ea5e9'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Scrubbing', 'Machine Supervision', 'Detailing/QA'],
+            datasets: [{
+                data: [20, 30, 50],
+                backgroundColor: ['#1e293b', '#f97316', '#0ea5e9'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'bottom', labels: { color: '#94a3b8' } } 
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
