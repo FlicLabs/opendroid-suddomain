@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Research: IIANR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --highlight: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 2rem;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--highlight);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Flex layout for charts */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pathway-card {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--highlight);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p style="letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;">Open Droids Consultation & Research</p>
+        <h1>The International Institute of<br>All-Natural Refrigeration</h1>
+        <p style="margin-top: 1rem;">Strategic Automation & Robotics Roadmap</p>
+    </header>
+
+    <!-- Executive KPI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">14.5</span>
+            <span class="metric-label">Months Payback</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">+25%</span>
+            <span class="metric-label">Target OEE Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Scrap Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$520k</span>
+            <span class="metric-label">Total Est. CAPEX</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="glass-card">
+        <h2>Financial & Production Projections</h2>
+        <div class="charts-container">
+            <div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div>
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Summary</h2>
+        <p>The transition to natural refrigerants (Ammonia/CO2) requires manufacturing precision that exceeds current manual capabilities. Our strategy proposes a shift to a <strong>Smart Flexible Manufacturing Ecosystem</strong>. By integrating Industry 4.0 technologies, the Institute will ensure leak-proof containment integrity, enhance safety, and scale throughput to meet global regulatory demands.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-card">
+                <span class="tag">PATHWAY A</span>
+                <h3>Collaborative Assembly</h3>
+                <p><strong>Focus:</strong> Safety & Precision</p>
+                <p>Deployment of IP67-rated Cobots for TIG welding and brazing. Ensures 100% joint consistency critical for high-pressure ammonia systems.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="tag">PATHWAY B</span>
+                <h3>AMR Logistics</h3>
+                <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                <p>Autonomous Mobile Robots (1000kg payload) to transport compressor racks between Fabrication and Assembly, reducing operator fatigue.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="tag">PATHWAY C</span>
+                <h3>Automated QA</h3>
+                <p><strong>Focus:</strong> Throughput & Yield</p>
+                <p>Robotic arms with high-sensitivity "sniffers" and thermal imaging to reduce leak detection cycles from 20 minutes to 3 minutes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+            <li style="margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <strong style="color: #fff;">YEAR 1:</strong> Pilot Phase (Welding Cobots & Raw Material AMRs).
+            </li>
+            <li style="margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <strong style="color: #fff;">YEAR 2:</strong> Scaling & Integration (End-of-Line QA & ERP Integration).
+            </li>
+            <li style="margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <strong style="color: #fff;">YEAR 3:</strong> Optimization (Full Fleet Connectivity & Predictive Maintenance).
+            </li>
+            <li style="margin-bottom: 1rem;">
+                <strong style="color: #fff;">YEAR 5:</strong> Autonomous Ecosystem (AI-Driven Process Optimization).
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Cobot Output
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Welding', 'Leak Check', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual (Units/Hr)',
+                    data: [4, 3, 12],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [9, 15, 28],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
