@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KGH 3P Logistics | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--accent-purple);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(124,58,237,0.1) 100%);
+            border: 1px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Grid for content and charts */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+
+        .year-badge {
+            background-color: var(--accent-purple);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.8rem;
+        }
+        
+        canvas {
+            max-height: 250px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Research</div>
+            <h1>KGH 3P Logistics</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Strategic Automation</div>
+            <div style="color: var(--accent-purple); font-weight: bold;">CONFIDENTIAL</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">$950k</span>
+            <span class="metric-label">Est. Pilot CAPEX</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Labor OpEx Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">18 Mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Executive Summary -->
+        <div class="glass-card full-width">
+            <h2>Executive Summary</h2>
+            <p>KGH 3P Logistics is poised to transition from a traditional labor-heavy model to a Smart Logistics Ecosystem. By integrating AMRs and AI-driven predictive logistics, KGH will decouple revenue growth from headcount dependency, securing margins against labor market volatility.</p>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            
+            <h3>Pathway A: AMRs</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                Deployment of Locus/Fetch style bots to handle internal transport. Drastically reduces picker walking time.
+            </p>
+
+            <h3>Pathway B: Robotic Picking</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                High-density ASRS and picking arms to maximize vertical space and achieve 99.9% accuracy.
+            </p>
+
+            <h3>Pathway C: AI Logistics</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                Computer vision for dock scheduling and predictive slotting algorithms.
+            </p>
+        </div>
+
+        <!-- Throughput Chart -->
+        <div class="glass-card">
+            <h2>Throughput Analysis (UPH)</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>5-Year Roadmap</h2>
+            <div class="roadmap-step">
+                <span class="year-badge">Year 1</span>
+                <span>Pilot Phase: WMS Integration & AMR Test Zone</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="year-badge">Year 2</span>
+                <span>Expansion: Facility-wide AMR Rollout & AI Docking</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="year-badge">Year 3</span>
+                <span>Density: ASRS Installation for Slow-Movers</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="year-badge">Year 5</span>
+                <span>Digital Twin: Full Virtual Simulation Environment</span>
+            </div>
+        </div>
+
+        <!-- Savings Chart -->
+        <div class="glass-card">
+            <h2>Cumulative Savings Projection ($ Millions)</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Chart 1: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist (AMR)', 'Full Automation'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [70, 185, 350],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.7)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed',
+                    '#7c3aed'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Chart 2: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    
+    // Gradient for the line chart
+    let gradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings',
+                data: [0.2, 1.5, 3.8, 6.5, 9.2], // In Millions
+                borderColor: '#7c3aed',
+                backgroundColor: gradient,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return '$' + context.parsed.y + ' Million';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Savings ($ Millions)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
