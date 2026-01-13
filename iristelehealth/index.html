@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Telehealth Robotics Analysis</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #005f73 0%, #0a9396 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .header h2 {
+            margin: 10px 0 0 0;
+            font-weight: 300;
+            opacity: 0.9;
+            font-size: 18px;
+        }
+
+        .section {
+            padding: 30px 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #0a9396;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .exec-summary {
+            font-size: 16px;
+            color: #444;
+            background-color: #f0fdfa;
+            padding: 20px;
+            border-left: 4px solid #0a9396;
+            border-radius: 4px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .profile-card strong {
+            display: block;
+            color: #005f73;
+            margin-bottom: 5px;
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .pathway-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 10px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-color: #0a9396;
+        }
+
+        .pathway-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .badge-a { background-color: #e6fffa; color: #047481; }
+        .badge-b { background-color: #fff5f5; color: #c53030; }
+        .badge-c { background-color: #ebf8ff; color: #2b6cb0; }
+
+        .metric-box {
+            background: #2d3748;
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-val {
+            font-weight: 600;
+            color: #4fd1c5;
+        }
+
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .roadmap-step {
+            position: relative;
+            z-index: 1;
+            background: white;
+            width: 30%;
+            padding-top: 45px;
+        }
+
+        .dot {
+            width: 40px;
+            height: 40px;
+            background: #0a9396;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px;
+            background-color: #f8f9fa;
+            color: #4a5568;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Iris Telehealth</h1>
+        <h2>Robotics & Automation Opportunities Portfolio</h2>
+    </div>
+
+    <div class="section">
+        <span class="section-title">01 / Executive Summary</span>
+        <div class="exec-summary">
+            <p><strong>The Opportunity:</strong> Moving from a staffing model to a tech-enabled logistics platform.</p>
+            <p style="margin-bottom:0;">Iris Telehealth is uniquely positioned to leverage <strong>Robotic Process Automation (RPA)</strong> to solve the industry's biggest bottleneck: credentialing lag. While physical robotics (telepresence) offers a strategic differentiator in ERs, the dominant ROI lies in "software robotics" that automate administrative friction, projected to yield ~£1.8M in annual net benefit with rapid payback.</p>
+        </div>
+        
+        <div class="profile-grid">
+            <div class="profile-card">
+                <strong>Model</strong>
+                B2B Telepsychiatry Partnerships
+            </div>
+            <div class="profile-card">
+                <strong>Scale</strong>
+                200+ Health Systems / ~500 Clinicians
+            </div>
+            <div class="profile-card">
+                <strong>Key Friction</strong>
+                Admin Burden & Credentialing (90+ Days)
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="section-title">02 / Opportunity Pathways</span>
+        <div class="pathways-grid">
+            
+            <!-- Pathway A -->
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <h3 style="margin:0; font-size:18px;">Pathway A: RPA & Admin</h3>
+                    <span class="badge badge-a">Highest ROI</span>
+                </div>
+                <p style="font-size:14px; color:#666;">Software robots to automate credentialing, licensing, and EMR data entry.</p>
+                <ul style="font-size:13px; padding-left:20px; color:#555;">
+                    <li>Reduces credentialing lag by 30-40%</li>
+                    <li>Saves 3-5 admin hours/clinician/week</li>
+                    <li>Accelerates time-to-revenue</li>
+                </ul>
+            </div>
+
+            <!-- Pathway B -->
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <h3 style="margin:0; font-size:18px;">Pathway B: Telepresence</h3>
+                    <span class="badge badge-b">Strategic</span>
+                </div>
+                <p style="font-size:14px; color:#666;">Mobile, self-driving robots for Emergency Departments (EDs).</p>
+                <ul style="font-size:13px; padding-left:20px; color:#555;">
+                    <li>Psychiatrists "drive" into rooms independently</li>
+                    <li>Reduces burden on ED nursing staff</li>
+                    <li>Premium service differentiator</li>
+                </ul>
+            </div>
+
+            <!-- Pathway C -->
+            <div class="pathway-card">
+                <div class="pathway-header">
+                    <h3 style="margin:0; font-size:18px;">Pathway C: Clinical AI</h3>
+                    <span class="badge badge-c">Workflow</span>
+                </div>
+                <p style="font-size:14px; color:#666;">NLP agents for automated documentation and risk scoring.</p>
+                <ul style="font-size:13px; padding-left:20px; color:#555;">
+                    <li>Reduces charting time by 50%</li>
+                    <li>Increases throughput (1-2 more patients/shift)</li>
+                    <li>Improves clinician retention</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="section-title">03 / Financial Model (Pathway A Focus)</span>
+        <p style="font-size:14px; color:#666; margin-bottom:20px;">Modeling the impact of automating administrative overhead for a network of ~500 clinicians.</p>
+        
+        <div class="metric-box">
+            <div class="metric-row">
+                <span>Annual Hours Saved (Admin)</span>
+                <span class="metric-val">36,000 Hours</span>
+            </div>
+            <div class="metric-row">
+                <span>Direct Operational Savings</span>
+                <span class="metric-val">~£1.26M / year</span>
+            </div>
+            <div class="metric-row">
+                <span>Revenue Acceleration (Faster Credentialing)</span>
+                <span class="metric-val">~£750k / year</span>
+            </div>
+            <div class="metric-row" style="border-top:1px solid #4fd1c5; margin-top:10px; padding-top:15px;">
+                <span style="color:#4fd1c5;"><strong>Total Net Benefit</strong></span>
+                <span style="font-size:18px; color:#4fd1c5;"><strong>£1.8M - £2.0M / year</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="section-title">04 / Comparative Analysis</span>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A (RPA)</th>
+                        <th>Pathway B (Telepresence)</th>
+                        <th>Pathway C (Clinical AI)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Main Driver</strong></td>
+                        <td>Margin & Speed</td>
+                        <td>Differentiation</td>
+                        <td>Throughput</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Benefit</strong></td>
+                        <td>£1.5M - £2.0M</td>
+                        <td>Contract Retention</td>
+                        <td>£0.5M - £1.0M</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td><span style="color:#0a9396; font-weight:bold;">Immediate</span></td>
+                        <td>12-18 Months</td>
+                        <td>6-9 Months</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Profile</strong></td>
+                        <td>Low</td>
+                        <td>Moderate (Hardware)</td>
+                        <td>Moderate (Adoption)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section" style="border-bottom:none;">
+        <span class="section-title">05 / Implementation Roadmap</span>
+        <div class="roadmap">
+            <div class="roadmap-step">
+                <div class="dot">01</div>
+                <strong>Year 1: Foundation</strong>
+                <p style="font-size:13px; color:#666;">Launch RPA for credentialing and billing. Goal: Cut admin overhead by 25%.</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="dot">02</div>
+                <strong>Year 2: Pilot</strong>
+                <p style="font-size:13px; color:#666;">Deploy mobile telepresence robots in flagship EDs. Pilot AI scribing tools.</p>
+            </div>
+            <div class="roadmap-step">
+                <div class="dot">03</div>
+                <strong>Year 3: Scale</strong>
+                <p style="font-size:13px; color:#666;">Full scale Clinical AI. Offer "Premium Telepresence" tier to partners.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
