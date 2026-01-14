@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Automation Report | Total Transportation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .accent-text {
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Layout */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2-col { grid-template-columns: 1fr; }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header style="margin-bottom: 3rem; text-align: center;">
+            <p style="color: var(--accent-blue); letter-spacing: 2px; text-transform: uppercase; font-weight: bold;">Open Droids Intelligence</p>
+            <h1>Total Transportation Inc.<br>Automation Research Report</h1>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <h2>01. Executive Summary</h2>
+            <p>Total Transportation and Distribution Inc. is poised to transition from a manual 3PL model to a hybrid-automated ecosystem. By integrating Autonomous Mobile Robots (AMRs) and AI-driven logistics, the company can address West Coast labor volatility and achieve a <span class="accent-text">40% increase in throughput</span> per square foot.</p>
+        </section>
+
+        <!-- Financial Dashboard -->
+        <section>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Estimated CAPEX (Pilot)</div>
+                    <div class="metric-value">$625k</div>
+                    <div style="color: #4ade80; font-size: 0.8rem;">Mid-range estimate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Labor Cost Reduction</div>
+                    <div class="metric-value">35%</div>
+                    <div style="color: #4ade80; font-size: 0.8rem;">Target OPEX Savings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">ROI Payback Period</div>
+                    <div class="metric-value">18 Mo</div>
+                    <div style="color: #4ade80; font-size: 0.8rem;">&lt; 2 Years</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="glass-card">
+            <h2>02. Projected Impact</h2>
+            <div class="grid-2-col">
+                <div>
+                    <h3 style="font-size: 1.2rem; color: var(--text-muted);">Cumulative Savings (5 Years)</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; color: var(--text-muted);">Throughput Velocity</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Opportunity Pathways -->
+        <div class="grid-2-col">
+            <section class="glass-card">
+                <h2>03. Robotics Pathways</h2>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 class="accent-text">Pathway A: AMRs</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Deployment of heavy-payload robots for dock-to-stock movement, reducing forklift travel by 60%.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 class="accent-text">Pathway B: Auto-Picking</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Goods-to-Person (GTP) technology for fulfillment, boosting accuracy to 99.9%.</p>
+                </div>
+                <div>
+                    <h3 class="accent-text">Pathway C: AI Logistics</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Computer vision gantries for automated dimensioning and freight scanning.</p>
+                </div>
+            </section>
+
+            <section class="glass-card">
+                <h2>04. Implementation Roadmap</h2>
+                <ul>
+                    <li><strong>Year 1: Foundation</strong><br>Deploy AI scanning tunnels & pilot 5 AMRs.</li>
+                    <li><strong>Year 2: Expansion</strong><br>Integrate WMS with Robotics Control System.</li>
+                    <li><strong>Year 3: Scale</strong><br>Expand AMR fleet to all major hubs.</li>
+                    <li><strong>Year 4: Dark Warehouse</strong><br>Fully automated storage zones.</li>
+                    <li><strong>Year 5: Optimization</strong><br>Predictive AI for fleet management.</li>
+                </ul>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cross-Dock', 'Picking', 'Auditing'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [45, 120, 200],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 5
+                    },
+                    {
+                        label: 'Robotic (Units/Hr)',
+                        data: [85, 350, 600],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
