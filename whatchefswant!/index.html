@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCW Automation Strategy | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .brand-title {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-accent {
+            color: #7c3aed;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+            border-left: 4px solid #7c3aed;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 10px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .pathway-item {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .year-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="brand-title">OPEN DROIDS <span class="brand-accent">///</span> RESEARCH</div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: 600;">WHAT CHEFS WANT!</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Projected ROI Period</div>
+            <div class="metric-value">18 MONTHS</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Labor Cost Reduction</div>
+            <div class="metric-value">35%</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Picking Accuracy</div>
+            <div class="metric-value">99.99%</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-value">2.5x</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column: Strategy & Charts -->
+        <div>
+            <div class="glass-card">
+                <h2>Executive Vision</h2>
+                <p>The strategic objective for <strong>What Chefs Want!</strong> is to transition from a high-touch manual selection process to a "Hyper-Agile Fulfillment" model. By integrating Autonomous Mobile Robots (AMRs) and cold-chain specific ASRS, we can support the "No Minimums" business model while decoupling operational costs from labor market volatility.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Financial Projection: 5-Year Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Throughput Analysis (Units Per Hour)</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Pathways & Roadmap -->
+        <div>
+            <div class="glass-card">
+                <h2>Opportunity Pathways</h2>
+                
+                <div class="pathway-item">
+                    <h3>Pathway A: AMRs</h3>
+                    <p>Automated transport for butchery and cold storage. Eliminates "dead walking time" in refrigerated zones.</p>
+                </div>
+
+                <div class="pathway-item">
+                    <h3>Pathway B: Cold Chain ASRS</h3>
+                    <p>High-density Goods-to-Person automation specifically for breaking cases and piece-picking.</p>
+                </div>
+
+                <div class="pathway-item">
+                    <h3>Pathway C: AI Logistics</h3>
+                    <p>Predictive modeling for "Friday Rush" demand to pre-position high-velocity proteins.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                
+                <div class="roadmap-step">
+                    <div class="year-badge">YR 1</div>
+                    <p style="margin:0">Pilot AMRs in Louisville HQ. WMS Integration.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="year-badge">YR 2</div>
+                    <p style="margin:0">Install Cold-Chain ASRS Pilot. Route AI Launch.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="year-badge">YR 3</div>
+                    <p style="margin:0">Expansion to Nashville & Cincinnati Hubs.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="year-badge">YR 4</div>
+                    <p style="margin:0">90% Automated Piece-Picking achieved.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="year-badge">YR 5</div>
+                    <p style="margin:0">Full Autonomy: Automated Loading & Drone Counting.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 2.1, 4.8, 8.2, 12.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            },
+            {
+                label: 'Manual Operation Cost Baseline',
+                data: [0, 0, 0, 0, 0], // Baseline
+                borderColor: '#ffffff',
+                borderDash: [5, 5],
+                borderWidth: 1,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Hybrid (AMR)', 'Full Automation (ASRS)'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [120, 185, 350],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(124, 58, 237, 0.5)',
+                    '#7c3aed'
+                ],
+                borderColor: 'transparent',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
