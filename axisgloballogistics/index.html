@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axis Global Logistics | Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.5);
+            transform: translateY(-2px);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #a78bfa;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .accent {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 16px;
+            border-left: 3px solid #7c3aed;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="margin-bottom: 40px;">
+        <div style="font-size: 0.8rem; color: #7c3aed; letter-spacing: 2px; font-weight: bold;">OPEN DROIDS CONSULTING</div>
+        <h1>AXIS GLOBAL LOGISTICS</h1>
+        <p style="color: #94a3b8; font-size: 1.1rem;">Strategic Automation & Robotics Feasibility Report</p>
+    </header>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">21 Months</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Reduction in Labor OPEX</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Inventory Accuracy</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$425k</span>
+            <span class="metric-label">Pilot CAPEX Estimate</span>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3 style="color: #a78bfa; font-size: 1rem;">5-Year Cumulative Savings Projection</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: #a78bfa; font-size: 1rem;">Daily Throughput: Manual vs. Robotic</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-grid">
+        <!-- LEFT COLUMN: STRATEGY -->
+        <div>
+            <div class="glass-card">
+                <h2>01. Executive Vision</h2>
+                <p>Axis Global Logistics is positioned to transition from a traditional 3PL model to a Tech-Enabled Supply Chain Architect. By integrating heavy-payload AMRs and ASRS systems, Axis can enhance its specialty in high-touch, white-glove logistics.</p>
+                <p>The objective is not merely speed, but <span class="accent">visibility and precision</span>—critical for retail rollouts, medical shipments, and FF&E projects.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>02. Robotics Opportunity Pathways</h2>
+                
+                <h3 style="color: #fff; margin-top: 20px;">Pathway A: Internal Transport (AMR)</h3>
+                <p>Deployment of Heavy-Payload AMRs to replace manual dollies for moving oversized furniture and fixtures. Expected to increase pallet velocity by <strong>35%</strong>.</p>
+
+                <h3 style="color: #fff; margin-top: 20px;">Pathway B: Robotic Piece Picking (ASRS)</h3>
+                <p>Implementation of Goods-to-Person technology for the Fulfillment Services division. Utilizing vertical height to reduce warehouse footprint by <strong>45%</strong> while boosting accuracy to <strong>99.9%</strong>.</p>
+
+                <h3 style="color: #fff; margin-top: 20px;">Pathway C: AI Predictive Logistics</h3>
+                <p>AI layers atop the WMS to predict staging needs for large rollouts, reducing truck dwell times by <strong>25%</strong>.</p>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: FINANCIALS & ROADMAP -->
+        <div>
+            <div class="glass-card">
+                <h2>Financial Model</h2>
+                <ul>
+                    <li><strong>Pilot CAPEX:</strong> $425,000 (5 AMRs, 2 GTP Stations, Software).</li>
+                    <li><strong>Year 1 Savings:</strong> $210,000 via labor reallocation and efficiency.</li>
+                    <li><strong>Energy Impact:</strong> 15% reduction in lighting/HVAC costs.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <h2>5-Year Roadmap</h2>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <strong class="accent">Year 1:</strong> Pilot Program (NJ Hub)
+                    </div>
+                    <div>
+                        <strong class="accent">Year 2:</strong> Expansion & Fulfillment ASRS
+                    </div>
+                    <div>
+                        <strong class="accent">Year 3:</strong> AI Network Integration
+                    </div>
+                    <div>
+                        <strong class="accent">Year 4:</strong> "Dark Warehouse" Night Shifts
+                    </div>
+                    <div>
+                        <strong class="accent">Year 5:</strong> Global Standardization
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Generated by Open Droids Research Agent | Confidential & Proprietary
+    </div>
+</div>
+
+<script>
+    // Global Default Settings
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [210000, 490000, 850000, 1300000, 1900000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Inbound Pallets', 'Order Picking', 'Outbound Staging'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [120, 150, 100],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 6,
+                    borderWidth: 0
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [180, 290, 160],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6,
+                    borderWidth: 0,
+                    boxShadow: '0 0 10px #7c3aed' 
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { usePointStyle: true } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    title: { display: true, text: 'Units Per Hour' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
