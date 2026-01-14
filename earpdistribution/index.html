@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earp Distribution | Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-cyan: #22d3ee;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(34, 211, 238, 0.15) 0px, transparent 50%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-left: 4px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div style="display: flex; justify-content: space-between; align-items: end;">
+            <div>
+                <p style="margin: 0; color: var(--accent-purple); font-weight: 600;">OPEN DROIDS RESEARCH</p>
+                <h1>Earp Distribution</h1>
+                <p>Strategic Automation Assessment & Roadmap</p>
+            </div>
+            <div style="text-align: right;">
+                <p>Date: October 2023</p>
+                <p>Status: <span style="color: var(--accent-cyan)">Analysis Complete</span></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Est. Labor Reduction</span>
+            <span class="metric-value">35%</span>
+            <span class="metric-label">Operating Expenses</span>
+        </div>
+        <div class="metric-card" style="border-left-color: var(--accent-cyan);">
+            <span class="metric-label">ROI Timeline</span>
+            <span class="metric-value">22 MO</span>
+            <span class="metric-label">Break-even Point</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Order Accuracy</span>
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Target Efficiency</span>
+        </div>
+        <div class="metric-card" style="border-left-color: var(--accent-cyan);">
+            <span class="metric-label">Throughput Gain</span>
+            <span class="metric-value">200%</span>
+            <span class="metric-label">By Year 5</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput Velocity (Pallets/Hr)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Vision</h2>
+        <p>
+            Earp Distribution stands at a pivotal juncture. To maintain leadership in the Midwest food service sector, the transition to a <strong>Hybrid-Automated Cold Chain</strong> is essential. Our strategy integrates heavy-payload AMRs and temperature-hardened ASRS to decouple labor from travel time. This shift moves operations from reactive fulfillment to predictive, continuous flow, securing cold-chain integrity and scalability.
+        </p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>02. Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <!-- Pathway A -->
+            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px;">
+                <span class="status-pill">PATHWAY A</span>
+                <h3>AMR Transport</h3>
+                <p>Deployment of Autonomous Mobile Robots for internal pallet transport. Decouples human operators from long-haul travel.</p>
+                <p style="color: var(--accent-cyan); font-weight: bold;">Impact: 35% more picks/hr</p>
+            </div>
+            
+            <!-- Pathway B -->
+            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px;">
+                <span class="status-pill">PATHWAY B</span>
+                <h3>Freezer ASRS</h3>
+                <p>High-density automated storage and retrieval for frozen goods. Eliminates "hunt time" in harsh environments.</p>
+                <p style="color: var(--accent-cyan); font-weight: bold;">Impact: 60% Space Reclaimed</p>
+            </div>
+
+            <!-- Pathway C -->
+            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px;">
+                <span class="status-pill">PATHWAY C</span>
+                <h3>AI Logistics</h3>
+                <p>Predictive slotting logic and outbound loading optimization to reduce breakage and improve truck density.</p>
+                <p style="color: var(--accent-cyan); font-weight: bold;">Impact: 15% Less Breakage</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>03. Implementation Timeline</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="min-width: 80px; color: var(--accent-purple); font-weight: bold;">YEAR 1</div>
+                <div>Foundation: Network upgrades, WMS integration, and Pilot AMR deployment in Dry Goods.</div>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="min-width: 80px; color: var(--accent-purple); font-weight: bold;">YEAR 2</div>
+                <div>Cold Chain: Expansion of AMRs to Freezer zones and ASRS Pilot for high-velocity SKUs.</div>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div style="min-width: 80px; color: var(--accent-purple); font-weight: bold;">YEAR 3</div>
+                <div>Optimization: Full AI predictive slotting integration and 99.9% accuracy target realization.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Open Droids | Confidential Research for Earp Distribution
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#22d3ee'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Hybrid (Yr 1)', 'Automated (Yr 3)'],
+            datasets: [{
+                label: 'Pallets per Hour',
+                data: [45, 65, 110],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(34, 211, 238, 0.6)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
