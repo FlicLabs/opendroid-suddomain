@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majestic Transportation | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .sub-header {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="sub-header">Open Droids Consulting</div>
+            <h1>Majestic Transportation</h1>
+            <p style="max-width: 600px; margin: 0 auto;">Strategic Automation Research & Implementation Plan</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Proj. Labor Reduction</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">&lt;24 Mo</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">99.9%</div>
+                <div class="metric-label">Target Picking Accuracy</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">$100k</div>
+                <div class="metric-label">Max Capex Per Station</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary & Profile -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Majestic Transportation is positioned to transition from traditional freight handling to an AI-integrated logistics hub. Our strategic research indicates that by integrating Autonomous Mobile Robots (AMRs) and data orchestration, Majestic can reduce dock-to-stock time by 45%. This shift moves the operational model from reactive manual handling to predictive, automated throughput.</p>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="two-col">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Velocity (Pallets/Hr)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="two-col">
+                <div>
+                    <h3>Pathway A: AMRs</h3>
+                    <p>Deployment of heavy-payload AMRs for internal transport. Focus on moving pallets from inbound receiving to outbound shipping lanes, reducing forklift traffic and accidents.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: Robotic ASRS</h3>
+                    <p>Implementation of Goods-to-Person systems for 3PL fulfillment. Maximizes vertical density and ensures high-accuracy handling for high-value freight.</p>
+                </div>
+            </div>
+            <div style="margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+                <h3>Pathway C: AI Logistics</h3>
+                <p>Utilization of Computer Vision for predictive yard management. Algorithms optimize dock scheduling to reduce truck idling and improve turnaround times.</p>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 1</div>
+                <div><strong>Pilot Phase:</strong> Vendor selection and deployment of AMR units at flagship hub.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 2</div>
+                <div><strong>Optimization:</strong> Data analysis, traffic rule refinement, and internal maintenance training.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 3</div>
+                <div><strong>Expansion:</strong> Rolling out AMR fleet to 3 regional hubs and implementing AI scheduling.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 4</div>
+                <div><strong>Advanced Auto:</strong> Deployment of ASRS for fulfillment and 50% automation of internal transport.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 5</div>
+                <div><strong>Full Autonomy:</strong> Full network integration and real-time predictive supply chain management.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart (Line)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.5, 1.8, 3.5, 5.8, 8.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: savingsGradient,
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart (Bar)
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Inbound', 'Sorting', 'Outbound'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 60, 50],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [85, 110, 95],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
