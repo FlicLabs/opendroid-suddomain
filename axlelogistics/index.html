@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axle Logistics | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--accent-purple);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Header Section */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .meta-info {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-glow);
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .meta-info {
+                text-align: left;
+                margin-top: 10px;
+            }
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Steps */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .step-year {
+            font-weight: 700;
+            color: #fff;
+            min-width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <h1>Axle Logistics</h1>
+                <p style="margin:0; color:var(--accent-glow);">Strategic Automation Research Report</p>
+            </div>
+            <div class="meta-info">
+                <strong>Prepared By:</strong> Open Droids<br>
+                <strong>Focus:</strong> Warehouse & Logistics Automation
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Summary</h2>
+            <p>Axle Logistics is positioned to transition from a high-growth brokerage model to a tech-enabled physical logistics leader. By integrating Autonomous Mobile Robots (AMRs) and AI-driven predictive logic, Axle can reduce dwelling times at transfer hubs by 40% and offer clients unprecedented speed in LTL consolidation.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target Labor Savings</div>
+                <div class="metric-value">35%</div>
+                <div style="color: var(--success); font-size: 0.8rem;">▲ Efficiency Gain</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Est. Payback Period</div>
+                <div class="metric-value">18 Mo</div>
+                <div style="color: var(--success); font-size: 0.8rem;">▼ ROI Timeline</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Initial CAPEX (Pilot)</div>
+                <div class="metric-value">$1.2M</div>
+                <div style="color: var(--text-muted); font-size: 0.8rem;">Scalable Pilot</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Order Accuracy</div>
+                <div class="metric-value">99.9%</div>
+                <div style="color: var(--success); font-size: 0.8rem;">▲ With ASRS</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-box">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Throughput: Manual vs Robotic</h2>
+                <div class="chart-box">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="glass-card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h3>Pathway A: AMRs</h3>
+                    <p>Heavy-payload Autonomous Mobile Robots for internal cross-dock transport. Eliminates forklift congestion and increases safety.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: Robotic Picking</h3>
+                    <p>Goods-to-Person (GTP) systems for high-density kitting and re-packaging services. Reduces storage footprint by 40%.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: AI Logistics</h3>
+                    <p>Predictive algorithms that pre-assign robotic missions based on inbound freight data before trucks arrive at the dock.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>03. Implementation Roadmap</h2>
+            <div class="roadmap">
+                <div class="roadmap-step">
+                    <div class="step-year">Year 1</div>
+                    <div>Infrastructure audit & Pilot launch of AMR fleet in Knoxville Hub.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-year">Year 2</div>
+                    <div>Deployment of AI Logic Layer & Integration with TMS. Start ASRS installation.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-year">Year 3</div>
+                    <div>"Dark Warehouse" capability for night shifts; expansion to satellite facilities.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-year">Year 4</div>
+                    <div>Inter-facility data sync & Fleet upgrade to continuous-run battery tech.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-year">Year 5</div>
+                    <div>Cost-per-pallet reduced by 45%; Market leader in Tech-First 3PL services.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 1.5, 3.8, 6.5, 9.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Pallets/Hour', 'Pick Accuracy', 'Uptime'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [25, 92, 65], // Normalized data points
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [45, 99.9, 98], // Normalized data points
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1,
+                        boxShadow: '0 0 10px #7c3aed'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
