@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolve Logistics | Automation Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Content Typography */
+        h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="subtitle">Open Droids Research</div>
+            <h1>Evolve Logistics LLC</h1>
+            <p style="color: var(--text-secondary)">Automation Strategy & Financial Projections</p>
+        </header>
+
+        <!-- Executive Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">18m</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">300%</div>
+                <div class="metric-label">Throughput Increase</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">$2.5M</div>
+                <div class="metric-label">5-Year Projected Savings</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-row">
+            <div class="glass-card">
+                <h2>Cumulative Savings Projection</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Content -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>The transition to an <strong>Automated Intelligent Fulfillment Center</strong> is critical. By decoupling revenue growth from headcount dependency, Evolve Logistics can create a fluid, data-driven ecosystem. This strategy elevates human capital to supervisory roles while AMRs handle high-frequency tasks.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Pathway A -->
+            <div class="glass-card">
+                <h3>Pathway A: AMRs</h3>
+                <p><strong>Internal Transport & GTP</strong></p>
+                <ul>
+                    <li>Eliminates 60% of walking time.</li>
+                    <li>ROI Driver: 50% labor reduction per order.</li>
+                    <li>Scalable fleet deployment.</li>
+                </ul>
+            </div>
+
+            <!-- Pathway B -->
+            <div class="glass-card">
+                <h3>Pathway B: ASRS</h3>
+                <p><strong>Picking & Vertical Storage</strong></p>
+                <ul>
+                    <li>30% more inventory in same footprint.</li>
+                    <li>0.01% Error rates via Computer Vision.</li>
+                    <li>High-density storage racks.</li>
+                </ul>
+            </div>
+
+            <!-- Pathway C -->
+            <div class="glass-card">
+                <h3>Pathway C: AI Ops</h3>
+                <p><strong>Predictive Logistics</strong></p>
+                <ul>
+                    <li>Predictive inbound/outbound scheduling.</li>
+                    <li>25% faster dock turnover.</li>
+                    <li>Pre-staging pallets autonomously.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h3 style="color: #fff;">Year 1</h3>
+                    <p style="border-left: 3px solid var(--accent-color); padding-left: 15px;">
+                        <strong>Pilot Phase:</strong> Deploy 5 AMRs at primary hub. Validate WMS integration.
+                    </p>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3 style="color: #fff;">Year 2</h3>
+                    <p style="border-left: 3px solid var(--accent-color); padding-left: 15px;">
+                        <strong>Scaling:</strong> Expand to 20 units. Install Vertical Lift Modules. Reduce temp labor by 50%.
+                    </p>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3 style="color: #fff;">Year 3-5</h3>
+                    <p style="border-left: 3px solid var(--accent-color); padding-left: 15px;">
+                        <strong>Full Autonomy:</strong> Predictive AI Supply Chain. 'Dark Warehouse' zones operational.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (USD)',
+                    data: [150000, 450000, 950000, 1600000, 2500000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradientSavings,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value / 1000 + 'k';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Picking (UPH)', 'Sorting (UPH)', 'Putaway (UPH)'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [60, 150, 40],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [180, 450, 120],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Units Per Hour'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
