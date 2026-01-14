@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bradford White Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-header {
+            background: rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 4px solid #7c3aed;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .highlight {
+            color: #c4b5fd;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #64748b;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="glass-header">
+        <div class="container">
+            <h1>BRADFORD WHITE</h1>
+            <p style="color: #a78bfa; margin-top: 5px;">STRATEGIC ROBOTICS & LOGISTICS AUTOMATION REPORT</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Vision</h2>
+            <p>Bradford White is poised to transition from legacy heavy manufacturing logistics to a state-of-the-art automated supply chain. The strategic focus is on <strong>Heavy Payload AMRs</strong> and <strong>High-Density Parts Fulfillment</strong>. By leveraging automation, the company can address labor shortages in the Midwest and enhance safety standards while maintaining their "Built to be the Best" reputation.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">22M</div>
+                <div class="metric-label">Target ROI Period (Months)</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">35%</div>
+                <div class="metric-label">Labor Efficiency Gain</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">99.9%</div>
+                <div class="metric-label">Target Picking Accuracy</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">$80k</div>
+                <div class="metric-label">Avg. Station CAPEX</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings Projection</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Velocity: Manual vs. Robotic</h3>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>03. Strategic Pathways</h2>
+            <div class="pathway-grid">
+                <div>
+                    <h3>PATHWAY A: Heavy AMRs</h3>
+                    <p>Deployment of high-payload autonomous tuggers to replace manual forklifts for internal transport of steel coils and finished water heaters. Increases safety and reduces material damage.</p>
+                </div>
+                <div>
+                    <h3>PATHWAY B: Parts ASRS</h3>
+                    <p>Implementation of Vertical Lift Modules (VLMs) for the spare parts division. This ensures rapid, accurate fulfillment for warranty claims and wholesaler orders.</p>
+                </div>
+                <div>
+                    <h3>PATHWAY C: AI Logistics</h3>
+                    <p>Utilization of Computer Vision at dock doors to optimize trailer loading density, reducing "shipping air" and lowering overall freight costs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>05. Implementation Roadmap</h2>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                    <span class="highlight">YEAR 1:</span> Pilot Phase - 6 Heavy AMRs in Middleville & Pilot VLM for top 500 Parts.
+                </li>
+                <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                    <span class="highlight">YEAR 2-3:</span> Scale & Optimize - Full Parts Catalog to ASRS & WES Integration.
+                </li>
+                <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                    <span class="highlight">YEAR 4-5:</span> AI Ecosystem - Predictive maintenance and autonomous supply chain orchestration.
+                </li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            PREPARED BY OPEN DROIDS RESEARCH DIVISION
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [-0.5, 0.8, 2.5, 4.8, 7.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#cbd5e1' }
+                    },
+                    x: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Pallet Movement', 'Small Part Picks', 'Trailer Loading'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [12, 45, 8],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [28, 120, 14],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#cbd5e1' },
+                        title: { display: true, text: 'Units / Hour', color: '#64748b' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#cbd5e1' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
