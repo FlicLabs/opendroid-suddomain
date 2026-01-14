@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E & S Food Inc. | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .pathway-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+
+        .pathway-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--card-border);
+            z-index: 0;
+        }
+
+        .milestone {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-color);
+            padding: 0 10px;
+            text-align: center;
+            width: 18%;
+        }
+
+        .dot {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            margin: 10px auto;
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .milestone-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Research</div>
+            <h1>E & S Food Inc.</h1>
+            <div style="color: var(--text-muted); margin-top: 5px;">Warehouse Automation & Logistics Strategy</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Status</div>
+            <div style="color: var(--success); font-weight: bold;">Ready for Review</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Initial CAPEX Est.</div>
+            <div class="metric-value">$1.27M</div>
+            <div style="color: var(--success); font-size: 0.8rem;">Fully Integrated</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Annual OPEX Savings</div>
+            <div class="metric-value">$580k</div>
+            <div style="color: var(--success); font-size: 0.8rem;">Labor & Energy</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">ROI Payback</div>
+            <div class="metric-value">26 Mo.</div>
+            <div style="color: var(--accent-blue); font-size: 0.8rem;">Aggressive Target</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Accuracy Gain</div>
+            <div class="metric-value">99.9%</div>
+            <div style="color: var(--success); font-size: 0.8rem;">Up from 98.5%</div>
+        </div>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Pick Rate Throughput</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <h2>Robotics Opportunity Pathways</h2>
+    <div class="pathways-grid">
+        <div class="glass-card">
+            <div class="pathway-icon">A</div>
+            <div class="pathway-title">AMR Internal Transport</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                Autonomous Mobile Robots to handle long-haul pallet movement between receiving and staging, removing forklift bottlenecks.
+            </p>
+        </div>
+        <div class="glass-card">
+            <div class="pathway-icon">B</div>
+            <div class="pathway-title">ASRS & Piece Picking</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                High-density storage for "break-bulk" restaurant orders. Crucial for handling high-mix SKUs with minimal floor space.
+            </p>
+        </div>
+        <div class="glass-card">
+            <div class="pathway-icon">C</div>
+            <div class="pathway-title">AI Logistics Core</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                Predictive algorithms to pre-position inventory based on seasonal food trends and restaurant ordering patterns.
+            </p>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <h2>Implementation Timeline</h2>
+    <div class="glass-card" style="padding-bottom: 40px;">
+        <div class="roadmap">
+            <div class="milestone">
+                <div class="dot"></div>
+                <div class="year-label">Year 1</div>
+                <div class="milestone-desc">Data Analysis & AMR Pilot (Internal Transport)</div>
+            </div>
+            <div class="milestone">
+                <div class="dot"></div>
+                <div class="year-label">Year 2</div>
+                <div class="milestone-desc">ASRS Install for Specialty Goods</div>
+            </div>
+            <div class="milestone">
+                <div class="dot"></div>
+                <div class="year-label">Year 3</div>
+                <div class="milestone-desc">Cold Chain Full Automation</div>
+            </div>
+            <div class="milestone">
+                <div class="dot"></div>
+                <div class="year-label">Year 4</div>
+                <div class="milestone-desc">Scaling to Secondary Hubs</div>
+            </div>
+            <div class="milestone">
+                <div class="dot"></div>
+                <div class="year-label">Year 5</div>
+                <div class="milestone-desc">"Dark Warehouse" Capability</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Cumulative Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [-695000, -115000, 465000, 1045000, 1625000], // Taking into account investment vs savings
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        callback: function(value) { return '$' + value / 1000 + 'k'; }
+                    }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist', 'Full Automation'],
+            datasets: [{
+                label: 'Lines Per Hour (LPH)',
+                data: [60, 180, 350],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Muted for manual
+                    'rgba(59, 130, 246, 0.8)',  // Blue for Assist
+                    'rgba(16, 185, 129, 0.8)'   // Green for Full
+                ],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
