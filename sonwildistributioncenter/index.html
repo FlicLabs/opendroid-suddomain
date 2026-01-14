@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonwil Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 118, 110, 0.15) 0%, transparent 20%);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            color: var(--accent-purple);
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .section-title {
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+        }
+
+        .metric-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .pathway-item h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .pathway-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+        }
+
+        .roadmap-list li:last-child {
+            border-bottom: none;
+        }
+
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 20px;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <p>Open Droids Intelligence</p>
+        <h1>Sonwil Distribution Center: Automation Strategy</h1>
+    </div>
+
+    <div class="container">
+        
+        <!-- Executive Summary -->
+        <div class="card">
+            <span class="section-title">Executive Summary</span>
+            <p style="line-height: 1.6; color: var(--text-muted);">
+                The transition to a "Smart Logistics Park" model positions Sonwil to dominate the Northeast corridor. By leveraging existing rail and cross-border infrastructure with a new layer of AMRs and Predictive AI, Sonwil can pivot from storage-centric operations to velocity-centric fulfillment, securing a critical competitive advantage against national 3PLs.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-val">35%</span>
+                <span class="metric-label">Proj. OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">&lt;22mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">99.9%</span>
+                <span class="metric-label">Picking Accuracy</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">$75k</span>
+                <span class="metric-label">Avg. Station CAPEX</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="card">
+                <span class="section-title">5-Year Cumulative Savings Projection</span>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <span class="section-title">Throughput Velocity (Pallets/Hr)</span>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="card">
+            <span class="section-title">Robotics Opportunity Pathways</span>
+            <div class="pathways-grid">
+                <div class="pathway-item">
+                    <h3>A. Internal AMRs</h3>
+                    <p>Heavy-payload Autonomous Mobile Robots replacing manual forklifts for long-haul transport. Reduces operator fatigue and optimizes dock-to-stock travel.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>B. Robotic Picking</h3>
+                    <p>Goods-to-Person (GTP) systems for high-velocity e-commerce fulfillment. Maximizes vertical storage density and eliminates picking errors.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>C. AI Logistics</h3>
+                    <p>Predictive algorithms for inbound rail/truck manifests. Enables "Hot Landing" scenarios to reduce dwell time by 20%.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <span class="section-title">Strategic Roadmap</span>
+            <ul class="roadmap-list">
+                <li>
+                    <span class="year-badge">Year 1</span>
+                    <span>Foundation: Wi-Fi 6 Mesh install & Pilot Program (5 AMRs).</span>
+                </li>
+                <li>
+                    <span class="year-badge">Year 2</span>
+                    <span>Scale: Fleet expansion to 20 units & Dark Shift implementation.</span>
+                </li>
+                <li>
+                    <span class="year-badge">Year 3</span>
+                    <span>Integration: Automated trailer loading & Real-time client dashboards.</span>
+                </li>
+                <li>
+                    <span class="year-badge">Year 4</span>
+                    <span>Optimization: Predictive maintenance AI & Rail-siding automation.</span>
+                </li>
+                <li>
+                    <span class="year-badge">Year 5</span>
+                    <span>Maturity: Full Cognitive Warehouse ecosystem active.</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        const gradient1 = ctx1.createLinearGradient(0, 0, 0, 400);
+        gradient1.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradient1.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($ Millions)',
+                    data: [-0.5, 0.2, 1.8, 3.5, 5.2], // Negative start due to CAPEX
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradient1,
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { callback: function(value) { return '$' + value + 'M'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Inbound Dock', 'Put-Away', 'Picking', 'Outbound Stage'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 30, 60, 50],
+                        backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [65, 80, 140, 95],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4,
+                        boxShadow: '0 0 10px #7c3aed'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
