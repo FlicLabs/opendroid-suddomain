@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holman Logistics | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2, h3 {
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* KPI Dashboard */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(255,255,255,0.01));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Section */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+        
+        .badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Holman Logistics</h1>
+        <div class="subtitle">Strategic Automation Research & Implementation Plan | Prepared by Open Droids</div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">14 Months</div>
+            <div class="kpi-label">ROI Payback Period</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">$750k</div>
+            <div class="kpi-label">Est. Pilot CAPEX</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">35%</div>
+            <div class="kpi-label">Labor Cost Reduction</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">2.5x</div>
+            <div class="kpi-label">Throughput Multiplier</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="card">
+            <h3>5-Year Cumulative Savings (USD)</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Comparison (Units Per Hour)</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="card">
+        <h3><span style="color: var(--accent-purple);">//</span> Robotics Opportunity Pathways</h3>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Targeting high-friction operational zones within Holman facilities.</p>
+        
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway A: AMRs for Internal Transport</span>
+                <p>Decoupling horizontal travel from vertical lifting. Replacing long-haul forklift runs with Autonomous Mobile Robots to keep operators in active picking zones.</p>
+                <span class="badge">High Priority</span>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway B: Robotic Piece Picking</span>
+                <p>Implementation of Goods-to-Person (GTP) systems for e-commerce clients. Increases pick density and reduces storage footprint by 30%.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway C: AI Inbound/Outbound</span>
+                <p>Computer vision at docks and AI scheduling to predict loading sequences, reducing detention fees and dwell time by 20%.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h3>Implementation Roadmap</h3>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="color: var(--accent-blue);">Year 1</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Pilot Launch (8-10 AMRs) & WMS Integration</p>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="color: var(--accent-blue);">Year 2</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Standardization & Multi-site Rollout</p>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="color: var(--accent-blue);">Year 3</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Co-Packing Cobot Integration</p>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="color: var(--accent-blue);">Year 4-5</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Network-wide Data Ecosystem & Full Autonomy</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2023 Open Droids Consultation. Confidential Research for Holman Logistics.
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Net Cumulative Savings ($ Millions)',
+                data: [-0.75, 0.1, 1.2, 2.5, 4.0, 5.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist (AMR)', 'Full GTP Automation'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [60, 140, 320],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(59, 130, 246, 0.6)',
+                    'rgba(16, 185, 129, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
