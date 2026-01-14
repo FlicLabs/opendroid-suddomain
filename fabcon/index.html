@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabcon Strategic Automation Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+        }
+
+        .glow-text {
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+        }
+
+        .accent-border {
+            border-left: 4px solid #7c3aed;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10 min-h-screen">
+
+    <!-- Header -->
+    <header class="mb-10 flex justify-between items-center">
+        <div>
+            <h4 class="text-sm font-semibold tracking-widest text-purple-400 uppercase mb-1">Open Droids Research</h4>
+            <h1 class="text-4xl md:text-5xl font-bold glow-text">FABCON</h1>
+            <p class="text-slate-400 mt-2">Logistics Automation Strategy & Feasibility Study</p>
+        </div>
+        <div class="hidden md:block text-right">
+            <div class="inline-block px-4 py-2 glass-card text-xs font-mono text-purple-300">
+                STATUS: CONFIDENTIAL<br>
+                REF: FBC-AUTO-24
+            </div>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Executive Summary -->
+        <div class="glass-card p-6 col-span-2 accent-border">
+            <h2 class="text-xl font-bold mb-4 text-purple-300">Executive Vision</h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                Fabcon operates at the intersection of heavy manufacturing and complex logistics. This report proposes a transition to a <strong>Smart Factory Logistics Ecosystem</strong>. By shifting from manual forklift dependency to Heavy-Duty AMRs and AI-driven Yard Management, Fabcon can target a 35% reduction in material handling downtime and achieve 99.9% inventory accuracy for construction hardware.
+            </p>
+        </div>
+
+        <!-- Org Profile -->
+        <div class="glass-card p-6">
+            <h2 class="text-xl font-bold mb-4 text-purple-300">Profile</h2>
+            <ul class="space-y-3 text-sm text-slate-300">
+                <li class="flex justify-between border-b border-slate-700 pb-2">
+                    <span>Industry</span> <span class="text-white">Precast Concrete</span>
+                </li>
+                <li class="flex justify-between border-b border-slate-700 pb-2">
+                    <span>Focus</span> <span class="text-white">Heavy Logistics</span>
+                </li>
+                <li class="flex justify-between border-b border-slate-700 pb-2">
+                    <span>Hubs</span> <span class="text-white">MN, PA, KS, OH</span>
+                </li>
+                <li class="flex justify-between pt-1">
+                    <span>Current Model</span> <span class="text-red-300">Manual / Forklift</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h3 class="text-lg font-bold text-slate-200 mb-4 uppercase tracking-wider">Financial Projection Dashboard</h3>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="glass-card p-5 text-center">
+            <p class="text-slate-400 text-xs uppercase mb-1">Est. CAPEX Per Station</p>
+            <p class="text-3xl font-bold text-white">$75k - $120k</p>
+        </div>
+        <div class="glass-card p-5 text-center">
+            <p class="text-slate-400 text-xs uppercase mb-1">Labor/Energy Reduction</p>
+            <p class="text-3xl font-bold text-emerald-400">35%</p>
+        </div>
+        <div class="glass-card p-5 text-center">
+            <p class="text-slate-400 text-xs uppercase mb-1">ROI Payback Period</p>
+            <p class="text-3xl font-bold text-purple-400">&lt; 22 Months</p>
+        </div>
+        <div class="glass-card p-5 text-center">
+            <p class="text-slate-400 text-xs uppercase mb-1">Accuracy Target</p>
+            <p class="text-3xl font-bold text-blue-400">99.9%</p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Line Chart -->
+        <div class="glass-card p-6">
+            <h3 class="text-sm font-bold text-slate-300 mb-4">Cumulative Savings (5-Year Horizon)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <!-- Bar Chart -->
+        <div class="glass-card p-6">
+            <h3 class="text-sm font-bold text-slate-300 mb-4">Throughput Efficiency: Manual vs. Robotic</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Grid -->
+    <h3 class="text-lg font-bold text-slate-200 mb-4 uppercase tracking-wider">Robotic Opportunity Pathways</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <!-- Pathway A -->
+        <div class="glass-card p-6 hover:bg-slate-800 transition duration-300">
+            <div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center mb-4 font-bold">A</div>
+            <h4 class="text-lg font-bold text-white mb-2">Internal Transport (AMR)</h4>
+            <p class="text-sm text-slate-400 mb-4">Deploying Heavy-Payload AMRs to move rebar and insulation bundles.</p>
+            <div class="text-xs text-blue-300 font-mono">IMPACT: 25% Higher Availability</div>
+        </div>
+
+        <!-- Pathway B -->
+        <div class="glass-card p-6 hover:bg-slate-800 transition duration-300">
+            <div class="h-10 w-10 rounded-full bg-purple-600 flex items-center justify-center mb-4 font-bold">B</div>
+            <h4 class="text-lg font-bold text-white mb-2">Piece Picking & ASRS</h4>
+            <p class="text-sm text-slate-400 mb-4">Vertical Lift Modules (VLMs) for connection hardware and embeds.</p>
+            <div class="text-xs text-purple-300 font-mono">IMPACT: 60% Space Savings</div>
+        </div>
+
+        <!-- Pathway C -->
+        <div class="glass-card p-6 hover:bg-slate-800 transition duration-300">
+            <div class="h-10 w-10 rounded-full bg-emerald-600 flex items-center justify-center mb-4 font-bold">C</div>
+            <h4 class="text-lg font-bold text-white mb-2">AI Logistics</h4>
+            <p class="text-sm text-slate-400 mb-4">Predictive yard management for staging outbound panel loads.</p>
+            <div class="text-xs text-emerald-300 font-mono">IMPACT: 40% Faster Load Times</div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card p-8 mb-8">
+        <h3 class="text-lg font-bold text-slate-200 mb-6 uppercase tracking-wider">Implementation Roadmap</h3>
+        <div class="relative border-l border-slate-700 ml-4 space-y-8">
+            <div class="ml-6 relative">
+                <span class="absolute -left-9 top-1 h-5 w-5 rounded-full bg-blue-500 border-4 border-slate-900"></span>
+                <h4 class="text-white font-bold">Year 1: Pilot & Validation</h4>
+                <p class="text-sm text-slate-400 mt-1">ASRS launch in MN facility. Digital twin simulation of AMR traffic.</p>
+            </div>
+            <div class="ml-6 relative">
+                <span class="absolute -left-9 top-1 h-5 w-5 rounded-full bg-purple-500 border-4 border-slate-900"></span>
+                <h4 class="text-white font-bold">Year 2-3: Deployment & Expansion</h4>
+                <p class="text-sm text-slate-400 mt-1">Rollout of 5 Heavy-Duty AMRs per hub. Drone-based yard inventory tracking.</p>
+            </div>
+            <div class="ml-6 relative">
+                <span class="absolute -left-9 top-1 h-5 w-5 rounded-full bg-emerald-500 border-4 border-slate-900"></span>
+                <h4 class="text-white font-bold">Year 4-5: Full Autonomy</h4>
+                <p class="text-sm text-slate-400 mt-1">"Dark Warehouse" capability for consumables. Full AI supply chain integration.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-slate-500 text-xs py-6">
+        &copy; 2023 Open Droids Research. Generated for Fabcon Internal Review.
+    </footer>
+
+    <!-- Chart JS Logic -->
+    <script>
+        // Common Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Line Chart: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 1.5, 3.8, 6.5, 9.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Bar Chart: Throughput
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Pallet Transport', 'Picking Speed', 'Yard Staging', 'Inventory Counts'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 30, 50, 20],
+                        backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [85, 90, 85, 98],
+                        backgroundColor: '#38bdf8',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Efficiency Score (0-100)' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
