@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | FSWVA Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .pathway-card {
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Open Droids Research</h1>
+            <div style="color: var(--accent-purple); font-weight: 600; margin-top: 5px;">CLIENT: FEEDING SOUTHWEST VIRGINIA</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="tag">STATUS: STRATEGIC ANALYSIS</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">October 2023</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-label">Target CAPEX</span>
+            <span class="metric-value">$175k</span>
+            <span class="metric-label">Phase 1 Pilot</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-label">Labor Efficiency</span>
+            <span class="metric-value" style="color: var(--success);">+40%</span>
+            <span class="metric-label">Throughput Gain</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-label">Payback Period</span>
+            <span class="metric-value">20.5</span>
+            <span class="metric-label">Months</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-label">Accuracy</span>
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Robotic Picking</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            <strong>Vision: Zero Friction, Zero Hunger.</strong><br>
+            To transform FSWVA from a traditional warehouse model into a high-velocity automated distribution hub. 
+            By implementing AMRs and AI-driven logistics, we aim to maximize the throughput of perishable goods to the 26 counties served, 
+            ensuring freshness and reducing the physical strain on the volunteer workforce.
+        </p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="pathways-grid">
+        <div class="glass-card pathway-card">
+            <h3>Pathway A: AMRs</h3>
+            <p><strong>Internal Transport</strong></p>
+            <p>Deployment of Lidar-guided Autonomous Mobile Robots to handle long-haul pallet movements from receiving to cold storage. Reduces forklift congestion and improves safety.</p>
+        </div>
+        <div class="glass-card pathway-card">
+            <h3>Pathway B: Robotics</h3>
+            <p><strong>Piece Picking & ASRS</strong></p>
+            <p>Implementation of semi-automated picking arms for high-repetition tasks like the "Backpack Program" and Senior Boxes. Increases kitting speed and storage density.</p>
+        </div>
+        <div class="glass-card pathway-card">
+            <h3>Pathway C: AI Logistics</h3>
+            <p><strong>Predictive Efficiency</strong></p>
+            <p>AI algorithms to predict donation inflows and optimize expiration date management (FIFO), ensuring perishable foods are distributed faster.</p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Hourly Throughput Comparison</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 20px;">
+            <div>
+                <strong style="color: var(--accent-purple)">Year 1</strong>
+                <p style="font-size: 0.9rem">Pilot AMRs & Mapping</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 2</strong>
+                <p style="font-size: 0.9rem">Robotic Kitting Arm</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 3</strong>
+                <p style="font-size: 0.9rem">Cloud Dashboard Integration</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 4</strong>
+                <p style="font-size: 0.9rem">Autonomous Forklifts</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 5</strong>
+                <p style="font-size: 0.9rem">Smart Hub Optimization</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        OPEN DROIDS CONSULTATION DIVISION &copy; 2023 | CONFIDENTIAL RESEARCH
+    </footer>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 150000, 320000, 550000, 850000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value / 1000 + 'k';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist', 'Full Auto'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [120, 280, 450],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(124, 58, 237, 0.6)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 0,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
