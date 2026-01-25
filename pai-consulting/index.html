@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAI Consulting - Robotic Automation Strategy</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary-blue: #0ea5e9;
+            --primary-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--primary-orange);
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Metrics */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 5px;
+        }
+        
+        .metric-label { color: #cbd5e1; font-size: 0.9rem; }
+        .metric-value { font-weight: 700; color: #fff; }
+
+        /* Financial Highlights */
+        .highlight-card {
+            background: rgba(249, 115, 22, 0.15);
+            border: 1px solid var(--primary-orange);
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .highlight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-orange);
+            display: block;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        /* Text Content */
+        p { line-height: 1.6; color: #e2e8f0; margin-bottom: 15px; }
+        ul { list-style: none; padding: 0; }
+        li { 
+            padding: 8px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            display: flex;
+            align-items: center;
+        }
+        li::before {
+            content: "›";
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* Phase Timeline */
+        .timeline-item {
+            border-left: 2px solid var(--primary-blue);
+            padding-left: 20px;
+            margin-left: 10px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-orange);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+            .chart-container { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>PAI CONSULTING</h1>
+        <p style="font-size: 1.1rem; color: #94a3b8;">STRATEGIC AUTOMATION REPORT | AVIATION CLEANING & MAINTENANCE</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>PAI Consulting is positioned to revolutionize aviation operations through the deployment of specialized robotic automation. This strategic shift moves beyond simple labor replacement to a holistic fleet management upgrade. By integrating autonomous cleaning, UV-C disinfection, and AI inspection, PAI will achieve significant OPEX reductions, enhanced safety compliance, and elevated passenger confidence. The roadmap targets a <strong>payback period of under 24 months</strong> while establishing PAI as a leader in sustainable, high-tech ground handling.</p>
+    </section>
+
+    <!-- Organizational Profile -->
+    <section class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Operational Context</h3>
+                <p>PAI Consulting operates in high-density airport hubs with a diverse fleet (narrow-body and wide-body). The current manual cleaning model faces challenges in labor consistency and rapid turnaround demands.</p>
+                <ul>
+                    <li><strong>Hub Presence:</strong> Major International Airports</li>
+                    <li><strong>Turnaround Volume:</strong> High Frequency (Daily)</li>
+                    <li><strong>Model:</strong> Labor-Intensive Manual Cleaning</li>
+                </ul>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; font-weight: 800; color: var(--primary-blue);">100%</div>
+                    <div style="color: #cbd5e1;">Manual Dependency (Current)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-3">
+            <div class="glass-card" style="background: rgba(14, 165, 233, 0.1); border-color: var(--primary-blue);">
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p><strong>Focus:</strong> Turnaround Time & Labor Efficiency</p>
+                <p>Autonomous vacuuming and wiping robots work in parallel with human crews, reducing ground time by up to 30%.</p>
+            </div>
+            <div class="glass-card" style="background: rgba(249, 115, 22, 0.1); border-color: var(--primary-orange);">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p><strong>Focus:</strong> Health Standards & Compliance</p>
+                <p>Mobile UV-C units provide hospital-grade sanitization, creating auditable logs for safety certification.</p>
+            </div>
+            <div class="glass-card" style="background: rgba(14, 165, 233, 0.1); border-color: var(--primary-blue);">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p><strong>Focus:</strong> Water Conservation & Surface Protection</p>
+                <p>Robotic fuselage washers reduce water usage by 50% and eliminate manual height risks.</p>
+            </div>
+            <div class="glass-card" style="background: rgba(249, 115, 22, 0.1); border-color: var(--primary-orange);">
+                <h3>Pathway D: AI Inspection</h3>
+                <p><strong>Focus:</strong> Safety & Predictive Maintenance</p>
+                <p>AI-powered bots detect micro-cracks and corrosion, shifting from scheduled to condition-based maintenance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Model -->
+    <section class="glass-card">
+        <h2>Financial Model & Projections</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Investment Breakdown</h3>
+                <div class="metric-row">
+                    <span class="metric-label">Unit CAPEX Range</span>
+                    <span class="metric-value">$75k - $150k</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Target Payback Period</span>
+                    <span class="metric-value">&lt; 18-24 Months</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">OPEX Reduction Target</span>
+                    <span class="metric-value">35-45%</span>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #cbd5e1;">
+                    *Costs include hardware acquisition, integration, and initial training. ROI realized through labor reallocation, utility savings, and reduced turnaround penalties.
+                </p>
+            </div>
+            <div>
+                <h3>Cost Per Turnaround: Manual vs. Robotic</h3>
+                <div style="display: flex; gap: 10px; align-items: flex-end; height: 120px; margin-top: 20px;">
+                    <div style="width: 50%; background: rgba(255,255,255,0.1); border-radius: 8px 8px 0 0; position: relative; height: 100%;">
+                        <div style="position: absolute; bottom: 0; width: 100%; height: 80%; background: #64748b; border-radius: 8px 8px 0 0;"></div>
+                        <div style="position: absolute; top: -25px; width: 100%; text-align: center; font-weight: 700;">$400</div>
+                        <div style="position: absolute; bottom: 10px; width: 100%; text-align: center;">Manual</div>
+                    </div>
+                    <div style="width: 50%; background: rgba(255,255,255,0.1); border-radius: 8px 8px 0 0; position: relative; height: 100%;">
+                        <div style="position: absolute; bottom: 0; width: 100%; height: 50%; background: var(--primary-orange); border-radius: 8px 8px 0 0; box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);"></div>
+                        <div style="position: absolute; top: -25px; width: 100%; text-align: center; font-weight: 700;">$210</div>
+                        <div style="position: absolute; bottom: 10px; width: 100%; text-align: center;">Robotic</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Dashboard Section -->
+    <section class="glass-card">
+        <h2>Automation Efficiency Dashboard</h2>
+        
+        <!-- Row 1: Charts -->
+        <div class="grid-2" style="margin-bottom: 20px;">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="timeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Row 2: Pie Chart -->
+        <div class="grid-1" style="width: 100%;">
+            <div class="chart-container" style="height: 350px; width: 80%; margin: 0 auto;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">Year 1: Pilot Phase</div>
+            <p>Deployment of 2-3 Cabin Cleaning robots and 1 UV-C unit at a primary hub. Focus on data integration and staff training. Establishing baseline metrics for ROI validation.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 2: Expansion</div>
+            <p>Scale to 3 major hubs. Introduction of Exterior Washing Systems for specific fleet types. Optimization of robotic routes using AI learning from Year 1 data.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 3: Full Penetration</div>
+            <p>50% of active fleet serviced by robotic units. Deployment of AI Inspection Bots for line maintenance checks. Significant reduction in manual labor hours.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 4: Ecosystem Automation</div>
+            <p>100% major hub coverage. Inter-robot communication (IoT mesh) enables fully coordinated cleaning schedules. Predictive maintenance fully integrated.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 5: Maturity</div>
+            <p>Standardized SOPs. Robotic units handle 100% of routine cleaning. Human staff transitioned to quality assurance and specialized detailing roles. Full 40% OPEX reduction realized.</p>
+        </div>
+    </section>
+
+    <footer style="text-align: center; color: #64748b; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+        <p>© 2024 Open Droids | Senior Consultation & Research Agent</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Cost Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.5, 6.0, 11.0, 18.0],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Cumulative 5-Year Savings', color: '#fff' },
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    ticks: { color: '#cbd5e1' } 
+                },
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#cbd5e1' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Turnaround Times
+    const ctxTime = document.getElementById('timeChart').getContext('2d');
+    new Chart(ctxTime, {
+        type: 'bar',
+        data: {
+            labels: ['Cleaning', 'Inspection', 'Total Turnaround'],
+            datasets: [
+                {
+                    label: 'Manual (Min)',
+                    data: [45, 15, 60],
+                    backgroundColor: '#64748b',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic (Min)',
+                    data: [25, 8, 33],
+                    backgroundColor: '#f97316',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Turnaround Time Efficiency', color: '#fff' },
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true, 
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    ticks: { color: '#cbd5e1' } 
+                },
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#cbd5e1' } 
+                }
+            }
+        }
+    });
+
+    // Chart 3: Labor Hour Redistribution
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Routine Cleaning', 'Quality Assurance', 'Specialized Detailing', 'Safety Monitoring'],
+            datasets: [{
+                data: [20, 30, 30, 20],
+                backgroundColor: [
+                    '#f97316', // Routine (Orange)
+                    '#0ea5e9', // QA (Blue)
+                    '#38bdf8', // Detailing (Light Blue)
+                    '#fb923c'  // Safety (Light Orange)
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Post-Automation Labor Redistribution (%)', color: '#fff' },
+                legend: { position: 'right', labels: { color: '#cbd5e1', boxWidth: 12 } }
+            }
+        }
+    });
+</script>
+</body>
+</html>
