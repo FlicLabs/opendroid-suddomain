@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nata Compliance Services - Automation Report</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0ea5e9; /* Sky Blue */
+            --secondary: #f97316; /* Aviation Orange */
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        /* Charts Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Pathways */
+        .pathway-item {
+            border-left: 3px solid var(--secondary);
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .pathway-title {
+            color: #fff;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        th {
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            border-left: 2px solid var(--primary);
+            margin-left: 10px;
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--secondary);
+        }
+
+        .year-label {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+            body { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>NATA COMPLIANCE SERVICES</h1>
+        <p style="font-size: 1.1rem; color: var(--text-muted); margin-top: 5px;">Strategic Automation Report: Aviation Cleaning & Maintenance</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>Executive Summary</h2>
+        <p style="font-size: 1.1rem; color: #fff;">
+            Nata Compliance Services is positioned to revolutionize aviation operations through the integration of robotic automation. This transition shifts the paradigm from labor-intensive manual processes to precision-engineered, data-driven consistency. By deploying an autonomous fleet, Nata can drastically reduce turnaround times, ensure rigorous health compliance, and optimize total cost of ownership. This strategic move secures a competitive advantage through enhanced operational throughput and superior asset protection.
+        </p>
+    </section>
+
+    <!-- Organizational Profile -->
+    <section class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Current Landscape</h3>
+                <p>Nata operates within high-volume aviation environments, managing diverse commercial fleets at major international hubs. The current manual cleaning model faces challenges regarding labor availability, wage inflation, and consistency variability.</p>
+                <ul>
+                    <li><strong>Fleet Scope:</strong> Narrow-body to wide-body commercial aircraft.</li>
+                    <li><strong>Hub Presence:</strong> 24/7 operations at major international gateways.</li>
+                    <li><strong>Volume:</strong> High-frequency turnarounds (40-60 daily/active hub).</li>
+                </ul>
+            </div>
+            <div class="grid-4" style="grid-template-columns: 1fr 1fr;">
+                <div class="metric-card">
+                    <div class="metric-label">Daily Turnarounds</div>
+                    <div class="metric-value">50+</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Active Hubs</div>
+                    <div class="metric-value">Major</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Labor Cost</div>
+                    <div class="metric-value">High</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Compliance Risk</div>
+                    <div class="metric-value">Moderate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Opportunities -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway A: Autonomous Cabin Cleaning</span>
+                <p>AMRs for vacuuming and sanitizing high-touch surfaces. Reduces cleaning time by 50% and operates simultaneously with crew.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway B: UV-C Disinfection Robots</span>
+                <p>Autonomous UV-C cycles for pathogen neutralization. Verifiable compliance logs and reduced chemical dependency.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway C: Exterior Washing Systems</span>
+                <p>Robotic fuselage crawlers using precise water jets. Saves up to 60% water and protects aerodynamic surfaces.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway D: AI Inspection Bots</span>
+                <p>Thermal imaging and HD cameras for predictive maintenance. Digitizes safety logs and reduces human hazard exposure.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Model -->
+    <section class="glass-card">
+        <h2>Financial Model</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Investment & ROI</h3>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Model</th>
+                        <th>Robotic Model</th>
+                        <th>Impact</th>
+                    </tr>
+                    <tr>
+                        <td>Cost Per Turnaround</td>
+                        <td>$90 - $120</td>
+                        <td>$45 - $60</td>
+                        <td style="color: var(--secondary);">-50%</td>
+                    </tr>
+                    <tr>
+                        <td>OPEX (Labor/Chem)</td>
+                        <td>Baseline</td>
+                        <td>Target</td>
+                        <td style="color: var(--secondary);">-35% to -45%</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td>N/A</td>
+                        <td>18-24 Months</td>
+                        <td style="color: var(--primary);">Fast ROI</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 15px; font-size: 0.9rem;">
+                    <strong>CAPEX Estimate:</strong> Units range from $75k - $150k. Infrastructure adds ~15%.
+                </p>
+            </div>
+            <div class="chart-card">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap (Year 1 - 5)</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year-label">Year 1: Pilot & Validation</div>
+                <p>Deploy 5 Cabin Units + 2 UV-C bots at single hub. Data collection and SOP refinement.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year-label">Year 2: Expansion</div>
+                <p>Scale to 3 hubs. Introduce AI Inspection Bots for hangar operations.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year-label">Year 3: Exterior Integration</div>
+                <p>Deploy Exterior Washing Systems at heavy maintenance hangars. 30% fleet coverage.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year-label">Year 4: Saturation</div>
+                <p>Focus on narrow-body high-volume ops. 70% fleet coverage for automated exterior washes.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year-label">Year 5: Autonomous Ecosystem</div>
+                <p>100% heavy maintenance checks via AI bots. "Touchless Turnaround" concept maturity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Visualization -->
+    <section class="glass-card">
+        <h2>Automation Efficiency Dashboard</h2>
+        <div class="grid-2" style="margin-bottom: 20px;">
+            <div class="chart-card">
+                <h3 style="text-align: center; font-size: 0.9rem;">Manual vs. Robotic Turnaround Time</h3>
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3 style="text-align: center; font-size: 0.9rem;">Labor Hour Redistribution</h3>
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Global Font Settings
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Cost Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [0, 150000, 500000, 1200000, 2500000, 4200000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                }
+            }
+        }
+    });
+
+    // 2. Turnaround Time Comparison
+    const ctxTurnaround = document.getElementById('turnaroundChart').getContext('2d');
+    new Chart(ctxTurnaround, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow-Body', 'Wide-Body', 'Regional'],
+            datasets: [
+                {
+                    label: 'Manual (Mins)',
+                    data: [45, 60, 35],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)', // Orange
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Mins)',
+                    data: [22, 35, 18],
+                    backgroundColor: 'rgba(14, 165, 233, 0.6)', // Blue
+                    borderColor: '#0ea5e9',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#fff' } }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Remaining Manual Tasks', 'Robot Supervision', 'Redeployed to Value-Add'],
+            datasets: [{
+                data: [30, 20, 50],
+                backgroundColor: [
+                    '#f97316', // Orange
+                    '#0ea5e9', // Blue
+                    '#10b981'  // Green (for value-add)
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#fff' } }
+            },
+            cutout: '70%'
+        }
+    });
+</script>
+
+</body>
+</html>
