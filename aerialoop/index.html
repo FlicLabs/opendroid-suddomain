@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerialoop Robotics Strategy Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --purple: #7c3aed;
+            --blue: #0ea5e9;
+            --orange: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, var(--bg-dark));
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--blue);
+        }
+
+        .highlight-orange { color: var(--orange); font-weight: 600; }
+        .highlight-purple { color: var(--purple); font-weight: 600; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            opacity: 0.7;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        li:last-child { border-bottom: none; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #6d28d9;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <h1>AERIALOOP STRATEGIC RESEARCH REPORT</h1>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            This strategic analysis outlines the integration of advanced robotic cleaning and maintenance automation within Aerialoop’s operations. The proposed strategy prioritizes the deployment of specialized robotic units to drive safety, hygiene, and operational efficiency. By transitioning from traditional manual labor to automated workflows, Aerialoop can achieve a reduction in operational expenditures by 35% to 45% while enhancing fleet readiness.
+        </p>
+        <p>
+            The core vision is the establishment of a <span class="highlight-orange">"Zero-Contact"</span> ground maintenance model, leveraging autonomous systems to ensure consistent high-quality cleaning and inspection with minimal human intervention.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$370K</div>
+                <div class="metric-label">Initial Hub CAPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">45%</div>
+                <div class="metric-label">Max OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">22 Mo</div>
+                <div class="metric-label">Max Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">25</div>
+                <div class="metric-label">Fleet Units</div>
+            </div>
+        </div>
+        
+        <div class="section-title">Cost Breakdown (Per Unit)</div>
+        <ul>
+            <li><strong>Cabin Cleaning Robot:</strong> $75,000</li>
+            <li><strong>UV-C Disinfection Unit:</strong> $50,000</li>
+            <li><strong>Exterior Washing System:</strong> $150,000</li>
+            <li><strong>AI Inspection Bot:</strong> $95,000</li>
+        </ul>
+    </div>
+
+    <!-- Strategy Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="charts-grid">
+            <div>
+                <div class="section-title">1. Autonomous Cabin Cleaning</div>
+                <p>AMRs navigating aisles for vacuuming and UV sanitation between tight turnaround windows.</p>
+            </div>
+            <div>
+                <div class="section-title">2. UV-C Disinfection Robots</div>
+                <p>Portable units neutralizing pathogens on high-touch surfaces post-deplaning.</p>
+            </div>
+            <div>
+                <div class="section-title">3. Exterior Washing Systems</div>
+                <p>Robotic crawlers reducing water usage by 50% and eliminating height-safety risks.</p>
+            </div>
+            <div>
+                <div class="section-title">4. AI Inspection Bots</div>
+                <p>Thermal imaging and AI analysis for predictive maintenance in hard-to-reach areas.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Visualization -->
+    <div class="glass-card">
+        <h2>Performance Visualization</h2>
+        <div class="charts-grid">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid var(--orange); padding-left: 15px;">
+                <strong>Year 1: Assessment & Pilot</strong><br>
+                Workflow analysis, baseline data, pilot units (Cleaning/UV-C).
+            </div>
+            <div style="border-left: 3px solid var(--blue); padding-left: 15px;">
+                <strong>Year 2: Hub-Centric Deployment</strong><br>
+                Exterior washing systems & AI Inspections at main hangars.
+            </div>
+            <div style="border-left: 3px solid var(--purple); padding-left: 15px;">
+                <strong>Year 3: Fleet-Wide Scaling</strong><br>
+                Full roll-out of Cabin/UV-C robots to all bases. Target 35% OPEX reduction.
+            </div>
+            <div style="border-left: 3px solid var(--orange); padding-left: 15px;">
+                <strong>Year 4: Optimization</strong><br>
+                Predictive maintenance software upgrades. Full ROI achieved.
+            </div>
+            <div style="border-left: 3px solid var(--blue); padding-left: 15px;">
+                <strong>Year 5: Ecosystem Integration</strong><br>
+                Fully autonomous ground support. Sustained 45% OPEX reduction.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.2, 1.1, 2.8, 4.5, 6.2],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, title: { display: true, text: '5-Year Cumulative Savings', color: '#e2e8f0' } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput (Bar)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Min/Unit)',
+                    data: [45, 20, 120],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)'
+                },
+                {
+                    label: 'Robotic (Min/Unit)',
+                    data: [25, 10, 60],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Throughput Comparison (Minutes)', color: '#e2e8f0' } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Hour Redistribution (Pie)
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'pie',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Maintenance of Robots', 'Eliminated Manual Labor'],
+            datasets: [{
+                data: [30, 10, 60],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316'  // Aviation Orange
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Labor Hour Redistribution', color: '#e2e8f0' } }
+        }
+    });
+</script>
+
+</body>
+</html>
