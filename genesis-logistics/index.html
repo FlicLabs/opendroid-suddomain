@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Logistics - Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+            color: var(--accent-purple);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        /* Metric Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-purple);
+            margin-top: 5px;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        canvas {
+            max-height: 250px;
+        }
+
+        /* Implementation Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--glass-border);
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .btn-export {
+            display: inline-block;
+            background: var(--accent-purple);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-export:hover {
+            background: transparent;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center;">
+        <h1>Genesis Logistics</h1>
+        <p style="font-size: 1.2rem; color: #cbd5e1;">Strategic Robotics Integration Report</p>
+        <div style="font-size: 0.8rem; opacity: 0.7;">Prepared by Open Droids Consultancy</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            Genesis Logistics is positioned to transition from labor-intensive operations to a data-driven, automated ecosystem. 
+            The strategic integration of robotics will enable a "Dark Warehouse" capability during off-peak hours, maximizing asset utilization 
+            and minimizing energy costs. This report outlines a phased approach focusing on AMRs, ASRS, and AI-driven logistics to reduce 
+            cost-per-pick and enhance throughput consistency, ensuring market leadership in the metropolitan distribution sector.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$50k-$100k</div>
+                <div class="metric-label">CAPEX / Station</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">30-40%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 Mos</div>
+                <div class="metric-label">Target Payback</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">99.9%</div>
+                <div class="metric-label">Pick Accuracy</div>
+            </div>
+        </div>
+        <p style="font-size: 0.85rem; text-align: center; font-style: italic;">
+            *Estimates based on mid-to-large scale logistics operations. Actuals subject to site survey.
+        </p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <ul>
+            <li>
+                <strong style="color: #fff;">Pathway A: AMRs for Internal Transport</strong><br>
+                <span style="font-size: 0.9rem;">Focus: Replacing manual forklifts for "miles walked" efficiency. ROI via labor reduction and dynamic routing.</span>
+            </li>
+            <li>
+                <strong style="color: #fff;">Pathway B: Robotic Piece Picking & ASRS</strong><br>
+                <span style="font-size: 0.9rem;">Focus: Vertical storage density and picking accuracy. Reduces mis-picks and defers facility expansion.</span>
+            </li>
+            <li>
+                <strong style="color: #fff;">Pathway C: AI-Driven Inbound/Outbound</strong><br>
+                <span style="font-size: 0.9rem;">Focus: Predictive logistics using AI to pre-position inventory. Optimizes energy usage and prevents bottlenecks.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Charts -->
+    <div class="glass-card">
+        <h2>Performance Projections</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="year-label">Year 1: Pilot & Integration</span>
+                <p>Deploy AMRs in single zone. Integrate ASRS for high-velocity SKUs. Focus on staff training.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 2: Expansion & Optimization</span>
+                <p>Scale AMR fleet to 50% coverage. Implement AI routing for energy and path optimization.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 3: Systemic Automation</span>
+                <p>Full robotic picking for medium/slow movers. Achieve 30% OPEX reduction.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 4: Predictive Logistics</span>
+                <p>Deploy AI-driven inbound/outbound. Enable "Dark Warehouse" night operations.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 5: Ecosystem Scaling</span>
+                <p>Standardize tech stack for secondary hubs. Explore drone counting and advanced vision.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 40px; opacity: 0.5; font-size: 0.8rem;">
+        CONFIDENTIAL &bull; OPEN DROIDS CONSULTANCY &bull; 2024
+    </div>
+
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Cumulative Savings Chart (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 600000, 1400000, 2500000, 3800000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Cumulative Savings (ROI)' }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Throughput Comparison (Bar)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Picks/Hour', 'Moves/Hour', 'Accuracy %'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [120, 40, 96],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic',
+                    data: [350, 120, 99.9],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top', labels: { color: '#e2e8f0' } },
+                title: { display: true, text: 'Manual vs. Robotic Performance' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
