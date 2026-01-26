@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Robotics Report - Thoroughbred Aviation</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at top right, rgba(124, 58, 237, 0.15), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.15), transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Styles */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        /* Financial Dashboard Metrics */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Pathway Icons (Visual placeholders) */
+        .pathway-item {
+            background: rgba(14, 165, 233, 0.05);
+            border-left: 3px solid var(--accent-blue);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-item strong {
+            color: #fff;
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .html-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--glass-border);
+        }
+
+        /* Table Styles for Roadmap */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        th {
+            color: var(--accent-blue);
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>THOROUGHBRED AVIATION LLC</h1>
+        <p style="font-size: 1.2rem; color: var(--accent-blue);">Strategic Robotics & Automation Integration Report</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            Thoroughbred Aviation LLC stands at the precipice of operational transformation through the integration of advanced robotics. This report outlines a strategic pathway to modernize ground support operations, targeting cabin cleaning, disinfection, exterior maintenance, and inspection protocols. The vision is to transition from labor-intensive manual processes to a hybrid model where autonomous systems handle repetitive tasks, allowing human staff to focus on high-value quality control and customer service. This shift will position Thoroughbred Aviation as a leader in aviation hygiene standards and turnaround efficiency.
+        </p>
+    </section>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <p>Projected metrics for initial fleet deployment and 5-year horizon.</p>
+        
+        <div class="grid-4" style="margin-top: 20px;">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">Per Unit CAPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Water Savings (Exterior)</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid-2">
+        <!-- Organizational Profile -->
+        <section class="glass-card">
+            <h2>ORGANIZATIONAL PROFILE</h2>
+            <p>Thoroughbred Aviation LLC operates as a dynamic regional and charter carrier with a focus on premium service delivery.</p>
+            <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                <li style="margin-bottom: 10px;">1. <strong>Fleet:</strong> Mixed narrow-body and light jet aircraft.</li>
+                <li style="margin-bottom: 10px;">2. <strong>Hubs:</strong> High-traffic regional hubs with critical gate constraints.</li>
+                <li style="margin-bottom: 10px;">3. <strong>Current Model:</strong> Reliance on manual labor for cleaning and inspection.</li>
+                <li style="margin-bottom: 10px;">4. <strong>Challenge:</strong> Labor shortages and inconsistent turnaround standards.</li>
+            </ul>
+        </section>
+
+        <!-- Implementation Roadmap -->
+        <section class="glass-card">
+            <h2>IMPLEMENTATION ROADMAP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Timeline</th>
+                        <th>Focus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1-6 Mo</td>
+                        <td>Pilot & Evaluation</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>7-18 Mo</td>
+                        <td>Process Integration</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>19-36 Mo</td>
+                        <td>Fleet Standardization</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>37-60 Mo</td>
+                        <td>Advanced Optimization</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <section class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div class="grid-2">
+            <div class="pathway-item">
+                <strong>Pathway A: Autonomous Cabin Cleaning</strong>
+                <p style="font-size: 0.9rem;">LiDAR-navigated robots for vacuuming and sanitizing tray tables. Reduces manual manpower by 60%.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway B: UV-C Disinfection</strong>
+                <p style="font-size: 0.9rem;">Dry, chemical-free pathogen neutralization. Sanitizes cabins in under 15 minutes.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway C: Exterior Washing</strong>
+                <p style="font-size: 0.9rem;">Automated gantry systems reducing water usage by 40% and eliminating fall risks.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway D: AI Inspection</strong>
+                <p style="font-size: 0.9rem;">Thermal imaging and high-res cameras for instant anomaly detection and airworthiness checks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Charts Section -->
+    <section class="glass-card">
+        <h2>INTERACTIVE ANALYTICS</h2>
+        
+        <div class="grid-2">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Comparison (Daily Aircraft)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <h3>Labor Hour Redistribution</h3>
+            <div style="width: 100%; max-width: 500px; margin: 0 auto;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Common Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. 5-Year Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [50000, 350000, 800000, 1400000, 2200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#0ea5e9',
+                    bodyColor: '#fff'
+                }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfect', 'Exterior Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [4.5, 2.5, 6.0, 3.0],
+                    backgroundColor: 'rgba(14, 165, 233, 0.7)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [1.5, 0.5, 1.0, 0.5],
+                    backgroundColor: 'rgba(249, 115, 22, 0.8)',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Hours per Aircraft' } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Supervisory/QA', 'High-Value Maintenance', 'Robot Management'],
+            datasets: [{
+                data: [15, 25, 40, 20],
+                backgroundColor: [
+                    '#f97316', // Aviation Orange
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#64748b'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
