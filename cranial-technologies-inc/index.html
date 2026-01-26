@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cranial Technologies Inc. Robotics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --deep-space-blue: #0f172a;
+    --electric-purple: #7c3aed;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --text-primary: #e5e7eb;
+    --text-secondary: #cbd5e1;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(1200px 600px at 20% -10%, #1e293b, var(--deep-space-blue));
+    color: var(--text-primary);
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 40px;
+    border-bottom: 1px solid var(--glass-border);
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.08), transparent);
+    backdrop-filter: blur(6px);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    background: conic-gradient(from 180deg, var(--electric-purple), #3b82f6, var(--electric-purple));
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+  }
+  .logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .tagline {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+  main {
+    padding: 32px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    margin-bottom: 24px;
+  }
+  h1, h2, h3 {
+    margin: 0 0 12px 0;
+  }
+  h1 {
+    font-size: 28px;
+    color: #ffffff;
+  }
+  h2 {
+    font-size: 22px;
+    color: #e2e8f0;
+    margin-top: 8px;
+  }
+  p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 12px 0;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .metric-card {
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.05));
+    border: 1px solid rgba(124, 58, 237, 0.35);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 0 24px rgba(124, 58, 237, 0.3);
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+    text-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+  }
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  canvas {
+    background: rgba(2, 6, 23, 0.4);
+    border-radius: 12px;
+    padding: 8px;
+    border: 1px solid var(--glass-border);
+  }
+  .section-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .section-list li {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .section-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--electric-purple);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--electric-purple);
+  }
+  .grid-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .callout {
+    border-left: 3px solid var(--electric-purple);
+    padding-left: 12px;
+    margin: 12px 0;
+    color: #e5e7eb;
+  }
+  footer {
+    margin-top: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-mark">OD</div>
+      <div class="logo-text">Open Droids</div>
+    </div>
+    <div class="tagline">Cranial Technologies Inc. Robotics Portfolio</div>
+  </header>
+
+  <main>
+    <section class="glass-card">
+      <h1>Executive Summary</h1>
+      <p>Cranial Technologies Inc. is the exclusive provider of non-surgical cranial remolding treatment in the United States, operating under the DOC Band brand. With a high volume of infant patients and a precision-driven clinical workflow, the company is uniquely positioned for robotics and automation impact across fabrication, scanning, and clinic operations.</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">35,000</div>
+          <div class="metric-label">Annual Patient Starts</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">20-35%</div>
+          <div class="metric-label">Fabrication Cost Reduction Potential</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">8-16 Mo</div>
+          <div class="metric-label">Estimated Payback</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2>Organizational Profile</h2>
+      <p>Cranial Technologies focuses on outpatient infant cranial remolding with a specialized service model. The workflow includes 3D scanning, device design, custom fabrication, and iterative in-clinic fittings.</p>
+      <ul class="section-list">
+        <li>National footprint with high-volume clinics across the United States.</li>
+        <li>Exclusive focus on non-surgical cranial remolding using DOC Bands.</li>
+        <li>Insurance coverage driving consistent demand and predictable capacity needs.</li>
+        <li>Core operational constraints: scan-to-fit lead time, fabrication throughput, clinician scheduling.</li>
+      </ul>
+    </section>
+
+    <section class="glass-card">
+      <h2>Robotics Opportunity Pathways</h2>
+      <div class="grid-two">
+        <div>
+          <h3>Pathway A: Automated Additive Manufacturing</h3>
+          <p>In-house automated print cells and robotic post-processing to reduce per-unit cost and lead time. Includes quality inspection automation and regional print nodes.</p>
+        </div>
+        <div>
+          <h3>Pathway B: Vision Scanning and Robotic-Aided Fitting</h3>
+          <p>Fixed scanning stations with computer vision and cobot-assisted fitting to improve accuracy and clinician throughput.</p>
+        </div>
+      </div>
+      <div class="grid-two">
+        <div>
+          <h3>Pathway C: AI-Driven Clinic Optimization</h3>
+          <p>Predictive scheduling and capacity planning to raise utilization and reduce cancellations across the network.</p>
+        </div>
+        <div>
+          <h3>Strategic Impact</h3>
+          <p class="callout">Speed, accuracy, and patient experience improvements with measurable cost reduction and scalable capacity.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2>Financial Model (Pathway A)</h2>
+      <p>Baseline assumptions: 35,000 annual starts; fabrication cost $400–$600; lead time 5–7 days. Automation reduces cost by 20–35% and improves yield by 2–4 percentage points.</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">$3.5M</div>
+          <div class="metric-label">Annual Cost Savings (Mid-case)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">$2-4M</div>
+          <div class="metric-label">Incremental Revenue (Conservative)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">1-2 Days</div>
+          <div class="metric-label">Lead Time Reduction</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2>Comparative View of Pathways</h2>
+      <div class="grid-two">
+        <div>
+          <h3>Pathway A</h3>
+          <ul class="section-list">
+            <li>Scope: Centralized and regional print cells</li>
+            <li>Value Driver: Cost per unit and lead time</li>
+            <li>Annual Benefit: $3–5M cost savings</li>
+            <li>Payback: 8–16 months</li>
+            <li>Risk: Moderate</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pathway B</h3>
+          <ul class="section-list">
+            <li>Scope: Clinic scanning stations and cobots</li>
+            <li>Value Driver: Throughput and accuracy</li>
+            <li>Annual Benefit: 10–15% higher scans per clinician</li>
+            <li>Payback: 12–24 months</li>
+            <li>Risk: Low–Moderate</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-two">
+        <div>
+          <h3>Pathway C</h3>
+          <ul class="section-list">
+            <li>Scope: Network scheduling and forecasting</li>
+            <li>Value Driver: Utilization and throughput</li>
+            <li>Annual Benefit: 3–6% clinician utilization improvement</li>
+            <li>Payback: 4–8 months</li>
+            <li>Risk: Low</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Recommendation</h3>
+          <p class="callout">Prioritize Pathway C for quick wins, Pathway B for clinic optimization, Pathway A for sustained cost reduction and scalability.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2>Interactive Financial Dashboard</h2>
+      <div class="chart-row">
+        <div>
+          <canvas id="cumulativeSavingsChart" height="180"></canvas>
+        </div>
+        <div>
+          <canvas id="throughputChart" height="180"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h2>Implementation Roadmap</h2>
+      <ul class="section-list">
+        <li>Year 1: Pilot Pathway C across 10–15 clinics; Pathway B in 3–5 clinics; Pathway A print cell pilot.</li>
+        <li>Year 2: Scale Pathway C network-wide; expand Pathway B to 30–50 clinics; grow Pathway A to 40–60% coverage.</li>
+        <li>Year 3: Optimize Pathway A to 80–90% coverage; network-wide Pathway B deployment; explore platform licensing.</li>
+      </ul>
+    </section>
+
+    <section class="glass-card">
+      <h2>Strategic Positioning</h2>
+      <p>Cranial Technologies can evolve into a digitally native, robotics-enabled platform for infant cranial care. This strengthens payer relationships, enables faster capacity scaling, and opens adjacent pediatric orthotic categories.</p>
+    </section>
+
+    <footer>
+      © Open Droids Robotics Consulting. Internal analysis for Cranial Technologies Inc. informational purposes only.
+    </footer>
+  </main>
+
+  <script>
+    const chartDefaults = {
+      plugins: {
+        legend: {
+          labels: { color: '#e5e7eb', font: { family: 'Inter', size: 12 } }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#cbd5e1' },
+          grid: { color: 'rgba(255,255,255,0.08)' }
+        },
+        y: {
+          ticks: { color: '#cbd5e1' },
+          grid: { color: 'rgba(255,255,255,0.08)' }
+        }
+      }
+    };
+
+    // 5-Year Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('cumulativeSavingsChart').getContext('2d');
+    const gradient1 = ctx1.createLinearGradient(0, 0, 0, 180);
+    gradient1.addColorStop(0, 'rgba(124, 58, 237, 0.6)');
+    gradient1.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+        datasets: [{
+          label: 'Cumulative Savings (USD, millions)',
+          data: [1.5, 3.5, 6.5, 9.5, 13.0],
+          borderColor: '#7c3aed',
+          backgroundColor: gradient1,
+          tension: 0.3,
+          fill: true,
+          pointBackgroundColor: '#7c3aed',
+          pointBorderColor: '#ffffff',
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: chartDefaults.plugins,
+        scales: chartDefaults.scales
+      }
+    });
+
+    // Manual vs Robotic Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Scans/Day/Clinician', 'Devices/Day/Cell'],
+        datasets: [
+          {
+            label: 'Manual',
+            data: [22, 60],
+            backgroundColor: 'rgba(59, 130, 246, 0.6)',
+            borderColor: '#3b82f6',
+            borderWidth: 1
+          },
+          {
+            label: 'Robotic/Automated',
+            data: [26, 90],
+            backgroundColor: 'rgba(124, 58, 237, 0.8)',
+            borderColor: '#7c3aed',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: chartDefaults.plugins,
+        scales: chartDefaults.scales
+      }
+    });
+  </script>
+</body>
+</html>
