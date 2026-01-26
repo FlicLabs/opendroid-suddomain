@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fort Wayne Airlines - Robotics Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-sky: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: var(--accent-sky);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+        }
+
+        h2 {
+            color: var(--accent-orange);
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        /* Dashboard Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.15), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--accent-sky);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(0, 0, 0, 0.2);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-sky);
+        }
+
+        .roadmap-timeline {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="text-align: center; margin-bottom: 40px;">
+        <h1>STRATEGIC AUTOMATION REPORT</h1>
+        <p style="font-size: 1.2rem; color: var(--text-main);">Prepared for: Fort Wayne Airlines</p>
+        <p style="color: var(--accent-sky);">Senior Consultation and Research Agent | Open Droids</p>
+    </header>
+
+    <!-- Executive Summary & Org Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>The vision for Fort Wayne Airlines is the transition from labor-intensive manual cleaning to a technologically advanced, automated ecosystem. By deploying specialized robotics, the airline will achieve substantial improvements in sanitation standards, operational efficiency, and turnaround times.</p>
+            <p>Integration of autonomous systems positions Fort Wayne as a leader in aviation hygiene and cost management, ensuring a safer, more reliable travel experience while optimizing asset utilization.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <ul>
+                <li><strong>Fleet Size:</strong> 45 Regional and Domestic Aircraft</li>
+                <li><strong>Hub Presence:</strong> Fort Wayne International Airport (FWA)</li>
+                <li><strong>Operational Model:</strong> Point-to-point feeder network</li>
+                <li><strong>Current Status:</strong> Manual ground crew reliance; 45-minute avg turnaround; seasonal staff fluctuations.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">Unit CAPEX</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--accent-sky); box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--accent-orange); box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);">
+                <div class="metric-value">&lt; 24 Months</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Pathway A: Autonomous Cabin Cleaning</h3>
+                <p>LiDAR-mapped vacuuming and wiping units for rapid turnaround sanitation.</p>
+                
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Autonomous UV arrays for pathogen eradication on high-touch surfaces.</p>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated gantry systems reducing water usage by 60% and downtime.</p>
+                
+                <h3>Pathway D: AI Inspection Bots</h3>
+                <p>Drones/ground bots with thermal sensors for micro-crack detection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Throughput Comparison -->
+    <div class="glass-card">
+        <h2>Throughput Analysis</h2>
+        <div class="chart-container">
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <div class="roadmap-timeline">
+            <div class="roadmap-item">
+                <h3>Year 1: Pilot Phase</h3>
+                <p>Deployment of 2 Cabin Cleaning & 1 UV-C Robot at FWA. Data collection and process validation.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Year 2: Core Integration</h3>
+                <p>Expansion to 12 Cleaning Units and 2 Exterior Washing Systems. Target 15% OPEX reduction.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Year 3: Network Scaling</h3>
+                <p>Standardize protocols across hubs. 70% Fleet coverage. Target 35% OPEX reduction.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Year 4: Advanced Automation</h3>
+                <p>Full AI Inspection Bot deployment. Workflow optimization and data synergy.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Year 5: Ecosystem Maturity</h3>
+                <p>100% Fleet coverage. Continuous software optimization. Target 45% OPEX reduction.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Labor Redistribution -->
+    <div class="glass-card">
+        <h2>Labor Hour Redistribution Post-Automation</h2>
+        <div class="chart-container" style="height: 250px; max-width: 500px; margin: 0 auto;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Financial Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [0, 150000, 450000, 950000, 1600000, 2400000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Regional Jet Clean (Min)', 'Deep Sanitization (Min)', 'Inspection Time (Min)', 'Exterior Wash (Min)'],
+            datasets: [{
+                label: 'Manual Process',
+                data: [45, 30, 20, 120],
+                backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                borderColor: '#94a3b8',
+                borderWidth: 1
+            }, {
+                label: 'Robotic Process',
+                data: [25, 10, 8, 60],
+                backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                borderColor: '#7c3aed',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Technical Maintenance (Robots)', 'Reduced Hours (Seasonal)', 'Retained Cleaning Staff'],
+            datasets: [{
+                data: [40, 25, 20, 15],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316', // Aviation Orange
+                    '#e2e8f0'  // Text Grey
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#e2e8f0' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
