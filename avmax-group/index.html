@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avmax Group Robotics Strategy Report</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed;
+            --accent: #0ea5e9;
+            --highlight: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Dashboard Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        .metric-card.highlight {
+            border-color: var(--highlight);
+            box-shadow: inset 0 0 20px rgba(249, 115, 22, 0.1);
+        }
+
+        .metric-card.highlight .metric-value {
+            color: var(--highlight);
+            text-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Typography Styles for Content */
+        .report-section {
+            margin-top: 2rem;
+        }
+        
+        .section-heading {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #e2e8f0;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--highlight);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), #6d28d9);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="card">
+        <h1>AVMAX GROUP</h1>
+        <div class="subtitle">Strategic Research: Robotics Automation in Aviation Cleaning & Maintenance</div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">100+</div>
+                <div class="metric-label">Aircraft Fleet</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35-45%</div>
+                <div class="metric-label">OpEx Reduction Target</div>
+            </div>
+            <div class="metric-card highlight">
+                <div class="metric-value">24 MOS</div>
+                <div class="metric-label">Max Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">5 YR</div>
+                <div class="metric-label">Roadmap Horizon</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <section class="card">
+        <h2 class="section-heading">FINANCIAL DASHBOARD</h2>
+        <div class="charts-grid">
+            <div>
+                <h3>Cumulative Savings (5-Year)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 24px; text-align: center;">
+            <h3>Labor Hour Redistribution</h3>
+            <div class="chart-container" style="height: 250px; width: 50%; margin: 0 auto;">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Content -->
+    <section class="card">
+        <h2 class="section-heading">ORGANIZATIONAL PROFILE</h2>
+        <p>Avmax Group is a diversified aviation company with a primary focus on aircraft leasing, regional airline operations, and comprehensive MRO services.</p>
+        <ul>
+            <li><strong>Fleet Composition:</strong> Avmax maintains a fleet exceeding 100 aircraft, primarily regional jets (CRJ series) and turboprops (Dash 8), alongside narrow-body jet assets.</li>
+            <li><strong>Operational Hubs:</strong> Major maintenance and leasing hubs in Calgary, Vancouver, and strategic US locations, with reach into Africa and the Caribbean.</li>
+            <li><strong>Current Model:</strong> Relies on manual labor for cabin cleaning and periodic deep cleaning. Exterior washing is traditionally outsourced or performed manually, creating safety risks and scheduling bottlenecks.</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2 class="section-heading">ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+                <h3 style="color: var(--accent);">Pathway A: Cabin Cleaning</h3>
+                <p>Mobile autonomous robots for vacuuming and wiping tray tables. Addresses labor shortages and standardizes lease return preservation.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent);">Pathway B: UV-C Disinfection</h3>
+                <p>Autonomous UV-C robots for rapid disinfection. Enhances passenger confidence without increasing chemical usage.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent);">Pathway C: Exterior Washing</h3>
+                <p>Automated gantry systems or crawlers for fuselage washing. Reduces scaffolding requirements and improves safety.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent);">Pathway D: AI Inspection</h3>
+                <p>Drones/crawlers with thermal imaging. Reduces MRO inspection times and improves predictive maintenance data.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2 class="section-heading">FINANCIAL MODEL</h2>
+        <ul>
+            <li><strong>CAPEX Estimates:</strong> 75,000 to 150,000 USD per unit (Cabin vs. Exterior/AI systems). Initial Pilot Acquisition: ~2.5M USD.</li>
+            <li><strong>OPEX Reduction Targets:</strong> 35% to 45% reduction in direct cleaning labor hours. 15% reduction in consumables via precision application.</li>
+            <li><strong>Payback Period:</strong> Under 24 months. ROI driven by labor reallocation to revenue-generating MRO activities and increased aircraft utilization.</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2 class="section-heading">IMPLEMENTATION ROADMAP</h2>
+        <ul>
+            <li><strong>Year 1:</strong> Feasibility & Pilot. Deployment of 2 units (1 Cabin, 1 Exterior) at primary hub.</li>
+            <li><strong>Year 2:</strong> Expansion. Scale to 10 units. Integration with MRO management systems.</li>
+            <li><strong>Year 3:</strong> Standardization. Exterior washing robots at all bases. Full UV-C adoption for lease returns.</li>
+            <li><strong>Year 4:</strong> AI Integration. Deployment of AI-Powered Inspection Bots. Predictive analytics implementation.</li>
+            <li><strong>Year 5:</strong> Autonomous Ecosystem. Full operational autonomy. Potential "Cleaning-as-a-Service" revenue stream.</li>
+        </ul>
+    </section>
+</div>
+
+<script>
+    // Global Config for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [150000, 850000, 2100000, 4000000, 6500000],
+                borderColor: '#22d3ee', // Electric Blue
+                backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#7c3aed',
+                pointBorderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + (value / 1000000) + 'M';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Cleaning', 'Exterior Wash', 'UV-C Disinfect', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [120, 160, 90, 200],
+                    backgroundColor: '#f97316', // Aviation Orange
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [45, 60, 30, 80],
+                    backgroundColor: '#7c3aed', // Deep Purple
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12 } }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Hours per Aircraft' } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning (Reduced)', 'High-Value MRO Tasks', 'Robot Maintenance', 'Supervisory'],
+            datasets: [{
+                data: [25, 45, 15, 15],
+                backgroundColor: [
+                    '#f97316', // Orange
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Purple
+                    '#94a3b8'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
