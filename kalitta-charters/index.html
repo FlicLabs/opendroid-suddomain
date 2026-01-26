@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalitta Charters Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space-blue: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--deep-space-blue);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--electric-purple);
+            padding-bottom: 10px;
+            display: inline-block;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.3rem;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* List Styling in Glass Cards */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--aviation-orange);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>KALITTA CHARTERS: AUTOMATION STRATEGY</h1>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>This strategic roadmap envisions a future where Kalitta Charters leads in aviation support automation. By integrating autonomous cleaning and inspection technologies, we target a 35-45% reduction in operational overhead while enhancing aircraft safety and readiness. The proposed 5-year phased approach ensures minimal disruption and maximized ROI, transitioning manual labor toward complex technical tasks.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">CAPEX Per Unit</div>
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">Hardware Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">Annual Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">ROI Horizon</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="chart-row">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput: Manual vs. Robotic</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways & Roadmap -->
+    <div class="chart-row">
+        <div class="glass-card">
+            <h2>Robotics Pathways</h2>
+            <ul>
+                <li><strong>Pathway A:</strong> Autonomous Cabin Cleaning</li>
+                <li><strong>Pathway B:</strong> UV-C Disinfection Units</li>
+                <li><strong>Pathway C:</strong> Exterior Aircraft Washing</li>
+                <li><strong>Pathway D:</strong> AI-Powered Inspection Bots</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1:</strong> Pilot & Assessment</li>
+                <li><strong>Year 2:</strong> Integration & Exterior Wash</li>
+                <li><strong>Year 3:</strong> Network Expansion</li>
+                <li><strong>Year 4:</strong> Fleet Standardization</li>
+                <li><strong>Year 5:</strong> AI Optimization</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chart Row 2 -->
+    <div class="glass-card">
+        <h3>Labor Hour Redistribution Post-Automation</h3>
+        <div class="chart-container" style="height: 250px; max-width: 600px; margin: 0 auto;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Common Chart Options
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [50000, 250000, 600000, 1100000, 1800000],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9' // Sky Blue
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfect', 'Ext. Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [4, 2, 1, 3],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)', // Aviation Orange
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [8, 6, 4, 7],
+                    backgroundColor: 'rgba(14, 165, 233, 0.6)', // Sky Blue
+                    borderColor: '#0ea5e9',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Routine Cleaning', 'Technical Maintenance', 'Customer Service', 'Admin/Ops'],
+            datasets: [{
+                data: [15, 45, 25, 15], // Simulated shift: Cleaning time reduced, Maintenance increased
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316', // Aviation Orange
+                    '#64748b'  // Slate
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: '#fff' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
