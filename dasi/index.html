@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASI Robotics Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header h1 {
+            color: #7c3aed;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+        .header p {
+            color: #0ea5e9;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card h2 {
+            color: #7c3aed;
+            margin-top: 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0ea5e9;
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-top: 8px;
+        }
+        .chart-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+        .chart-title {
+            color: #0ea5e9;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        canvas {
+            max-height: 300px;
+        }
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 4px solid #f97316;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .roadmap-year {
+            font-weight: 700;
+            color: #f97316;
+            min-width: 80px;
+            margin-right: 16px;
+        }
+        .roadmap-desc {
+            color: #e2e8f0;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #7c3aed, #0ea5e9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: opacity 0.3s ease;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn-print {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* Chart.js Customization */
+        .chartjs-render-monitor {
+            filter: drop-shadow(0 0 2px rgba(124, 58, 237, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DASI AVIATION AUTOMATION</h1>
+            <p>Strategic Research Report on Cleaning & Maintenance Robotics</p>
+            <div style="margin-top: 20px;">
+                <button onclick="window.print()" class="btn btn-print">Download PDF / Print</button>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="glass-card">
+            <h2>FINANCIAL DASHBOARD</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$75K-$150K</div>
+                    <div class="metric-label">CAPEX per Unit</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">35-45%</div>
+                    <div class="metric-label">OPEX Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">&lt; 24 Mos</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">High</div>
+                    <div class="metric-label">ROI Projection</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary & Organizational Profile -->
+        <div class="glass-card">
+            <h2>EXECUTIVE SUMMARY</h2>
+            <p>Integration of robotic automation to modernize DASI's operations, focusing on efficiency, hygiene, and scalability. The strategy leverages four key robotic pathways to reduce operational costs and enhance safety standards.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>ORGANIZATIONAL PROFILE</h2>
+            <p>DASI operates a diverse fleet serving domestic and international routes. Current manual cleaning processes face challenges in cost and consistency. Automation offers a solution to maintain high-frequency operations while ensuring premium service quality.</p>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                <div style="background: rgba(14, 165, 233, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3);">
+                    <h3 style="color: #0ea5e9; margin-top: 0;">A. Autonomous Cabin Cleaning</h3>
+                    <p>AI-driven robots for vacuuming and wiping. Reduces turnaround time.</p>
+                </div>
+                <div style="background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(124, 58, 237, 0.3);">
+                    <h3 style="color: #7c3aed; margin-top: 0;">B. UV-C Disinfection</h3>
+                    <p>Automated sanitization of high-touch surfaces. Enhances passenger safety.</p>
+                </div>
+                <div style="background: rgba(249, 115, 22, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(249, 115, 22, 0.3);">
+                    <h3 style="color: #f97316; margin-top: 0;">C. Exterior Washing</h3>
+                    <p>Robotic fuselage washing. Improves aerodynamics and reduces water waste.</p>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    <h3 style="color: #e2e8f0; margin-top: 0;">D. AI Inspection Bots</h3>
+                    <p>Drone-based visual inspections. Predictive maintenance analytics.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="glass-card">
+            <h2>FINANCIAL VISUALIZATION</h2>
+            <div class="chart-container">
+                <div class="chart-title">5-Year Cumulative Savings Projection</div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">Throughput Comparison: Manual vs. Robotic</div>
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">Labor Hour Redistribution Post-Automation</div>
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>IMPLEMENTATION ROADMAP (5-YEAR PHASED STRATEGY)</h2>
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-year">Year 1</div>
+                    <div class="roadmap-desc"><strong>Pilot Program:</strong> Deploy cabin cleaning & UV-C robots at primary hub. Establish baseline metrics.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-year">Year 2</div>
+                    <div class="roadmap-desc"><strong>Fleet Expansion:</strong> Scale to 50% of fleet. Introduce AI inspection bots for maintenance.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-year">Year 3</div>
+                    <div class="roadmap-desc"><strong>Full Integration:</strong> Implement exterior washing systems. Integrate with fleet management software.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-year">Year 4</div>
+                    <div class="roadmap-desc"><strong>Advanced Analytics:</strong> Leverage AI for predictive maintenance. Optimize hybrid models.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-year">Year 5</div>
+                    <div class="roadmap-desc"><strong>Continuous Innovation:</strong> Full automation across major hubs. Establish R&D robotics lab.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js Global Configuration
+        Chart.defaults.color = '#cbd5e1';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Cumulative Savings Line Chart
+        new Chart(document.getElementById('savingsChart'), {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.5, 2.8, 6.5, 11.2, 17.5],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#7c3aed',
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Throughput Comparison Bar Chart
+        new Chart(document.getElementById('throughputChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Cleaning (Aircraft/Hr)', 'Disinfection (Aircraft/Hr)', 'Exterior Wash (Aircraft/Hr)'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [1, 0.5, 0.3],
+                        backgroundColor: 'rgba(249, 115, 22, 0.7)',
+                        borderColor: '#f97316',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [2.5, 1.5, 0.8],
+                        backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Labor Redistribution Pie Chart
+        new Chart(document.getElementById('laborChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Direct Cleaning', 'Supervision & Planning', 'Technical Maintenance', 'Passenger Service'],
+                datasets: [{
+                    data: [35, 25, 20, 20],
+                    backgroundColor: [
+                        '#0ea5e9',
+                        '#7c3aed',
+                        '#f97316',
+                        '#10b981'
+                    ],
+                    borderColor: 'rgba(15, 23, 42, 0.8)',
+                    borderWidth: 2,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: { callbacks: { label: function(context) { return context.label + ': ' + context.raw + '%'; } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
