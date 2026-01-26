@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDI Group Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg-deep) 60%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Pathway Grid */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .pathway-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--accent-purple);
+        }
+
+        /* Financial Dashboard */
+        .financial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .timeline-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .year-badge {
+            background: var(--accent-blue);
+            color: #000;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            min-width: 60px;
+            text-align: center;
+            height: fit-content;
+            margin-top: 2px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>The PDI Group</h1>
+        <div class="subtitle">Strategic Report: Aviation Cleaning & Maintenance Automation</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2 class="section-title">Executive Summary</h2>
+        <p style="line-height: 1.6; color: #cbd5e1;">
+            The PDI Group is positioned to revolutionize its operational efficiency through the integration of advanced robotics. This strategy outlines a high-level vision where autonomous systems manage routine cleaning and inspection tasks, reducing operational expenditures by 35-45%. The transition ensures enhanced safety, superior hygiene standards, and a projected payback period of under 24 months.
+        </p>
+    </section>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2 class="section-title">Financial Dashboard</h2>
+        <div class="financial-grid">
+            <div class="metric-card">
+                <span class="metric-value">$75k - $150k</span>
+                <span class="metric-label">CAPEX Per Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">35% - 45%</span>
+                <span class="metric-label">OPEX Reduction Target</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt; 24 Months</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <section class="glass-card">
+        <h2 class="section-title">Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h4>A. Autonomous Cabin Cleaning</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">Mobile robots utilizing computer vision for rapid debris removal and surface sanitization during turnarounds.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>B. UV-C Disinfection</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">Post-cleaning robotic deployment to neutralize pathogens on high-touch surfaces, ensuring health safety.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>C. Exterior Washing</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">Automated gantry systems for eco-friendly fuselage scrubbing, improving aerodynamics and reducing labor risk.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>D. AI Inspection Bots</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0;">LiDAR-equipped drones for pre-flight and hangar maintenance inspections, identifying micro-fractures.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Visualization -->
+    <section class="glass-card">
+        <h2 class="section-title">Performance Analytics</h2>
+        <div class="charts-grid">
+            <div>
+                <h4 style="color: var(--text-muted); margin-bottom: 10px;">5-Year Cumulative Savings</h4>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h4 style="color: var(--text-muted); margin-bottom: 10px;">Throughput Comparison (Daily)</h4>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--glass-border);">
+            <h4 style="color: var(--text-muted); margin-bottom: 10px;">Labor Hour Redistribution</h4>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2 class="section-title">Implementation Roadmap (5-Year Phased Strategy)</h2>
+        
+        <div class="timeline-step">
+            <div class="year-badge">Year 1</div>
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: #fff;">Pilot Program & Infrastructure</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1;">Procurement of 20 units (across all pathways). Integration of charging infrastructure and fleet management software.</p>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="year-badge" style="background: var(--accent-purple);">Year 2</div>
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: #fff;">Core Hub Integration</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1;">Full deployment of Cabin Cleaning & UV-C units at primary hubs. Staff training and KPI establishment.</p>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="year-badge" style="background: var(--accent-orange);">Year 3</div>
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: #fff;">Secondary Hub Expansion</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1;">Rollout of Exterior Washing and AI Inspection Bots. Optimization based on Year 1-2 data.</p>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="year-badge">Year 4</div>
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: #fff;">Fleet-Wide Standardization</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1;">100% coverage of cabin cleaning automation. Integration of robotics data into central maintenance records.</p>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="year-badge" style="background: var(--accent-blue);">Year 5</div>
+            <div>
+                <h4 style="margin: 0 0 5px 0; color: #fff;">Optimization & Analytics</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cbd5e1;">Full predictive maintenance utilization. Continuous improvement loops and potential third-party revenue streams.</p>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+    // Global Chart Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Line Chart: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.8, 6.5, 11.2, 16.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Bar Chart: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Inspection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Turnarounds/Day)',
+                    data: [12, 20, 3],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Turnarounds/Day)',
+                    data: [18, 35, 6],
+                    backgroundColor: '#0ea5e9',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 3. Pie Chart: Labor Redistribution
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Routine Cleaning (Reduced)', 'Quality Assurance (Increased)', 'Passenger Service', 'New Tech Maintenance'],
+            datasets: [{
+                data: [25, 30, 35, 10],
+                backgroundColor: [
+                    '#f97316',
+                    '#7c3aed',
+                    '#0ea5e9',
+                    '#10b981'
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
