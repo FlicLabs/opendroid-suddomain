@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rand Construction Corp: Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(124, 58, 237, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #c4b5fd;
+        }
+
+        h3 {
+            color: #a78bfa;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .chart-wrapper h3 {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        /* Pathway Lists */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .pathway-list strong {
+            color: #fff;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-item {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>Strategic Automation Report</h1>
+        <div class="subtitle">Rand Construction Corporation | Open Droids Consultation</div>
+    </header>
+
+    <!-- Executive Summary & Dashboard -->
+    <section class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Strategic deployment of robotics offers Rand Construction Corporation a pathway to redefine operational efficiency. By integrating a symbiotic workforce, the organization can leverage automation for repetitive tasks (food transport, precise cooking) while empowering human staff to focus on high-value guest interactions. This shift drives table turnover velocity, ensures consistency, and yields significant labor arbitrage, positioning the brand as a leader in modern hospitality.</p>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">$1.4M - $2.8M</div>
+                <div class="metric-label">Est. CAPEX (20 Locations)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">15-25%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 14 Mo</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Organizational Profile & Pathways -->
+    <section class="glass-card">
+        <h2>Organizational Profile & Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3>Current State</h3>
+                <p><strong>Model:</strong> Fast-Casual / Full Service Hybrid</p>
+                <p><strong>Locations:</strong> Estimated 10-50 units (Regional)</p>
+                <p><strong>Focus:</strong> Manual service, high labor dependency, variable consistency.</p>
+            </div>
+            <div>
+                <h3>Strategic Pathways</h3>
+                <ul class="pathway-list">
+                    <li><strong>Pathway A (FOH):</strong> Serving Robots for Table Turnover & Staff Support.</li>
+                    <li><strong>Pathway B (BOH):</strong> Automated Frying/Grilling for Consistency & Safety.</li>
+                    <li><strong>Pathway C:</strong> AI Kiosks/Voice Agents for Upselling & Accuracy.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Model -->
+    <section class="glass-card">
+        <h2>Financial Model</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center;">
+            <div>
+                <h3>CAPEX</h3>
+                <p style="font-size: 1.2rem; color: #fff;">$15k - $40k / Unit</p>
+                <p style="font-size: 0.9rem;">Hardware & Integration</p>
+            </div>
+            <div>
+                <h3>OPEX Impact</h3>
+                <p style="font-size: 1.2rem; color: #fff;">Target: 15-25%</p>
+                <p style="font-size: 0.9rem;">FOH Labor Reduction</p>
+            </div>
+            <div>
+                <h3>ROI</h3>
+                <p style="font-size: 1.2rem; color: #fff;">&lt; 14 Months</p>
+                <p style="font-size: 0.9rem;">Via Throughput & Savings</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Charts -->
+    <section class="glass-card">
+        <h2>Performance Analytics</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <h3>5-Year Cumulative Labor Savings</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <h3>Table Turnover Rate (Hourly)</h3>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="roadmap-year">Year 1: Pilot Phase</div>
+            <p>Deploy AI Kiosks (Pathway C) at 5 locations. Establish IT infrastructure. Focus on staff training and change management.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">Year 2: FOH Integration</div>
+            <p>Roll out Serving Robots (Pathway A) to pilot locations. Refine fleet management. Begin data-driven staff reallocation.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">Year 3: Expansion</div>
+            <p>Scale all pathways to 50% of estate. Standardize Human-Robot collaboration SOPs. Achieve full 15% OPEX reduction target.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">Year 4: Optimization</div>
+            <p>Leverage aggregate data for supply chain refinement. Implement dynamic pricing and advanced predictive maintenance.</p>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">Year 5: Ecosystem Maturity</div>
+            <p>Full deployment across viable units. Robotic fleet becomes a mature asset class contributing directly to EBITDA growth.</p>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 550000, 1200000, 2100000, 3200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate (Bar Chart)
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Peak', 'Dinner Peak', 'Off-Peak'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [1.2, 1.5, 0.8],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [1.8, 2.2, 1.1],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                    ticks: { color: '#94a3b8' },
+                    title: { display: true, text: 'Turns per Hour', color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
