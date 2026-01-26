@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provi: Strategic Robotics Implementation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #c4b5fd;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Content Sections */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .pathway-item {
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .year-badge {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            min-width: 50px;
+            text-align: center;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div class="subtitle">Open Droids | Senior Consultation Report</div>
+            <h1>Provi Automation Strategy</h1>
+            <p style="color: #fff;">Strategic pathways for robotics integration in hospitality operations</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="glass-card" style="margin-bottom: 30px;">
+            <h2>Executive Summary</h2>
+            <p>
+                The integration of robotics in dining models represents a shift toward operational resilience. 
+                The core vision is to augment human staff, not replace them, by offloading repetitive tasks. 
+                This allows personnel to focus on high-value interactions, driving dual benefits of optimized cost structures and enhanced guest loyalty. 
+                Technology handles the routine; humans handle the exceptional.
+            </p>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="metrics-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Estimated CAPEX</div>
+                <div class="metric-value">$15k - $40k</div>
+                <p>Per robot unit (deployable scale)</p>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Labor Cost Target</div>
+                <div class="metric-value">-25%</div>
+                <p>Reduction in FOH operational costs</p>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 14 Months</div>
+                <p>Driven by table turnover & accuracy</p>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Global Footprint</div>
+                <div class="metric-value">2,000+</div>
+                <p>Locations eligible for phased rollout</p>
+            </div>
+        </div>
+
+        <!-- Organization & Pathways -->
+        <div class="section-grid">
+            <div class="glass-card">
+                <h2>Organizational Profile</h2>
+                <h3>Provi at a Glance</h3>
+                <p>Operating as a high-volume multi-location model, Provi focuses on broad-spectrum cuisine within the QSR and Fast Casual segments.</p>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Service Model:</strong> Quick Service (QSR) & Fast Casual</li>
+                    <li><strong>Primary Volume:</strong> High transaction count, moderate check average</li>
+                    <li><strong>Demand Drivers:</strong> Speed, consistency, and digital integration</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <h2>Opportunity Pathways</h2>
+                <div class="pathway-list">
+                    <div class="pathway-item">
+                        <strong>Pathway A: Front-of-House Serving</strong>
+                        <p style="font-size: 0.85rem; margin:0;">Autonomous bussing & delivery to increase table turns.</p>
+                    </div>
+                    <div class="pathway-item">
+                        <strong>Pathway B: Back-of-House Automation</strong>
+                        <p style="font-size: 0.85rem; margin:0;">Robotic frying/grilling for brand consistency & safety.</p>
+                    </div>
+                    <div class="pathway-item">
+                        <strong>Pathway C: AI-Driven Interfaces</strong>
+                        <p style="font-size: 0.85rem; margin:0;">Voice agents & kiosks for upselling and order accuracy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Table Turnover Impact</h2>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="year-badge">Y1</div>
+                    <div>
+                        <strong>Pilot & Validation</strong>
+                        <p style="margin:0">Deploy AI Voice Agents (50 units) & BOH Fryers (10 units). Validate uptime >98%.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y2</div>
+                    <div>
+                        <strong>Standardization</strong>
+                        <p style="margin:0">Scale Voice AI to 500 locations. FOH Robots in 50 Test Kitchens. Refine POS integration.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y3</div>
+                    <div>
+                        <strong>Scale & Integration</strong>
+                        <p style="margin:0">BOH Automation to 1,000 locations. FOH Robots to 300 high-traffic sites.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y4</div>
+                    <div>
+                        <strong>Ecosystem Expansion</strong>
+                        <p style="margin:0">"Dark Kitchen" concepts. Predictive maintenance integration. Shift ROI focus to revenue growth.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y5</div>
+                    <div>
+                        <strong>Autonomy & Data</strong>
+                        <p style="margin:0">Fully autonomous locations. Centralized data center for predictive ordering. Food cost <28%.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2024 Open Droids Consultation. Confidential Property of Provi Analysis.
+        </footer>
+
+    </div>
+
+    <script>
+        // Global Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+        
+        // 1. Cumulative Labor Cost Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (in Millions)',
+                    data: [0.5, 2.8, 7.5, 14.2, 22.0],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { callback: function(value) { return '$' + value + 'M'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Table Turnover Rate Comparison
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Lunch Peak', 'Dinner Peak', 'Weekend'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [1.2, 1.5, 1.8],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robot-Assisted',
+                        data: [1.8, 2.2, 2.5],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12 } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        title: { display: true, text: 'Turns per Hour' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
