@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAON Inc. - Automation Strategy Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Containers */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-glow);
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 12px;
+        }
+
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Grid Systems */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Metric Cards (Dashboard Style) */
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathways Section */
+        .pathway-card {
+            border-left: 3px solid var(--accent-purple);
+        }
+        
+        .pathway-badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-purple);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent-glow);
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AAON INC. STRATEGY REPORT</h1>
+        <p style="font-size: 1.2rem; color: var(--text-secondary);">Industrial Automation & Smart Manufacturing Integration</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section>
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>AAON Inc. stands at the precipice of Industry 4.0 transformation. The strategic vision focuses on integrating flexible manufacturing systems to support high-mix customization while maintaining high-volume efficiency. By leveraging IoT interoperability and autonomous systems, AAON aims to transition from traditional discrete manufacturing to a resilient, data-driven "Smart Factory" ecosystem. This transition mitigates labor volatility and aligns with corporate sustainability goals through energy-optimized automation.</p>
+        </div>
+    </section>
+
+    <!-- Production Dashboard Metrics -->
+    <section>
+        <div class="grid-3">
+            <div class="metric-card">
+                <span class="metric-value">$60k-$120k</span>
+                <span class="metric-label">Per Robotic Cell CAPEX</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">+30%</span>
+                <span class="metric-label">Target OEE Increase</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt;18 Mo</span>
+                <span class="metric-label">Target Payback Period</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial & Charts Section -->
+    <section>
+        <div class="grid-2">
+            <div class="glass-card">
+                <h2>Financial Model & Projections</h2>
+                <h3>CAPEX Strategy</h3>
+                <p>Initial deployment estimated at <strong>$335k - $500k</strong> per facility. Scalable implementation reduces risk exposure.</p>
+                
+                <h3>OPEX Optimization</h3>
+                <p>Targeting a <strong>20-30% increase in OEE</strong> driven by:</p>
+                <ul>
+                    <li>Reduced Machine Downtime</li>
+                    <li>Scrap Reduction via Vision Inspection</li>
+                    <li>Labor Reallocation to High-Value Supervision</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <h2>Visual Analysis: Cumulative Savings</h2>
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">5-Year Projection (Labor & Scrap Reduction)</p>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Pathways -->
+    <section>
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="grid-3">
+                <div class="pathway-card glass-card">
+                    <span class="pathway-badge">PATHWAY A</span>
+                    <h3>Collaborative Robots</h3>
+                    <p><strong>Focus:</strong> Safety & Precision</p>
+                    <p><strong>Application:</strong> Machine tending (CNC/Press Brakes) and repetitive assembly (tube insertion). Enables HRC without caging.</p>
+                    <p><strong>Impact:</strong> 15% reduction in injuries; 25% uptime increase.</p>
+                </div>
+                <div class="pathway-card glass-card">
+                    <span class="pathway-badge">PATHWAY B</span>
+                    <h3>Autonomous Mobile Robots</h3>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                    <p><strong>Application:</strong> Material transport and line-side replenishment of raw materials (coils) and finished sub-assemblies.</p>
+                    <p><strong>Impact:</strong> 30% reduction in WIP inventory; dynamic navigation.</p>
+                </div>
+                <div class="pathway-card glass-card">
+                    <span class="pathway-badge">PATHWAY C</span>
+                    <h3>Automated End-of-Line</h3>
+                    <p><strong>Focus:</strong> Throughput & Yield</p>
+                    <p><strong>Application:</strong> High-speed palletizing and 3D machine vision for leak detection/cosmetic QA.</p>
+                    <p><strong>Impact:</strong> 99.9% packaging accuracy; reduced scrap waste.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Output Comparison Chart -->
+    <section>
+        <div class="glass-card">
+            <h2>Efficiency Comparison</h2>
+            <p>Projected throughput increase per production hour when integrating Pathway A (Cobot) vs. Manual Operations.</p>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section>
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 1: Pilot Phase</div>
+                    <p>Audit & Process Mapping. Deployment of 2 Cobot cells in Tulsa (Heat Exchanger Assembly). Establish OEE baseline.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 2: Material Flow</div>
+                    <p>Integrate AMR fleet for internal logistics. Expand Cobots to Longview facility. Focus on operator training.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 3: End-of-Line</div>
+                    <p>Implementation of Automated Palletizing & Vision Inspection (Pathway C). Full ERP/MES integration.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 4: Data & Digital Twins</div>
+                    <p>Shift to predictive maintenance. Deployment of Digital Twins for simulation of production changes.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 5: Full Autonomy</div>
+                    <p>AI-driven dynamic scheduling. "Lights-out" manufacturing for specific sub-assemblies. High-mix flexibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Chart.js Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Production Cost Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [350000, 1050000, 2100000, 3500000, 5250000],
+                borderColor: '#7c3aed',
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                    gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+                    gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+                    return gradient;
+                },
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 2. Manual vs. Cobot Assisted Output Bar Chart
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Machine Tending', 'Assembly', 'Packaging', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual Output (Units/Hr)',
+                    data: [15, 12, 18, 10],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate gray
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot-Assisted Output (Units/Hr)',
+                    data: [22, 19, 25, 20],
+                    backgroundColor: '#7c3aed', // Electric Purple
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
