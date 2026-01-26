@@ -1,0 +1,414 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eataly Robotics Strategy Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.15), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Sections */
+        .section-title {
+            color: #a78bfa;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-purple), transparent);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .pathway-item strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .pathway-item span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--glass-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-purple);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Canvas Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Glass Effect for Charts */
+        .chart-wrapper {
+            background: var(--glass-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>EATALY AUTOMATION STRATEGY</h1>
+        <div class="subtitle">Open Droids Consultation | Hospitality & Restaurant Automation</div>
+    </header>
+
+    <!-- Executive Dashboard -->
+    <div class="glass-card">
+        <h2 class="section-title">Executive Summary</h2>
+        <p>The integration of robotics into Eataly represents a strategic evolution of the premium Italian dining model. By leveraging automation to handle repetitive logistics and high-heat cooking tasks, Eataly can enhance operational efficiency while elevating the human guest experience. The vision is a hybrid model where technology manages the mechanical, and staff focus on the artisanal. This approach targets a reduction in labor strain and an increase in table turnover, ensuring the brand remains competitive in high-density urban markets.</p>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-label">Estimated CAPEX</div>
+            <div class="metric-value">$85k - $115k</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Per Flagship Location</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Cost Reduction</div>
+            <div class="metric-value">15-25%</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Front-of-House Optimization</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Target</div>
+            <div class="metric-value">&lt; 14 Months</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Payback Period</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Opportunity Pathways -->
+        <div class="glass-card">
+            <h3 style="color: #a78bfa;">Robotics Opportunity Pathways</h3>
+            <ul class="pathway-list">
+                <li class="pathway-item">
+                    <strong>Pathway A: Front-of-House Serving</strong>
+                    <span>AGVs for expo-to-table transport. Reduces server walking time by 60% and boosts upselling capability.</span>
+                </li>
+                <li class="pathway-item">
+                    <strong>Pathway B: Back-of-House Automation</strong>
+                    <span>Robotic arms for frying and grilling. Ensures consistency in high-volume items (pizza, arancini) and improves kitchen safety.</span>
+                </li>
+                <li class="pathway-item">
+                    <strong>Pathway C: AI-Driven Kiosks</strong>
+                    <span>Smart ordering stations with sommelier logic. Increases order accuracy and captures incremental revenue through data-driven pairings.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Organizational Profile -->
+        <div class="glass-card">
+            <h3 style="color: #a78bfa;">Organizational Profile</h3>
+            <div style="margin-bottom: 15px;">
+                <strong style="color: #fff;">Global Footprint:</strong>
+                <span style="color: var(--text-secondary);"> ~40 Locations</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong style="color: #fff;">Cuisine Type:</strong>
+                <span style="color: var(--text-secondary);"> Artisanal Italian (Pasta, Pizza, Deli)</span>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong style="color: #fff;">Service Model:</strong>
+                <span style="color: var(--text-secondary);"> Hybrid (QSR Counters + Full-Service Dining)</span>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: #94a3b8; line-height: 1.5;">
+                Eataly operates at the intersection of fast-casual throughput and premium dining experience, making it an ideal candidate for modular automation deployment.
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Visualizations -->
+    <div class="grid-2">
+        <div class="chart-wrapper">
+            <h3 style="text-align: center; margin-bottom: 20px;">5-Year Cumulative Labor Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3 style="text-align: center; margin-bottom: 20px;">Table Turnover Rate (Hourly)</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h3 style="color: #a78bfa;">Implementation Roadmap (Year 1 - 5)</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">Year 1: Pilot & Validation</div>
+                <div class="timeline-desc">Deploy serving robots in 2 flagship locations (NYC, Chicago). Establish baseline metrics for table turnover and labor allocation.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 2: Optimization</div>
+                <div class="timeline-desc">Introduce Back-of-House automation for pizza/pasta stations. Refine navigation and battery management. Begin expansion to 5 additional locations.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 3: Integration</div>
+                <div class="timeline-desc">Implement AI-Driven Kiosks across US locations. Integrate robot data with POS for real-time inventory tracking.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 4: Standardization</div>
+                <div class="timeline-desc">Establish "Automation Kit" for new global openings. Bulk purchasing to reduce CAPEX. Expand to EMEA regions.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 5: Ecosystem Scale</div>
+                <div class="timeline-desc">Full global deployment. Data-driven labor scheduling. Human staff exclusively focused on culinary art and high-touch guest experience.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [35000, 95000, 180000, 320000, 500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#a78bfa',
+                pointBorderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value.toLocaleString(); } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Comparison
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch (12-2pm)', 'Dinner (6-8pm)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [2.5, 2.2],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [3.4, 3.1],
+                    backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+```
