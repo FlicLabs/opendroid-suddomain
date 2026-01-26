@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids - Healthcare Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #7c3aed;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .chart-title {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Research Summary Table (Custom Style) */
+        .research-summary {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .summary-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .summary-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background-color: rgba(124, 58, 237, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Pathway List */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pathway-list li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .pathway-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Open Droids</div>
+            <div class="report-title">Healthcare Robotics Opportunities Portfolio</div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Projected Annual Savings</div>
+                <div class="metric-value">$6.0M</div>
+                <div class="metric-label">The Blood Connection (Pathway A)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">1-3 Mo</div>
+                <div class="metric-label">RPA Implementation</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Incremental Units</div>
+                <div class="metric-value">22.5K</div>
+                <div class="metric-label">Annual Donor Yield</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Horizon</div>
+                <div class="metric-value">5 Yrs</div>
+                <div class="metric-label">Cumulative Net Benefit</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-title">5-Year Cumulative Savings (Pathway A)</div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">Manual vs. Robotic Throughput Comparison</div>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Research Summary -->
+        <div class="research-summary">
+            <div class="summary-header">The Blood Connection: Strategic Overview</div>
+            <div class="summary-content">
+                <p><strong>Executive Summary:</strong> The Blood Connection is a non-profit community blood center operating across South Carolina, North Carolina, and Georgia. The organization faces critical labor shortages and donor engagement volatility. Robotics and automation offer significant potential to stabilize operations, reduce reliance on manual labor, and ensure consistent blood availability for over 70 partner hospitals.</p>
+                
+                <p><strong>Primary Opportunity:</strong> Robotic Process Automation (RPA) for donor recruitment and data management is the highest-value, lowest-risk pathway. It leverages AI to optimize scheduling, reduce no-shows, and increase donor conversion rates.</p>
+
+                <h4 style="color: var(--text-primary); margin-top: 20px;">Pathway Analysis</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Pathway A: RPA Recruitment</th>
+                            <th>Pathway B: Mobile Automation</th>
+                            <th>Pathway C: Processing Automation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Scope</td>
+                            <td>All markets, all donors</td>
+                            <td>Mobile fleet & drive-thrus</td>
+                            <td>Central lab operations</td>
+                        </tr>
+                        <tr>
+                            <td>Main Value Driver</td>
+                            <td>Donor conversion & retention</td>
+                            <td>Throughput per staff</td>
+                            <td>Safety & wastage reduction</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Benefit (Mid)</td>
+                            <td>$4M - $6M</td>
+                            <td>$1M - $2M (Years 2+)</td>
+                            <td>$500K - $1M</td>
+                        </tr>
+                        <tr>
+                            <td>Payback</td>
+                            <td>1 - 3 Months</td>
+                            <td>6 - 12 Months</td>
+                            <td>12 - 18 Months</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Level</td>
+                            <td>Low (Software)</td>
+                            <td>Moderate (Hardware)</td>
+                            <td>Moderate (Compliance)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 5-Year Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [4.5, 9.0, 13.5, 18.0, 22.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#94a3b8' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Manual vs. Robotic Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Donor Recruitment', 'Phlebotomy/Visit', 'Lab Processing'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [100, 100, 100],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [125, 140, 115],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { color: '#94a3b8' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        title: {
+                            display: true,
+                            text: 'Throughput Index (Baseline=100)',
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
