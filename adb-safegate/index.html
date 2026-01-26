@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Aviation: Automation Strategy Report</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a; /* Deep Space Blue */
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed; /* Electric Purple */
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Layout Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 1.5rem;
+            margin-left: 1rem;
+        }
+
+        .timeline-item {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.95rem;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 2px solid var(--accent);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Signature Aviation</h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">Strategic Automation & Smart Manufacturing Research</p>
+    </header>
+
+    <!-- Executive Dashboard Metrics -->
+    <section class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Target OEE Improvement</div>
+            <div class="metric-value">+30%</div>
+            <p style="font-size: 0.8rem; margin: 0;">Via Robotics & AMRs</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">&lt; 18 Mos</div>
+            <p style="font-size: 0.8rem; margin: 0;">Via Labor Reallocation</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">CAPEX Per Cell</div>
+            <div class="metric-value">$60k-$120k</div>
+            <p style="font-size: 0.8rem; margin: 0;">Scalable Deployment</p>
+        </div>
+    </section>
+
+    <!-- Research Content -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Signature Aviation is positioned to transform its FBO and hangar operations through Industry 4.0 principles. The transition involves moving from high-touch manual workflows to "Smart Hangar" environments utilizing modular automation. This strategy decouples labor dependencies from peak seasonal demand, ensuring consistent service levels. By integrating autonomous material handling and precision robotic assistive technologies, Signature can achieve flexible manufacturing standards suitable for the low-volume, high-variability nature of business aviation.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+                <h3>Operations Overview</h3>
+                <p><strong>Scale:</strong> 300+ global locations. Measured in high-value "events" (aircraft turns, maintenance cycles).</p>
+                <p><strong>Process Type:</strong> Discrete Manufacturing. Operations are batch-type (one-off repairs) or small-batch (fleet management).</p>
+            </div>
+            <div>
+                <h3>Current State</h3>
+                <p><strong>Facilities:</strong> Major hubs in US (Teterboro, Van Nuys) and Europe.</p>
+                <p><strong>Automation Level:</strong> Predominantly manual. Reliance on artisan craftsmanship and static equipment.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <h3>Pathway A: Collaborative Robots (Cobots)</h3>
+            <p><strong>Focus:</strong> Safety & Precision</p>
+            <p><strong>Application:</strong> Automated riveting, sanding, and polishing of airframe components; tending CNC machines for interior parts manufacturing. ISO/TS 15066 compliant operation near high-value assets.</p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h3>Pathway B: Autonomous Mobile Robots (AMRs)</h3>
+            <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+            <p><strong>Application:</strong> Transporting heavy components (engines, landing gear) and consumables. Eliminates technician "search time" and ensures JIT delivery of parts to the hangar floor.</p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <h3>Pathway C: Automated Inspection & Palletizing</h3>
+            <p><strong>Focus:</strong> Throughput & Yield</p>
+            <p><strong>Application:</strong> Drone/LiDAR fuselage inspection for structural integrity; automated loading of catering and baggage logistics. Increases defect detection rates and material handling speed.</p>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Model</h2>
+        <p>Based on a mid-sized facility deployment strategy.</p>
+        
+        <ul>
+            <li><strong>CAPEX Range:</strong> $60k – $120k per robotic cell (Cobot, AMR, or Inspection systems).</li>
+            <li><strong>OPEX Impact:</strong> 20-30% increase in Overall Equipment Effectiveness (OEE) driven by reduced downtime and higher quality yields.</li>
+            <li><strong>Payback Period:</strong> Target &lt; 18 months via labor reallocation to revenue-generating tasks and 15% reduction in material scrap.</li>
+        </ul>
+    </div>
+
+    <!-- Data Visualization Section -->
+    <div class="glass-card">
+        <h2>Financial Projections & Output Analysis</h2>
+        
+        <!-- Chart 1: Cumulative Savings -->
+        <h3>5-Year Cumulative Production Cost Savings</h3>
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+
+        <!-- Chart 2: Output Comparison -->
+        <h3 style="margin-top: 2rem;">Manual vs. Cobot-Assisted Output (Units/Hr)</h3>
+        <div class="chart-container">
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">Year 1: Foundation</div>
+                <p>Facility digital mapping; Pilot deployment of 2-3 AMRs; Installation of first Cobot cell for interior finishing.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 2: Expansion</div>
+                <p>Scale AMR fleet to 10 units; Deploy Automated Inspection (Pathway C); Integrate AMR fleet with WMS.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 3: Optimization</div>
+                <p>Implement AI-driven scheduling; Cobot "teach-back" learning; Target 15% OEE improvement.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 4: Scale</div>
+                <p>Standardize robotic cells across 25% of global footprint; Predictive maintenance integration.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 5: Autonomy</div>
+                <p>Full Smart Hangar ecosystem; 24/7 AMR operations; Data-driven global network optimization.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts for Charts -->
+    <script>
+        // Chart 1: Cumulative Cost Savings (Line Chart)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 250000, 600000, 1100000, 1800000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8', callback: function(value) { return '$' + value / 1000 + 'k'; } } 
+                    },
+                    x: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' } 
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Cobot Output (Bar Chart)
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        const outputChart = new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Sand/Finish', 'Rivet Assembly', 'Polishing', 'CNC Tending'],
+                datasets: [
+                    {
+                        label: 'Manual Output (Units/Hr)',
+                        data: [4, 6, 5, 3],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate-400
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted Output (Units/Hr)',
+                        data: [8, 12, 10, 7],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)', // Electric Purple
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' } 
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
