@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Integration Report: Pizza Hut Fort Wayne</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(124, 58, 237, 0.3);
+            --accent: #7c3aed;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 10% 20%, #1e1b4b 0%, var(--bg-color) 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+            border-color: rgba(124, 58, 237, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .pathway-card {
+            border-left: 3px solid var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <h1>Robotics Strategic Report</h1>
+        <p style="font-size: 1.2rem; color: var(--text-secondary);">Client: Pizza Hut of Fort Wayne | Open Droids Consultation</p>
+    </header>
+
+    <div class="glass-card" style="margin-top: 30px;">
+        <h2>Executive Summary</h2>
+        <p>
+            The integration of robotics within the hospitality sector represents a pivotal shift from traditional labor-intensive models to technology-enhanced service ecosystems. For Pizza Hut of Fort Wayne, adopting robotics offers a strategic avenue to future-proof operations, enhance customer experience, and drive sustainable growth. The vision is to establish a flagship location that utilizes automation to set new benchmarks for operational efficiency and customer satisfaction in the QSR sector.
+        </p>
+    </div>
+
+    <!-- ROI Dashboard -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Financial Modeling Dashboard</h2>
+            <span class="tag">PROJECTION</span>
+        </div>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-value">$60k - $85k</div>
+                <div class="metric-label">Est. CAPEX (Pilot)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">10-12 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">15-25%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Entity:</strong> Pizza Hut of Fort Wayne</p>
+            <p><strong>Cuisine Type:</strong> Italian-American (QSR/Fast Casual)</p>
+            <p><strong>Current State:</strong> Hybrid counter-service and delivery. High-volume environment with reliance on traditional labor for FOH runners and BOH frying.</p>
+            <br>
+            <h3>Key Challenges:</h3>
+            <ul>
+                <li>Peak hour bottlenecks at pickup counters.</li>
+                <li>Food quality consistency during rush.</li>
+                <li>Labor volatility and staffing shortages.</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1 (Pilot):</strong> Deploy 1 Serving Robot + 2 AI Kiosks. Focus on data collection and staff training.</li>
+                <li><strong>Year 2 (Scale):</strong> Back-of-House automation (Frying stations) + Voice AI Drive-Thru.</li>
+                <li><strong>Year 3 (Predictive):</strong> Fleet connectivity and predictive prep analytics.</li>
+                <li><strong>Year 4 (Autonomy):</strong> Tableside payment via robots. Experience Managers only.</li>
+                <li><strong>Year 5 (Maturity):</strong> Full ecosystem ROI. Brand expansion.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-3">
+            <div class="pathway-card">
+                <h3>A: Front-of-House AMRs</h3>
+                <p>Autonomous runners for food delivery. Reduces server fatigue and increases table turnover.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>B: Back-of-House Automation</h3>
+                <p>Robotic frying arms. Ensures 100% consistency and safety in hot oil environments.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>C: AI Voice/Kiosks</h3>
+                <p>Upselling agents. Increases check size by 10-15% and reduces order errors.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <p>Projected savings from labor displacement and retention.</p>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Table Turnover Impact</h2>
+            <p>Manual vs. Robot-Assisted (Per Hour)</p>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [18000, 45000, 85000, 140000, 210000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value / 1000 + 'k'; } },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Bar Chart
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Rush', 'Dinner Rush', 'Weekend Peak'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [4, 5, 6],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [5.5, 7, 9],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
