@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Aviation - Robotics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--deep-space);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--aviation-orange);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--sky-blue);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card.purple {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: var(--electric-purple);
+        }
+
+        .metric-card.orange {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--aviation-orange);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px currentColor;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-1 {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        /* Pathway Styles */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pathway-list li {
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 10px;
+            padding: 12px;
+            border-left: 3px solid var(--electric-purple);
+            border-radius: 4px;
+        }
+
+        .pathway-list li strong {
+            color: var(--sky-blue);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>SIGNATURE AVIATION</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Strategic Research: Robotics & Automation Integration</p>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>A strategic vision to revolutionize FBO operations through robotic automation. This initiative targets a 35-45% reduction in operational expenditures while establishing Signature Aviation as the premier standard for hygiene and efficiency in private aviation.</p>
+            <p>Focus areas include autonomous interior detailing, UV-C sterilization, and AI-driven exterior maintenance, all integrated into a unified operational workflow.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Network Scale:</strong> 200+ Global Locations</p>
+            <p><strong>Primary Hubs:</strong> North America, Europe, Asia-Pacific</p>
+            <p><strong>Operational Focus:</strong> High-velocity BizAv & GA Turnarounds</p>
+            <p><strong>Current Challenge:</strong> Labor-intensive manual cleaning protocols limiting throughput during peak windows.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">$150K</span>
+                <span class="metric-label">Max CAPEX / Unit</span>
+            </div>
+            <div class="metric-card purple">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">OPEX Reduction</span>
+            </div>
+            <div class="metric-card orange">
+                <span class="metric-value">&lt;24 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+            *Estimates based on pilot deployment at top-tier FBO hubs.
+        </p>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway A: Autonomous Cabin Cleaning</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">SLAM-enabled robots for vacuuming and detailing. Reduces man-hours by 40%.</span>
+                </li>
+                <li>
+                    <strong>Pathway B: UV-C Disinfection Robots</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Autonomous pathing for cabin sterilization. Verifiable sanitation records for clients.</span>
+                </li>
+            </ul>
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway C: Exterior Washing Systems</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Automated gantry systems reducing water usage by 30% and enabling weather-independent washing.</span>
+                </li>
+                <li>
+                    <strong>Pathway D: AI Inspection Bots</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Computer vision drones for fuselage damage detection. Reduces pre-flight checks to minutes.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Visualizations -->
+    <section class="glass-card">
+        <h2>Performance Analytics</h2>
+        <div class="grid-2">
+            <div>
+                <h3 style="text-align: center; font-size: 1rem; color: var(--sky-blue);">5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3 style="text-align: center; font-size: 1rem; color: var(--aviation-orange);">Labor Hour Redistribution</h3>
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="grid-1" style="margin-top: 20px;">
+            <div>
+                <h3 style="text-align: center; font-size: 1rem; color: var(--electric-purple);">Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap (5-Year Phased)</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid var(--aviation-orange); padding-left: 15px;">
+                <strong style="color: var(--aviation-orange);">Year 1: Pilot Phase</strong>
+                <p style="margin: 0; font-size: 0.9rem;">Deploy Pathway A & B at 3 key hubs (e.g., Teterboro, Van Nuys). Establish baseline KPIs.</p>
+            </div>
+            <div style="border-left: 3px solid var(--electric-purple); padding-left: 15px;">
+                <strong style="color: var(--electric-purple);">Year 2: Evaluation & Scale</strong>
+                <p style="margin: 0; font-size: 0.9rem;">Refine workflows. Expand Pathway A to top 20 FBOs. Centralize fleet management.</p>
+            </div>
+            <div style="border-left: 3px solid var(--sky-blue); padding-left: 15px;">
+                <strong style="color: var(--sky-blue);">Year 3: Exterior Expansion</strong>
+                <p style="margin: 0; font-size: 0.9rem;">Infrastructure upgrades for Pathway C (Exterior Washing) at major hubs.</p>
+            </div>
+            <div style="border-left: 3px solid #fff; padding-left: 15px;">
+                <strong style="color: #fff;">Year 4: AI & Inspection</strong>
+                <p style="margin: 0; font-size: 0.9rem;">Rollout of Pathway D. Integration of all data into Digital Twin dashboard.</p>
+            </div>
+            <div style="border-left: 3px solid #888; padding-left: 15px;">
+                <strong style="color: #888;">Year 5: Optimization</strong>
+                <p style="margin: 0; font-size: 0.9rem;">Global network saturation. Focus on sustainability metrics and OTA updates.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Global Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.2, 5.8, 11.5, 18.0],
+                borderColor: '#0ea5e9', // Sky Blue
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // 2. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed (Concierge)', 'Eliminated', 'Retained (Oversight)'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: [
+                    '#7c3aed', // Electric Purple
+                    '#f97316', // Aviation Orange
+                    '#0ea5e9'  // Sky Blue
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 3. Throughput Bar Chart
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Light Jet', 'Midsize Jet', 'Large Cabin', 'Ultra-Long Range'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [8, 5, 3, 1.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [14, 10, 6, 3],
+                    backgroundColor: '#7c3aed', // Electric Purple
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
