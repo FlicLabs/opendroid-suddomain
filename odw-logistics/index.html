@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODW Logistics: Robotics Integration Strategy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--accent-glow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Metrics Dashboard */
+        .metrics-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.15) 0%, rgba(30, 41, 59, 0.7) 100%);
+            border: 1px solid var(--accent-glow);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        
+        .chart-wrapper {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        li:before {
+            content: "›";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent);
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .metrics-row { flex-direction: column; }
+            .metric-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>ODW Logistics</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">
+            Strategic Roadmap for Robotics & Automation Integration
+        </p>
+        <p style="color: var(--accent); font-weight: 600; margin-top: 10px;">
+            Prepared by Open Droids | Senior Consultation & Research
+        </p>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <section>
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>
+                ODW Logistics stands at a pivotal juncture. The transition to "Cognitive Logistics" represents a shift from reactive fulfillment to a proactive, automated ecosystem. By integrating Autonomous Mobile Robots (AMRs) and AI-driven sorting, ODW addresses critical bottlenecks in labor dependency and spatial inefficiency. This strategy creates a fluid, scalable infrastructure capable of handling demand spikes without linear cost increases, positioning ODW as a tech-enabled supply chain architect.
+            </p>
+        </div>
+    </section>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <section style="margin-top: 40px;">
+        <h2>Financial Dashboard</h2>
+        <div class="metrics-row">
+            <div class="metric-card">
+                <div class="metric-value">$75k</div>
+                <div class="metric-label">Est. CAPEX / Station</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35%</div>
+                <div class="metric-label">Target OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-label">Avg. Payback Period</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>Capital Expenditure (CAPEX)</h3>
+                <p>Estimated based on mid-sized 3PL facility scaling. Includes hardware, software, and integration.</p>
+                <ul>
+                    <li>Hardware (AMRs/ASRS): 70%</li>
+                    <li>Software/WCS: 20%</li>
+                    <li>Training/Integration: 10%</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h3>Operational Impact (OPEX)</h3>
+                <p>Primary drivers for cost reduction and efficiency gains.</p>
+                <ul>
+                    <li>Labor Optimization: 30-40% reduction in repetitive tasks</li>
+                    <li>Energy Efficiency: 25% decrease via electric AMRs</li>
+                    <li>Error Reduction: 99.99% picking accuracy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY PATHWAYS -->
+    <section style="margin-top: 40px;">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-3">
+            <div class="glass-card">
+                <h3>Pathway A: AMRs</h3>
+                <h4>Internal Transport</h4>
+                <p>Automates movement between zones. Reduces walking time by 60%.</p>
+                <p><strong style="color: var(--accent);">ROI Focus:</strong> Throughput & Labor</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway B: ASRS</h3>
+                <h4>Robotic Picking</h4>
+                <p>Goods-to-person systems maximizing vertical density and accuracy.</p>
+                <p><strong style="color: var(--accent);">ROI Focus:</strong> Density & Accuracy</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway C: AI Logic</h3>
+                <h4>Predictive Logistics</h4>
+                <p>AI forecasting for inventory placement and dynamic fleet allocation.</p>
+                <p><strong style="color: var(--accent);">ROI Focus:</strong> Predictive Efficiency</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHARTS SECTION -->
+    <section class="charts-container">
+        <h2>Performance Visualizations</h2>
+        
+        <div class="chart-wrapper">
+            <h3>5-Year Cumulative Savings (Projected)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+
+        <div class="chart-wrapper">
+            <h3>Throughput Comparison: Manual vs. Robotic</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section style="margin-top: 40px;">
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year-label">Year 1: Foundation & Pilot</div>
+                    <p>Workflow mapping, Pilot AMR deployment (Inbound), WMS integration, Super User training.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 2: Expansion</div>
+                    <p>Scale AMR coverage to 50%, deploy ASRS for high-density SKUs, transition to GTP model.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 3: Intelligence</div>
+                    <p>AI-Driven Logistics integration, Robotic Arm deployment at picking stations, 70% automation.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 4: Maturity</div>
+                    <p>Full facility optimization, expansion to secondary hubs, standardized tech stack.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 5: Innovation</div>
+                    <p>Advanced specialized robotics, Data-as-a-Service monetization, autonomous fulfillment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // CHART 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.8)');
+    savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.1)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [100000, 450000, 950000, 1600000, 2400000],
+                borderColor: '#7c3aed',
+                backgroundColor: savingsGradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#94a3b8',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8', callback: (value) => '$' + value / 1000 + 'k' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // CHART 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Order Picking', 'Inventory Put-away', 'Sorting'],
+            datasets: [
+                {
+                    label: 'Manual (Units/Hr)',
+                    data: [60, 80, 45],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Units/Hr)',
+                    data: [160, 220, 180],
+                    backgroundColor: '#7c3aed',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#fff' } },
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
