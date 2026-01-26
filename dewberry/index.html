@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dewberry: Industry 4.0 Strategic Report</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .subtitle {
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Metric Cards (Glowing) */
+        .metric-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 5px 0;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--primary);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .year-tag {
+            font-weight: 700;
+            color: #fff;
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="subtitle">Open Droids - Industrial Automation</div>
+        <h1>Strategic Robotics Report</h1>
+        <h2 style="border: none; margin: 0; font-size: 1.2rem; color: #fff;">Client: Dewberry</h2>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The transition to Industry 4.0 is essential for Dewberry to maintain competitiveness. The vision focuses on a "connected factory" ecosystem using cyber-physical systems for decentralized decision-making. By adopting flexible manufacturing, Dewberry can shift from rigid mass-production to agile high-mix/low-volume configurations, allowing rapid adaptation to customer specifications while maintaining efficiency.</p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-label">CAPEX Per Cell</div>
+                <div class="metric-value">$60k-$120k</div>
+                <p style="margin:0; font-size:0.8rem">Entry to High-End</p>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Target OEE Increase</div>
+                <div class="metric-value">+25%</div>
+                <p style="margin:0; font-size:0.8rem">Avg. Industry Baseline</p>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 18 Mo</div>
+                <p style="margin:0; font-size:0.8rem">Via Labor & Scrap</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Research Areas -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <h3>Current State</h3>
+            <p><strong>Production Scale:</strong> Medium-to-Large scale with high-volume discrete components.</p>
+            <p><strong>Facilities:</strong> Centralized Hub (150k sq ft) + Regional Satellites (50k sq ft).</p>
+            <h3>Process Type</h3>
+            <p><strong>Discrete Manufacturing:</strong> Primary focus on assembly and machining.</p>
+            <p><strong>Process Manufacturing:</strong> Secondary focus on finishing/coating.</p>
+            <p><strong>Bottlenecks:</strong> Manual inspection and palletizing cause significant WIP delays.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            <ul>
+                <li><strong style="color:#fff">Pathway A: Cobots</strong><br>Focus: Machine Tending & Assembly. Safety & Precision.</li>
+                <li><strong style="color:#fff">Pathway B: AMRs</strong><br>Focus: Material Transport. WIP Flow efficiency.</li>
+                <li><strong style="color:#fff">Pathway C: Automated EO</strong><br>Focus: End-of-Line Palletizing. Throughput & Yield.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Interactive Charts Section -->
+    <div class="glass-card">
+        <h2>Interactive Analytics</h2>
+        <div class="grid-2">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Output Comparison (Units/Hr)</h3>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="year-tag">Year 1</span>
+                <strong>Pilot Phase:</strong> Digital audit, Cobot pilot cell installation, baseline data collection.
+            </div>
+            <div class="timeline-item">
+                <span class="year-tag">Year 2</span>
+                <strong>Expansion:</strong> Rollout of Pathway A (Cobots) & Pathway C (End-of-Line). MES integration.
+            </div>
+            <div class="timeline-item">
+                <span class="year-tag">Year 3</span>
+                <strong>Logistics:</strong> Deployment of Pathway B (AMRs) for autonomous material flow.
+            </div>
+            <div class="timeline-item">
+                <span class="year-tag">Year 4</span>
+                <strong>Intelligence:</strong> AI & Machine Learning for predictive maintenance and quality analysis.
+            </div>
+            <div class="timeline-item">
+                <span class="year-tag">Year 5</span>
+                <strong>Ecosystem:</strong> Digital Twin implementation for dynamic, real-time production optimization.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 250000, 600000, 1100000, 1800000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#7c3aed',
+                        bodyColor: '#e2e8f0',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Manual vs Cobot Bar Chart
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Assembly', 'Packing', 'Machine Tending', 'Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual',
+                        data: [45, 30, 50, 40],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate-400
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cobot-Assisted',
+                        data: [65, 55, 75, 70],
+                        backgroundColor: '#7c3aed', // Purple-600
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#e2e8f0' } },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
