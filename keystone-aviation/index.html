@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keystone Aviation Automation Report</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-sky: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent-sky), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        /* Dashboard Metrics */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .purple-glow { color: var(--accent-purple); text-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
+        .sky-glow { color: var(--accent-sky); text-shadow: 0 0 20px rgba(14, 165, 233, 0.4); }
+        .orange-glow { color: var(--accent-orange); text-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
+
+        /* Charts Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways List */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent-sky);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            color: var(--accent-sky);
+            font-size: 1.1rem;
+        }
+
+        /* HTML Specific Text Styling */
+        p { line-height: 1.6; color: #cbd5e1; }
+        strong { color: #fff; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="card">
+        <h1>Keystone Aviation Automation Strategy</h1>
+        <div class="subtitle">Strategic Research Report by Open Droids | Senior Consultation & Research</div>
+        <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 15px;">
+            <strong>Executive Vision:</strong> This report visualizes the roadmap toward robotic cleaning and maintenance automation, targeting a 45% reduction in operational expenditures and a sub-24-month payback period. The following dashboard and analysis detail the integration of autonomous systems into Keystone Aviation's core operations.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h2 style="margin-left: 10px;">Financial Dashboard</h2>
+    <div class="grid-3">
+        <div class="metric-card">
+            <div class="metric-label">CAPEX Per Unit</div>
+            <div class="metric-value purple-glow">$75k - $150k</div>
+            <div class="metric-label">Robotics Hardware</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">OPEX Reduction</div>
+            <div class="metric-value sky-glow">35% - 45%</div>
+            <div class="metric-label">Labor & Consumables</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value orange-glow">&lt; 24 Months</div>
+            <div class="metric-label">ROI Timeline</div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Fleet Composition:</strong> Mid-size business jets and regional turboprops. High utilization rates requiring rapid turnaround.</p>
+            <p><strong>Operational Model:</strong> Currently manual-heavy for cabin detailing and exterior wash. Hubs located at high-traffic regional airports.</p>
+            <p><strong>Challenge:</strong> Labor volatility, hygiene standards, and tight turnaround windows necessitate high-efficiency automation.</p>
+        </div>
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <ul class="pathway-list">
+                <li class="pathway-item">
+                    <div class="pathway-title">A. Autonomous Cabin Cleaning</div>
+                    <small>Self-navigating units for vacuuming and wiping. Reduces ground time.</small>
+                </li>
+                <li class="pathway-item" style="border-left-color: var(--accent-purple);">
+                    <div class="pathway-title" style="color: var(--accent-purple);">B. UV-C Disinfection</div>
+                    <small>Chemical-free sanitation for high-touch surfaces. Enhances passenger trust.</small>
+                </li>
+                <li class="pathway-item" style="border-left-color: var(--accent-orange);">
+                    <div class="pathway-title" style="color: var(--accent-orange);">C. Exterior Washing</div>
+                    <small>Gantry/Robotic systems reducing water usage and manual labor.</small>
+                </li>
+                <li class="pathway-item" style="border-left-color: #22c55e;">
+                    <div class="pathway-title" style="color: #22c55e;">D. AI Inspection Bots</div>
+                    <small>Predictive maintenance via visual/thermal anomaly detection.</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="card">
+        <h2>Performance Analytics</h2>
+        <div class="grid-2">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 30px; text-align: center;">
+            <h3>Labor Hour Redistribution Post-Automation</h3>
+            <div class="chart-container" style="height: 250px; width: 50%; margin: 0 auto;">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap (5-Year Strategy)</h2>
+        <div class="grid-2">
+            <div>
+                <p><strong>Year 1: Pilot Phase</strong><br>Deploy 2 Cabin Cleaners & 1 UV-C unit at primary hub. Focus on SOP development.</p>
+                <p><strong>Year 2: Expansion</strong><br>Integrate Exterior Washing Systems. Connect data streams to central maintenance software.</p>
+                <p><strong>Year 3: Scaling</strong><br>Roll out to secondary hubs. Deploy AI Inspection Bots. 50% automation coverage.</p>
+            </div>
+            <div>
+                <p><strong>Year 4: Automation</strong><br>85% cleaning automation. Predictive maintenance workflows active. Reduce AOG time.</p>
+                <p><strong>Year 5: Optimization</strong><br>Full ROI achieved. Swarm logic integration. Focus on energy efficiency upgrades.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 450000, 900000, 1500000, 2200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Ext. Wash', 'Disinfection', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours/Ac)',
+                    data: [2.5, 4.0, 1.0, 1.5],
+                    backgroundColor: '#94a3b8',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Hours/Ac)',
+                    data: [1.0, 1.5, 0.5, 0.5],
+                    backgroundColor: '#0ea5e9',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Hours' } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Maintenance Tech Roles', 'Redundant (Attrition)', 'Upskilled (Robot Ops)'],
+            datasets: [{
+                data: [40, 25, 15, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316', // Aviation Orange
+                    '#22c55e'  // Green
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'right', labels: { boxWidth: 12 } } 
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
