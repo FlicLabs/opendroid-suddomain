@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentastar Aviation Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --bg-gradient: linear-gradient(135deg, #1e293b, #0f172a);
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-card {
+            text-align: center;
+            border-top: 4px solid var(--aviation-orange);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, var(--sky-blue), var(--aviation-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--sky-blue);
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid var(--sky-blue);
+        }
+
+        li strong {
+            color: var(--aviation-orange);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .roadmap-item {
+            border-left-color: var(--aviation-orange);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-grid, .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="card header-card">
+        <h1>PENTASTAR AVIATION</h1>
+        <p style="color: var(--text-dim); font-size: 1.1rem;">Strategic Automation Research & Robotics Integration Proposal</p>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="content-grid">
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>The integration of robotic automation represents a paradigm shift for Pentastar Aviation's operational efficiency. By deploying a specialized fleet of cleaning and inspection robots, Pentastar can achieve hospital-grade sanitization, reduce aircraft downtime, and optimize labor allocation. This report details a strategic vision focusing on high-ROI pathways, targeting a 35-45% reduction in operational expenses with a payback period under 24 months.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Headquarters:</strong> Waterford, MI (KPTK)</p>
+            <p><strong>Fleet Size:</strong> 100+ Aircraft (Light to Long-Range Jets)</p>
+            <p><strong>Operations:</strong> Full-service FBO, MRO, and Charter Services.</p>
+            <p><strong>Current Model:</strong> Labor-intensive manual detailing and inspection processes.</p>
+        </div>
+    </div>
+
+    <!-- Aviation Efficiency Dashboard -->
+    <div class="card">
+        <h2>Aviation Efficiency Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">24 <span style="font-size: 1rem;">MO</span></span>
+                <span class="metric-label">Max Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">OPEX Reduction Target</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$150k</span>
+                <span class="metric-label">Max Unit Cost (CAPEX)</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">5 Yrs</span>
+                <span class="metric-label">Phased Deployment</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="card">
+        <h2>Performance Analytics</h2>
+        <div class="charts-grid">
+            <div class="chart-container full-width">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="turnaroundChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways & Roadmap -->
+    <div class="content-grid">
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <ul>
+                <li>
+                    <strong>Pathway A: Autonomous Cabin Cleaning</strong>
+                    Robotic vacuums and sanitizers for interior detailing using LiDAR navigation.
+                </li>
+                <li>
+                    <strong>Pathway B: UV-C Disinfection</strong>
+                    Automated UV-C light systems for pathogen neutralization during turnarounds.
+                </li>
+                <li>
+                    <strong>Pathway C: Exterior Washing</strong>
+                    Water-efficient robotic gantries for fuselage cleaning without scaffolding.
+                </li>
+                <li>
+                    <strong>Pathway D: AI Inspection Bots</strong>
+                    Visual and thermal imaging drones for automated airframe maintenance checks.
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li class="roadmap-item"><strong>Year 1:</strong> Pilot Phase (Audit & 2 Unit Deployment)</li>
+                <li class="roadmap-item"><strong>Year 2:</strong> Fleet Integration (Expansion & Training)</li>
+                <li class="roadmap-item"><strong>Year 3:</strong> Full Deployment (UV-C & Exterior Systems)</li>
+                <li class="roadmap-item"><strong>Year 4:</strong> Network Expansion (Secondary Hubs)</li>
+                <li class="roadmap-item"><strong>Year 5:</strong> Autonomous Optimization (AI Ecosystem)</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Cost Savings Line Chart
+    new Chart(document.getElementById('savingsChart'), {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 250000, 600000, 1100000, 1800000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#f97316'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: '5-Year Cumulative Cost Savings' } }
+        }
+    });
+
+    // 2. Turnaround Time Bar Chart
+    new Chart(document.getElementById('turnaroundChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Standard Clean', 'Deep Clean', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [2.5, 4.0, 1.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [1.2, 2.5, 0.75],
+                    backgroundColor: '#f97316',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Turnaround Time Comparison' } }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    new Chart(document.getElementById('laborPieChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['High-Value Maintenance', 'Routine Cleaning', 'Supervision/Logistics'],
+            datasets: [{
+                data: [50, 30, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#f97316', // Aviation Orange
+                    '#334155'  // Slate
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Labor Hour Redistribution Post-Automation' } }
+        }
+    });
+</script>
+
+</body>
+</html>
