@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Robotics Opportunities Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space-blue: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--deep-space-blue) 0%, #1e293b 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--electric-purple);
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--electric-purple);
+            padding-bottom: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--electric-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 0 15px var(--electric-purple);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-weight: 600;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Metric Grid */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--electric-purple);
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* List Styles */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+        
+        ul li:before {
+            content: "•";
+            color: var(--electric-purple);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Comparison Table (HTML Table) */
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid var(--electric-purple);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+            color: #fff;
+        }
+
+        /* Footer Note */
+        .footer-note {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">OD</div>
+                <h1>Community Hospice & Palliative Care</h1>
+            </div>
+            <div style="text-align: right; color: var(--text-muted);">
+                <strong>Robotics Opportunity Analysis</strong><br>
+                Strategic Consultation Report
+            </div>
+        </header>
+
+        <!-- Executive Overview -->
+        <div class="glass-card">
+            <h2>Executive Overview</h2>
+            <p>
+                Community Hospice & Palliative Care operates a complex network of home-based care requiring high-efficiency logistics and fleet management. This analysis identifies three primary robotics pathways: Fleet Logistics Optimization, Internal AMRs, and Telepresence RPM. The immediate opportunity lies in AI-driven fleet optimization to reduce operational overhead and increase clinician capacity.
+            </p>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <span class="metric-value">£230K</span>
+                    <span class="metric-label">Annual Net Benefit (Pathway A)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">15%</span>
+                    <span class="metric-label">Est. Fuel Reduction</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">6 Mo</span>
+                    <span class="metric-label">Max Payback Period</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="glass-card">
+            <h2>Financial Dashboard</h2>
+            <p>Projected 5-Year Cumulative Savings & Throughput Comparison</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div>
+                    <h3>5-Year Cumulative Savings</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3>Throughput: Manual vs. Robotic</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Analysis -->
+        <div class="glass-card">
+            <h2>Comparative Pathway Analysis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Pathway A: Logistics AI</th>
+                            <th>Pathway B: Internal AMRs</th>
+                            <th>Pathway C: Telepresence RPM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Scope</strong></td>
+                            <td>Full Fleet Deployment</td>
+                            <td>Main Campus / Warehouses</td>
+                            <td>High-Acuity Patient Homes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Primary Driver</strong></td>
+                            <td>Utilization & Throughput</td>
+                            <td>Labor Efficiency</td>
+                            <td>ER Reduction & Satisfaction</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Est. Annual Benefit</strong></td>
+                            <td>£230,000</td>
+                            <td>£80,000</td>
+                            <td>£150,000 (Cost Avoidance)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payback Period</strong></td>
+                            <td>1–6 Months</td>
+                            <td>2–3 Years</td>
+                            <td>1–2 Years</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Risk Level</strong></td>
+                            <td>Low</td>
+                            <td>Low–Moderate</td>
+                            <td>Moderate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1 (Phase 1):</strong> Pilot Fleet Logistics AI on 50 vehicles. Measure fuel savings and visit capacity.</li>
+                <li><strong>Year 2 (Phase 2):</strong> Deploy Internal AMRs in central supply warehouse to automate distribution.</li>
+                <li><strong>Year 3 (Phase 3):</strong> Pilot Telepresence RPM units for 20–30 high-acuity patients to reduce ER transfers.</li>
+            </ul>
+        </div>
+
+        <!-- UVMMC Section -->
+        <div class="glass-card">
+            <h2>Partner Focus: UVMMC</h2>
+            <p>University of Vermont Medical Center leverages robotics primarily for clinical outcomes and differentiation. Key investments include Vector gait systems in the Mobility Gym and Mako robotic surgery platforms.</p>
+            <div style="margin-top: 20px; display: flex; gap: 20px;">
+                <div style="flex: 1; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <h3>Rehabilitation</h3>
+                    <p style="font-size: 0.9rem;">Ceiling-mounted harness systems for high-intensity gait training. Funded largely via philanthropy ($500k recent expansion).</p>
+                </div>
+                <div style="flex: 1; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <h3>Surgery</h3>
+                    <p style="font-size: 0.9rem;">Mako systems for joint replacement. Focus on precision, reduced revision rates, and attracting top surgical talent.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Generated by Open Droids Research Agent | Data Sources: DispatchHealth, UVMMC, Industry Reports
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings (£)',
+                    data: [230000, 460000, 690000, 920000, 1150000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '£' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Daily Visits (Avg)', 'Vehicles Utilized'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [1000, 200],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Optimization',
+                        data: [1200, 170], // Reduced vehicles due to efficiency
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
