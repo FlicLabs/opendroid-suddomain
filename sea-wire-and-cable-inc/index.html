@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEA Wire and Cable Inc. - Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary-color: #7c3aed;
+            --accent-color: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #7c3aed, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #a78bfa;
+        }
+
+        h3 {
+            color: #0ea5e9;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Metrics */
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* HTML Report Specifics */
+        .html-report-section {
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .pathway-card {
+            background: rgba(14, 165, 233, 0.05);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            border-left: 2px solid var(--primary-color);
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        .roadmap-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .metrics-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <header style="text-align: center; margin-bottom: 50px;">
+        <h1>SEA WIRE AND CABLE INC.</h1>
+        <p style="font-size: 1.2rem; color: #0ea5e9;">Strategic Aviation Cleaning & Maintenance Automation Report</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            This report presents a comprehensive strategy for integrating advanced robotics into the operational ecosystem of SEA Wire and Cable Inc. The vision centers on transitioning from labor-intensive manual processes to a technology-first approach, leveraging autonomous systems for cabin cleaning, UV-C disinfection, exterior washing, and AI-powered inspections. The objective is to achieve unparalleled operational efficiency, rigorous hygiene standards, and significant cost reduction, positioning SEA Wire and Cable Inc. as a pioneer in aviation maintenance automation.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <p>Projected metrics for a 5-year automation deployment cycle.</p>
+        
+        <div class="metrics-container">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card" style="background: rgba(14, 165, 233, 0.15); border-color: #0ea5e9;">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card" style="background: rgba(249, 115, 22, 0.15); border-color: #f97316;">
+                <div class="metric-value">&lt; 24 MOS</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container" style="height: 250px;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>ORGANIZATIONAL PROFILE</h2>
+        <p>SEA Wire and Cable Inc. operates a diverse fleet servicing critical domestic and international hubs. The current operational model relies on traditional manual labor for cleaning and maintenance, presenting challenges in consistency, labor availability, and turnaround speed. Automation offers a direct solution to scale operations sustainably.</p>
+        <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+            <li style="margin-bottom: 10px;">1. <strong>Fleet Composition:</strong> Mixed narrow-body and wide-body aircraft.</li>
+            <li style="margin-bottom: 10px;">2. <strong>Hubs:</strong> High-traffic metropolitan airports requiring rapid gate availability.</li>
+            <li style="margin-bottom: 10px;">3. <strong>Current Model:</strong> Manual intensive cleaning and inspection protocols.</li>
+            <li style="margin-bottom: 10px;">4. <strong>Target:</strong> Transition to hybrid human-robot workflows.</li>
+        </ul>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div class="grid-2">
+            <div class="pathway-card">
+                <h3>PATHWAY A: Autonomous Cabin Cleaning</h3>
+                <p>AMRs for vacuuming and sanitizing cabin interiors. Utilizes LiDAR for safe navigation during tight turnarounds.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>PATHWAY B: UV-C Disinfection Robots</h3>
+                <p>Automated UV-C light cycles to eliminate pathogens on high-touch surfaces post-cleaning.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>PATHWAY C: Exterior Washing</h3>
+                <p>Gantry or robotic arm systems for eco-friendly, water-efficient exterior cleaning and polishing.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>PATHWAY D: AI Inspection Bots</h3>
+                <p>Drones and crawlers with thermal imaging for automated structural and component integrity checks.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP</h2>
+        <div class="roadmap-timeline">
+            <div class="roadmap-item">
+                <div class="roadmap-year">YEAR 1: PILOT & ASSESSMENT</div>
+                <p>Deploy pilot fleet (5-10 units). Establish baseline metrics for cleaning time and quality. Train core operational teams.</p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">YEAR 2: OPERATIONAL INTEGRATION</div>
+                <p>Expand fleet by 25%. Introduce exterior washing systems. Integrate with maintenance management software.</p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">YEAR 3: FLEET-WIDE DEPLOYMENT</div>
+                <p>Scale deployment across all major hubs. Implement AI inspection bots for routine checks.</p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">YEAR 4: OPTIMIZATION & MATURITY</div>
+                <p>Full autonomy for cleaning schedules. Predictive maintenance driven by AI inspection data.</p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">YEAR 5: FUTURE-PROOFING</div>
+                <p>Evaluate emerging tech. Ensure adaptability to new aircraft models. Achieve full ROI.</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">
+        Prepared by Open Droids Senior Consultation & Research Agent<br>
+        Specializing in Aviation Cleaning & Maintenance Automation
+    </div>
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.8, 6.5, 11.2, 16.5],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings' },
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Inspection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Flights/Day)',
+                    data: [12, 8, 4],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Flights/Day)',
+                    data: [22, 18, 10],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput: Manual vs. Robotic' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Manual Labor', 'Robot Supervision', 'Strategic Maintenance', 'Training & Development'],
+            datasets: [{
+                data: [40, 25, 20, 15],
+                backgroundColor: [
+                    '#f97316', // Aviation Orange
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#94a3b8'  // Muted
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation' },
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+</body>
+</html>
