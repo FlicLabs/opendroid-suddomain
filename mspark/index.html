@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mspark Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --primary: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-deep);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Pathways */
+        .pathway-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--glass-border);
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        /* Utility */
+        .text-center { text-align: center; }
+        .mb-4 { margin-bottom: 24px; }
+        .highlight { color: var(--primary); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="glass-card" style="text-align: center; margin-top: 20px;">
+            <h1>MSPARK AUTOMATION REPORT</h1>
+            <p style="color: var(--text-muted);">Strategic Robotics Integration & ROI Forecast</p>
+            <div style="margin-top: 16px; font-size: 0.85rem; color: #fff; background: rgba(255,255,255,0.05); display: inline-block; padding: 4px 12px; border-radius: 20px;">
+                OPEN DROIDS • SENIOR CONSULTATION
+            </div>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="glass-card">
+            <h2>Hospitality ROI Dashboard</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">50</div>
+                    <div class="metric-label">Total Locations</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$60k</div>
+                    <div class="metric-label">Avg CAPEX Per Site</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">-25%</div>
+                    <div class="metric-label">Labor Cost Target</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">14mo</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.9rem; margin-top: 16px;">
+                <span class="highlight">Strategic Focus:</span> Front-of-House Support, Back-of-House Consistency, AI Upselling.
+            </p>
+        </div>
+
+        <!-- Strategic Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-list">
+                <div class="pathway-item">
+                    <h3>A. Front-of-House Serving</h3>
+                    <p><strong>Focus:</strong> Table Turnover & Staff Support.</p>
+                    <p>Autonomous Mobile Robots (AMRs) delivering food to tables. Frees servers to focus on upselling and guest experience.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>B. Back-of-House Cooking</h3>
+                    <p><strong>Focus:</strong> Consistency & Safety.</p>
+                    <p>Robotic arms for frying and grilling. Ensures exact cook parameters, reduces waste, and improves safety standards.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>C. AI Kiosks & Voice</h3>
+                    <p><strong>Focus:</strong> Upselling & Accuracy.</p>
+                    <p>AI-driven order taking (kiosk/drive-thru). Increases average check size by 5-8% via predictive upselling.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Charts -->
+        <div class="glass-card">
+            <h2>Financial Projections</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="font-size: 0.9rem; color: var(--text-muted);">5-Year Cumulative Labor Savings</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-size: 0.9rem; color: var(--text-muted);">Table Turnover Improvement</h3>
+                    <div class="chart-container">
+                        <canvas id="turnoverChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                *Estimates based on 50-location deployment of mixed robotic solutions (Serving + AI Kiosks).
+            </p>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap: Year 1 - 5</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year-label">Year 1: Pilot & Infrastructure</div>
+                    <p>Deploy Pathways A & C at 5 flagship locations. Establish IT integration and data benchmarking.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 2: Optimization</div>
+                    <p>Introduce Pathway B (Back-of-House). Refine navigation algorithms. Target 10% OPEX reduction.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 3: Expansion</div>
+                    <p>Roll out full Hybrid model to 50% of network. Launch Central Command Center.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 4: Standardization</div>
+                    <p>Full network deployment. Rebrand as "Tech-Forward Dining." Achieve 25% labor cost reduction.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year-label">Year 5: Next-Gen Ecosystem</div>
+                    <p>Hardware upgrades (V2.0). Autonomous drive-thru lanes. 100% automated curbside delivery.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>
+                Mspark stands at a critical juncture where robotics integration can solve the dual challenges of labor volatility and operational consistency. By implementing a phased approach—starting with serving support and AI order taking, then moving to automated cooking—Mspark can secure a <span class="highlight">14-month payback period</span> and sustainable margin growth. The vision is not to replace the human element of hospitality, but to elevate it, allowing staff to engage more meaningfully with guests while technology ensures precision and efficiency behind the scenes. This transition positions Mspark not just as a fast-casual provider, but as an industry innovator in the new era of dining.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart.js Global Defaults for Dark Mode
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Line Chart: Cumulative Labor Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [75000, 225000, 600000, 1100000, 1750000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Bar Chart: Table Turnover Rate
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Lunch Rush', 'Dinner Peak', 'Weekend'],
+                datasets: [
+                    {
+                        label: 'Manual (Current)',
+                        data: [2.1, 2.0, 1.8],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robot-Assisted',
+                        data: [2.8, 2.6, 2.4],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } },
+                scales: {
+                    y: { beginAtZero: true, max: 3.5, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
