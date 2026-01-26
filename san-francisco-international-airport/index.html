@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Automation Report: SFO</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --primary: #7c3aed;
+            --secondary: #0ea5e9;
+            --accent: #f97316;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p { color: var(--text-muted); }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            height: 300px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* List Styles */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            background: rgba(14, 165, 233, 0.05);
+            border-left: 3px solid var(--secondary);
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>SFO AUTOMATION STRATEGY</h1>
+        <p style="font-size: 1.2rem; color: #cbd5e1;">Senior Consultation Report | Open Droids Aviation Division</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            San Francisco International Airport (SFO) stands as a premier global gateway, handling millions of passengers annually with a commitment to innovation and operational excellence. The integration of robotic cleaning and maintenance automation represents a transformative opportunity to elevate SFO’s operational standards. This strategy envisions a future where autonomous systems work seamlessly alongside human crews to enhance hygiene, safety, and efficiency. By deploying specialized robotics, SFO can achieve unprecedented levels of cleanliness, reduce turnaround times for aircraft, and minimize operational disruptions. This initiative aligns with SFO’s broader goals of sustainability, technological leadership, and superior passenger experience.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card" style="background: rgba(14, 165, 233, 0.15); border-color: rgba(14, 165, 233, 0.4);">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card" style="background: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.4);">
+                <div class="metric-value">&lt; 24 Months</div>
+                <div class="metric-label">Projected Payback Period</div>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; text-align: center; margin-top: 15px;">
+            <em>Projections based on medium-scale deployment at a Tier-1 hub.</em>
+        </p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="card">
+        <h2>ORGANIZATIONAL PROFILE</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 300px;">
+                <h3>Hub Status</h3>
+                <p>Primary base for United Airlines; Key focus for Alaska Airlines. Major transpacific gateway.</p>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h3>Operational Model</h3>
+                <p>High-volume, rapid-turnaround environment. Current model relies on manual labor for cabin cleaning and inspection, creating bottlenecks during peak hours.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <ul class="pathway-list">
+            <li>
+                <strong>Pathway A: Autonomous Cabin Cleaning Robots</strong><br>
+                AMRs for vacuuming, trash collection, and surface sanitization. Reduces narrow-body cleaning time to < 15 minutes.
+            </li>
+            <li>
+                <strong>Pathway B: UV-C Disinfection Robots</strong><br>
+                Post-cleaning deployment for hospital-grade sterilization of high-touch surfaces and air filtration.
+            </li>
+            <li>
+                <strong>Pathway C: Exterior Aircraft Washing Systems</strong><br>
+                Precision robotic washers reducing water usage by 40% while maintaining paint integrity during overnight operations.
+            </li>
+            <li>
+                <strong>Pathway D: AI-Powered Inspection Bots</strong><br>
+                Drones/ground bots equipped with LiDAR for rapid FOD detection and fuselage structural integrity checks.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>IMPLEMENTATION ROADMAP</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-year">YEAR 1: PILOT PHASE</span>
+                <p>Deploy Pathway A & D in Terminal 2. Establish Automation Task Force. Baseline KPI measurement.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">YEAR 2: EXPANSION</span>
+                <p>Scale Pathway A to 20 units. Introduce Pathway B (UV-C) for overnight wide-body cleaning.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">YEAR 3: INTEGRATION</span>
+                <p>Full terminal rollout of Pathway A. Deploy Pathway C (Exterior Washing) at remote stands.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">YEAR 4: SYNERGY</span>
+                <p>Unified Digital Twin integration. Expand Pathway D to cargo hold operations.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">YEAR 5: MATURITY</span>
+                <p>Target 40% OPEX reduction. SFO established as global automation reference site.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Analytics -->
+    <div class="card">
+        <h2>DATA VISUALIZATION</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [150000, 650000, 1400000, 2300000, 3500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                title: { display: true, text: '5-Year Cumulative Savings', color: '#e2e8f0' } 
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow-Body (Cleaning)', 'Wide-Body (Cleaning)', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [45, 60, 15],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [25, 35, 5],
+                    backgroundColor: '#0ea5e9',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                title: { display: true, text: 'Throughput: Manual vs. Robotic', color: '#e2e8f0' } 
+            },
+            scales: {
+                y: { beginAtZero: true, title: {display: true, text: 'Minutes per Aircraft'} }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Robotic Supervision', 'Floor Ops / Customer Service', 'Maintenance/Tech'],
+            datasets: [{
+                data: [35, 15, 40, 10],
+                backgroundColor: [
+                    '#f97316', // Manual (Orange)
+                    '#0ea5e9', // Supervision (Blue)
+                    '#7c3aed', // Ops (Purple)
+                    '#1e293b'  // Maintenance (Dark)
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation', color: '#e2e8f0' },
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
