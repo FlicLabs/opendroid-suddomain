@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoJet Airlines Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed;
+            --secondary: #0ea5e9;
+            --accent: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--secondary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            height: 300px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 20px;
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-item {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 3px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>GoJet Airlines</h1>
+        <div class="subtitle">Strategic Robotics Automation Report</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            This report presents a comprehensive strategy for integrating autonomous robotics into GoJet Airlines' cleaning and maintenance operations. The objective is to transition from labor-intensive methods to a high-tech, data-driven model. By deploying autonomous systems, GoJet can achieve unprecedented hygiene efficiency, reduce operational costs by 35-45%, and significantly improve fleet turnaround times. This transformation positions GoJet as an industry leader in aviation maintenance innovation.
+        </p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Fleet Overview</h3>
+                <p>GoJet operates a fleet of approximately 50 CRJ-700 and CRJ-900 aircraft. This standardized fleet provides an ideal platform for robotic integration due to uniform cabin dimensions and exterior profiles.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Hub Presence</h3>
+                <p>Operations are centralized at major American Airlines hubs including Chicago O'Hare (ORD), Dallas Fort Worth (DFW), and Washington Reagan (DCA). These high-volume environments necessitate rapid gate turnarounds.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 Months</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+        <p style="color: var(--text-muted); text-align: center; font-size: 0.9rem;">
+            *Financial projections based on standard aviation automation benchmarks.
+        </p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div class="pathway-list">
+            <div class="pathway-item">
+                <strong>Pathway A: Autonomous Cabin Cleaning Robots</strong>
+                Mobile units utilizing LiDAR for trash collection, seat organization, and vacuuming. Reduces gate turn time by 15-20 minutes.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway B: UV-C Disinfection Robots</strong>
+                Deployable post-deplaning for hospital-grade pathogen neutralization on high-touch surfaces. Reduces chemical usage by 30%.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway C: Exterior Aircraft Washing</strong>
+                Automated systems maintaining aerodynamic efficiency, reducing fuel consumption by approx. 0.5% and extending paint life.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway D: AI-Powered Inspection Bots</strong>
+                Drones/Crawlers with thermal imaging for structural anomaly detection. Creates digital twins for predictive maintenance.
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <ul style="list-style-type: decimal; padding-left: 20px; color: var(--text-main);">
+            <li style="margin-bottom: 15px;"><strong style="color: var(--accent);">Phase 1 (Year 1):</strong> Pilot deployment of Cabin Cleaning and UV-C robots at DFW hub (2 Aircraft).</li>
+            <li style="margin-bottom: 15px;"><strong style="color: var(--accent);">Phase 2 (Year 2):</strong> Infrastructure installation at ORD; integration with MOC; expand fleet to 30%.</li>
+            <li style="margin-bottom: 15px;"><strong style="color: var(--accent);">Phase 3 (Years 3-4):</strong> Fleet-wide rollout of cleaning bots; deployment of AI Inspection for C-Checks.</li>
+            <li style="margin-bottom: 15px;"><strong style="color: var(--accent);">Phase 4 (Year 5):</strong> Full autonomous operation; data optimization for predictive maintenance; evaluation of hydrogen power.</li>
+        </ul>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="glass-card">
+        <h2>Performance Visualizations</h2>
+        <div class="charts-grid">
+            <div class="chart-container full-width">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 300000, 750000, 1400000, 2200000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9',
+                pointBorderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings', color: '#e2e8f0' },
+                legend: { display: false }
+            },
+            scales: {
+                y: { ticks: { callback: (val) => '$' + val / 1000 + 'k' } }
+            }
+        }
+    });
+
+    // 2. Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Min/Aircraft)',
+                    data: [45, 20, 120],
+                    backgroundColor: '#334155',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Min/Aircraft)',
+                    data: [25, 5, 60],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput Comparison (Time)', color: '#e2e8f0' }
+            },
+            scales: {
+                y: { beginAtZero: true, title: {display: true, text: 'Minutes'} }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Reassigned to Tech Ops', 'Reduced Headcount', 'Retained Cleaning', 'New Tech Roles'],
+            datasets: [{
+                data: [35, 20, 25, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#f97316', // Aviation Orange
+                    '#7c3aed', // Electric Purple
+                    '#64748b'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation', color: '#e2e8f0' },
+                legend: { position: 'bottom', labels: { boxWidth: 12 } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
