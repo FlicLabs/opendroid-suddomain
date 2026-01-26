@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunar Outpost: Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            height: 300px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .roadmap {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .roadmap-year {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .roadmap-year::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            box-shadow: 0 0 8px var(--accent-orange);
+        }
+
+        @media (max-width: 768px) {
+            .pathway-grid { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none; padding-bottom: 0;">
+        <h1>LUNAR OUTPOST</h1>
+        <p style="font-size: 1.1rem; margin-top: 0;">Strategic Aviation Automation & Maintenance Report</p>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            Lunar Outpost represents a visionary leap in aviation cleaning and maintenance, transitioning from traditional ground handling to an integrated robotic ecosystem. This strategy deploys autonomous technologies to revolutionize cabin sanitation, exterior maintenance, and aircraft inspection. By leveraging these systems, Lunar Outpost achieves unprecedented hygiene standards, reduces turnaround times, and elevates passenger confidence. The core objective is a shift from labor-intensive manual processes to a data-driven robotic workforce operating with precision and scalability, positioning the airline as a pioneer in aerospace facility automation.
+        </p>
+        <h2>Organizational Profile</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <strong>Fleet:</strong> Mid-to-long range narrow and wide-body aircraft.
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <strong>Hubs:</strong> Lunar Gateway (Primary), Tranquility Base, Armstrong International.
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <strong>Operational Model:</strong> High-tempo, short-turnaround cycles reliant on contracted ground crews.
+            </div>
+        </div>
+        <p style="margin-top: 15px;">
+            Current challenges include labor variability and the need for consistent, thorough sanitation protocols. The fleet composition requires flexible automation solutions adaptable to varying airframe geometries.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75K - $150K</div>
+                <div class="metric-label">CAPEX per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" style="color: var(--accent-blue);">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" style="color: var(--accent-orange);">&lt; 24 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Autonomous Cabin Cleaning</h3>
+                <p>Compact units using LiDAR for aisle navigation. Performs vacuuming, surface wiping, and trash collection. Operates concurrently with catering teams.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Automated high-intensity UV light deployment for neutralizing pathogens on high-touch surfaces. Features motion sensors for safety and data logging.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Robotic platforms utilizing high-pressure water and soft brushes. Rail or free-roaming guidance for fuselage and wing cleaning with water reclamation.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D: AI Inspection Bots</h3>
+                <p>Crawling bots with thermal imaging to detect micro-fractures and lightning strikes. AI analyzes imagery for predictive maintenance alerts.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="glass-card">
+        <h2>Performance Analytics</h2>
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap">
+            <div class="roadmap-year">
+                <strong>Year 1: Pilot Phase</strong>
+                <p>Deployment of Cabin Cleaning (A) and UV-C (B) at Lunar Gateway. Focus on integration and baseline metrics.</p>
+            </div>
+            <div class="roadmap-year">
+                <strong>Year 2: Expansion & Standardization</strong>
+                <p>Scale to secondary hubs. Integrate AI Inspection (D). Achieve 30% labor reduction in target areas.</p>
+            </div>
+            <div class="roadmap-year">
+                <strong>Year 3: Exterior Automation</strong>
+                <p>Roll out Exterior Washing (C). Synchronize with AI inspection data to minimize downtime.</p>
+            </div>
+            <div class="roadmap-year">
+                <strong>Year 4: Network-Wide Optimization</strong>
+                <p>Complete network deployment. Implement predictive analytics for scheduling and battery management.</p>
+            </div>
+            <div class="roadmap-year">
+                <strong>Year 5: Next-Gen Integration</strong>
+                <p>Transition to fully autonomous supervision. Solar-powered charging. Full closed-loop maintenance cycle.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart.js Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [1.2, 3.5, 6.8, 10.5, 15.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings' }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Hours/Aircraft)',
+                    data: [45, 30, 120],
+                    backgroundColor: '#f97316'
+                },
+                {
+                    label: 'Robotic (Hours/Aircraft)',
+                    data: [20, 15, 60],
+                    backgroundColor: '#0ea5e9'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput Comparison' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Retained for Robot Supervision', 'Reduced Contractual Hours'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: [
+                    '#0ea5e9', 
+                    '#7c3aed', 
+                    '#f97316'
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
