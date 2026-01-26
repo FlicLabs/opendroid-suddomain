@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bozeman Yellowstone Airport - Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--deep-space) 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            border-bottom: 2px solid var(--electric-purple);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .section-title {
+            color: var(--aviation-orange);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Metrics Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--electric-purple), var(--sky-blue));
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--aviation-orange);
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .chart-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chart-box h3 {
+            font-size: 1rem;
+            color: var(--sky-blue);
+            margin-top: 0;
+        }
+
+        canvas {
+            max-height: 250px;
+        }
+
+        /* Pathway List */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .pathway-item {
+            background: rgba(14, 165, 233, 0.05);
+            border-left: 4px solid var(--sky-blue);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .charts-grid { grid-template-columns: 1fr; }
+            .pathway-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="glass-card">
+        <h1>STRATEGIC AUTOMATION REPORT</h1>
+        <p style="font-size: 1.1rem; color: #cbd5e1;">Bozeman Yellowstone International Airport (BZN)</p>
+        <p style="color: #94a3b8;">Prepared by: Open Droids Consultation & Research Division</p>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile & Vision</h2>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+                <div class="section-title">EXECUTIVE SUMMARY</div>
+                <p>
+                    Bozeman Yellowstone International Airport is positioned to become a leader in aviation automation. This proposal details the integration of robotic cleaning systems to handle seasonal peaks with precision and efficiency. By leveraging Open Droids technology, BZN will reduce labor dependency, ensure medical-grade sanitation, and optimize turnaround times for partner airlines.
+                </p>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <div class="section-title">OPERATIONAL PROFILE</div>
+                <ul style="list-style: none; padding: 0; color: #cbd5e1;">
+                    <li>• Primary Hub for Allegiant Air</li>
+                    <li>• Seasonal Peak: Summer & Winter Tourism</li>
+                    <li>• Focus Fleet: Narrow-body (A320/737)</li>
+                    <li>• Current Challenge: Labor availability during peak cycles</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">CAPEX Per Unit</div>
+                <div class="metric-value">$75K - $150K</div>
+                <div class="metric-sub">Robotic Hardware</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-sub">Labor & Resource Efficiency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">< 24 Mos</div>
+                <div class="metric-sub">Rapid ROI</div>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #94a3b8;">*Financial projections based on standard utilization rates across 5-year lifecycle.</p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <strong style="color: var(--electric-purple);">A. Autonomous Cabin Cleaning</strong><br>
+                Vacuuming & seat sanitation for rapid narrow-body turns.
+            </div>
+            <div class="pathway-item">
+                <strong style="color: var(--aviation-orange);">B. UV-C Disinfection Robots</strong><br>
+                Mobile pathogen inactivation for cabin & terminal health.
+            </div>
+            <div class="pathway-item">
+                <strong style="color: var(--sky-blue);">C. Exterior Wash Systems</strong><br>
+                Automated fuselage cleaning reducing water waste by 30%.
+            </div>
+            <div class="pathway-item">
+                <strong style="color: #fff;">D. AI Inspection Bots</strong><br>
+                Visual defect detection during routine cleaning passes.
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualization Area -->
+    <div class="glass-card">
+        <h2>Projected Analytics</h2>
+        <div class="charts-grid">
+            <!-- Chart 1: Cumulative Savings -->
+            <div class="chart-box">
+                <h3>5-Year Cumulative Savings (Labor & OPEX)</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+
+            <!-- Chart 2: Throughput Comparison -->
+            <div class="chart-box">
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        <div class="charts-grid" style="margin-top: 20px;">
+            <!-- Chart 3: Labor Redistribution -->
+            <div class="chart-box" style="grid-column: span 2;">
+                <h3>Labor Hour Redistribution (Post-Automation)</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap: 5-Year Phased Deployment</h2>
+        <div style="border-left: 2px solid var(--electric-purple); padding-left: 20px;">
+            <div style="margin-bottom: 20px;">
+                <strong style="color: var(--sky-blue);">Year 1: Pilot Program</strong><br>
+                <span style="font-size: 0.9rem; color: #cbd5e1;">Deploy 2 Cabin Cleaners & 1 UV-C Unit. Data optimization for Allegiant Air.</span>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <strong style="color: var(--sky-blue);">Year 2: Terminal Integration</strong><br>
+                <span style="font-size: 0.9rem; color: #cbd5e1;">Overnight terminal UV-C deployment. Fleet expansion to major carriers.</span>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <strong style="color: var(--aviation-orange);">Year 3: Exterior Wash System</strong><br>
+                <span style="font-size: 0.9rem; color: #cbd5e1;">Construction of automated wash bay. Full retraining of ground crews.</span>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <strong style="color: var(--aviation-orange);">Year 4: Fleet-Wide Scale</strong><br>
+                <span style="font-size: 0.9rem; color: #cbd5e1;">Full autonomous integration across all partners. AI maintenance alerts.</span>
+            </div>
+            <div>
+                <strong style="color: #fff;">Year 5: Smart Airport Ecosystem</strong><br>
+                <span style="font-size: 0.9rem; color: #cbd5e1;">Centralized AI Command Center. Predictive resource allocation.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart.js Configurations
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 220000, 480000, 850000, 1300000],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body (Clean)', 'Narrow Body (Wash)', 'Terminal Area (Sanitize)'],
+            datasets: [
+                {
+                    label: 'Manual (Min/Unit)',
+                    data: [45, 120, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.7)' // Slate
+                },
+                {
+                    label: 'Robotic (Min/Unit)',
+                    data: [25, 65, 30],
+                    backgroundColor: 'rgba(249, 115, 22, 0.8)' // Aviation Orange
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Maintenance & Tech Ops', 'Reduced Hours / Attrition', 'New Automation Management'],
+            datasets: [{
+                data: [45, 30, 15, 10],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316', // Aviation Orange
+                    '#e2e8f0'  // White/Grey
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
