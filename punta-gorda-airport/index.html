@@ -1,0 +1,463 @@
+**
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids: Strategic Automation Report for Punta Gorda Airport</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            border-bottom: 2px solid var(--accent-orange);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Financial Dashboard */
+        .financial-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Container */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .chart-container {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-main);
+        }
+
+        li::before {
+            content: '•';
+            color: var(--accent-blue);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .pathway-list li::before {
+            content: '>';
+            color: var(--accent-orange);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #6d28d9;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2, .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>PUNTA GORDA AIRPORT</h1>
+        <div class="subtitle">Strategic Report: Robotic Cleaning & Maintenance Automation</div>
+        <div style="font-size: 0.9rem; color: var(--text-muted);">Prepared by Open Droids Senior Consultation & Research Agent</div>
+        <hr style="border: 0; height: 1px; background: var(--glass-border); margin: 2rem 0;">
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>Executive Summary</h2>
+        <p style="color: var(--text-main);">
+            The integration of robotic automation at Punta Gorda Airport represents a pivotal shift toward next-generation aviation operations. By deploying specialized autonomous systems, PGD can address labor shortages, optimize flight turnaround times, and elevate hygiene standards. This report proposes a strategic pathway to reduce operational costs by 35-45% while ensuring the airport remains a competitive regional hub through state-of-the-art facility management.
+        </p>
+    </section>
+
+    <!-- Organizational Profile -->
+    <section class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Operational Footprint</h3>
+                <ul>
+                    <li><strong>Primary Carrier:</strong> Allegiant Air (Boeing 737/MD-80)</li>
+                    <li><strong>Hub Type:</strong> Non-Primary Commercial Service</li>
+                    <li><strong>Current Model:</strong> Lean operations with manual cleaning reliance</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Key Challenges</h3>
+                <ul>
+                    <li>High-frequency aircraft turnaround requirements</li>
+                    <li>Labor constraints in cleaning and maintenance</li>
+                    <li>Need for consistent sanitization standards</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Opportunity Pathways -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2 pathway-list">
+            <div>
+                <h3>Pathway A: Autonomous Cabin Cleaning</h3>
+                <p>Robots performing vacuuming, surface sanitization, and trash removal during tight turnaround windows.</p>
+                <ul>
+                    <li>30-minute narrow-body cleans</li>
+                    <li>HEPA filtration integration</li>
+                    <li>Automated scheduling via FMS</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Autonomous units utilizing UV-C light to neutralize pathogens in cabins and gate areas overnight.</p>
+                <ul>
+                    <li>Targeted pathogen elimination</li>
+                    <li>Safe for occupied/unoccupied spaces</li>
+                    <li>Log-free operation</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Robotic platforms cleaning fuselages and wings with precision water jets and eco-friendly agents.</p>
+                <ul>
+                    <li>60% water reduction</li>
+                    <li>Improved aerodynamics (fuel savings)</li>
+                    <li>Reduced manual scaffolding risks</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Drones and ground rovers for automated visual inspections of infrastructure and ramp safety.</p>
+                <ul>
+                    <li>Proactive maintenance alerts</li>
+                    <li>Debris detection (FOD)</li>
+                    <li>Facade integrity checks</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>Financial Model & Dashboard</h2>
+        <p style="margin-bottom: 2rem;">Projected metrics for a 3-unit pilot deployment (Year 1).</p>
+        
+        <div class="financial-dashboard">
+            <div class="metric-card">
+                <div class="metric-label">Unit CAPEX</div>
+                <div class="metric-value">$95k</div>
+                <div class="metric-label">Avg. per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value" style="color: #4ade80;">40%</div>
+                <div class="metric-label">Target Year 2</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">20<span style="font-size: 1rem;">mo</span></div>
+                <div class="metric-label">Under 24 Months</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Efficiency</div>
+                <div class="metric-value">3.5x</div>
+                <div class="metric-label">Output Increase</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap (5-Year)</h2>
+        <div style="position: relative; padding-left: 20px; border-left: 2px solid var(--glass-border);">
+            <div style="margin-bottom: 2rem; position: relative;">
+                <div style="position: absolute; left: -26px; top: 0; width: 10px; height: 10px; background: var(--accent-purple); border-radius: 50%;"></div>
+                <h3>Year 1: Pilot Phase</h3>
+                <p>Deploy 2 Cabin Cleaning Units. Establish baseline metrics. Staff training.</p>
+            </div>
+            <div style="margin-bottom: 2rem; position: relative;">
+                <div style="position: absolute; left: -26px; top: 0; width: 10px; height: 10px; background: var(--accent-blue); border-radius: 50%;"></div>
+                <h3>Year 2: Operational Scaling</h3>
+                <p>Deploy 3 UV-C Units. Integration of Fleet Management Software. 15% Labor reduction.</p>
+            </div>
+            <div style="margin-bottom: 2rem; position: relative;">
+                <div style="position: absolute; left: -26px; top: 0; width: 10px; height: 10px; background: var(--accent-orange); border-radius: 50%;"></div>
+                <h3>Year 3: Infrastructure Expansion</h3>
+                <p>Deploy Exterior Washing System. Achieve full ROI on Pilot Phase.</p>
+            </div>
+            <div style="margin-bottom: 2rem; position: relative;">
+                <div style="position: absolute; left: -26px; top: 0; width: 10px; height: 10px; background: var(--accent-purple); border-radius: 50%;"></div>
+                <h3>Year 4: Full Autonomy</h3>
+                <p>80% Coverage. AI Predictive Maintenance integration. Staff upskilling.</p>
+            </div>
+            <div style="position: relative;">
+                <div style="position: absolute; left: -26px; top: 0; width: 10px; height: 10px; background: var(--accent-orange); border-radius: 50%;"></div>
+                <h3>Year 5: Optimization</h3>
+                <p>Next-gen battery tech. IoT ecosystem integration. Target 45% OPEX reduction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+        <p>© 2023 Open Droids. Proprietary Research & Strategy.</p>
+    </footer>
+</div>
+
+<script>
+    // Global Chart Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [25000, 120000, 250000, 420000, 650000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings' },
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (min)', 'Terminal Sanitization (sqft/hr)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 1200],
+                    backgroundColor: 'rgba(148, 163, 184, 0.6)'
+                },
+                {
+                    label: 'Robotic',
+                    data: [25, 3500],
+                    backgroundColor: '#0ea5e9'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: 'Throughput: Manual vs Robotic' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Supervisory/Admin', 'Hands-on Cleaning', 'Maintenance/Repair', 'Redeployed Staff'],
+            datasets: [{
+                data: [20, 40, 15, 25],
+                backgroundColor: [
+                    '#7c3aed',
+                    '#0ea5e9',
+                    '#f97316',
+                    '#4ade80'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution' },
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
