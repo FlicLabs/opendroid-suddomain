@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wilmington Health Robotics & Automation Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --deep-space-blue: #0f172a;
+      --electric-purple: #7c3aed;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --text: #e5e7eb;
+      --accent: #a78bfa;
+      --glow: rgba(124, 58, 237, 0.4);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 10% 10%, #111827 0%, #0f172a 30%, #0b1223 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      padding: 32px;
+      border-bottom: 1px solid var(--glass-border);
+      background: linear-gradient(180deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.0) 100%);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .logo {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0%, #a78bfa 30%, #7c3aed 70%, #3b0764 100%);
+      box-shadow: 0 0 20px var(--glow), inset 0 0 10px rgba(255,255,255,0.2);
+    }
+    .brand h1 {
+      font-size: 24px; margin: 0;
+      letter-spacing: 0.5px; font-weight: 700;
+    }
+    .brand small {
+      display: block; color: #cbd5e1; font-size: 12px;
+    }
+    .dashboard {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 10px 30px -10px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(800px 300px at 80% -20%, rgba(124,58,237,0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .metric {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .metric .label { font-size: 12px; color: #94a3b8; letter-spacing: 0.4px; }
+    .metric .value {
+      font-size: 28px; font-weight: 800;
+      text-shadow: 0 0 8px var(--glow);
+    }
+    .metric .sub { font-size: 12px; color: #a78bfa; }
+    .full { grid-column: span 12; }
+    .half { grid-column: span 6; }
+    .third { grid-column: span 4; }
+    .two-thirds { grid-column: span 8; }
+    canvas { background: rgba(15, 23, 42, 0.4); border-radius: 8px; }
+    h2 {
+      font-size: 18px; margin: 0 0 8px 0; font-weight: 700;
+      color: #e5e7eb;
+    }
+    p { margin: 0 0 8px 0; color: #cbd5e1; }
+    ul { margin: 8px 0; padding-left: 20px; }
+    li { margin: 4px 0; }
+    .footer-note {
+      padding: 12px 24px; font-size: 12px; color: #94a3b8; border-top: 1px solid var(--glass-border);
+      background: rgba(15, 23, 42, 0.35);
+    }
+    @media (max-width: 900px) {
+      .half, .third, .two-thirds { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>OPEN DROIDS Robotics Portfolio</h1>
+        <small>Consultation & Research Agent</small>
+      </div>
+    </div>
+    <h2 style="margin-top: 8px;">Wilmington Health – Executive Report</h2>
+    <p>AI-orchestrated ambulatory care network: higher throughput, faster cycles, stronger value-based performance.</p>
+  </header>
+
+  <main>
+    <section class="dashboard">
+      <div class="glass-card third">
+        <div class="metric">
+          <span class="label">Annual Patient Visits</span>
+          <span class="value">1.2M+</span>
+          <span class="sub">20+ clinics, 300+ providers</span>
+        </div>
+      </div>
+      <div class="glass-card third">
+        <div class="metric">
+          <span class="label">Network Coverage</span>
+          <span class="value">Southeast NC</span>
+          <span class="sub">Primary care, orthopedics, ASCs, imaging</span>
+        </div>
+      </div>
+      <div class="glass-card third">
+        <div class="metric">
+          <span class="label">Blended Revenue / Visit</span>
+          <span class="value">$150–$200</span>
+          <span class="sub">Value-based care participation</span>
+        </div>
+      </div>
+
+      <div class="glass-card two-thirds">
+        <h2>5-Year Cumulative Savings (Pathway A: AI Patient Flow)</h2>
+        <p>Projected net benefit from visit throughput uplift, staff efficiency, and reduced cycle time.</p>
+        <canvas id="cumulativeChart" height="160"></canvas>
+      </div>
+      <div class="glass-card third">
+        <div class="metric">
+          <span class="label">Payback Period</span>
+          <span class="value">1–3 Months</span>
+          <span class="sub">Low-risk, mature technology</span>
+        </div>
+      </div>
+
+      <div class="glass-card full">
+        <h2>Throughput Comparison: Manual vs. Robotic (AI Patient Flow)</h2>
+        <p>Visits per provider per day (mid-case scenario)</p>
+        <canvas id="throughputChart" height="180"></canvas>
+      </div>
+
+      <div class="glass-card half">
+        <h2>Key Robotics Opportunity Pathways</h2>
+        <ul>
+          <li>Pathway A: AI-Driven Patient Flow and Ambulatory Logistics</li>
+          <li>Pathway B: Surgical and Procedure-Room Automation (ASC)</li>
+          <li>Pathway C: Radiology and Lab Workflow Robotics</li>
+        </ul>
+        <p>Primary value driver: provider utilization and cycle-time reduction across a distributed network.</p>
+      </div>
+
+      <div class="glass-card half">
+        <h2>Financial Highlights (Pathway A)</h2>
+        <ul>
+          <li>Incremental visits: 240k–300k annually</li>
+          <li>Incremental revenue: $35–50M/year</li>
+          <li>Operating savings: $2–4M/year</li>
+          <li>Implementation cost: $2.5–4.5M/year</li>
+          <li>Net annual benefit: $30–48M</li>
+        </ul>
+        <p>5-year cumulative net benefit: $150–240M in realistic scenarios.</p>
+      </div>
+
+      <div class="glass-card full">
+        <h2>Implementation Roadmap</h2>
+        <ul>
+          <li>Year 1: Pilot in 2 clinics, expand to full network within 12 months (Pathway A)</li>
+          <li>Year 2: ASC automation pilot and scale (Pathway B)</li>
+          <li>Year 2–3: Imaging and lab workflow automation (Pathway C)</li>
+          <li>Year 3–4: Integrated analytics and predictive capacity planning</li>
+        </ul>
+      </div>
+
+      <div class="glass-card full">
+        <h2>Strategic Positioning</h2>
+        <p>Wilmington Health becomes an AI-orchestrated ambulatory leader: faster cycle times, higher throughput, improved patient experience, and enhanced value-based care performance. The network can leverage scale to develop a licensable ambulatory workflow automation platform for smaller clinics.</p>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Report generated by Open Droids Consultation & Research Agent. Visualizations use Chart.js with a glassmorphism aesthetic. For full methodological notes and data sources, consult the internal research repository.
+    </div>
+  </main>
+
+  <script>
+    // Chart.js configuration
+    Chart.defaults.color = '#cbd5e1';
+    Chart.defaults.font.family = "'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
+
+    // 5-Year Cumulative Savings (Line Chart)
+    const cumulativeCtx = document.getElementById('cumulativeChart').getContext('2d');
+    new Chart(cumulativeCtx, {
+      type: 'line',
+      data: {
+        labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+        datasets: [{
+          label: 'Cumulative Net Benefit ($M)',
+          data: [40, 85, 130, 180, 230],
+          borderColor: '#7c3aed',
+          backgroundColor: 'rgba(124, 58, 237, 0.25)',
+          tension: 0.3,
+          fill: true,
+          pointRadius: 4,
+          pointBackgroundColor: '#a78bfa'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            borderColor: '#7c3aed',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(255,255,255,0.08)' },
+            ticks: { callback: v => '$' + v + 'M' }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Throughput Comparison (Bar Chart)
+    const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+    new Chart(throughputCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Current (Manual)', 'AI-Assisted (Robotic Flow)'],
+        datasets: [{
+          label: 'Patients/Provider/Day',
+          data: [28, 33],
+          backgroundColor: [
+            'rgba(124, 58, 237, 0.35)',
+            'rgba(124, 58, 237, 0.85)'
+          ],
+          borderColor: '#7c3aed',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            borderColor: '#7c3aed',
+            borderWidth: 1
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(255,255,255,0.08)' },
+            ticks: { stepSize: 2 }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
