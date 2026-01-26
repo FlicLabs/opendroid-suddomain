@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WindBorne Systems - Robotics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --purple: #7c3aed;
+            --blue: #0ea5e9;
+            --orange: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: var(--blue);
+            border-bottom: 2px solid var(--purple);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--orange);
+            margin-top: 0;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .pathway-item {
+            border-left: 4px solid var(--orange);
+            padding-left: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+            .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="glass-card">
+        <h1>WIND BORNE SYSTEMS</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Strategic Automation Report: Aviation Cleaning & Maintenance</p>
+        <p style="color: var(--text-muted);">Prepared by: Open Droids Consultancy</p>
+    </header>
+
+    <section class="glass-card">
+        <h2>EXECUTIVE DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$150K</div>
+                <div class="metric-label">Max CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 MOS</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">5 YRS</div>
+                <div class="metric-label">Full Deployment</div>
+            </div>
+        </div>
+        
+        <h3>Financial Visualization</h3>
+        <div class="chart-row">
+            <div class="glass-card" style="border:none;">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card" style="border:none;">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card" style="border:none; max-width: 600px; margin: 0 auto;">
+             <canvas id="laborPieChart"></canvas>
+        </div>
+    </section>
+
+    <section class="glass-card">
+        <h2>STRATEGIC PATHWAYS</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Autonomous Cabin</h3>
+                <p>Mobile robots for sweeping, vacuuming, and high-touch surface disinfection during turns.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Automated UV-C light units for terminal sterilization of cabins overnight.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Rail-based robotic systems for fuselage cleaning with water recycling tech.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Computer vision bots detecting fuselage damage and engine anomalies pre-flight.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP</h2>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <strong style="color: var(--blue);">Year 1 (Pilot):</strong> Audit processes. Deploy 2 units (Cabin & UV-C) at primary hub.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <strong style="color: var(--blue);">Year 2-3 (Expansion):</strong> Scale to top 3 hubs. 20 units deployed. Software integration.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+                <strong style="color: var(--blue);">Year 4 (Fleet Integration):</strong> 60% fleet coverage. Introduction of Exterior & AI Inspection bots.
+            </li>
+            <li style="margin-bottom: 15px;">
+                <strong style="color: var(--blue);">Year 5 (Optimization):</strong> Full coverage. Swarm intelligence integration. OPEX targets met.
+            </li>
+        </ul>
+    </section>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($000s)',
+                data: [50, 200, 550, 1100, 1800],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings' }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Cleaning (hrs)', 'Exterior Wash (hrs)', 'Inspection (mins)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [120, 240, 45],
+                    backgroundColor: '#334155'
+                },
+                {
+                    label: 'Robotic',
+                    data: [70, 140, 15],
+                    backgroundColor: '#7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput: Manual vs Robotic' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Passenger Care', 'Redeployed to Maintenance', 'Reduced Turnover/Training'],
+            datasets: [{
+                data: [50, 30, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#f97316', // Aviation Orange
+                    '#7c3aed'  // Electric Purple
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
