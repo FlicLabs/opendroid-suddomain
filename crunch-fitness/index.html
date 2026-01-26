@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crunch Fitness Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --purple: #7c3aed;
+            --purple-glow: rgba(124, 58, 237, 0.3);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--purple-glow);
+            border-color: var(--purple);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple), #4c1d95);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 0 15px var(--purple);
+        }
+
+        h1 { margin: 0; font-size: 2rem; background: linear-gradient(to right, #fff, var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { color: var(--purple); margin-top: 0; }
+        h3 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 10px; }
+        p { color: var(--text-muted); line-height: 1.6; }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--purple);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+            margin-top: 10px;
+        }
+
+        th {
+            background: rgba(124, 58, 237, 0.2);
+            padding: 12px;
+            text-align: left;
+            color: var(--purple);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div>
+            <h1>Crunch Fitness</h1>
+            <p style="margin:0;">Robotics & Automation Strategy Portfolio</p>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Crunch Fitness is positioned to leverage AI-driven software robotics and smart hardware to revolutionize operational efficiency. By focusing on Computer Vision for crowd management and Automated Cleaning systems, Crunch can reduce labor costs by up to 30% while increasing member retention through enhanced safety and facility quality. The primary ROI driver is the optimization of high-volume, low-margin memberships via data-driven facility intelligence.</p>
+    </div>
+
+    <!-- Key Metrics Dashboard -->
+    <h2 style="margin-top: 20px;">Financial Dashboard</h2>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">-30%</div>
+            <div class="metric-label">Labor Cost Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+3%</div>
+            <div class="metric-label">Retention Uplift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$18k</div>
+            <div class="metric-label">Annual Cost Per Location</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">6 Mo</div>
+            <div class="metric-label">Avg Payback Period</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <h3>5-Year Cumulative Savings (Pathway A)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3>Manual vs. Robotic Throughput</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathways Comparison -->
+    <div class="glass-card">
+        <h2>Comparative Pathways Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: AI Monitoring</th>
+                    <th>Pathway B: Cleaning Robots</th>
+                    <th>Pathway C: Smart Onboarding</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scope</td>
+                    <td>Full Network (Software)</td>
+                    <td>High-Traffic Locations</td>
+                    <td>Flagship Pilots</td>
+                </tr>
+                <tr>
+                    <td>Value Driver</td>
+                    <td>Retention & Safety</td>
+                    <td>Labor Cost Reduction</td>
+                    <td>Upsell & Conversion</td>
+                </tr>
+                <tr>
+                    <td>Annual Benefit (Mid)</td>
+                    <td>$1.5M+</td>
+                    <td>$2.5M (Labor)</td>
+                    <td>$500k (PT Sales)</td>
+                </tr>
+                <tr>
+                    <td>Payback</td>
+                    <td style="color: #4ade80;">&lt; 6 Months</td>
+                    <td>18-24 Months</td>
+                    <td>12 Months</td>
+                </tr>
+                <tr>
+                    <td>Risk</td>
+                    <td>Low</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: var(--purple);">Year 1: Pathway A</h3>
+                <ul>
+                    <li>Q1-Q2: Deploy AI Vision in 50 pilot locations.</li>
+                    <li>Q3: Analyze crowd & equipment data.</li>
+                    <li>Q4: Full network rollout.</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: var(--purple);">Year 2: Pathway B & C</h3>
+                <ul>
+                    <li>Deploy robotic scrubbers to top 20% sites.</li>
+                    <li>Launch AI Coach screens in HIITZone.</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: var(--purple);">Year 3: Optimization</h3>
+                <ul>
+                    <li>50% autonomous cleaning coverage.</li>
+                    <li>Biometric entry standardization.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>By executing this roadmap, Crunch Fitness transitions from a traditional gym operator to a "Smart Fitness" platform. This leverages data to optimize floor plans, reduces friction in the member journey, and lowers the operational cost base. It enhances the franchise value proposition, making locations easier to manage and more profitable, while providing a safer and cleaner environment for members.</p>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [1.6, 4.5, 8.2, 12.5, 18.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8', callback: (value) => '$' + value + 'M' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Check-ins', 'Equipment Scan', 'Cleanliness Score', 'PT Conv. (%)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [120, 80, 75, 4],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI',
+                    data: [180, 95, 95, 6],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
