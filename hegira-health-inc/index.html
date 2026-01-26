@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hegira Health Inc. Robotics Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+        h2 {
+            color: #7c3aed;
+            border-bottom: 2px solid rgba(124, 58, 237, 0.5);
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        .logo-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #0f172a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 15px #7c3aed;
+            font-size: 12px;
+            text-align: center;
+            border: 2px solid #fff;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.8));
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            background: rgba(124, 58, 237, 0.1);
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-left: 4px solid #7c3aed;
+            border-radius: 4px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            color: #e2e8f0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        th {
+            background-color: rgba(124, 58, 237, 0.3);
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .summary-box {
+            border-left: 4px solid #fff;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="logo-header">
+            <div class="logo-circle">OPEN<br>DROIDS</div>
+            <h1>Hegira Health Inc.<br>Robotics Analysis</h1>
+        </div>
+
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Hegira Health Inc. is a Michigan-based behavioral health system that has historically specialized in addiction treatment, mental health programs, and psychiatric residential treatment facilities (PRTFs). The organization has evolved through hospital-based management contracts and community-based services, with a notable footprint in Kalamazoo and statewide referral networks. As of 2022, the organization operated with approximately 350 employees and focused on treating high-acuity, complex psychiatric populations. Following a 2023 transaction where the company was sold to Strategic Behavioral Health (SBH), the operational focus has shifted toward optimizing facility utilization, reducing seclusion and restraint events, and improving staff safety and retention.</p>
+            <p>The strongest robotics and automation levers for Hegira Health are: (1) AI-driven operational scheduling and utilization optimization for inpatient beds and facility resources, (2) Safety and security robotics (remote monitoring and automated alerts), and (3) Automated medication management and inventory control. The dominant ROI driver is the reduction of high-cost staffing churn and safety incidents, alongside maximizing the revenue potential of fixed inpatient beds.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Type</div>
+                    <div class="metric-value" style="font-size: 1.2rem;">Behavioral Health System</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Scale</div>
+                    <div class="metric-value" style="font-size: 1.2rem;">150+ Beds (Historical)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Employees</div>
+                    <div class="metric-value" style="font-size: 1.2rem;">~350</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Status</div>
+                    <div class="metric-value" style="font-size: 1.2rem;">Acquired (SBH)</div>
+                </div>
+            </div>
+            <br>
+            <p><strong>Operational Context:</strong> The behavioral health sector faces critical staffing shortages and high turnover rates. Operational bottlenecks are primarily in bed management (admissions and discharges), patient monitoring, and safety protocol execution. High reliance on manual scheduling, paper-based workflows, and reactive safety measures creates opportunities for automation.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <div class="glass-card" style="background: rgba(124, 58, 237, 0.1);">
+                <h3>Pathway A – Operational Scheduling (High Immediate Value)</h3>
+                <p><strong>Scope:</strong> AI-driven software automation to optimize bed turnover, staffing schedules, and facility resource allocation.</p>
+                <ul>
+                    <li><strong>Predictive Modeling:</strong> Admission and discharge timing to minimize bed idle time.</li>
+                    <li><strong>Dynamic Staffing:</strong> Allocation based on patient acuity and census fluctuations.</li>
+                    <li><strong>Automated Triage:</strong> Referral intake to reduce administrative delays.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card" style="background: rgba(124, 58, 237, 0.1);">
+                <h3>Pathway B – Safety & Security Automation (High Strategic Value)</h3>
+                <p><strong>Scope:</strong> Remote monitoring systems, environmental sensors, and automated alert protocols.</p>
+                <ul>
+                    <li><strong>AI Video Analytics:</strong> Behavioral anomaly detection (non-intrusive).</li>
+                    <li><strong>Wearable Tech:</strong> Panic buttons for staff with automated location tracking.</li>
+                    <li><strong>Environmental Control:</strong> Automated lighting and noise reduction to lower agitation.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card" style="background: rgba(124, 58, 237, 0.1);">
+                <h3>Pathway C – Medication & Inventory (Operational Efficiency)</h3>
+                <p><strong>Scope:</strong> Robotic dispensing systems and inventory management software.</p>
+                <ul>
+                    <li><strong>Automated Dispensing:</strong> Pill counters and storage to reduce nurse workload.</li>
+                    <li><strong>Real-time Tracking:</strong> Inventory management to prevent stockouts and waste.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Model – Pathway A</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Baseline Utilization</div>
+                    <div class="metric-value">75%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Target Utilization</div>
+                    <div class="metric-value">88%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Incremental Revenue</div>
+                    <div class="metric-value">$8.5M/Year</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Payback Period</div>
+                    <div class="metric-value">< 1 Month</div>
+                </div>
+            </div>
+            <div class="summary-box">
+                <strong>Result:</strong> Net incremental benefit of $8.0M–$8.2M/year. 5-Year Cumulative Net Benefit: $40M–$41M.
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Comparative View of Pathways</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Pathway A: Operational Optimization</th>
+                            <th>Pathway B: Safety Automation</th>
+                            <th>Pathway C: Medication Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Scope</strong></td>
+                            <td>All facilities, admin & clinical staff</td>
+                            <td>Clinical units, high-acuity wards</td>
+                            <td>Pharmacy & nursing stations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Main Value Driver</strong></td>
+                            <td>Bed utilization & throughput</td>
+                            <td>Staff safety & retention</td>
+                            <td>Labor efficiency & error reduction</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Annual Benefit (Mid)</strong></td>
+                            <td>$8M - $10M</td>
+                            <td>$0.8M - $1.5M</td>
+                            <td>$0.3M - $0.5M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payback</strong></td>
+                            <td>Immediate (Weeks)</td>
+                            <td>6 - 12 Months</td>
+                            <td>12 - 18 Months</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Dashboard</h2>
+            
+            <h3>5-Year Cumulative Savings (Pathway A)</h3>
+            <div class="chart-container">
+                <canvas id="cumulativeChart"></canvas>
+            </div>
+            <br>
+            
+            <h3>Manual vs. Robotic Throughput (Bed Utilization)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1 – Pathway A Rollout:</strong> Q1-Q2 Vendor selection & EMR integration. Q3-Q4 Pilot in Kalamazoo. Full network rollout by year-end.</li>
+                <li><strong>Year 2 – Pathway B Pilot:</strong> Select 1 high-acuity unit for safety sensor pilot. Evaluate reduction in incidents/turnover.</li>
+                <li><strong>Year 3 – Pathway C Deployment:</strong> Implementation of automated dispensing cabinets in central pharmacy locations.</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Strategic Positioning</h2>
+            <p>Executing this roadmap positions Hegira Health (under SBH ownership) as a data-driven behavioral health network. By leveraging operational robotics and AI, the organization can improve margins despite industry-wide labor shortages. The focus on safety automation directly addresses the critical pain point of staff burnout, making the organization a more attractive employer. This operational efficiency allows for reinvestment into clinical programming and potential expansion into new markets.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Configuration for Chart.js
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(124, 58, 237, 0.2)';
+
+        // 5-Year Cumulative Savings Line Chart
+        const ctxCumulative = document.getElementById('cumulativeChart').getContext('2d');
+        new Chart(ctxCumulative, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [8.1, 16.2, 24.3, 32.4, 40.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { 
+                        backgroundColor: '#0f172a',
+                        titleColor: '#7c3aed',
+                        bodyColor: '#fff',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(124, 58, 237, 0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Manual vs. Robotic Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Beds Occupied (Daily)', 'Visits/Day (Team)', 'Admin Efficiency'],
+                datasets: [
+                    {
+                        label: 'Manual (Current)',
+                        data: [112, 6.5, 60],
+                        backgroundColor: 'rgba(148, 163, 184, 0.7)',
+                    },
+                    {
+                        label: 'Robotic/AI Optimized',
+                        data: [132, 9.5, 85],
+                        backgroundColor: '#7c3aed',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleColor: '#7c3aed',
+                        bodyColor: '#fff',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(124, 58, 237, 0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
