@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Report - Metcut Research Inc.</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple));
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-box {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .chart-title {
+            text-align: center;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        /* Section Layout */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight-text {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card">
+        <h1>METCUT RESEARCH INC.</h1>
+        <p style="font-size: 1.2rem; color: var(--accent-blue);">Strategic Aviation Robotics & Automation Report</p>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+        <p><strong>Executive Summary:</strong> This report details a transformative vision for integrating robotic automation into Metcut Research Inc.'s operational framework. By targeting key areas of cabin cleaning, disinfection, exterior washing, and AI inspection, the airline can achieve significant OPEX reduction and enhance safety standards. The proposed 5-year roadmap ensures a scalable transition with a projected payback period of under 24 months.</p>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75K - $150K</div>
+                <div class="metric-label">Per Unit CAPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Paths -->
+    <section class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div class="section-grid">
+            <div>
+                <h3 style="color: var(--accent-purple);">Pathway A: Autonomous Cabin Cleaning</h3>
+                <p>Mobile robots mapping interiors for rapid turnaround. Focus on high-touch surface sanitization and seat organization. Reduces manual labor by 60% during short ground times.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-orange);">Pathway B: UV-C Disinfection</h3>
+                <p>Autonomous units utilizing UV-C light to sterilize cabins post-cleaning. Ensures verifiable hygiene standards and increases passenger confidence without chemical downtime.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-blue);">Pathway C: Exterior Washing</h3>
+                <p>Automated gantry or robotic arm systems for fuselage and wing cleaning. Minimizes water usage and safety risks while maintaining aerodynamic efficiency.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-purple);">Pathway D: AI Inspection</h3>
+                <p>Drone and ground-based bots with ML algorithms for structural anomaly detection. Shifts maintenance from reactive to predictive, extending asset lifespan.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP</h2>
+        <ul>
+            <li><strong>Phase 1 (Year 1): Pilot Program.</strong> Deployment of Cabin Cleaning and UV-C robots at primary hub. Focus on data collection and workflow validation.</li>
+            <li><strong>Phase 2 (Year 2): Hub Expansion.</strong> Scaling to secondary hubs. Introduction of Exterior Washing Systems. Staff upskilling for robot supervision.</li>
+            <li><strong>Phase 3 (Years 3-4): AI Integration.</strong> Deployment of AI Inspection Bots. Centralized data platform for predictive maintenance analytics.</li>
+            <li><strong>Phase 4 (Year 5): Full Autonomy.</strong> Integrated ecosystem managed by central AI. Optimization of total ground time and resource allocation.</li>
+        </ul>
+    </section>
+
+    <!-- Interactive Charts -->
+    <section class="glass-card">
+        <h2>DATA VISUALIZATION & PROJECTIONS</h2>
+        <div class="charts-container">
+            <div class="chart-box">
+                <div class="chart-title">5-Year Cumulative Savings</div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <div class="chart-title">Throughput: Manual vs. Robotic</div>
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-box" style="grid-column: span 2;">
+                <div class="chart-title">Labor Hour Redistribution Post-Automation</div>
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+        <p>Prepared for Metcut Research Inc. | Open Droids Senior Consultation & Research Agent</p>
+    </footer>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 2.2, 5.5, 9.8, 15.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (Min)', 'Ext. Wash (Min)', 'Inspection (Min)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 60, 30],
+                    backgroundColor: '#f97316',
+                },
+                {
+                    label: 'Robotic',
+                    data: [20, 35, 15],
+                    backgroundColor: '#0ea5e9',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Robot Supervision', 'Maintenance/IT', 'Direct Flight Ops'],
+            datasets: [{
+                data: [40, 25, 15, 20],
+                backgroundColor: [
+                    '#f97316', // Manual (Reduced)
+                    '#0ea5e9', // Supervision (New)
+                    '#7c3aed', // Maintenance (Expanded)
+                    '#64748b'  // Flight Ops (Stable)
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
