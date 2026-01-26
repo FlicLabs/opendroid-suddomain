@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantage Group - Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed; /* Electric Purple */
+            --accent: #0ea5e9;  /* Sky Blue */
+            --highlight: #f97316; /* Aviation Orange */
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-metrics {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .metric-card {
+            flex: 1;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-card.orange {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+        }
+
+        .metric-card.blue {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Pathways List */
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            color: var(--highlight);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-metrics {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>VANTAGE GROUP STRATEGIC AUTOMATION REPORT</h1>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Vantage Group stands at the precipice of an operational transformation. By integrating advanced robotics and cleaning automation, the airline can achieve unprecedented levels of hygiene, efficiency, and cost control. This strategic roadmap envisions a fleet of autonomous agents operating in concert with human crews, leveraging data-driven insights to optimize turnaround times and extend asset longevity. The transition represents a fundamental shift toward predictive, precision-driven ground operations.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-metrics">
+            <div class="metric-card orange">
+                <span class="metric-value">75k - 150k</span>
+                <span class="metric-label">CAPEX Per Unit</span>
+            </div>
+            <div class="metric-card blue">
+                <span class="metric-value">35% - 45%</span>
+                <span class="metric-label">OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt; 24 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+        
+        <div class="grid-2">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container" style="height: 250px;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-item">
+            <div class="pathway-title">Pathway A: Autonomous Cabin Cleaning Robots</div>
+            <p>Deployment of compact, autonomous mobile robots for vacuuming and sanitizing cabin interiors. These units navigate aisles using LiDAR, ensuring consistent coverage without crew fatigue during tight turnaround windows.</p>
+        </div>
+        <div class="pathway-item">
+            <div class="pathway-title">Pathway B: UV-C Disinfection Robots</div>
+            <p>Implementation of autonomous UV-C light towers to treat high-touch surfaces and cabin air systems. These units operate during overnight maintenance, significantly reducing pathogen load.</p>
+        </div>
+        <div class="pathway-item">
+            <div class="pathway-title">Pathway C: Exterior Aircraft Washing Systems</div>
+            <p>Robotic platforms designed to traverse the fuselage, applying cleaning agents and rinsing residue. This eliminates scaffolding needs, reducing water consumption and improving safety.</p>
+        </div>
+        <div class="pathway-item">
+            <div class="pathway-title">Pathway D: AI-Powered Inspection Bots</div>
+            <p>Small drones or ground-based bots equipped with thermal imaging for fuselage and engine inspections. Automates visual checks, identifying micro-damage or FOD faster than manual inspections.</p>
+        </div>
+    </div>
+
+    <!-- Organizational Profile & Roadmap -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Fleet Size:</strong> 120 Active Units (Mixed Narrow/Wide-body)</p>
+            <p><strong>Hub Presence:</strong> Primary international hubs with high-density traffic.</p>
+            <p><strong>Current Model:</strong> Manual labor intensive. Challenges include labor shortages, variable quality, and weather-dependent exterior cycles.</p>
+        </div>
+        
+        <div class="glass-card">
+            <h2>Implementation Roadmap (5 Years)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year-label">Year 1: Pilot & Validation</span>
+                    <p>Deploy 7 units at primary hub. Establish baseline KPIs and GSE integration.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-label">Year 2: Operational Expansion</span>
+                    <p>Scale cabin cleaning to 50% of fleet. Introduce AI Inspection (Pathway D).</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-label">Year 3: Multi-Hub Integration</span>
+                    <p>Expand to secondary hubs. Deploy Exterior Washing (Pathway C).</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-label">Year 4: Full Fleet Automation</span>
+                    <p>100% Pathway A coverage. Standardize UV-C protocols (Pathway B).</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-label">Year 5: Optimization</span>
+                    <p>Autonomous fleet coordination. Realized 45% OPEX reduction.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.2, 1.5, 4.0, 8.5, 15.0],
+                borderColor: '#0ea5e9', // Sky Blue
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: '5-Year Cumulative Savings' } }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Regional'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [12, 6, 18],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)'
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [18, 9, 24],
+                    backgroundColor: '#f97316' // Aviation Orange
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { title: { display: true, text: 'Throughput: Manual vs. Robotic' } }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning', 'Supervision/Planning', 'Maintenance', ' redeployed to Customer Service'],
+            datasets: [{
+                data: [30, 20, 15, 35],
+                backgroundColor: [
+                    '#7c3aed', // Purple
+                    '#0ea5e9', // Blue
+                    '#f97316', // Orange
+                    '#334155'  // Dark Slate
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
