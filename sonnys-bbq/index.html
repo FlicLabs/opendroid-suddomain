@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonny's BBQ Robotics Integration Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-color: #7c3aed;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #c4b5fd;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li:before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        /* Section Layout */
+        .section-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .section-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: #a78bfa;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sonny's BBQ Robotics Strategy</h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">Operational Automation & Financial ROI Analysis</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The integration of robotics into Sonny's BBQ operations signifies a shift toward "Hybrid Hospitality." By leveraging automation for repetitive tasks (food transport, frying), human staff are liberated to focus on high-value guest interactions. This strategy targets a 15-25% reduction in labor costs and improved table turnover rates, ensuring a payback period of under 14 months. The vision is to modernize the legacy barbecue brand while maintaining the authentic, high-touch service customers expect.</p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">$35k</div>
+            <div class="metric-label">Avg. Unit CAPEX</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Target Labor Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">&lt;14 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">90+</div>
+            <div class="metric-label">Potential Locations</div>
+        </div>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div class="section-layout">
+            <div>
+                <h3>Brand Overview</h3>
+                <p><strong>Entity:</strong> Sonny's BBQ</p>
+                <p><strong>Cuisine:</strong> American Barbecue (Slow-smoked)</p>
+                <p><strong>Market:</strong> Southeastern US (FL, GA, SC, AL, etc.)</p>
+                <p><strong>Scale:</strong> 90+ Locations (Corporate & Franchise)</p>
+            </div>
+            <div>
+                <h3>Service Model</h3>
+                <p><strong>Primary:</strong> Full Service Dining</p>
+                <p><strong>Secondary:</strong> Fast Casual (Counter/Takeout)</p>
+                <p><strong>Key Challenge:</strong> High labor intensity in BOH (Frying/Grilling) and heavy load transport in FOH.</p>
+                <p><strong>Opportunity:</strong> Standardization of flavor profiles via robotic precision.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-bottom: 20px;">
+            <span class="pathway-tag">Pathway A</span>
+            <h3>Front-of-House Serving Robots</h3>
+            <p><strong>Focus:</strong> Table Turnover & Staff Support</p>
+            <p>Autonomous delivery units to transport heavy platters and pitchers. Reduces server transit time by 30-40%, allowing staff to focus on order taking and guest engagement.</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <span class="pathway-tag">Pathway B</span>
+            <h3>Back-of-House Automated Frying</h3>
+            <p><strong>Focus:</strong> Consistency & Safety</p>
+            <p>Robotic arms managing fry baskets for sides (fries, hushpuppies). Eliminates burn risks, ensures perfect golden-brown consistency across franchises, and optimizes oil usage.</p>
+        </div>
+
+        <div>
+            <span class="pathway-tag">Pathway C</span>
+            <h3>AI-Driven Kiosks & Voice Agents</h3>
+            <p><strong>Focus:</strong> Upselling & Order Accuracy</p>
+            <p>Smart kiosks and voice-enabled drive-thru agents. Increases Average Order Value (AOV) through algorithmic upselling and reduces human error in complex orders.</p>
+        </div>
+    </div>
+
+    <!-- Financial Analysis & Charts -->
+    <div class="glass-card">
+        <h2>Financial Model & Projections</h2>
+        <div class="section-layout">
+            <div>
+                <h3>Cost Structure</h3>
+                <p><strong>CAPEX:</strong> $15k - $40k per unit (est. $2M for 20-store pilot).</p>
+                <p><strong>OPEX:</strong> Maintenance contracts (~$2k/yr/unit) + Negligible energy.</p>
+                <p><strong>Labor Impact:</strong> Direct reduction in runner/fry cook hours (Target: 15-25%).</p>
+                <p><strong>Revenue Impact:</strong> Increased table turns + 8-12% AOV increase from AI upselling.</p>
+            </div>
+            <div>
+                <h3>Cumulative Savings (5-Year)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Operational Efficiency</h3>
+        <div class="chart-container" style="height: 250px; margin-top: 20px;">
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <h3>Year 1: Pilot Phase</h3>
+                <p>Vendor selection, POS integration, and deployment of robots in 5-10 high-volume stores. Focus on data collection and staff training.</p>
+            </div>
+            <div style="border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <h3>Year 2: Scaled Expansion</h3>
+                <p>Rollout to 15 additional locations. Optimization of BOH automation. Franchisee roadshows begin.</p>
+            </div>
+            <div style="border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <h3>Year 3: Franchise Enablement</h3>
+                <p>Full corporate deployment. Introduction of RaaS (Robotics as a Service) financing for franchise partners.</p>
+            </div>
+            <div style="border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <h3>Year 4-5: Ecosystem Maturity</h3>
+                <p>Predictive maintenance via IoT. Expansion into specialized prep units. System-wide AI optimization for demand forecasting.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Data for Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 650000, 1400000, 2300000, 3200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#94a3b8' }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value / 1000 + 'k'; } },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Data for Table Turnover Chart
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Rush', 'Dinner Peak', 'Weekend All-Day'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [1.2, 1.1, 1.3],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [1.6, 1.5, 1.7],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    title: { display: true, text: 'Turns per Hour', color: '#94a3b8' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
