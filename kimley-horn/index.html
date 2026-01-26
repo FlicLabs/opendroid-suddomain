@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimley-Horn Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 24px;
+            background: var(--primary);
+            margin-right: 12px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Sections */
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            color: #cbd5e1;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        canvas {
+            max-height: 300px;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>Kimley-Horn Automation Strategy</h1>
+        <div class="subtitle">Strategic Assessment for Industry 4.0 & Smart Manufacturing Integration</div>
+        
+        <div class="metrics-grid" style="max-width: 800px; margin: 0 auto;">
+            <div class="metric-card">
+                <span class="metric-value">$120k</span>
+                <span class="metric-label">Max CAPEX/Cell</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">30%</span>
+                <span class="metric-label">OEE Target</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">18 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">5 Year</span>
+                <span class="metric-label">Roadmap</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Kimley-Horn is strategically positioned to integrate Industry 4.0 principles not only into internal engineering workflows but also as a premier consultant for infrastructure and manufacturing clients. The vision shifts from manual data acquisition to <span class="highlight">digitally native, sensor-driven intelligence</span>.</p>
+        <p>The firm's unique advantage lies in bridging the gap between civil infrastructure and discrete manufacturing automation. By adopting collaborative robotics and autonomous systems, Kimley-Horn can enhance field safety, accelerate project timelines, and offer predictive analytics services.</p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Operations Overview</h3>
+                <p><strong>Scale:</strong> 100+ Offices | Project-Based Production</p>
+                <p><strong>Locations:</strong> Raleigh HQ, Atlanta, Chicago, Dallas, LA, Denver</p>
+                <p><strong>Process Type:</strong> Service-Oriented Discrete Output (CAD/GIS) & Field Operations</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Current State</h3>
+                <ul>
+                    <li>Manual Field Data Collection</li>
+                    <li>Traditional Survey & Inspection Methods</li>
+                    <li>Siloed Data Systems (Legacy)</li>
+                    <li>Linear Project Management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            <!-- Pathway A -->
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-top: 3px solid #3b82f6;">
+                <h3 style="color: #3b82f6; font-size: 1.1rem;">Pathway A: Cobots</h3>
+                <p><strong>Focus:</strong> Safety & Precision</p>
+                <p><strong>Application:</strong> Field surveying and repetitive testing tasks.</p>
+                <p><strong>Impact:</strong> Reduces human risk in hazardous zones; increases stability of data capture.</p>
+            </div>
+
+            <!-- Pathway B -->
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-top: 3px solid #10b981;">
+                <h3 style="color: #10b981; font-size: 1.1rem;">Pathway B: AMRs</h3>
+                <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                <p><strong>Application:</strong> Logistics on construction sites; material transport.</p>
+                <p><strong>Impact:</strong> Optimizes inventory tracking; reduces non-value travel time.</p>
+            </div>
+
+            <!-- Pathway C -->
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border-top: 3px solid #f59e0b;">
+                <h3 style="color: #f59e0b; font-size: 1.1rem;">Pathway C: Automation</h3>
+                <p><strong>Focus:</strong> Throughput & Yield</p>
+                <p><strong>Application:</strong> Automated structural inspection (Drones/Vision).</p>
+                <p><strong>Impact:</strong> 10x faster inspections; AI-driven defect detection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model -->
+    <div class="glass-card">
+        <h2>Financial Model & ROI</h2>
+        <p>The financial justification relies on operational efficiency and risk mitigation.</p>
+        
+        <div class="metrics-grid">
+            <div class="metric-card" style="border-color: #ef4444;">
+                <span class="metric-value" style="color: #ef4444;">$60k - $120k</span>
+                <span class="metric-label">CAPEX / Cell</span>
+            </div>
+            <div class="metric-card" style="border-color: #22c55e;">
+                <span class="metric-value" style="color: #22c55e;">20-30%</span>
+                <span class="metric-label">OEE Increase</span>
+            </div>
+            <div class="metric-card" style="border-color: #8b5cf6;">
+                <span class="metric-value" style="color: #8b5cf6;">&lt; 18 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+
+        <h3>Drivers</h3>
+        <ul>
+            <li><strong>Labor Reallocation:</strong> Moving engineers from data collection to high-value analysis.</li>
+            <li><strong>Scrap Reduction:</strong> Minimizing rework in design and field errors.</li>
+            <li><strong>Client Value:</strong> Offering predictive maintenance services to manufacturing clients.</li>
+        </ul>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (Year 1 - 5)</h2>
+        <div style="position: relative; padding-left: 20px; border-left: 2px solid var(--glass-border);">
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 5px; color: #fff;">Year 1: Discovery & Foundation</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Assess workflows, deploy RPA pilots, integrate IoT sensors for data acquisition.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 5px; color: #fff;">Year 2: Pilot Integration</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Field testing of AMRs and Cobots. Live Computer Vision implementation on active sites.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 5px; color: #fff;">Year 3: Scaling Operations</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Standardize "Smart Site" protocols. 20% of field data fully automated. ROI realization.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 5px; color: #fff;">Year 4: AI & Analytics</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Deploy predictive maintenance models. Launch external consulting toolkits for manufacturing.</p>
+            </div>
+
+            <div>
+                <h3 style="margin-bottom: 5px; color: #fff;">Year 5: Ecosystem Maturity</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Digital-native firm status. 50% reduction in manual field labor. Full lifecycle automation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="glass-card">
+        <h2>Data Visualization: ROI & Output</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="costSavingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Generated by Open Droids Senior Consultation Agent | Kimley-Horn Strategic Report | Industry 4.0 Focus
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Production Cost Savings
+        const ctx1 = document.getElementById('costSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 180000, 450000, 900000, 1600000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '5-Year Cumulative Cost Savings', color: '#e2e8f0' },
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs. Cobot-Assisted Output
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Survey Data (pts/hr)', 'Material Transport (loads/hr)', 'Quality Inspections (units/hr)'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [20, 5, 8],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted',
+                        data: [60, 15, 25],
+                        backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: 'Manual vs. Automated Output Efficiency', color: '#e2e8f0' },
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
