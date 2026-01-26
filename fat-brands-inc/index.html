@@ -1,0 +1,375 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAT Brands Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(124, 58, 237, 0.3);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .highlight-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        /* Pathway Badges */
+        .pathway-badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center;">
+        <h1>FAT Brands Inc.</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Strategic Robotics Integration & Automation Report</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            FAT Brands Inc. represents a prime candidate for hospitality robotics integration due to its vast portfolio of 
+            <span class="highlight-text">Quick-Service (QSR)</span> and <span class="highlight-text">Fast-Casual</span> brands. 
+            The vision is to transition from traditional labor models to a "Human-Robot Collaboration" ecosystem. This strategy focuses on 
+            automating repetitive tasks to accelerate throughput, ensure food safety consistency, and mitigate labor shortages. 
+            By leveraging robotics, FAT Brands can preserve the hospitality touch while optimizing operational efficiency across 3,000+ locations.
+        </p>
+    </section>
+
+    <!-- Key Metrics Dashboard -->
+    <section class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Est. CAPEX / Unit</div>
+                <div class="metric-value">$15k - $40k</div>
+                <div class="metric-label">Scalable per location</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Cost Reduction</div>
+                <div class="metric-value">15% - 25%</div>
+                <div class="metric-label">Front-of-House Target</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 14 Months</div>
+                <div class="metric-label">Via efficiency & savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Global Locations</div>
+                <div class="metric-value">3,000+</div>
+                <div class="metric-label">Deployment Scale</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-bottom: 15px;">
+            <h3>Pathway A: Front-of-House Serving Robots</h3>
+            <p><strong>Focus:</strong> Table Turnover & Staff Support</p>
+            <p>Deployment in Casual Dining (TGI Fridays) and Fast Casual (Fatburger) for bussing, runner duties, and beverage delivery. Reduces physical strain on servers, allowing coverage of larger table sections.</p>
+            <span class="pathway-badge">Table Turns +20%</span>
+            <span class="pathway-badge">Labor Savings 15%</span>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <h3>Pathway B: Back-of-House Automation</h3>
+            <p><strong>Focus:</strong> Consistency & Safety</p>
+            <p>Automated fry stations and grilling arms for QSR brands (Round Table Pizza, Fatburger). Ensures precise adherence to recipes and safety protocols, eliminating human error in high-heat environments.</p>
+            <span class="pathway-badge">Quality Consistency 99%</span>
+            <span class="pathway-badge">Labor Savings 30%</span>
+        </div>
+
+        <div>
+            <h3>Pathway C: AI-Driven Kiosks & Voice Agents</h3>
+            <p><strong>Focus:</strong> Upselling & Order Accuracy</p>
+            <p>Intelligent interfaces for all QSR locations. AI suggests add-ons based on purchase history and handles drive-thru voice ordering to reduce bottlenecks.</p>
+            <span class="pathway-badge">Check Size +10-15%</span>
+            <span class="pathway-badge">Accuracy 95%+</span>
+        </div>
+    </section>
+
+    <!-- Data Visualizations -->
+    <section class="glass-card">
+        <h2>ROI Projections & Impact Analysis</h2>
+        <div class="chart-grid">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Table Turnover Efficiency</h3>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Year 1: Discovery & Pilot</h3>
+                <p>Deploy serving robots in 2-3 high-volume pilots. Integrate AI Voice Ordering at 50 drive-thrus. Establish KPI baselines.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 2: Optimization & Expansion</h3>
+                <p>Refine fleet management. Roll out Back-of-House automated frying to 200 high-volume units. Expand franchisee support.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 3: Standardization</h3>
+                <p>Mandate robotic bussing for new Casual Dining builds. AI Kiosks in 50% of domestic QSRs. 10% system-wide labor reduction.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 4: Network Effects</h3>
+                <p>Full BOH automation across QSR network. Data centralization for supply chain optimization. VR/AR training integration.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 5: Maturity</h3>
+                <p>Hybrid Workforce operating model. 30% of labor hours automated. Real-time operational intelligence across the portfolio.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(148, 163, 184, 0.1)';
+
+    // 1. Cumulative Labor Cost Savings Chart (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.5, 7.0, 15.0, 28.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 2. Table Turnover Comparison (Bar)
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Shift', 'Dinner Shift', 'Peak Weekend'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [1.2, 1.5, 1.8],
+                    backgroundColor: 'rgba(100, 116, 139, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [1.8, 2.2, 2.6],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Turns per Hour' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
