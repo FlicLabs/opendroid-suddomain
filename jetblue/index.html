@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JetBlue Robotics Automation Strategy</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a; /* Deep Space Blue */
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --primary-accent: #7c3aed; /* Electric Purple */
+            --secondary-accent: #0ea5e9; /* Sky Blue */
+            --tertiary-accent: #f97316; /* Aviation Orange */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, rgba(124, 58, 237, 0.15), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.1), transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--primary-accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--secondary-accent);
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--tertiary-accent);
+            box-shadow: 0 0 10px var(--tertiary-accent);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 300px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+        ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+        ul li::before {
+            content: "•";
+            color: var(--secondary-accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="glass-card">
+            <h1>JETBLUE AUTOMATION STRATEGY</h1>
+            <p style="font-size: 1.2rem; color: #cbd5e1;">Strategic Report: Robotics & AI Integration for Aviation Cleaning & Maintenance</p>
+            <div style="display: flex; gap: 20px; margin-top: 15px; font-size: 0.9rem;">
+                <span style="color: var(--tertiary-accent);">✓ OPEX Reduction: 45%</span>
+                <span style="color: var(--secondary-accent);">✓ Payback: < 24 Months</span>
+                <span style="color: var(--primary-accent);">✓ 5-Year Roadmap</span>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <h2>EXECUTIVE SUMMARY</h2>
+            <p>JetBlue is positioned to lead the aviation industry in maintenance automation. By integrating Open Droids' robotic solutions, JetBlue will transition from labor-intensive cleaning protocols to a high-efficiency, technology-driven model. This strategy focuses on four key pathways: Autonomous Cabin Cleaning, UV-C Disinfection, Exterior Washing, and AI Inspection. The result is a projected 35-45% reduction in operational expenditures, enhanced aircraft hygiene, and a sub-24-month return on investment.</p>
+        </section>
+
+        <!-- Financial Dashboard -->
+        <section>
+            <h2>FINANCIAL DASHBOARD</h2>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$100k</div>
+                    <div class="metric-label">Avg. CAPEX Per Unit</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">45%</div>
+                    <div class="metric-label">Target OPEX Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">&lt; 24 Mo</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">5 Phases</div>
+                    <div class="metric-label">Implementation Timeline</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <!-- Chart 1: Cumulative Savings -->
+            <div class="chart-wrapper full-width">
+                <h3>5-Year Cumulative Savings Projection</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+
+            <!-- Chart 2: Throughput Comparison -->
+            <div class="chart-wrapper">
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+
+            <!-- Chart 3: Labor Redistribution -->
+            <div class="chart-wrapper">
+                <h3>Labor Hour Redistribution</h3>
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap & Pathways -->
+        <div class="glass-card">
+            <h2>DEPLOYMENT ROADMAP</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div>
+                    <h3>Phase 1: Pilot (Year 1)</h3>
+                    <p>Focus on JFK Hub. Deployment of 5 Cabin Cleaning units and 2 AI Inspection bots. KPI establishment.</p>
+                </div>
+                <div>
+                    <h3>Phase 2: Expansion (Year 2)</h3>
+                    <p>Scale to 40 Cabin Cleaning units. Introduce 15 UV-C Disinfection units at JFK & BOS.</p>
+                </div>
+                <div>
+                    <h3>Phase 3: Network (Year 3)</h3>
+                    <p>50% Fleet coverage for Cabin Cleaning. Pilot Exterior Washing systems.</p>
+                </div>
+                <div>
+                    <h3>Phase 4: Standardization (Year 4)</h3>
+                    <p>90% Fleet coverage. Full integration of UV-C and Exterior Washing at MRO facilities.</p>
+                </div>
+                <div>
+                    <h3>Phase 5: Optimization (Year 5)</h3>
+                    <p>AI-Driven scheduling. Level 4 Autonomous Inspection. Full OPEX reduction realized.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+            <ul>
+                <li><strong>Pathway A (Cabin Cleaning):</strong> Autonomous AMRs for vacuuming, seat sanitization, and debris collection.</li>
+                <li><strong>Pathway B (UV-C Disinfection):</strong> Autonomous UV-C light units for pathogen neutralization on high-touch surfaces.</li>
+                <li><strong>Pathway C (Exterior Washing):</strong> Automated gantry systems reducing water consumption and ground safety risks.</li>
+                <li><strong>Pathway D (AI Inspection):</strong> LiDAR-equipped bots for predictive maintenance and fuselage integrity checks.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Chart Scripts -->
+    <script>
+        // Global Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1 (Pilot)', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.5, 2.5, 8.0, 15.0, 24.0],
+                    borderColor: '#0ea5e9', // Sky Blue
+                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Aircraft/Hour (Cabin)', 'Area/Day (Exterior)', 'Seats/Day (Disinfection)'],
+                datasets: [{
+                    label: 'Manual',
+                    data: [2, 150, 80],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)', // Aviation Orange
+                    borderWidth: 0
+                }, {
+                    label: 'Robotic',
+                    data: [4.5, 400, 250],
+                    backgroundColor: 'rgba(124, 58, 237, 0.6)', // Electric Purple
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#f8fafc' } }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // 3. Labor Redistribution Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Routine Cleaning (Automated)', 'High-Touch Detailing', 'Maintenance & Tech Oversight', 'Retrained Ops Staff'],
+                datasets: [{
+                    data: [45, 20, 15, 20],
+                    backgroundColor: [
+                        '#7c3aed', // Electric Purple
+                        '#0ea5e9', // Sky Blue
+                        '#f97316', // Orange
+                        '#ffffff'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '60%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#f8fafc', padding: 20 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
