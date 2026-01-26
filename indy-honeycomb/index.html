@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indy Honeycomb - Aviation Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --primary-purple: #7c3aed;
+            --secondary-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 40%);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-purple);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--secondary-blue);
+            margin-top: 20px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 5px;
+        }
+
+        /* Chart Container */
+        .chart-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 400px;
+            position: relative;
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--secondary-blue);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Financial Dashboard Glow */
+        .glow-text {
+            color: var(--accent-orange);
+            text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <header class="card" style="text-align: center; margin-bottom: 40px;">
+        <h1>INDY HONEYCOMB</h1>
+        <h3 style="color: var(--text-main); border: none; font-size: 1.2rem; font-weight: 400;">
+            Aviation Cleaning & Maintenance Automation - Strategic Research Report
+        </h3>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            Indy Honeycomb is positioned at the forefront of aviation operational efficiency through the strategic implementation of robotic cleaning automation. This research outlines a high-level vision where labor-intensive, non-revenue-generating turnaround tasks are transformed into streamlined, autonomous processes. By integrating specialized robotics, Indy Honeycomb can achieve superior aircraft availability, enforce consistent hygiene standards, and significantly lower operational expenditures. The core objective is to transition the airline's cleaning and maintenance protocols from a technology-augmented, predictive automation framework.
+        </p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="card">
+        <h2>ORGANIZATIONAL PROFILE</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Fleet Size</h3>
+                <p>50-75 active aircraft (Narrow & Wide-body), servicing domestic and international routes.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Hub Presence</h3>
+                <p>Primary Hub: Indianapolis (IND). Strategic focus stations at major metropolitan airports.</p>
+            </div>
+        </div>
+        <h3>Current Operational Model</h3>
+        <p>
+            Currently relies on manual cleaning crews for cabin detailing and lavatory servicing. The model faces challenges regarding labor availability, variable cleaning quality, and strict time constraints during short turnaround periods. A reactive approach necessitates a shift toward automated consistency.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard (Metrics) -->
+    <div class="card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value glow-text">45%</div>
+                <div class="metric-label">Max OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" style="color: var(--secondary-blue);">18-24</div>
+                <div class="metric-label">Month Payback Period</div>
+            </div>
+        </div>
+        
+        <h3>Pathway Cost Breakdown</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Technology</th>
+                    <th>Est. CAPEX</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>Autonomous Cabin Cleaning</td>
+                    <td>$75,000</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>UV-C Disinfection Robots</td>
+                    <td>$80,000</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>Exterior Washing Systems</td>
+                    <td>$125,000</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>AI-Powered Inspection Bots</td>
+                    <td>$150,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="chart-section">
+        <!-- Savings Chart -->
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        
+        <!-- Throughput Chart -->
+        <div class="chart-container">
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Labor Redistribution -->
+        <div class="chart-container">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>IMPLEMENTATION ROADMAP (5-YEAR)</h2>
+        
+        <div style="border-left: 3px solid var(--primary-purple); padding-left: 20px; margin-top: 20px;">
+            <div style="margin-bottom: 30px;">
+                <h3>Year 1: Pilot & Validation</h3>
+                <p>Deployment of 2 Cabin Robots & 1 UV-C unit at Indianapolis Hub. Focus on safety compliance and workflow integration.</p>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3>Year 2: Hub Standardization</h3>
+                <p>Expansion to 10 Cabin units & 5 UV-C units. Introduction of 1 Exterior Washing System. OPEX reduction of 20%.</p>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3>Year 3: Multi-Hub Rollout</h3>
+                <p>Robotics deployment to strategic stations. Initial trials of AI Inspection Bots. Total fleet: 40 units. OPEX reduction of 35%.</p>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3>Year 4: Fleet-Wide Automation</h3>
+                <p>Comprehensive coverage across all major hubs. AI Integration into maintenance loops. OPEX reduction of 40-45%.</p>
+            </div>
+
+            <div>
+                <h3>Year 5: Optimization & Autonomy</h3>
+                <p>Data synergy for predictive cleaning. Upgraded autonomous fleet management. Fully automated ground service ecosystem.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Chart JS Logic -->
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [50000, 150000, 400000, 850000, 1500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings Projection', color: '#fff' }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Regional'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [12, 8, 18],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [18, 12, 24],
+                    backgroundColor: '#f97316',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput Comparison (Daily)', color: '#fff' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Re-Deployed (Ops/Tech)', 'Reduced Headcount', 'Manual Cleaning'],
+            datasets: [{
+                data: [50, 20, 30],
+                backgroundColor: [
+                    '#0ea5e9',
+                    '#f97316',
+                    '#7c3aed'
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation', color: '#fff' },
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
