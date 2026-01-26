@@ -1,0 +1,424 @@
+**
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taughannock Aviation: Robotic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-purple);
+            color: var(--text-main);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Phase Timeline */
+        .timeline-item {
+            border-left: 2px solid var(--accent-orange);
+            padding-left: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+        .year-badge {
+            display: inline-block;
+            background: var(--accent-orange);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="glass-card">
+        <h1>TAUGHANNOCK AVIATION CORP.</h1>
+        <h2 style="border: none; font-size: 1.5rem; color: var(--text-main);">Strategic Automation Report</h2>
+        <p style="font-size: 1.1rem; max-width: 800px;">
+            A comprehensive deep dive into robotic cleaning and maintenance pathways designed to elevate operational efficiency, safety, and financial performance.
+        </p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            Taughannock Aviation Corp. stands at the precipice of a transformative operational shift. The integration of robotic cleaning and maintenance automation offers a pathway to redefine efficiency, safety, and passenger experience. This research proposes a strategic vision where autonomous systems handle routine cleaning and inspection tasks, liberating human staff for higher-value roles. The objective is to reduce operational costs, minimize aircraft turnaround times, and elevate hygiene standards to industry-leading levels.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">24 Mo</div>
+                <div class="metric-label">Max Payback Period</div>
+            </div>
+        </div>
+        <p style="margin-top: 20px;">
+            The financial model projects a robust ROI, driven by labor optimization and reduced resource consumption. The CAPEX is amortized efficiently against high OPEX savings, ensuring liquidity and long-term value generation.
+        </p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <!-- Cumulative Savings Chart -->
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Throughput Comparison Chart -->
+        <div class="glass-card">
+            <h3>Throughput: Manual vs. Robotic</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operational Pathways -->
+    <div class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        
+        <div class="grid-2">
+            <div>
+                <h3>1. Autonomous Cabin Cleaning</h3>
+                <p>Robots handle vacuuming and surface wiping autonomously. Optimized for rapid turnaround (15 mins per narrow-body).</p>
+            </div>
+            <div>
+                <h3>2. UV-C Disinfection</h3>
+                <p>Mobile units targeting pathogens on high-touch surfaces. Enhances passenger trust and reduces bio-risks.</p>
+            </div>
+            <div>
+                <h3>3. Exterior Washing Systems</h3>
+                <p>Automated gantries reducing water usage by 30% and eliminating fall risks for ground crews.</p>
+            </div>
+            <div>
+                <h3>4. AI Inspection Bots</h3>
+                <p>Drones/Crawlers performing NDT. Real-time data feeds into predictive maintenance models.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Labor Redistribution Chart -->
+    <div class="glass-card">
+        <h2>LABOR HOUR REDISTRIBUTION</h2>
+        <p>Post-automation, labor hours shift from repetitive manual tasks to supervisory and quality control roles.</p>
+        <div class="chart-container" style="height: 250px; width: 50%; margin: 0 auto;">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP (5-YEAR STRATEGY)</h2>
+        
+        <div class="timeline-item">
+            <span class="year-badge">YEAR 1</span>
+            <h3>Pilot and Validation</h3>
+            <p>Deploy 5 Cabin Cleaning Robots and 2 UV-C units at primary hub. Establish maintenance protocols.</p>
+        </div>
+
+        <div class="timeline-item">
+            <span class="year-badge">YEAR 2</span>
+            <h3>Expansion and Integration</h3>
+            <p>Rollout to secondary hubs. Procurement of Exterior Washing Systems. 15% fleet automation coverage.</p>
+        </div>
+
+        <div class="timeline-item">
+            <span class="year-badge">YEAR 3</span>
+            <h3>Standardization and AI Adoption</h3>
+            <p>Network-wide cleaning robot adoption. Introduction of AI Inspection Bots. 40% coverage.</p>
+        </div>
+
+        <div class="timeline-item">
+            <span class="year-badge">YEAR 4</span>
+            <h3>Full Operational Synergy</h3>
+            <p>Unified digital ecosystem. Predictive maintenance implementation. 70% coverage.</p>
+        </div>
+
+        <div class="timeline-item">
+            <span class="year-badge">YEAR 5</span>
+            <h3>Optimization and Future-Proofing</h3>
+            <p>Software upgrades and capacity expansion. Near-total automation for standard tasks. 90%+ coverage.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Chart.js Script -->
+<script>
+    // Common Chart Config
+    const chartConfig = {
+        plugins: {
+            legend: {
+                labels: { color: '#e2e8f0', font: { family: 'Inter' } }
+            }
+        }
+    };
+
+    // 1. 5-Year Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.5, 6.0, 11.0, 18.0],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            ...chartConfig,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // 2. Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow-Body', 'Wide-Body'],
+            datasets: [
+                {
+                    label: 'Manual (Min/Cycle)',
+                    data: [45, 75],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Min/Cycle)',
+                    data: [15, 25],
+                    backgroundColor: 'rgba(249, 115, 22, 0.8)',
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            ...chartConfig,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning', 'Supervision & QA', 'Maintenance', 'Logistics'],
+            datasets: [{
+                data: [30, 40, 20, 10],
+                backgroundColor: [
+                    '#7c3aed', // Purple
+                    '#0ea5e9', // Blue
+                    '#f97316', // Orange
+                    '#334155'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            ...chartConfig,
+            cutout: '60%',
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
