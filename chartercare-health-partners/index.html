@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CharterCARE Health Partners - Robotics Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(124, 58, 237, 0.1);
+            border-bottom: 2px solid #7c3aed;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #a855f7;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 1.5em;
+            color: #c084fc;
+            letter-spacing: 1px;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .glass-card h2 {
+            color: #a855f7;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .glass-card h3 {
+            color: #c084fc;
+            margin-top: 20px;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(124, 58, 237, 0.05) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: 800;
+            color: #a855f7;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin: 20px 0;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .dashboard-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        @media (max-width: 768px) {
+            .dashboard-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        .strategic-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .strategic-list li {
+            background: rgba(124, 58, 237, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 4px solid #7c3aed;
+            border-radius: 4px;
+        }
+        .highlight {
+            color: #f472b6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">OPEN DROIDS</div>
+            <div class="title">CharterCARE Health Partners - Robotics Research & ROI Analysis</div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>CharterCARE Health Partners is a dual-hospital system in Rhode Island, comprising Our Lady of Fatima Hospital (community) and Roger Williams Medical Center (academic). With a focus on oncology, cardiology, and advanced surgery, the system is positioned to leverage robotics for surgical expansion, pharmacy automation, and facility logistics. The primary ROI driver is surgical throughput optimization, projecting an annual margin improvement of $10–$15 million with payback periods of 6–18 months.</p>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$10M+</div>
+                    <div class="metric-label">Annual Net Benefit (Pathway A)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">6-18 Months</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">20%</div>
+                    <div class="metric-label">Target Robotic Case Share</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Target OR Utilization</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Pathway Analysis: Comparative Value</h2>
+            <p>Three primary robotics pathways were evaluated for CharterCARE. Surgical robotics offers the highest strategic and financial impact, followed by pharmacy/sterile processing automation for efficiency, and facility logistics for operational savings.</p>
+            <div class="dashboard-section">
+                <div>
+                    <h3>Pathway A: Surgical Robotics</h3>
+                    <ul class="strategic-list">
+                        <li><span class="highlight">Scope:</span> Expansion across surgical specialties and optimization.</li>
+                        <li><span class="highlight">Value Driver:</span> Revenue growth and margin per case.</li>
+                        <li><span class="highlight">Annual Benefit:</span> $10–$15M</li>
+                        <li><span class="highlight">Payback:</span> 6–18 months</li>
+                        <li><span class="highlight">Risk:</span> Moderate (surgeon adoption, scheduling change)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Pathway B: Pharmacy & Sterile Processing</h3>
+                    <ul class="strategic-list">
+                        <li><span class="highlight">Scope:</span> Automated dispensing and instrument cleaning.</li>
+                        <li><span class="highlight">Value Driver:</span> Efficiency and error reduction.</li>
+                        <li><span class="highlight">Annual Benefit:</span> $1–$2M</li>
+                        <li><span class="highlight">Payback:</span> 12–24 months</li>
+                        <li><span class="highlight">Risk:</span> Low (proven technology)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dashboard-section">
+                <div>
+                    <h3>Pathway C: Facility Logistics</h3>
+                    <ul class="strategic-list">
+                        <li><span class="highlight">Scope:</span> AMRs for transport and cleaning robots.</li>
+                        <li><span class="highlight">Value Driver:</span> Labor savings and patient satisfaction.</li>
+                        <li><span class="highlight">Annual Benefit:</span> $0.5–$1.5M</li>
+                        <li><span class="highlight">Payback:</span> 18–36 months</li>
+                        <li><span class="highlight">Risk:</span> Low (proven technology)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Strategic Positioning</h3>
+                    <p>Executing this roadmap positions CharterCARE as a technology-forward surgical hub, attracting top talent, strengthening payer relationships through lower complication rates, and creating a scalable model for operational excellence.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Dashboard & Projections</h2>
+            <p>The financial model for Pathway A (Surgical Robotics) projects significant cumulative savings over five years. The charts below visualize the growth in savings and the throughput improvement from manual to robotic optimization.</p>
+            
+            <div class="dashboard-section">
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$40M+</div>
+                    <div class="metric-label">5-Year Cumulative Net Benefit</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">18,000</div>
+                    <div class="metric-label">Baseline Annual Cases</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">3,960</div>
+                    <div class="metric-label">Projected Robotic Cases</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">15-25%</div>
+                    <div class="metric-label">Case Volume Increase</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul class="strategic-list">
+                <li><strong>Year 1:</strong> Assessment, pilot surgical expansion in one specialty, and implement scheduling optimization software.</li>
+                <li><strong>Year 2:</strong> Scale robotics to a second specialty, launch sterile processing automation, and upgrade pharmacy systems.</li>
+                <li><strong>Year 3:</strong> Full-scale rollout of surgical optimization, deploy facility logistics automation (AMRs).</li>
+                <li><strong>Year 4-5:</strong> Sustain improvements, integrate AI-driven analytics, and explore emerging robotic applications.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 5-Year Cumulative Savings Line Chart
+        const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+        new Chart(savingsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($M)',
+                    data: [10, 22, 35, 48, 65],
+                    borderColor: '#a855f7',
+                    backgroundColor: 'rgba(168, 85, 247, 0.2)',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    title: { display: true, text: '5-Year Cumulative Net Benefit', color: '#c084fc' }
+                },
+                scales: {
+                    y: { 
+                        ticks: { color: '#94a3b8' }, 
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                        title: { display: true, text: 'Cumulative $ (Millions)', color: '#a855f7' }
+                    },
+                    x: { 
+                        ticks: { color: '#94a3b8' }, 
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Bar Chart: Manual vs. Robotic Throughput
+        const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+        new Chart(throughputCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Cases per Year', 'OR Utilization (%)', 'Robotic Case Share (%)'],
+                datasets: [{
+                    label: 'Baseline (Manual)',
+                    data: [18000, 78, 12],
+                    backgroundColor: 'rgba(244, 114, 182, 0.5)',
+                    borderColor: '#f472b6',
+                    borderWidth: 2
+                }, {
+                    label: 'Optimized (Robotic)',
+                    data: [19800, 85, 22],
+                    backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    title: { display: true, text: 'Manual vs. Robotic Throughput Comparison', color: '#c084fc' }
+                },
+                scales: {
+                    y: { 
+                        ticks: { color: '#94a3b8' }, 
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' } 
+                    },
+                    x: { 
+                        ticks: { color: '#94a3b8' }, 
+                        grid: { color: 'rgba(148, 163, 184, 0.1)' } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
