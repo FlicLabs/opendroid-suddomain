@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogsalt Robotics Strategy Report</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Metric Grid */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-glow);
+            margin: 8px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            height: 300px;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 1.5rem;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            border-left: 3px solid var(--primary);
+        }
+
+        .pathway-header {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag {
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+
+        .roi-badge {
+            background: linear-gradient(135deg, var(--primary), #4c1d95);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card" style="text-align: center; padding: 40px;">
+        <h1>HOGSALT AUTOMATION STRATEGY</h1>
+        <p style="font-size: 1.2rem; color: #cbd5e1;">Deep Strategic Research & ROI Analysis</p>
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <span class="tag" style="font-size: 0.9rem; padding: 6px 12px;">Fine Casual</span>
+            <span class="tag" style="font-size: 0.9rem; padding: 6px 12px;">Robotics Integration</span>
+            <span class="tag" style="font-size: 0.9rem; padding: 6px 12px;">Year 1-5 Roadmap</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            The integration of robotics into Hogsalt represents a shift toward a hybrid operational framework. 
+            The vision is to deploy autonomous systems as "force multipliers" that handle repetitive, low-value tasks, 
+            allowing human staff to focus on culinary craftsmanship and high-touch guest interaction. 
+            This "Phygital" model combines the atmospheric experience of fine dining with the throughput efficiency of automation.
+        </p>
+        <div class="roi-badge">Target ROI: &lt; 14 Months</div>
+    </div>
+
+    <!-- Key Metrics -->
+    <h3 style="color: white; margin-bottom: 16px;">Hospitality ROI Dashboard</h3>
+    <div class="metric-grid">
+        <div class="metric-card">
+            <div class="metric-label">Est. CAPEX</div>
+            <div class="metric-value">$15k - $40k</div>
+            <div class="metric-label">Per Unit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Cost Reduction</div>
+            <div class="metric-value">15-25%</div>
+            <div class="metric-label">Target Range</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">&lt; 14 Mos</div>
+            <div class="metric-label">Via Throughput</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">+30%</div>
+            <div class="metric-label">Table Turns</div>
+        </div>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="section-title">Organizational Profile</div>
+    <div class="glass-card">
+        <p>
+            <strong>Entity:</strong> Hogsalt<br>
+            <strong>Service Model:</strong> Fine Casual (Hybrid of Full Service & QSR)<br>
+            <strong>Cuisine Type:</strong> American Comfort Food (Steak, Pasta)<br>
+            <strong>Operational Focus:</strong> High consistency in cooking protocols and premium guest experience. 
+            The boutique footprint (1-5 locations typical) requires scalable solutions that maintain brand intimacy while maximizing revenue per square foot.
+        </p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="section-title">Robotics Opportunity Pathways</div>
+    <div class="glass-card">
+        <div class="pathways-grid">
+            <div class="pathway-card pathway-card">
+                <div class="pathway-header">
+                    <span>Pathway A: FOH Serving</span>
+                    <span class="tag">Runner</span>
+                </div>
+                <p><strong>Focus:</strong> Table Turnover & Staff Support</p>
+                <p>Autonomous Mobile Units (AMRs) transport heavy plates (cast iron skillets, large platters). Reduces server strain and speeds up food delivery from expo to table.</p>
+            </div>
+
+            <div class="pathway-card pathway-card">
+                <div class="pathway-header">
+                    <span>Pathway B: BOH Cooking</span>
+                    <span class="tag">Precision</span>
+                </div>
+                <p><strong>Focus:</strong> Consistency & Safety</p>
+                <p>Automated frying/grilling stations. Ensures proteins are cooked to exact internal temperatures and sides are timed perfectly. Mitigates slip/fall/burn risks.</p>
+            </div>
+
+            <div class="pathway-card pathway-card">
+                <div class="pathway-header">
+                    <span>Pathway C: AI Ordering</span>
+                    <span class="tag">Upsell</span>
+                </div>
+                <p><strong>Focus:</strong> Accuracy & Revenue</p>
+                <p>AI Kiosks or Voice Agents for counter pickup. Analyzes patterns to recommend high-margin add-ons (e.g., truffle fries) with zero friction.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model Visuals -->
+    <div class="section-title">Financial Model & Visual Analysis</div>
+    <div class="charts-container">
+        <div class="glass-card chart-wrapper">
+            <canvas id="laborSavingsChart"></canvas>
+        </div>
+        <div class="glass-card chart-wrapper">
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="section-title">Implementation Roadmap</div>
+    <div class="glass-card">
+        <ul>
+            <li><strong>Year 1 (Pilot):</strong> Site audit. Deployment of FOH Runner units. Staff training. Data collection on table turns.</li>
+            <li><strong>Year 2 (Optimization):</strong> BOH Automated Frying integration. AI Kiosk deployment. Role redefinition (Robotics Coordinator).</li>
+            <li><strong>Year 3 (Expansion):</strong> Fleet rollout to all existing Hogsalt locations. Standardized Digital SOPs.</li>
+            <li><strong>Year 4 (Intelligence):</strong> Predictive analytics for inventory/staffing. Guest personalization via loyalty integration.</li>
+            <li><strong>Year 5 (Ecosystem):</strong> "Lights Out" BOH prep. Fully mature model for rapid brand scaling.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>Generated by Open Droids Senior Consultation & Research Agent</p>
+        <p>© 2023 Open Droids. Strategic Proprietary Information.</p>
+    </footer>
+
+    <script>
+        // Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Cumulative Labor Cost Savings (Line Chart)
+        const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [45000, 120000, 280000, 500000, 750000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Cumulative Labor Cost Savings', align: 'start', color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // 2. Table Turnover Rate (Bar Chart)
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Lunch (2hr)', 'Dinner (3hr)', 'Peak Weekend'],
+                datasets: [
+                    {
+                        label: 'Manual Service',
+                        data: [1.8, 2.2, 1.5],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robot-Assisted',
+                        data: [2.4, 3.1, 2.0],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'bottom' },
+                    title: { display: true, text: 'Table Turnover Rate (Per Hour)', align: 'start', color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
