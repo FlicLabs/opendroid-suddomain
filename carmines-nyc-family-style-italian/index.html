@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carmine's NYC - Robotics Strategy Report</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --electric-purple: #7c3aed;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--electric-purple);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .highlight-text {
+            color: var(--electric-purple);
+            font-weight: 600;
+        }
+
+        /* Metric Cards for Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--glow);
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="glass-card">
+        <h1>CARMINE'S NYC</h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">
+            Strategic Automation Report: Optimizing Family Style Dining
+        </p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            The dining landscape is shifting toward a <span class="highlight-text">hybrid model</span>. For Carmine's, 
+            robotics serves as a force multiplier. By automating the transport of heavy family-style platters and 
+            standardizing high-heat cooking processes, we shift human focus from logistics to hospitality. 
+            The goal is to increase table turnover and safety while maintaining the warmth of Italian service.
+        </p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="glass-card">
+        <h2>ROI Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">$120k</span>
+                <span class="metric-label">Est. CAPEX (Pilot)</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">20%</span>
+                <span class="metric-label">FOH Labor Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">14 Mos</span>
+                <span class="metric-label">Target Payback</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">5-8%</span>
+                <span class="metric-label">Table Turn Increase</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div>
+                <h3>1. Front-of-House Serving</h3>
+                <p><strong>Focus:</strong> Table Turnover & Staff Support</p>
+                <ul>
+                    <li>• Heavy platter transport (20-30 lbs)</li>
+                    <li>• Drink runners & bussers</li>
+                    <li>• Reduces server physical fatigue</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2. Back-of-House Automation</h3>
+                <p><strong>Focus:</strong> Consistency & Safety</p>
+                <ul>
+                    <li>• Automated frying stations</li>
+                    <li>• Standardized portioning</li>
+                    <li>• Elimination of hot-oil burns</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h3>3. AI-Driven Order Systems</h3>
+            <p><strong>Focus:</strong> Upselling & Accuracy</p>
+            <p>Voice agents for catering orders and kiosks for takeout to ensure accurate family-size portion recommendations.</p>
+        </div>
+    </div>
+
+    <!-- Data Visualization -->
+    <div class="glass-card">
+        <h2>Financial Impact Analysis</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Cumulative Labor Savings (5 Years)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Table Turnover Rate (Peak Hours)</h3>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid var(--electric-purple); padding-left: 15px;">
+                <strong>Year 1: Pilot & Validation</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Deploy 3 FOH & 2 BOH units at flagship NYC location.</span>
+            </div>
+            <div style="border-left: 3px solid var(--electric-purple); padding-left: 15px;">
+                <strong>Year 2: Optimization</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Integrate POS systems and refine workflows.</span>
+            </div>
+            <div style="border-left: 3px solid var(--electric-purple); padding-left: 15px;">
+                <strong>Year 3: Regional Expansion</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Roll out to 50% of high-volume urban locations.</span>
+            </div>
+            <div style="border-left: 3px solid var(--electric-purple); padding-left: 15px;">
+                <strong>Year 4-5: Full Ecosystem</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">100% coverage, predictive maintenance, and Ghost Kitchen expansion.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 135000, 270000, 450000, 675000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate (Bar Chart)
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Peak', 'Dinner Peak'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [1.8, 1.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [2.1, 1.8],
+                    backgroundColor: '#7c3aed',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
