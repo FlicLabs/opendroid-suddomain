@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradewind Aviation: Robotics Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --primary: #7c3aed; /* Electric Purple */
+            --accent: #0ea5e9; /* Sky Blue */
+            --highlight: #f97316; /* Aviation Orange */
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg-deep) 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Utility */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--highlight);
+            text-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* List Styling */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li strong {
+            color: var(--text-main);
+        }
+
+        .roadmap-step {
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Buttons/Interactivity */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #6d28d9;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <header style="text-align: center; margin-bottom: 50px;">
+        <h1>TRADEWIND AVIATION</h1>
+        <p style="font-size: 1.2rem; color: var(--accent);">Strategic Robotics Automation Report</p>
+        <p>Prepared by Open Droids | Senior Consultation & Research</p>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Tradewind Aviation is positioned to lead the regional aviation sector in operational efficiency through the strategic integration of robotics. This report outlines a vision where autonomous systems handle repetitive cleaning and inspection tasks, allowing human staff to focus on high-value interactions and quality assurance.</p>
+            <p>The proposed automation strategy targets a <strong>35-45% reduction in operational expenditures</strong> while standardizing hygiene protocols across the fleet. By leveraging a phased 5-year deployment, Tradewind ensures minimal disruption and maximized ROI, with a projected payback period of under <strong>24 months</strong>.</p>
+        </div>
+        
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Fleet Composition:</strong></p>
+            <ul>
+                <li>Pilatus PC-12 (Turboprop)</li>
+                <li>Citation Jets (Light/Mid-size)</li>
+            </ul>
+            <p><strong>Key Hubs:</strong></p>
+            <ul>
+                <li>Westchester County (HPN)</li>
+                <li>Stowe Memorial (STC)</li>
+                <li>San Juan International (SJU)</li>
+            </ul>
+            <p><strong>Operational Model:</strong> High-frequency regional shuttle and on-demand charter. Requires rapid turnaround times (30-60 mins) and immaculate cabin presentation.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <p>Projected metrics based on a pilot fleet of 4 mixed-unit robots.</p>
+        
+        <div class="grid-3" style="margin-top: 20px;">
+            <div class="metric-card">
+                <span class="metric-value">$75k - $150k</span>
+                <span class="metric-label">CAPEX Per Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">40%</span>
+                <span class="metric-label">Avg. OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">18 Mos</span>
+                <span class="metric-label">Est. Payback Period</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>Autonomous vacuums and surface sanitizers for PC-12 and Citation interiors. Focus on rapid turnover.</p>
+            </div>
+            <div>
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Mobile UVC units for chemical-free sterilization of high-touch surfaces and air quality control.</p>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated gantry systems reducing water usage by 30% and labor hours by 60%.</p>
+            </div>
+            <div>
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Thermal and visual imaging bots for predictive maintenance and fuselage integrity checks.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts Section -->
+    <div class="glass-card">
+        <h2>Performance Analytics</h2>
+        <p>Visualizing the impact of automation on Tradewind's operations.</p>
+        
+        <div class="grid-2">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <h3>Labor Hour Redistribution Post-Automation</h3>
+            <div class="chart-container" style="max-width: 400px; margin: 0 auto;">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (5 Years)</h2>
+        
+        <div class="roadmap-step">
+            <div class="roadmap-year">Year 1: Pilot Deployment</div>
+            <p>Deploy 3 units at HPN & STC. Train "Automation Specialists". Validate KPIs.</p>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="roadmap-year">Year 2: Infrastructure & Expansion</div>
+            <p>Install Exterior Washing System. Scale software integration. Begin expansion to secondary hubs.</p>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="roadmap-year">Year 3: Fleet-Wide Rollout</div>
+            <p>Full coverage of PC-12 and Citation fleets. Introduction of AI Inspection Bots.</p>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="roadmap-year">Year 4: Advanced Autonomy</div>
+            <p>Swarm robotics logic implementation. Deep integration with flight scheduling software.</p>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="roadmap-year">Year 5: Ecosystem Maturity</div>
+            <p>Real-time predictive analytics dashboard. Evaluation of next-gen units.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Chart.js Script -->
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. 5-Year Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [120000, 450000, 950000, 1600000, 2400000],
+                borderColor: '#0ea5e9', // Sky Blue
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (mins)', 'Exterior Wash (hrs)', 'Inspection (mins)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 2.5, 60],
+                    backgroundColor: '#94a3b8',
+                },
+                {
+                    label: 'Robotic',
+                    data: [20, 1.0, 25],
+                    backgroundColor: '#f97316', // Aviation Orange
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning', 'Supervision/QA', 'Redeployed to Customer Service', 'Maintenance'],
+            datasets: [{
+                data: [25, 30, 35, 10],
+                backgroundColor: [
+                    '#7c3aed', // Purple
+                    '#0ea5e9', // Blue
+                    '#f97316', // Orange
+                    '#e2e8f0'  // White
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12 } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
