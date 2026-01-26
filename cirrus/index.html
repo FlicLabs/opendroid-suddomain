@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirrus Robotics Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --purple: #7c3aed;
+            --blue: #0ea5e9;
+            --orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-card {
+            text-align: center;
+            border-top: 4px solid var(--orange);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--blue);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--orange);
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--purple);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
+            pointer-events: none;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--purple);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--blue);
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .year-badge {
+            background: var(--orange);
+            color: white;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 6px;
+            min-width: 60px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="card header-card">
+        <h1>CIRRUS AVIATION AUTOMATION STRATEGY</h1>
+        <p>Strategic Research for Robotics Integration in Cleaning and Maintenance Operations</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Cirrus is positioned to lead the aviation industry in cleaning and maintenance automation through a strategic deployment of robotics. The integration of autonomous systems will elevate operational efficiency, reduce long-term costs, and ensure the highest standards of hygiene and aircraft safety. By adopting a phased technology roadmap, Cirrus can achieve significant operational expense reductions while maintaining superior fleet readiness.</p>
+    </div>
+
+    <!-- Organizational Profile & Pathways -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Organizational Profile</h2>
+            <h3>Fleet & Operations</h3>
+            <p>Cirrus operates a modern fleet of approximately 150 aircraft, primarily mid-size jets and turboprops, with hubs at Chicago O'Hare and Dallas/Fort Worth.</p>
+            <ul>
+                <li><strong>Current Model:</strong> Manual labor for cabin cleaning, exterior washing, and visual inspections.</li>
+                <li><strong>Challenge:</strong> Bottlenecks during tight turnaround windows and variable cleaning quality.</li>
+                <li><strong>Objective:</strong> Standardize protocols and reduce dependency on manual labor.</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <ul>
+                <li><strong>Pathway A: Autonomous Cabin Cleaning</strong><br>SLAM-enabled robots for vacuuming and wiping (60% labor reduction).</li>
+                <li><strong>Pathway B: UV-C Disinfection</strong><br>Mobile units for pathogen neutralization (75% faster sanitization).</li>
+                <li><strong>Pathway C: Exterior Washing</strong><br>Gantry systems for eco-friendly, precise fuselage washing.</li>
+                <li><strong>Pathway D: AI Inspection Bots</strong><br>Drones/ground bots for pre-flight visual and thermal anomaly detection.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Dashboard</h2>
+        <p>Projected metrics for initial 24-month deployment cycle.</p>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">35-45%</div>
+                <div class="metric-label">OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">18-24</div>
+                <div class="metric-label">Month Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">High</div>
+                <div class="metric-label">ROI Potential</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput: Manual vs. Robotic</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Labor Hour Redistribution Post-Automation</h2>
+        <div class="chart-container" style="height: 250px; max-width: 500px; margin: 0 auto;">
+            <canvas id="laborPieChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 1</div>
+            <div>
+                <strong>Pilot Phase.</strong> Deploy Cabin Cleaning (Pathway A) and UV-C (Pathway B) at Chicago O'Hare. Infrastructure audit for Exterior Washing.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 2</div>
+            <div>
+                <strong>Expansion.</strong> Scale Pathway A to 50% of fleet. Integrate AI Inspection Bots (Pathway D). Install Exterior Washing at Dallas/Fort Worth.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 3</div>
+            <div>
+                <strong>Standardization.</strong> Full fleet coverage for Cabin Cleaning and Disinfection. Standardize AI inspection protocols.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 4</div>
+            <div>
+                <strong>Optimization.</strong> Data-driven refinement of maintenance schedules. Optimized resource usage for Exterior Washing.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 5</div>
+            <div>
+                <strong>Full Autonomy.</strong> Ecosystem maturity. 100% automated cabin cleaning. AI-augmented decision making for inspections.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Configuration for Chart.js styling
+    const chartConfig = {
+        textColor: '#94a3b8',
+        gridColor: 'rgba(255, 255, 255, 0.1)',
+        blue: '#0ea5e9',
+        purple: '#7c3aed',
+        orange: '#f97316',
+        savingsGradient: null // Will be set in creation
+    };
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    
+    // Create gradient for line chart
+    const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.2, 5.5, 9.8, 15.0],
+                borderColor: '#7c3aed',
+                backgroundColor: gradientSavings,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: chartConfig.textColor } }
+            },
+            scales: {
+                y: {
+                    grid: { color: chartConfig.gridColor },
+                    ticks: { color: chartConfig.textColor }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: chartConfig.textColor }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (mins)', 'Exterior Wash (hrs)', 'Inspection (mins)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 3, 30],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic',
+                    data: [20, 1.5, 10],
+                    backgroundColor: 'rgba(14, 165, 233, 0.7)',
+                    borderColor: '#0ea5e9',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: chartConfig.textColor } }
+            },
+            scales: {
+                y: {
+                    grid: { color: chartConfig.gridColor },
+                    ticks: { color: chartConfig.textColor }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: chartConfig.textColor }
+                }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Routine Cleaning', 'Deep Cleaning/Maintenance', 'Passenger Service', 'Logistics/Admin'],
+            datasets: [{
+                data: [30, 25, 35, 10],
+                backgroundColor: [
+                    '#7c3aed', // Deep Purple
+                    '#0ea5e9', // Sky Blue
+                    '#f97316', // Aviation Orange
+                    '#334155'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: { color: chartConfig.textColor, padding: 20 }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
