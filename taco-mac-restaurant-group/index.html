@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taco Mac Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+            padding: 20px;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 15px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Timeline */
+        .timeline-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="glass-card">
+        <h1>TACO MAC AUTOMATION STRATEGY</h1>
+        <p>Strategic Robotics Integration & ROI Analysis</p>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <section class="glass-card" style="margin-bottom: 20px;">
+        <h2>Executive Summary</h2>
+        <p>The strategic vision for Taco Mac focuses on a <strong>Hybrid Human-Centric Automation</strong> model. This approach integrates robotics to augment staff capabilities, specifically targeting logistical burdens in the front-of-house and consistency challenges in the back-of-house. By deploying autonomous mobile robots (AMRs) for food running and automated fry stations for product consistency, Taco Mac aims to increase table turnover rates and reduce labor costs by 15-25% while maintaining the social, sports-centric atmosphere of the brand.</p>
+    </section>
+
+    <!-- ROI DASHBOARD -->
+    <section style="margin-bottom: 20px;">
+        <h2>Hospitality ROI Dashboard</h2>
+        <div class="grid-3">
+            <div class="glass-card metric-card">
+                <div class="metric-value">$25k - $40k</div>
+                <div class="metric-label">Est. CAPEX Per Unit</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Target FOH Labor Reduction</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">&lt; 14 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY PATHWAYS -->
+    <section class="glass-card" style="margin-bottom: 20px;">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Pathway A: Front-of-House Serving</h3>
+                <p><strong>Focus:</strong> Table Turnover & Staff Support</p>
+                <p>Deployment of autonomous mobile robots (AMRs) for heavy food and beverage delivery. Reduces server physical fatigue, allowing staff to manage 6-8 tables instead of 4-5. Ideal for high-volume "game day" rushes.</p>
+                
+                <h3>Pathway B: Back-of-House Automation</h3>
+                <p><strong>Focus:</strong> Consistency & Safety</p>
+                <p>Automated fry stations for wing preparation. Ensures precise cook times for brand consistency and reduces safety risks associated with hot oil handling and slip hazards.</p>
+            </div>
+            <div>
+                <h3>Pathway C: AI-Driven Ordering</h3>
+                <p><strong>Focus:</strong> Upselling & Accuracy</p>
+                <p>AI Voice Agents for phone catering orders and counter kiosks. Programmed for 100% consistency in upselling (e.g., beer flights, sides), increasing average check size without customer friction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINANCIAL & CHARTS -->
+    <section class="glass-card" style="margin-bottom: 20px;">
+        <h2>Financial Model & Impact Analysis</h2>
+        <div class="grid-2">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p><strong>CAPEX Breakdown:</strong> $15k-$25k for FOH units; $30k-$40k for BOH automation.</p>
+            <p><strong>OPEX Impact:</strong> Direct reduction in labor scheduling costs (15-25%) and minimized food waste (3-5%).</p>
+            <p><strong>Payback Strategy:</strong> Driven by labor savings and increased revenue via higher table turnover rates.</p>
+        </div>
+    </section>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap (5-Year)</h2>
+        
+        <div class="timeline-item">
+            <div class="timeline-year">Year 1: Pilot & Proof of Concept</div>
+            <p>Deploy FOH Serving Robots at 2 high-volume locations. Establish cleaning/charging protocols. Measure baseline metrics for table turn time and labor hours.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 2: BOH Integration</div>
+            <p>Introduce Back-of-House automated frying in pilot locations. Roll out FOH robots to 50% of the estate. Optimize navigation and staff training (ETL).</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 3: Full Estate & AI Upselling</div>
+            <p>100% FOH robot deployment across all Taco Mac locations. Implement AI Voice Agents for catering and large party reservations to capture incremental revenue.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 4: Advanced Analytics</div>
+            <p>Integrate robot data with POS for predictive staffing based on sports schedules. Implement predictive maintenance for BOH equipment to eliminate downtime.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-year">Year 5: Sustainability & Innovation</div>
+            <p>Upgrade to next-gen eco-friendly models. Review 5-year ROI audit. Explore autonomous bussing and sanitization systems for enhanced hygiene.</p>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Cost Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [75000, 225000, 450000, 720000, 1050000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } },
+                title: { display: true, text: '5-Year Cumulative Labor Savings', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate Comparison
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Shift', 'Dinner Shift', 'Peak (Game Day)'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [1.2, 1.5, 1.8],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [1.5, 1.9, 2.4],
+                    backgroundColor: '#7c3aed',
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } },
+                title: { display: true, text: 'Table Turnover Rate (Per Hour)', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
