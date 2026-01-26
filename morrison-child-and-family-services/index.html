@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morrison Child and Family Services - Robotics Portfolio Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ffffff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+        }
+        h2 {
+            color: #7c3aed;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 1.4rem;
+            color: #a78bfa;
+        }
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #7c3aed;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            opacity: 0.5;
+            animation: pulse 4s infinite;
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .comparison-list {
+            list-style: none;
+            padding: 0;
+        }
+        .comparison-list li {
+            background: rgba(30, 41, 59, 0.5);
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #7c3aed;
+        }
+        .comparison-list li strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid #7c3aed;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .highlight-box h3 {
+            color: #7c3aed;
+            margin-top: 0;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #7c3aed;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #7c3aed;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .logo span {
+            color: #a78bfa;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.4; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+            100% { transform: scale(0.9); opacity: 0.4; }
+        }
+        .nav-link {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(167, 139, 250, 0.5);
+        }
+        .section-nav {
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <div class="logo">OPEN <span>DROIDS</span></div>
+    </div>
+
+    <h1>Morrison Child and Family Services</h1>
+    <p style="text-align: center; font-style: italic; margin-bottom: 30px;">Robotics Portfolio Analysis & Financial Dashboard</p>
+
+    <div class="section-nav">
+        <a href="#exec-summary" class="nav-link">Executive Summary</a>
+        <a href="#dashboard" class="nav-link">Financial Dashboard</a>
+        <a href="#pathways" class="nav-link">Opportunity Pathways</a>
+        <a href="#roadmap" class="nav-link">Implementation Roadmap</a>
+    </div>
+
+    <!-- Executive Summary -->
+    <div id="exec-summary" class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            Morrison Child and Family Services is a specialized nonprofit provider operating within the Multnomah County behavioral health system in Oregon, focusing on children, youth, and families impacted by trauma, substance use, and mental health challenges. As a provider of intensive outpatient, residential, and school-based services, Morrison’s operational model prioritizes high-touch clinical care, case management, and administrative compliance over high-volume throughput. Consequently, robotics and automation opportunities at Morrison differ significantly from acute care or logistics-heavy environments; the highest ROI lies in administrative automation, facility management, and logistics support rather than clinical robotics.
+        </p>
+        <p>
+            The strongest automation levers are: (1) Robotic Process Automation (RPA) for insurance billing, claims, and compliance reporting; (2) Autonomous Mobile Robots (AMRs) for facility sanitization and inventory management in residential settings; and (3) Telepresence and social robotics for therapeutic engagement and remote supervision. The dominant ROI driver is the reduction of administrative burden on clinical staff, allowing increased direct care hours and higher reimbursement capture, alongside improved safety and facility throughput in residential programs.
+        </p>
+        <div class="highlight-box">
+            <h3>Organizational Profile</h3>
+            <p><strong>Type:</strong> Nonprofit community behavioral health organization serving children, youth, and families in the Portland metro area.</p>
+            <p><strong>Scale:</strong> Multiple service lines including intensive outpatient programs, residential treatment, school-based services, and crisis intervention. Staffing includes licensed clinicians, case managers, and administrative support.</p>
+            <p><strong>Partnerships:</strong> Embedded in the Multnomah County health system, Medicaid/Medicare billing, and partnerships with local school districts and juvenile justice systems.</p>
+            <p><strong>Economics:</strong> Primarily funded through Medicaid (OHP), county contracts, and grants. Revenue is based on fee-for-service and value-based contracts for behavioral health outcomes.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div id="dashboard" class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <p>Visualizing the projected impact of the highest-value opportunity: Robotic Process Automation for administrative workflows.</p>
+        
+        <div class="dashboard-container">
+            <div class="metric-card">
+                <div class="metric-value">$350K</div>
+                <div class="metric-label">Annual Net Benefit (Mid-Case)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">5 Months</div>
+                <div class="metric-label">Average Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Admin Efficiency Gain</div>
+            </div>
+        </div>
+
+        <div class="glass-card" style="border: none; background: rgba(15, 23, 42, 0.4);">
+            <h3>5-Year Cumulative Savings (RPA Pathway)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card" style="border: none; background: rgba(15, 23, 42, 0.4);">
+            <h3>Admin Throughput Comparison (Claims Processed per FTE)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div id="pathways" class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A – Robotic Process Automation (RPA) for Administrative Workflow (Highest Value)</h3>
+        <p>
+            Deployment of software robots to automate repetitive administrative tasks, including insurance eligibility verification, claims submission, payment posting, and compliance reporting (e.g., CQI, outcome tracking).
+        </p>
+        <p><strong>Impact (Mid-Case):</strong> Reduction in administrative FTE requirements by 15–25% for billing and compliance staff. Improved claims acceptance rates and reduced days in accounts receivable (AR) by 10–20 days.</p>
+
+        <h3>Pathway B – Facility Automation and AMRs for Residential Programs</h3>
+        <p>
+            Deployment of autonomous mobile robots (AMRs) for environmental sanitation (UV disinfection robots) and inventory management (supply chain robots) in residential treatment facilities.
+        </p>
+        <p><strong>Impact (Mid-Case):</strong> Reduction in staff hours dedicated to cleaning and inventory by 10–15 hours per week per facility. Improved infection control metrics.</p>
+
+        <h3>Pathway C – Telepresence and Social Robotics for Therapeutic Engagement</h3>
+        <p>
+            Pilot of telepresence robots for remote supervision in residential settings and social robotics (e.g., therapeutic robots like PARO) for trauma-informed care and autism spectrum disorder (ASD) interventions.
+        </p>
+        <p><strong>Impact (Mid-Case):</strong> Increased access to specialist care, potentially reducing external referral costs. Reduction in behavioral incidents in ASD programs.</p>
+
+        <h3>COMPARATIVE VIEW OF PATHWAYS</h3>
+        <ul class="comparison-list">
+            <li>
+                <strong>Pathway A: RPA for Admin</strong>
+                Scope: All administrative functions. Main value driver: Staff efficiency and revenue capture. Annual benefit (mid): $250,000–$500,000. Payback: 3–6 months. Risk: Low.
+            </li>
+            <li>
+                <strong>Pathway B: Facility AMRs</strong>
+                Scope: Residential facilities. Main value driver: Operational efficiency and infection control. Annual benefit (mid): $100,000–$150,000. Payback: 8–12 months. Risk: Low–moderate.
+            </li>
+            <li>
+                <strong>Pathway C: Telepresence/Social Robotics</strong>
+                Scope: Clinical programs (ASD, complex care). Main value driver: Specialist access and incident reduction. Annual benefit (mid): $50,000–$100,000. Payback: 12–18 months. Risk: Moderate.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div id="roadmap" class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        
+        <h3>Year 1 – Pathway A Pilot → Rollout</h3>
+        <p>3–6 month pilot of RPA in billing and compliance. Scale to all administrative functions by year-end. Train staff on robot oversight and exception handling.</p>
+
+        <h3>Year 2 – Pathway B Pilot + Scale</h3>
+        <p>Pilot AMR disinfection and inventory robots in 1–2 residential facilities. Expand to all residential sites once infection control and savings are validated.</p>
+
+        <h3>Years 2–3 – Pathway C Pilots</h3>
+        <p>Deploy telepresence robots for remote psychiatric consultations. Pilot social robotics in one ASD or trauma-focused program. Evaluate clinical outcomes and staff feedback before broader rollout.</p>
+
+        <div class="highlight-box">
+            <h3>Strategic Positioning</h3>
+            <p>Implementing this roadmap positions Morrison Child and Family Services as a tech-enabled nonprofit leader in behavioral health. Automation of administrative functions allows clinical staff to focus on direct client care, improving outcomes and job satisfaction. Facility automation enhances safety and operational resilience, while telepresence and social robotics expand service capacity and innovation.</p>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#334155';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 5-Year Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($)',
+                    data: [300000, 650000, 1050000, 1450000, 1850000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e2e8f0', font: { size: 14, weight: 'bold' } }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#7c3aed',
+                        bodyColor: '#e2e8f0',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(51, 65, 85, 0.5)' },
+                        ticks: { 
+                            callback: function(value) { return '$' + value.toLocaleString(); }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Bar Chart: Manual vs Robotic Throughput
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        const throughputChart = new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Claims Processed', 'Eligibility Checks', 'Compliance Reports'],
+                datasets: [
+                    {
+                        label: 'Manual (Current)',
+                        data: [500, 800, 40],
+                        backgroundColor: '#334155',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'With RPA Automation',
+                        data: [800, 1300, 80],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e2e8f0', font: { size: 14 } }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(51, 65, 85, 0.5)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
