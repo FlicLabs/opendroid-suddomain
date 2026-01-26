@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simcom Aviation Training - Robotic Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --border-color: rgba(124, 58, 237, 0.3);
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            color: var(--sky-blue);
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.2rem;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 12px;
+        }
+
+        li::before {
+            content: "▸ ";
+            color: var(--electric-purple);
+            font-weight: bold;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--electric-purple);
+            border-color: var(--electric-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--sky-blue);
+        }
+
+        /* Chart Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media(min-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 300px;
+            position: relative;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Buttons/CTA styling simulation */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .orange-text { color: var(--aviation-orange); }
+        .purple-text { color: var(--electric-purple); }
+        .blue-text { color: var(--sky-blue); }
+
+        .exec-summary {
+            font-size: 1.1rem;
+            font-weight: 300;
+            border-left: 4px solid var(--aviation-orange);
+            padding-left: 20px;
+            color: #e2e8f0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>STRATEGIC RESEARCH REPORT</h1>
+    <h2 style="text-align: center; border: none; color: var(--text-muted); font-size: 1.2rem; margin-top: -20px;">Simcom Aviation Training</h2>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="glass-card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <div class="exec-summary">
+            The integration of robotic cleaning automation presents a transformative opportunity for Simcom Aviation Training to enhance operational efficiency, reduce long-term maintenance costs, and elevate hygiene standards. By deploying targeted robotic solutions across cabin, exterior, and inspection workflows, Simcom can achieve a projected operational cost reduction of 35% to 45% within 24 months.
+        </div>
+    </div>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <div class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">CAPEX Estimate</div>
+                <div class="metric-value">$75k - $150k</div>
+                <p>Per autonomous unit</p>
+            </div>
+            <div class="metric-card" style="border-color: var(--aviation-orange); box-shadow: inset 0 0 20px rgba(249, 115, 22, 0.1);">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value orange-text">35% - 45%</div>
+                <p>Within first 12 months</p>
+            </div>
+            <div class="metric-card" style="border-color: var(--sky-blue); box-shadow: inset 0 0 20px rgba(14, 165, 233, 0.1);">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value blue-text">&lt; 24 Months</div>
+                <p>Full ROI realization</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORGANIZATIONAL PROFILE -->
+    <div class="glass-card">
+        <h2>ORGANIZATIONAL PROFILE</h2>
+        <p>Simcom Aviation Training operates a network of high-fidelity flight simulation centers.</p>
+        <ul>
+            <li><strong>Asset Base:</strong> 50+ Full-Flight Simulators globally.</li>
+            <li><strong>Operational Model:</strong> 16-18 hour daily operations requiring rapid asset turnover.</li>
+            <li><strong>Current Challenges:</strong> Labor-intensive simulator cabin cleaning; subjective manual inspections; dust sensitivity in optical systems.</li>
+        </ul>
+    </div>
+
+    <!-- ROBOTICS OPPORTUNITY PATHWAYS -->
+    <div class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h3 style="font-size: 1rem;">A. Cabin Cleaning</h3>
+                <p style="font-size: 0.9rem;">Autonomous vacuuming and wiping for rapid turnaround.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h3 style="font-size: 1rem;">B. UV-C Disinfection</h3>
+                <p style="font-size: 0.9rem;">Chemical-free sanitization of high-touch controls.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h3 style="font-size: 1rem;">C. Exterior Washing</h3>
+                <p style="font-size: 0.9rem;">Low-water systems for facility exteriors & training facades.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h3 style="font-size: 1rem;">D. AI Inspection</h3>
+                <p style="font-size: 0.9rem;">LiDAR/Visual bots for preventative maintenance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="glass-card">
+        <h2>FINANCIAL VISUALIZATION & IMPACT</h2>
+        <div class="charts-grid">
+            <!-- Line Chart -->
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <!-- Bar Chart -->
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <!-- Pie Chart -->
+            <div class="chart-container full-width">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <div class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP (5 YEAR)</h2>
+        <div style="margin-top: 15px; border-left: 2px solid var(--border-color); padding-left: 20px;">
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--sky-blue);">YEAR 1: PILOT PHASE</h3>
+                <p>Deploy 3 units at Orlando HQ. Establish baseline KPIs. Staff training.</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--sky-blue);">YEAR 2: EXPANSION</h3>
+                <p>Scale to 2 additional regional hubs. Integrate AI data into CMMS.</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--sky-blue);">YEAR 3: STANDARDIZATION</h3>
+                <p>North American rollout. Procurement of exterior washing systems.</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--sky-blue);">YEAR 4: GLOBAL DEPLOYMENT</h3>
+                <p>International facility integration. Full data analytics ecosystem.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--aviation-orange);">YEAR 5: FULL AUTONOMY</h3>
+                <p>90% automation of routine tasks. ROI reinvestment.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 450000, 900000, 1500000, 2200000],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings', font: { size: 16, weight: 'bold' } },
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Inspection', 'Exterior Wash', 'Disinfection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [45, 12, 30, 6],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [20, 4, 12, 2],
+                    backgroundColor: '#0ea5e9', // Sky Blue
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput Comparison (Avg Weekly Hours)', font: { size: 16, weight: 'bold' } }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redundant Manual Tasks', 'High-Value Tech Maintenance', 'Supervisory & QA', 'Logistics'],
+            datasets: [{
+                data: [30, 40, 20, 10],
+                backgroundColor: [
+                    '#f97316', // Aviation Orange
+                    '#7c3aed', // Electric Purple
+                    '#0ea5e9', // Sky Blue
+                    '#334155'  // Slate
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation', font: { size: 16, weight: 'bold' } },
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
