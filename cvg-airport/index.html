@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVG Airport Robotic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Financial Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--glass-border);
+            min-height: 300px;
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 250px !important;
+        }
+
+        .list-style {
+            list-style-type: decimal;
+            padding-left: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .list-style li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .pathway-card {
+            border-left: 4px solid var(--accent-purple);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>CVG AIRPORT: AUTOMATION STRATEGY REPORT</h1>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>This report outlines a strategic roadmap for integrating advanced robotics into CVG Airport's cleaning and maintenance operations. The vision is to transition from traditional, labor-intensive protocols to a hybrid human-robotic workforce. By deploying specific technologies, CVG can achieve significant reductions in operational expenditure (OPEX), enhance passenger safety, and improve aircraft turnaround efficiency.</p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <p>CVG Airport serves as a major global cargo hub and a significant passenger airport, handling a complex mix of passenger and high-volume cargo aircraft.</p>
+        <ul class="list-style">
+            <li><strong>Fleet & Hub:</strong> Major hub for Delta Air Lines; primary global hub for Amazon Air and DHL.</li>
+            <li><strong>Operational Model:</strong> Relies on manual labor for cabin cleaning, lavatory servicing, and tarmac maintenance.</li>
+            <li><strong>Challenges:</strong> High labor turnover, stringent hygiene standards, and the need for rapid aircraft turnarounds.</li>
+        </ul>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h2>Financial Dashboard</h2>
+    <div class="dashboard">
+        <div class="metric-card">
+            <div class="metric-label">CAPEX Estimate</div>
+            <div class="metric-value">$75k - $150k</div>
+            <p>Per Unit</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">OPEX Reduction</div>
+            <div class="metric-value">35% - 45%</div>
+            <p>Targeted Savings</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">&lt; 24 Mos</div>
+            <p>ROI Horizon</p>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-card">
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>Autonomous vacuuming and wiping. Reduces cleaning time by 60% for faster turnarounds on narrow and wide-body fleets.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Hospital-grade disinfection in 5-10 minutes. Critical for international flights to boost traveler confidence.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Robotic systems reducing water consumption by 40% and eliminating manual labor safety risks on scaffolding.</p>
+            </div>
+            <div class="pathway-card">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Sensors and cameras for structural anomalies and debris detection. Prevents costly maintenance delays.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <h2>Projected Analytics</h2>
+    <div class="charts-grid">
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="throughputChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="laborPieChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap: 5-Year Phased Deployment</h2>
+        <ul class="list-style">
+            <li><strong>Phase 1 (Year 1):</strong> Pilot Program. Deploy 5 Cabin Cleaning & 2 UV-C units. Establish KPIs.</li>
+            <li><strong>Phase 2 (Year 2):</strong> Cargo Integration. AI Inspection Bots for DHL/Amazon; Exterior Washing for freighters.</li>
+            <li><strong>Phase 3 (Year 3):</strong> Terminal Expansion. Scale UV-C and Cabin Cleaning to 50% of passenger fleet.</li>
+            <li><strong>Phase 4 (Year 4):</strong> AI Optimization. Integrate data into AOCC for predictive maintenance.</li>
+            <li><strong>Phase 5 (Year 5):</strong> Full Ecosystem. 100% exterior coverage, 80% autonomous overnight cleaning.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Common Chart Options
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { labels: { color: '#94a3b8', font: { family: 'Inter' } } },
+            title: { display: true, color: '#f8fafc', font: { size: 16 } }
+        },
+        scales: {
+            y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } }
+        }
+    };
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 1.5, 4.2, 8.5, 14.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                title: { display: true, text: '5-Year Cumulative Savings' }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (Min)', 'Exterior Wash (Hrs)', 'UV-C Cycle (Min)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 4, 20],
+                    backgroundColor: '#334155'
+                },
+                {
+                    label: 'Robotic',
+                    data: [18, 1.5, 8],
+                    backgroundColor: '#f97316'
+                }
+            ]
+        },
+        options: {
+            ...commonOptions,
+            plugins: {
+                ...commonOptions.plugins,
+                title: { display: true, text: 'Throughput: Manual vs. Robotic' }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Maintenance & Supervision', 'Redeployed to Customer Service', 'Eliminated / Turnover'],
+            datasets: [{
+                data: [50, 30, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Purple
+                    '#f97316'  // Orange
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#94a3b8' } },
+                title: { display: true, text: 'Labor Hour Redistribution (Post-Automation)', color: '#f8fafc' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
