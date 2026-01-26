@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armick Inc. Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed;
+            --accent: #0ea5e9;
+            --highlight: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: white;
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card:nth-child(2) {
+            border-color: var(--highlight);
+            background: rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-list strong {
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .text-accent { color: var(--accent); }
+        .text-highlight { color: var(--highlight); }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 30px;
+            border-left: 2px solid var(--primary);
+        }
+        
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--highlight);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--highlight);
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="glass-card full-width">
+        <h1>ARMICK INC. AUTOMATION STRATEGY</h1>
+        <p style="text-align: center; font-size: 1.2rem; color: var(--text-muted);">
+            Executive Report on Robotic Cleaning & Maintenance Integration
+        </p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card full-width">
+        <h2>Executive Summary</h2>
+        <p>Armick Inc. is positioned to revolutionize its operational efficiency through the strategic deployment of robotic cleaning automation. This initiative aims to reduce OPEX by 35-45% while enhancing hygiene standards and aircraft availability. By integrating Autonomous Cabin Cleaning, UV-C Disinfection, Exterior Washing, and AI Inspection systems, Armick secures a competitive edge in aviation maintenance, ensuring a payback period of under 24 months.</p>
+    </div>
+
+    <!-- Organizational Profile & Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <ul style="padding-left: 20px; color: var(--text-muted);">
+            <li><span class="text-accent">Fleet Size:</span> 150 Aircraft (Mixed Body)</li>
+            <li><span class="text-accent">Hub Presence:</span> 3 Major International Hubs</li>
+            <li><span class="text-accent">Current Model:</span> Labor-Intensive Manual Cleaning</li>
+            <li><span class="text-accent">Target:</span> High-Frequency Turnarounds</li>
+        </ul>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-metrics">
+            <div class="metric-card">
+                <span class="metric-value">$75K-$150K</span>
+                <span class="metric-label">CAPEX / Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">35-45%</span>
+                <span class="metric-label">OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt;24 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+            *Financial projections based on current labor costs and utilization rates at primary hubs.
+        </p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card full-width">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway A: Autonomous Cabin Cleaning</strong>
+                    <span class="text-muted">Mobile vacuuming and surface sanitizing robots utilizing SLAM navigation for rapid turnarounds.</span>
+                </li>
+                <li>
+                    <strong>Pathway B: UV-C Disinfection</strong>
+                    <span class="text-muted">Autonomous UV-C towers for germicidal disinfection of high-touch surfaces and air systems.</span>
+                </li>
+            </ul>
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway C: Exterior Washing</strong>
+                    <span class="text-muted">Automated gantry systems reducing wash time by 60% while conserving water and chemicals.</span>
+                </li>
+                <li>
+                    <strong>Pathway D: AI Inspection</strong>
+                    <span class="text-muted">Drones and crawlers with thermal sensors for automated fuselage and structural integrity checks.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="glass-card full-width">
+        <h2>Financial Impact Visualization</h2>
+        <div class="grid-2">
+            <div>
+                <h3 style="font-size: 1rem; text-align: center;">5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3 style="font-size: 1rem; text-align: center;">Throughput Comparison (Aircraft/Day)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="grid-2" style="margin-top: 20px;">
+            <div style="text-align: center;">
+                <h3 style="font-size: 1rem;">Labor Hour Redistribution</h3>
+                <div class="chart-container" style="max-width: 400px; margin: 0 auto; height: 250px;">
+                    <canvas id="laborPieChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3 style="font-size: 1rem;">Implementation Roadmap (5-Year)</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <strong class="text-highlight">Year 1: Pilot Phase</strong>
+                        <div class="text-muted">Test 10 units at 3 hubs. Infrastructure setup.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <strong class="text-highlight">Year 2: Expansion</strong>
+                        <div class="text-muted">Cover 25% of fleet. Staff retraining.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <strong class="text-highlight">Year 3: Standardization</strong>
+                        <div class="text-muted">60% coverage. Predictive maintenance integration.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <strong class="text-highlight">Years 4-5: Full Scale</strong>
+                        <div class="text-muted">Secondary hubs deployment. 100% fleet coverage.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.5, 5.5, 9.0, 13.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfection', 'Exterior Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [45, 30, 120, 40],
+                    backgroundColor: 'rgba(14, 165, 233, 0.6)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [15, 10, 45, 15],
+                    backgroundColor: 'rgba(249, 115, 22, 0.8)',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Supervision/Robot Ops', 'Physical Cleaning (Legacy)', 'Advanced Maintenance', 'Redundant/Reassigned'],
+            datasets: [{
+                data: [35, 25, 20, 20],
+                backgroundColor: [
+                    '#7c3aed',
+                    '#0ea5e9',
+                    '#f97316',
+                    '#64748b'
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    position: 'right',
+                    labels: { boxWidth: 12 }
+                }
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
