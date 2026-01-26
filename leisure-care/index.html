@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Portfolio Analysis - Leisure Care</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: var(--primary);
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: var(--glass-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #4c1d95);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { color: white; font-size: 2.2rem; margin-bottom: 10px; }
+        h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 15px; border-left: 3px solid var(--primary); padding-left: 12px; }
+        h3 { font-size: 1.1rem; color: white; margin-top: 15px; margin-bottom: 8px; }
+        p { color: var(--text-muted); margin-bottom: 12px; font-size: 0.95rem; }
+        strong { color: #e2e8f0; }
+
+        /* Metric Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary-glow);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Lists */
+        ul { list-style: none; padding-left: 10px; }
+        li { 
+            position: relative; 
+            padding-left: 20px; 
+            margin-bottom: 8px; 
+            color: var(--text-muted); 
+            font-size: 0.95rem;
+        }
+        li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Section Layout */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: var(--glass-border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">OD</div>
+            <div class="logo-text">OPEN DROIDS</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Robotics Consultation Report</div>
+            <div style="font-size: 0.8rem; color: var(--primary);">Leisure Care Focus</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary Section -->
+    <div class="glass-card">
+        <h1>Leisure Care: Robotics Opportunity Analysis</h1>
+        <p>Leisure Care is a premier provider of senior living communities, with a portfolio that includes independent living, assisted living, and memory care. The core operational challenge is optimizing high-touch care while managing rising labor costs. This report outlines three strategic robotics pathways to enhance efficiency, safety, and resident experience.</p>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">£1.2M</div>
+                <div class="metric-label">Est. Labor Cost / Facility</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">350+</div>
+                <div class="metric-label">Potential FTE Savings (Network)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-label">Avg. Payback Period</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-grid">
+        <!-- Pathway A -->
+        <div class="glass-card">
+            <h2>Pathway A: Logistics & Service Automation</h2>
+            <p><strong>Scope:</strong> Autonomous Mobile Robots (AMRs) for laundry, meal delivery, and commercial cleaning.</p>
+            <h3>Key Levers</h3>
+            <ul>
+                <li>Laundry logistics transport (staff walking time reduction).</li>
+                <li>Automated meal delivery trays.</li>
+                <li>Commercial floor scrubbing (common areas).</li>
+            </ul>
+            <h3>Financial Impact</h3>
+            <p>20-30% reduction in back-of-house staff hours. Network-wide potential of <strong>£3.75M</strong> annual net benefit.</p>
+        </div>
+
+        <!-- Pathway B -->
+        <div class="glass-card">
+            <h2>Pathway B: Security & Monitoring</h2>
+            <p><strong>Scope:</strong> AI-enabled patrols, fall detection sensors, and staff assistive exoskeletons.</p>
+            <h3>Key Levers</h3>
+            <ul>
+                <li>Autonomous night patrol robots (hallway monitoring).</li>
+                <li>Smart sensors for proactive fall prevention.</li>
+                <li>Wearable exoskeletons for safe resident transfers.</li>
+            </ul>
+            <h3>Financial Impact</h3>
+            <p>Reduces insurance premiums and worker compensation claims. ROI via liability mitigation.</p>
+        </div>
+
+        <!-- Pathway C -->
+        <div class="glass-card">
+            <h2>Pathway C: Therapeutic Robotics</h2>
+            <p><strong>Scope:</strong> Companion robots (e.g., PARO, ElliQ) and cognitive stimulation tools.</p>
+            <h3>Key Levers</h3>
+            <ul>
+                <li>Dementia care support (agitation reduction).</li>
+                <li>Non-clinical engagement (staff time freeing).</li>
+                <li>Brand differentiation in marketing.</li>
+            </ul>
+            <h3>Financial Impact</h3>
+            <p>ROI measured via retention rates, occupancy growth, and marketing appeal rather than direct labor savings.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard Section -->
+    <div class="glass-card">
+        <h2>Financial Dashboard: Leisure Care Model</h2>
+        <p>Visualization of 5-year cumulative savings and throughput comparison between manual and robotic workflows.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+            <!-- Chart 1 -->
+            <div>
+                <h3 style="text-align: center; color: var(--text-muted);">5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <!-- Chart 2 -->
+            <div>
+                <h3 style="text-align: center; color: var(--text-muted);">Throughput Comparison (Daily Visits)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Implementation -->
+    <div class="glass-card">
+        <h2>Strategic Implementation Roadmap</h2>
+        <p>Phased approach to minimize risk and maximize returns.</p>
+        <br>
+        <table style="width: 100%; border-collapse: collapse; color: var(--text-muted);">
+            <thead>
+                <tr style="border-bottom: 1px solid var(--primary); text-align: left;">
+                    <th style="padding: 10px;">Phase</th>
+                    <th style="padding: 10px;">Timeline</th>
+                    <th style="padding: 10px;">Focus Area</th>
+                    <th style="padding: 10px;">Goal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 10px; color: white;">Pilot</td>
+                    <td style="padding: 10px;">Year 1</td>
+                    <td style="padding: 10px;">Logistics Automation</td>
+                    <td style="padding: 10px;">Test AMRs in 3 facilities</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 10px; color: white;">Expansion</td>
+                    <td style="padding: 10px;">Year 2</td>
+                    <td style="padding: 10px;">Therapeutic Robotics</td>
+                    <td style="padding: 10px;">Memory Care Integration</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; color: white;">Scale</td>
+                    <td style="padding: 10px;">Year 3+</td>
+                    <td style="padding: 10px;">Security & Monitoring</td>
+                    <td style="padding: 10px;">Network-wide Safety</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        &copy; 2024 Open Droids Robotics Consultation. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Chart.js Configurations
+        const primaryColor = '#7c3aed';
+        const secondaryColor = '#0f172a';
+        const textColor = '#94a3b8';
+
+        // Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (£)',
+                    data: [125000, 350000, 650000, 1050000, 1550000],
+                    borderColor: primaryColor,
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: textColor } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: textColor }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: textColor }
+                    }
+                }
+            }
+        });
+
+        // Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Independent Living', 'Assisted Living', 'Memory Care'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 30, 20],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [58, 42, 28],
+                        backgroundColor: primaryColor,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: textColor } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: textColor } 
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: textColor } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
