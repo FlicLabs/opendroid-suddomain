@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospice of the Valley - Robotics & Automation Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body { background: #0f172a; color: #e2e8f0; font-family: Inter, sans-serif; margin: 0; padding: 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(124, 58, 237, 0.35); border-radius: 16px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .logo { width: 56px; height: 56px; background: linear-gradient(135deg, #7c3aed, #0f172a); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; text-shadow: 0 0 12px rgba(124,58,237,0.6); }
+    h1 { margin: 0; font-size: 28px; color: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+    .metric-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(124, 58, 237, 0.35); border-radius: 14px; padding: 16px; }
+    .metric-value { font-size: 24px; font-weight: 700; color: #a78bfa; text-shadow: 0 0 10px rgba(124,58,237,0.4); }
+    .metric-label { font-size: 13px; color: #cbd5e1; margin-top: 8px; }
+    .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    .section-title { color: #fff; margin: 24px 0 12px; font-size: 20px; }
+    .footnote { font-size: 12px; color: #94a3b8; margin-top: 12px; }
+    .tag { display: inline-block; padding: 6px 10px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.4); color: #c4b5fd; border-radius: 999px; font-size: 12px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header glass">
+        <div class="logo">OPEN DROIDS</div>
+        <div>
+            <h1>Hospice of the Valley - Robotics & Automation Dashboard</h1>
+            <div style="color:#a78bfa;">AI-orchestrated home hospice operations</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="metric-card">
+            <div class="metric-value">£3.32M</div>
+            <div class="metric-label">Annual Net Benefit (Pathway A)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">20%</div>
+            <div class="metric-label">Visit Throughput Increase</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">2-4 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+    </div>
+
+    <div class="section-title">Financial Dashboard</div>
+    <div class="glass">
+        <span class="tag">5-Year Cumulative Savings</span>
+        <canvas id="savingsChart"></canvas>
+    </div>
+
+    <div class="chart-row">
+        <div class="glass">
+            <span class="tag">Manual Throughput</span>
+            <canvas id="manualChart"></canvas>
+        </div>
+        <div class="glass">
+            <span class="tag">Robotic Throughput</span>
+            <canvas id="roboticChart"></canvas>
+        </div>
+    </div>
+
+    <div class="footnote">Estimates are illustrative based on typical hospice operational parameters. Actual ROI will depend on implementation scope and regulatory approvals.</div>
+</div>
+
+<script>
+    const purple = '#7c3aed';
+    const glow = 'rgba(124,58,237,0.4)';
+
+    // 5-Year Cumulative Savings Line Chart
+    new Chart(document.getElementById('savingsChart'), {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (M£)',
+                data: [1.0, 2.1, 3.3, 4.4, 5.5],
+                borderColor: purple,
+                backgroundColor: 'rgba(124,58,237,0.15)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                tooltip: { enabled: true }
+            },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+            }
+        }
+    });
+
+    // Manual vs Robotic Throughput Bar Chart
+    new Chart(document.getElementById('manualChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+                label: 'Visits per Clinician per Day',
+                data: [6.0, 6.2, 5.9, 6.1],
+                backgroundColor: 'rgba(148,163,184,0.6)',
+                borderColor: '#94a3b8',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: '#cbd5e1' } } },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('roboticChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+                label: 'Visits per Clinician per Day',
+                data: [7.2, 7.4, 7.1, 7.3],
+                backgroundColor: purple,
+                borderColor: '#7c3aed',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: '#cbd5e1' } } },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+            }
+        }
+    });
+</script>
+</body>
+</html>
