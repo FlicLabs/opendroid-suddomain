@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Strategic Report - Covelli Enterprises</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --primary: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        /* Metric Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Pathways */
+        .pathway-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .pathway-focus {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* Charts */
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .charts-wrapper {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 20px;
+            }
+        }
+
+        /* Timeline */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .year-badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+        }
+
+        .roadmap-content {
+            border-left: 1px solid var(--glass-border);
+            padding-left: 20px;
+            padding-bottom: 10px;
+        }
+
+        .roadmap-content h4 {
+            margin: 0 0 5px 0;
+            color: #fff;
+        }
+
+        .roadmap-content p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="card">
+        <h1>Open Droids Consultation</h1>
+        <div class="subtitle">Strategic Robotics Implementation for Covelli Enterprises</div>
+        
+        <div class="section-title">Executive Vision</div>
+        <p>
+            The integration of robotics within the fast-casual sector is no longer theoretical; it is an operational imperative. For Covelli Enterprises, the strategic deployment of automation offers a dual-value proposition: mitigating labor volatility while elevating service consistency. The objective is to augment human staff, allowing them to focus on high-touch interactions while robotics manage repetitive, high-volume tasks. This roadmap projects a <strong>15-25% reduction in FOH labor costs</strong> and a payback period of <strong>&lt; 14 months</strong>.
+        </p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="card">
+        <h3>Hospitality ROI Dashboard</h3>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Estimated CAPEX Range</div>
+                <div class="metric-value">$15k - $40k</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Per Unit Hardware</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Cost Reduction</div>
+                <div class="metric-value">15% - 25%</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Target FOH Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Projected Payback</div>
+                <div class="metric-value">&lt; 14 Mo</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Via Throughput & Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Table Turnover Lift</div>
+                <div class="metric-value">10% - 15%</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Robot-Assisted vs Manual</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="card">
+        <h3>Organizational Profile</h3>
+        <p>
+            Covelli Enterprises operates as a premier franchisee within the Quick Service Restaurant (QSR) and Fast Casual segments.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+            <div>
+                <strong>Operational Focus</strong><br>
+                <span style="color: var(--text-muted);">High-volume, speed-centric QSR models.</span>
+            </div>
+            <div>
+                <strong>Service Model</strong><br>
+                <span style="color: var(--text-muted);">Hybrid Counter/Digital Order & Delivery.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="card">
+        <h3>Robotics Opportunity Pathways</h3>
+        <div class="pathway-container" style="margin-top: 20px;">
+            <div class="pathway-card">
+                <div class="pathway-title">Pathway A: FOH Serving Robots</div>
+                <span class="pathway-focus">Focus: Table Turnover & Staff Support</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    Autonomous mobile robots (AMRs) for food delivery and bussing reduce walk-time for staff. This allows servers to manage 20% more tables during peak hours, directly increasing covers per hour without adding headcount.
+                </p>
+            </div>
+            <div class="pathway-card">
+                <div class="pathway-title">Pathway B: BOH Automated Frying</div>
+                <span class="pathway-focus">Focus: Consistency & Safety</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    Automated frying units ensure precise cook times and batch consistency. Eliminates oil-handling hazards and guarantees product uniformity across all franchise locations, protecting brand integrity.
+                </p>
+            </div>
+            <div class="pathway-card">
+                <div class="pathway-title">Pathway C: AI Kiosks & Voice</div>
+                <span class="pathway-focus">Focus: Upselling & Order Accuracy</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    AI-driven drive-thru agents and kiosks remove fatigue and human error. Algorithmic upselling increases average check size by 10-15% while ensuring 100% order accuracy during rush periods.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model Visualization -->
+    <div class="card">
+        <h3>Financial Impact & Roadmap</h3>
+        <div class="charts-wrapper">
+            <div>
+                <div style="margin-bottom: 10px; font-weight: 600; color: #a78bfa;">5-Year Cumulative Labor Cost Savings</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <div style="margin-bottom: 10px; font-weight: 600; color: #a78bfa;">Table Turnover Comparison</div>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h3>Implementation Roadmap</h3>
+        <div class="roadmap" style="margin-top: 20px;">
+            <div class="roadmap-item">
+                <div class="year-badge">Year 1</div>
+                <div class="roadmap-content">
+                    <h4>Pilot & Validation</h4>
+                    <p>Deploy AI Kiosks (Pathway C) in 3-5 locations. Launch FOH Serving Robot pilot in one high-volume flagship store to validate integration.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 2</div>
+                <div class="roadmap-content">
+                    <h4>Standardization & BOH Testing</h4>
+                    <p>Scale Pathway A (FOH Robots) to top 20% of revenue sites. Initiate Pathway B (Automated Frying) pilot in central kitchen or flagship.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 3</div>
+                <div class="roadmap-content">
+                    <h4>Aggressive Expansion</h4>
+                    <p>Portfolio-wide rollout of Pathway C (Voice/Kiosks). Gradual expansion of Pathway A to mid-tier locations. Target 40% labor hour automation support.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 4-5</div>
+                <div class="roadmap-content">
+                    <h4>Optimization & Full Ecosystem</h4>
+                    <p>Full integration of BOH automation (Pathway B). Data sync across POS/Inventory. Evaluation of next-gen hardware refresh and autonomous late-night models.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Labor Savings Chart (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 450000, 950000, 1600000, 2400000],
+                borderColor: '#7c3aed',
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                    gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+                    gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+                    return gradient;
+                },
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#e2e8f0',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Table Turnover Comparison (Bar)
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual (Current)', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Tables Per Hour',
+                data: [12, 16],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                borderColor: ['rgba(148, 163, 184, 1)', '#a78bfa'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
