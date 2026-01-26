@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NV5: Strategic Automation Report</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Metric Cards with Glow */
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 60px;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Data Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+        th {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        td {
+            color: var(--text-main);
+        }
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>NV5 INDUSTRIAL AUTOMATION</h1>
+        <p style="font-size: 1.2rem; color: var(--accent);">Strategic Roadmap for Industry 4.0 & Smart Manufacturing</p>
+        <div style="width: 60px; height: 4px; background: var(--accent); margin: 20px auto; border-radius: 2px;"></div>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <section>
+        <h2>Executive Summary</h2>
+        <div class="glass-card">
+            <p>NV5 is positioned to transition from traditional manufacturing to a responsive, data-driven entity. The core vision involves adopting flexible manufacturing principles to handle high-mix, low-volume orders with rapid changeover times. By integrating Industry 4.0 technologies—specifically robotics and AI analytics—NV5 aims to achieve real-time decision-making capabilities, minimizing downtime and maximizing throughput in a competitive global market.</p>
+        </div>
+    </section>
+
+    <!-- KEY METRICS DASHBOARD -->
+    <section>
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Target OEE Increase</div>
+                <div class="metric-value">+30%</div>
+                <p style="font-size: 0.9rem;">Via Availability, Performance, and Quality optimization.</p>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">CAPEX Per Cell</div>
+                <div class="metric-value">$60k - $120k</div>
+                <p style="font-size: 0.9rem;">Scalable deployment for Cobots and AMRs.</p>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 18 Mo</div>
+                <p style="font-size: 0.9rem;">Driven by labor reallocation and scrap reduction.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINANCIAL IMPACT (CHART 1) -->
+    <section>
+        <h2>Financial Outlook: 5-Year Projection</h2>
+        <div class="glass-card">
+            <div class="chart-container">
+                <canvas id="financialChart"></canvas>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;">
+                <strong>Figure 1:</strong> Cumulative Production Cost Savings. Initial investment (Year 1) is offset by compounding efficiency gains in Years 2-5 through labor optimization and reduced material waste.
+            </p>
+        </div>
+    </section>
+
+    <!-- ROBOTICS OPPORTUNITY PATHWAYS -->
+    <section>
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="section-grid">
+            <div class="glass-card pathway-item">
+                <h3>Pathway A: Cobots</h3>
+                <p><strong>Focus:</strong> Safety & Precision</p>
+                <p><strong>Application:</strong> Machine Tending (CNC/Press) & Precision Assembly.</p>
+                <p><strong>Benefit:</strong> Optimizes floor space by removing safety cages; reduces assembly variance.</p>
+            </div>
+            <div class="glass-card pathway-item">
+                <h3>Pathway B: AMRs</h3>
+                <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                <p><strong>Application:</strong> Material Transport & Line-Side Replenishment.</p>
+                <p><strong>Benefit:</strong> Eliminates "waste of motion" for operators; enables JIT material delivery.</p>
+            </div>
+            <div class="glass-card pathway-item">
+                <h3>Pathway C: Automation</h3>
+                <p><strong>Focus:</strong> Throughput & Yield</p>
+                <p><strong>Application:</strong> End-of-Line Palletizing & Vision Inspection.</p>
+                <p><strong>Benefit:</strong> Reduces physical strain injuries and catches microscopic defects at speed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUTPUT ANALYSIS (CHART 2) -->
+    <section>
+        <h2>Productivity Analysis</h2>
+        <div class="glass-card">
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;">
+                <strong>Figure 2:</strong> Manual vs. Cobot-Assisted Output. Cobot integration allows for continuous operation (24/7 potential) and consistent cycle times, significantly outperforming manual labor in repetitive tasks.
+            </p>
+        </div>
+    </section>
+
+    <!-- FINANCIAL MODEL TABLE -->
+    <section>
+        <h2>Financial Model Breakdown</h2>
+        <div class="glass-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Description</th>
+                        <th>Target Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CAPEX</td>
+                        <td>Per Robotic Cell (Hardware + Integration)</td>
+                        <td>$60k - $120k</td>
+                    </tr>
+                    <tr>
+                        <td>OPEX Optimization</td>
+                        <td>Increase in Overall Equipment Effectiveness</td>
+                        <td>20% - 30%</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Driver</td>
+                        <td>Labor Reallocation & Scrap Reduction</td>
+                        <td>&lt; 18 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Scrap Rate</td>
+                        <td>Reduction via Automated Vision Inspection</td>
+                        <td>-5% Year 1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <section>
+        <h2>Implementation Roadmap (Year 1 - 5)</h2>
+        <div class="glass-card">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year-badge">Year 1</span>
+                    <h3>Assessment & Pilot Phase</h3>
+                    <p>Audit processes; deploy 2-3 Pilot Cobot cells (Machine Tending); train internal Automation Champions.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 2</span>
+                    <h3>Integration & Standardization</h3>
+                    <p>Rollout Automated Quality Inspection; standardize hardware/software across major lines; central SCADA monitoring.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 3</span>
+                    <h3>Expansion (Material Flow)</h3>
+                    <p>Deploy AMR fleet for warehouse-to-line transport; full End-of-Line automation; implement Digital Twins.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 4</span>
+                    <h3>Connectivity (IIoT)</h3>
+                    <p>Cloud integration of legacy machines; real-time data analytics; AI-driven production scheduling.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 5</span>
+                    <h3>Autonomous Operations</h3>
+                    <p>Full predictive maintenance models active; flexible manufacturing cells for rapid product changeovers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+        <p>Report Generated by Open Droids Senior Consultation & Research Agent</p>
+        <p>&copy; 2023 Open Droids. All Rights Reserved.</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Production Cost Savings (Line Chart)
+    const ctxFinancial = document.getElementById('financialChart').getContext('2d');
+    const financialChart = new Chart(ctxFinancial, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [-50000, 150000, 400000, 750000, 1200000], // Negative in Y1 due to CAPEX
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointRadius: 6,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return '$' + context.parsed.y.toLocaleString();
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' },
+                    title: { display: true, text: 'Savings ($)', color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Cobot Output (Bar Chart)
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    const outputChart = new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Assembly (Units/hr)', 'Machine Tending (Cycles/hr)', 'Inspection (Parts/hr)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 20, 300],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Muted gray
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [75, 45, 600], // 1.5x to 2x increase
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)', // Electric Purple
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#e2e8f0', font: { weight: '600' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
