@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North Star Air Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0f172a;
+            --purple: #7c3aed;
+            --blue: #0ea5e9;
+            --orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--blue);
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--orange);
+            margin-top: 1.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+            box-shadow: 0 0 10px var(--purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            background: rgba(2, 6, 23, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            height: 300px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .roadmap {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 1.5rem;
+            margin-left: 1rem;
+        }
+
+        .roadmap-item {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            top: 0.2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--orange);
+            box-shadow: 0 0 8px var(--orange);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--blue);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--purple);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #6d28d9;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="glass-card">
+        <h1>NORTH STAR AIR</h1>
+        <p style="font-size: 1.2rem; color: #e0e7ff;">Robotics & Automation Integration Strategy Report</p>
+        <p><strong>Date:</strong> January 2025 | <strong>Consultant:</strong> Open Droids Senior Agent</p>
+    </header>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <section class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">75k-150k</div>
+                <div class="metric-label">CAPEX Per Unit (USD)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">45%</div>
+                <div class="metric-label">Max OPEX Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt;24 MO</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">150</div>
+                <div class="metric-label">Fleet Size</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHARTS SECTION -->
+    <section class="glass-card">
+        <h2>PERFORMANCE VISUALIZATION</h2>
+        <div class="charts-grid">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-container" style="margin-top: 2rem; height: 250px; width: 50%; margin-left: auto; margin-right: auto;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </section>
+
+    <!-- EXECUTIVE SUMMARY & PROFILE -->
+    <div class="charts-grid">
+        <section class="glass-card">
+            <h2>EXECUTIVE SUMMARY</h2>
+            <p>This strategy proposes a phased integration of robotics to transform North Star Air's cleaning and maintenance operations. By leveraging autonomous systems, we project significant gains in efficiency, hygiene standards, and cost control. The roadmap targets a 35-45% reduction in operational expenditures with a payback period under 24 months.</p>
+        </section>
+        
+        <section class="glass-card">
+            <h2>ORGANIZATIONAL PROFILE</h2>
+            <h3>Fleet & Hubs</h3>
+            <p>North Star Air operates a fleet of 150 aircraft across global hubs. The current manual cleaning and inspection model faces capacity constraints during peak hours. Automation offers a scalable solution to maintain high standards without compromising turnaround times.</p>
+        </section>
+    </div>
+
+    <!-- OPPORTUNITY PATHWAYS -->
+    <section class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>Autonomous vacuuming and sanitizing robots for rapid turnaround.</p>
+            </div>
+            <div>
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Chemical-free pathogen neutralization for enhanced passenger safety.</p>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated gantry systems reducing water usage and downtime.</p>
+            </div>
+            <div>
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Proactive maintenance detection to minimize AOG incidents.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <section class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP (5-YEAR PHASE)</h2>
+        <div class="roadmap">
+            <div class="roadmap-item">
+                <span class="roadmap-year">YEAR 1: PILOT PHASE</span>
+                Deploy 5 Cleaning Robots & 2 UV-C units at primary hub. Establish KPIs.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">YEAR 2: VALIDATION</span>
+                Scale to 20 Cleaning Units. Optimize workflows based on pilot data.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">YEAR 3: EXPANSION</span>
+                Deploy Exterior Washing Systems & 10 AI Inspection Bots.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">YEAR 4: INTEGRATION</span>
+                60% Fleet Coverage. Full data integration into Ops Center.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">YEAR 5: MATURITY</span>
+                Full fleet coverage. Future-proofing for specialized maintenance bots.
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 2.5, 6.0, 11.0, 18.0],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9',
+                pointBorderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: '5-Year Cumulative Savings' }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Exterior Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Mins/Unit)',
+                    data: [45, 120, 60],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Mins/Unit)',
+                    data: [20, 60, 25],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Throughput Comparison (Mins)' }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning', 'Supervision & Tech', 'Reallocation to CX'],
+            datasets: [{
+                data: [30, 40, 30],
+                backgroundColor: [
+                    '#f97316', // Orange
+                    '#7c3aed', // Purple
+                    '#0ea5e9'  // Blue
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Labor Hour Redistribution (Post-Automation)' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
