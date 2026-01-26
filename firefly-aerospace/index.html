@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefly Aerospace Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at top right, #1e1b4b 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, #1e293b 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(14, 165, 233, 0.1));
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .phase {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center;">
+        <h1>FIREFLY AEROSPACE</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Strategic Automation Research: Aviation Cleaning & Maintenance</p>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>A high-level vision for integrating robotic autonomy into Firefly's vertical integration model. This strategy focuses on reducing ground time, ensuring sterility of payload environments, and leveraging AI for predictive maintenance of launch assets.</p>
+            <p><strong>Core Objective:</strong> Reduce Operational Expenditure (OPEX) by 35-45% while maintaining ISO-grade cleanliness standards for Alpha launch vehicles.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <ul>
+                <li><strong>Primary Hub:</strong> Vandenberg Space Force Base, CA</li>
+                <li><strong>Fleet Focus:</strong> Alpha Launch Vehicles & GSE</li>
+                <li><strong>Current Model:</strong> Manual-Intensive Ground Operations</li>
+                <li><strong>Key Challenge:</strong> High costs associated with manual cleaning and inspection downtime.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="grid-3" style="margin-bottom: 20px;">
+            <div class="metric-card">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">Unit CAPEX</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--accent-purple); box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);">
+                <div class="metric-value">45%</div>
+                <div class="metric-label">Max OPEX Reduction</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--accent-orange); box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);">
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">*Financial projections based on 5-year deployment lifecycle and pilot fleet sizing.</p>
+    </section>
+
+    <!-- Robotics Pathways -->
+    <section class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div>
+                <h3>1. Autonomous Cabin Cleaning</h3>
+                <p>Robots designed for crew capsule interiors. Uses HEPA filtration and automated surface wiping.</p>
+            </div>
+            <div>
+                <h3>2. UV-C Disinfection Units</h3>
+                <p>Autonomous irradiation for payload fairings and GSE. Eliminates biological contaminants without chemicals.</p>
+            </div>
+            <div>
+                <h3>3. Exterior Washing Systems</h3>
+                <p>Gantry-mounted robotic arms. High-pressure eco-washing for rocket fuselages.</p>
+            </div>
+            <div>
+                <h3>4. AI Inspection Bots</h3>
+                <p>Drone and crawler systems with thermal vision. Detects micro-fractures in composite structures.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizations -->
+    <div class="grid-2">
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Throughput Comparison -->
+        <div class="glass-card">
+            <h2>Throughput: Manual vs. Robotic</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart Section -->
+    <div class="glass-card">
+        <h2>Labor Hour Redistribution</h2>
+        <div class="grid-2">
+            <div>
+                <p>Post-automation, human labor shifts from repetitive cleaning tasks to high-value engineering and quality assurance roles.</p>
+                <ul>
+                    <li><strong style="color: var(--accent-purple)">Manual Cleaning (Reduced):</strong> 40%</li>
+                    <li><strong style="color: var(--accent-orange)">QA / Engineering:</strong> 35%</li>
+                    <li><strong style="color: var(--accent-blue)">Robot Supervision:</strong> 15%</li>
+                    <li><strong style="color: #fff">Logistics / Planning:</strong> 10%</li>
+                </ul>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2>Implementation Roadmap (5-Year Strategy)</h2>
+        
+        <div class="phase">
+            <h3>Year 1: Pilot Phase</h3>
+            <p>Validation of Cabin Cleaning (Pathway A) and UV-C (Pathway B) units at Vandenberg. Staff training and SOP definition.</p>
+        </div>
+
+        <div class="phase">
+            <h3>Year 2: Integration</h3>
+            <p>Full deployment of Pathways A & B. Procurement of Exterior Washing infrastructure (Pathway C). Initial OPEX reductions target: 15%.</p>
+        </div>
+
+        <div class="phase">
+            <h3>Year 3: AI & Inspection</h3>
+            <p>Rollout of AI Inspection Bots (Pathway D). Data integration with CMMS. Target OPEX reduction: 25%.</p>
+        </div>
+
+        <div class="phase">
+            <h3>Year 4: Scaling</h3>
+            <p>Expansion to all launch pads. Optimization of cleaning cycles via AI. Target OPEX reduction: 35%.</p>
+        </div>
+
+        <div class="phase">
+            <h3>Year 5: Maturity</h3>
+            <p>Autonomous operations. Predictive maintenance active. Target OPEX reduction: 45%+. Full payback realization.</p>
+        </div>
+    </section>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px;">
+        <p>Generated by Open Droids Senior Consultation & Research Agent | Report ID: FIRE-2024-AUTO</p>
+    </footer>
+</div>
+
+<script>
+    // Common Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [50000, 350000, 850000, 1500000, 2200000],
+                borderColor: '#7c3aed', // Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Exterior Wash', 'Inspection'],
+            datasets: [{
+                label: 'Manual (Hours)',
+                data: [8, 12, 6],
+                backgroundColor: 'rgba(249, 115, 22, 0.6)', // Orange
+            }, {
+                label: 'Robotic (Hours)',
+                data: [3, 4, 2],
+                backgroundColor: 'rgba(14, 165, 233, 0.6)', // Blue
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'QA / Engineering', 'Robot Supervision', 'Logistics'],
+            datasets: [{
+                data: [40, 35, 15, 10],
+                backgroundColor: [
+                    '#7c3aed', // Purple
+                    '#f97316', // Orange
+                    '#0ea5e9', // Blue
+                    '#94a3b8'  // Gray
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
