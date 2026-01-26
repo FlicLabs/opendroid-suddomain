@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keystone Health Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #a78bfa;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #7c3aed;
+            font-weight: 600;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.8));
+            border: 1px solid #7c3aed;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Header Logo */
+        .header-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-text {
+            font-family: 'Orbitron', sans-serif; /* Futuristic font for logo */
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+        .logo-subtitle {
+            color: #7c3aed;
+            font-size: 0.9rem;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
+            margin: 40px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li::before {
+            content: "•";
+            color: #7c3aed;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .pathway-box {
+            border-left: 4px solid #7c3aed;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            background: rgba(124, 58, 237, 0.05);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="header-logo">
+        <div class="logo-text">OPEN DROIDS</div>
+        <div class="logo-subtitle">Keystone Health Robotics Consultation</div>
+    </div>
+
+    <h1>Keystone Health Portfolio</h1>
+    
+    <!-- Executive Dashboard -->
+    <div class="glass-card">
+        <h2>Executive Dashboard: Projected Impact</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target ROI</div>
+                <div class="metric-value">315%</div>
+                <div>Year 1 Net Benefit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Annual Savings</div>
+                <div class="metric-value">$3.15M</div>
+                <div>Logistics & Retention</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Capacity Uplift</div>
+                <div class="metric-value">+15%</div>
+                <div>Visits per Provider</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">4-6 Mo</div>
+                <div>Fast Turnaround</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organization Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <p>Keystone Health is a fully integrated value-based primary care organization delivering in-home primary care, virtual care, pharmacy services, and social determinant of health (SDOH) support. Operating a capitated risk model, the organization prioritizes high-touch engagement while managing total cost of care.</p>
+        <ul>
+            <li><strong>Model:</strong> Value-based, risk-bearing primary care (House calls & Virtual)</li>
+            <li><strong>Scale:</strong> 100,000+ patients; 100+ clinical providers; 250,000+ annual visits</li>
+            <li><strong>Payer Mix:</strong> Commercial (40%) and Medicare Advantage (60%)</li>
+            <li><strong>Economics:</strong> Revenue driven by PMPM capitated payments (~$1,200–$1,500 MA)</li>
+        </ul>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div class="pathway-box">
+            <h3>Pathway A: Autonomous Mobile Coordination & Logistics</h3>
+            <p><strong>Scope:</strong> AI-driven dynamic routing and semi-autonomous delivery units for supplies.</p>
+            <p><strong>Impact:</strong> 20-30% reduction in travel time, +15% capacity increase without headcount growth.</p>
+            <p><strong>Value Driver:</strong> Provider utilization and retention.</p>
+        </div>
+
+        <div class="pathway-box">
+            <h3>Pathway B: Portable Clinical Robotics & Diagnostics</h3>
+            <p><strong>Scope:</strong> Handheld robotic diagnostic devices (Ultrasound, ECG) and automated phlebotomy.</p>
+            <p><strong>Impact:</strong> 15% reduction in ambulatory-sensitive admissions.</p>
+            <p><strong>Value Driver:</strong> Hospitalization avoidance and risk margin defense.</p>
+        </div>
+
+        <div class="pathway-box">
+            <h3>Pathway C: Hospital-at-Home Transition Automation</h3>
+            <p><strong>Scope:</strong> Automated logistics for acute care equipment setup and sanitization.</p>
+            <p><strong>Impact:</strong> 40% reduction in setup time for acute transitions.</p>
+            <p><strong>Value Driver:</strong> Higher acuity reimbursement capture.</p>
+        </div>
+    </div>
+
+    <!-- Financial Charts -->
+    <div class="glass-card">
+        <h2>Financial Analysis & Comparative View</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <h3>Comparative Data</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.85rem; text-align: center;">
+            <div style="background: rgba(255,255,255,0.1); padding: 10px; font-weight: bold;">Factor</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 10px; font-weight: bold;">Logistics AI</div>
+            <div style="background: rgba(255,255,255,0.1); padding: 10px; font-weight: bold;">Clinical Robotics</div>
+            
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">Scope</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">All Providers</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">High-Need Cohorts</div>
+
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">Main Value Driver</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">Capacity</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">Admission Avoidance</div>
+
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">Annual Benefit</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">$3M - $5M</div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px;">$1M - $2M</div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="section-divider"></div>
+        <h3>Phase 1: Pilot and Data Aggregation (Months 1-6)</h3>
+        <p>Deploy AI routing software across 20% of the provider fleet in Harrisburg. Establish baseline metrics for travel time and fuel costs.</p>
+        
+        <div class="section-divider"></div>
+        <h3>Phase 2: Clinical Robotics Rollout (Months 7-12)</h3>
+        <p>Equip 10 high-performing providers with portable diagnostic suites. Pilot autonomous delivery robots for pharmacy supplies in a controlled suburban zone.</p>
+        
+        <div class="section-divider"></div>
+        <h3>Phase 3: Network Expansion (Year 2)</h3>
+        <p>Full rollout of AI routing to all 100 providers. Scale clinical robotics to 50 providers based on ROI validation.</p>
+        
+        <div class="section-divider"></div>
+        <h3>Phase 4: Advanced Autonomy (Year 3+)</h3>
+        <p>Integrate Level 3 autonomous delivery units for wider geographic coverage. Implement full hospital-at-home logistics network.</p>
+    </div>
+
+    <!-- Strategic Positioning -->
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>By executing this roadmap, Keystone Health transitions from a traditional house-call model to a <strong>High-Tech, High-Touch Integrated Care Network</strong>.</p>
+        <ul>
+            <li><strong>Margin Expansion:</strong> Increasing visit volume without proportional headcount growth defends risk margins.</li>
+            <li><strong>Clinical Quality:</strong> Standardized diagnostics and faster response times improve HEDIS scores and Star Ratings.</li>
+            <li><strong>Scalability:</strong> The tech-enabled logistics layer makes the Keystone model replicable across new geographies.</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Cumulative Savings Chart
+    const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(savingsCtx, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [3.15, 6.8, 10.5, 14.2, 18.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#fff' }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#a78bfa' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#a78bfa' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                }
+            }
+        }
+    });
+
+    // Throughput Bar Chart
+    const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+    const throughputChart = new Chart(throughputCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Provider 1', 'Provider 2', 'Provider 3', 'Provider 4', 'Provider 5'],
+            datasets: [
+                {
+                    label: 'Manual (Current)',
+                    data: [5, 6, 5, 5, 6],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate-400
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Projected)',
+                    data: [6.5, 7.5, 6.8, 7.0, 7.2],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)', // Electric Purple
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#fff' }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#a78bfa' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#a78bfa' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
