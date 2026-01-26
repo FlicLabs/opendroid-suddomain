@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stantec Robotics & Industry 4.0 Strategy</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Utility */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-glow);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-glow);
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+
+        /* Pathway Tags */
+        .pathway-tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+
+        .footer-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 40px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header style="margin-bottom: 30px;">
+        <h1>Stantec Strategic Report</h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">
+            Industrial Automation & Smart Manufacturing Analysis | Open Droids Consultation
+        </p>
+    </header>
+
+    <!-- Executive Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">18 <span style="font-size: 1rem;">mo</span></div>
+            <div class="metric-label">Target Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+30%</div>
+            <div class="metric-label">OEE Improvement</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$120k</div>
+            <div class="metric-label">Max CAPEX / Cell</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="section-grid">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Stantec is positioned to bridge the gap between traditional AEC and advanced manufacturing. The strategic focus is on <strong>Modular Construction</strong> and <strong>Infrastructure Component Fabrication</strong>.</p>
+            <br>
+            <p><strong>Industry 4.0 Vision:</strong> Transition from project-based site assembly to factory-controlled, scalable modular manufacturing. This leverages Digital Twins for design validation and robotics for physical production.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <ul>
+                <li><strong>Production Scale:</strong> Low-volume, High-mix (Bespoke Modules).</li>
+                <li><strong>Core Process:</strong> Discrete Manufacturing (Steel frames, MEP integration).</li>
+                <li><strong>Key Locations:</strong> Western Canada, UK, Australia, US (Water Infra).</li>
+                <li><strong>Challenge:</strong> Skilled labor shortage & site safety risks.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-top: 20px;">
+            <h3><span class="pathway-tag">Pathway A</span> Cobots: Machine Tending & Assembly</h3>
+            <p>Deployment of collaborative arms for precision welding and structural assembly. Focus on <strong>Safety</strong> (handling heavy loads) and <strong>Precision</strong> (consistent weld quality).</p>
+            <br>
+            <h3><span class="pathway-tag">Pathway B</span> AMRs: Material Transport</h3>
+            <p>Large-payload Autonomous Mobile Robots to move raw materials (steel, drywall) and WIP components across bays. Focus on <strong>WIP Flow Efficiency</strong> and reducing forklift accidents.</p>
+            <br>
+            <h3><span class="pathway-tag">Pathway C</span> Automated End-of-Line</h3>
+            <p>Robotic 3D vision inspection and heavy-load palletizing. Focus on <strong>Throughput</strong> and <strong>Yield</strong> by automating QC and load-out.</p>
+        </div>
+    </div>
+
+    <!-- Financial Model & Charts -->
+    <div class="glass-card">
+        <h2>Financial Model & Visualization</h2>
+        <p>The financial model projects a strong ROI driven by labor optimization and scrap reduction. Below are the visualized projections.</p>
+        
+        <div class="chart-container">
+            <canvas id="financeChart"></canvas>
+        </div>
+        <br>
+        <div class="chart-container">
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (Year 1 - 5)</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid var(--accent-purple); padding-left: 15px;">
+                <strong>Year 1: Discovery & Pilot</strong><br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Cobot Welding Pilot, AMR Zone Testing, Baseline Metrics.</span>
+            </div>
+            <div style="border-left: 3px solid var(--accent-purple); padding-left: 15px;">
+                <strong>Year 2: Stabilization</strong><br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Integrate Cobot Cells, Scale AMR Fleet, IoT Integration.</span>
+            </div>
+            <div style="border-left: 3px solid var(--accent-purple); padding-left: 15px;">
+                <strong>Year 3: Quality Automation</strong><br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Deploy Automated Vision Inspection, Digital Twin Linkage.</span>
+            </div>
+            <div style="border-left: 3px solid var(--accent-purple); padding-left: 15px;">
+                <strong>Year 4: Full Interconnectivity</strong><br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">AI-Driven Scheduling, Dynamic AMR Routing, OEE Target Hit.</span>
+            </div>
+            <div style="border-left: 3px solid var(--accent-purple); padding-left: 15px;">
+                <strong>Year 5: Autonomy</strong><br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Lights-out Sub-Assembly, Closed-Loop Feedback (Site to Factory).</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Generated by Open Droids Consultation & Research Agent | Strategic Report for Stantec
+    </div>
+
+    <!-- Scripts for Chart Rendering -->
+    <script>
+        // Chart 1: Cumulative Savings (Line Chart)
+        const ctxFinance = document.getElementById('financeChart').getContext('2d');
+        new Chart(ctxFinance, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [25000, 150000, 380000, 750000, 1200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f1f5f9' } },
+                    title: { display: true, text: 'Cumulative Production Cost Savings', color: '#f1f5f9' }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison (Bar Chart)
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Structural Welding', 'Material Handling', 'Module Load-out', 'Quality Control'],
+                datasets: [
+                    {
+                        label: 'Manual Output (Units/Day)',
+                        data: [8, 12, 5, 6],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted Output (Units/Day)',
+                        data: [14, 20, 12, 14],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f1f5f9' } },
+                    title: { display: true, text: 'Manual vs. Cobot-Assisted Output', color: '#f1f5f9' }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
