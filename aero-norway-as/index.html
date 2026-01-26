@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Report: Aero Norway AS</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-sky: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent-sky), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: var(--accent-sky);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-purple);
+            color: #e2e8f0;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--accent-sky);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--accent-sky);
+            margin-left: 1rem;
+            padding-left: 2rem;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.6rem;
+            top: 0.2rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent-sky);
+            margin-bottom: 0.25rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center;">
+        <h1>AERO NORWAY AS</h1>
+        <p style="font-size: 1.2rem; color: var(--text-main);">Strategic Automation Research Report</p>
+        <p>Prepared by Open Droids Senior Consultation & Research Agent</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>
+            This report outlines a high-level vision for robotic cleaning automation at Aero Norway AS. 
+            By integrating autonomous systems, Aero Norway can achieve superior hygiene standards, 
+            optimized turnaround times, and significant operational cost reductions. The strategy focuses 
+            on four key pathways: Cabin Cleaning, UV-C Disinfection, Exterior Washing, and AI Inspections. 
+            This transition supports the airline's goals of sustainability and digital leadership in the Nordic aviation market.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>FINANCIAL DASHBOARD</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">$75k - $150k</span>
+                <span class="metric-label">Unit CAPEX</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">Max OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt; 24 MO</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div>
+                <h3>Cumulative Savings (5-Year)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Labor Hour Redistribution</h3>
+        <div class="chart-container" style="max-width: 600px; margin: 0 auto;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Pathway A & B: Cabin & Disinfection</h3>
+                <p>Autonomous cabin cleaners handle vacuuming and waste, while UV-C robots ensure pathogen elimination. This combo reduces chemical use by 20%.</p>
+                <ul>
+                    <li>Reduced labor for repetitive tasks</li>
+                    <li>Enhanced hygiene validation</li>
+                    <li>Faster narrow-body turnarounds</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Pathway C & D: Exterior & Inspection</h3>
+                <p>Automated washing systems reduce water consumption, while AI inspection bots provide digital traceability for structural checks.</p>
+                <ul>
+                    <li>Safety improvements for ground ops</li>
+                    <li>Early corrosion detection</li>
+                    <li>Resource efficiency</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>IMPLEMENTATION ROADMAP (5-YEAR PHASED DEPLOYMENT)</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">YEAR 1: PILOT PHASE</div>
+                <p>Deploy Pilot Units (Cabin & UV-C) at Oslo Hub. Establish baseline metrics and integration with existing MRO software.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">YEAR 2: EXPANSION</div>
+                <p>Scale cabin automation to 50% of fleet. Implement exterior washing systems for cargo operations. Staff training begins.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">YEAR 3: OPTIMIZATION</div>
+                <p>Deploy AI Inspection Bots for wheel wells/cargo. Optimize operational routes using accumulated data.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">YEAR 4: INTEGRATION</div>
+                <p>Full coverage for standard cleaning. Predictive maintenance for the robotic fleet. Digital Twin implementation.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">YEAR 5: SUSTAINABILITY</div>
+                <p>100% eco-friendly solutions. Evaluation of next-gen robotics (engine wash). Full autonomy maturity.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [150000, 500000, 1100000, 1800000, 2600000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9',
+                pointBorderColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Cargo'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [6, 3, 8],
+                    backgroundColor: 'rgba(248, 250, 252, 0.2)'
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [9, 5, 12],
+                    backgroundColor: '#0ea5e9'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Frontline Cleaning', 'Robot Supervision', 'Specialized Inspection', 'Admin/Logistics'],
+            datasets: [{
+                data: [35, 25, 30, 10],
+                backgroundColor: [
+                    '#f97316', // Orange
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Purple
+                    '#334155'  // Slate
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { position: 'right', labels: { color: '#f8fafc' } } 
+            },
+            cutout: '70%'
+        }
+    });
+</script>
+
+</body>
+</html>
