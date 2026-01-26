@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>American College of Cardiology - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--glow);
+        }
+
+        .status-badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-purple);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: 1px solid var(--accent-purple);
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-purple);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables (Plain HTML for readability) */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: var(--accent-purple);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        ul li::before {
+            content: '•';
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">DR</div>
+                <div>
+                    <div>OPEN DROIDS</div>
+                    <div style="font-size: 12px; font-weight: 400; color: var(--text-muted);">ACC Consulting Division</div>
+                </div>
+            </div>
+            <div class="status-badge">Analysis Active</div>
+        </div>
+
+        <!-- Executive Overview -->
+        <div class="card">
+            <h2>Executive Overview</h2>
+            <p>The American College of Cardiology (ACC) stands at a pivotal intersection of medical education, data registry, and clinical quality. This portfolio identifies high-impact robotics and automation opportunities designed to streamline data abstraction, enhance procedural training through simulation, and expand global reach via telepresence. The primary value driver is the automation of the National Cardiovascular Data Registry (NCDR), offering significant cost reduction and accelerated quality improvement cycles.</p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Projected Annual Savings</div>
+                    <div class="metric-value">$68M</div>
+                    <div>Net Margin Impact (Pathway A)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Efficiency Gain</div>
+                    <div class="metric-value">50%</div>
+                    <div>Reduction in Data Abstraction Labor</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Strategic Reach</div>
+                    <div class="metric-value">+30%</div>
+                    <div>Expansion of Training Capabilities</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h2>Financial Dashboard: Pathway A (RPA & Data Automation)</h2>
+            <p>Projected 5-Year Cumulative Savings and Throughput Comparison (Manual vs. Automated).</p>
+            
+            <div class="dashboard-grid">
+                <div>
+                    <canvas id="cumulativeSavingsChart"></canvas>
+                </div>
+                <div>
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Pathways -->
+        <div class="card">
+            <h2>Comparative View of Pathways</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>RPA for Data Abstraction</th>
+                        <th>Simulation & Robotics Training</th>
+                        <th>Telepresence Robotics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>System-wide NCDR</td>
+                        <td>Accredited Training Centers</td>
+                        <td>International Chapters</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Value Driver</strong></td>
+                        <td>Labor Savings & Data Velocity</td>
+                        <td>Education Quality & Revenue</td>
+                        <td>Access & Travel Reduction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Benefit</strong></td>
+                        <td>High ($100M+ Scale)</td>
+                        <td>Medium (Premium Fees)</td>
+                        <td>Low (Operational Efficiency)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td>Short (6-12 Months)</td>
+                        <td>Medium (2-3 Years)</td>
+                        <td>Long (3+ Years)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Level</strong></td>
+                        <td>Low</td>
+                        <td>Moderate</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Year 1: Foundation & Pilot</h3>
+                    <ul>
+                        <li>Develop EHR API integrations (Epic, Cerner).</li>
+                        <li>Launch RPA pilot with 50 hospital sites.</li>
+                        <li>Establish data security protocols.</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Year 2: Scale & Expansion</h3>
+                    <ul>
+                        <li>Full RPA rollout to NCDR participants.</li>
+                        <li>Deploy high-fidelity simulators at regional hubs.</li>
+                        <li>Launch Remote Fellows program.</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Year 3: AI & Global Reach</h3>
+                    <ul>
+                        <li>Integrate AI predictive analytics.</li>
+                        <li>Expand simulation licensing globally.</li>
+                        <li>Deploy telepresence for virtual conferences.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Positioning -->
+        <div class="card">
+            <h2>Strategic Positioning</h2>
+            <p>By adopting these technologies, the American College of Cardiology transitions from a traditional medical association to a <span class="highlight">data-driven healthcare technology platform</span>. The automation of the NCDR removes friction for member hospitals, ensuring deeper integration and reliance on ACC infrastructure. Simultaneously, advanced robotics in education positions the ACC as a global leader in procedural training, securing future revenue streams and enhancing brand equity in an increasingly digital medical landscape.</p>
+        </div>
+
+        <!-- Placeholder Sections -->
+        <div class="card" style="border-style: dashed;">
+            <h2>Additional Profiles (Under Development)</h2>
+            <p><strong>Help at Home:</strong> Detailed analysis of home-based care automation pending.</p>
+            <p><strong>AdaptHealth:</strong> Durable Medical Equipment (DME) and supply chain robotics assessment pending.</p>
+            <p><strong>WellNow Urgent Care:</strong> Clinical workflow automation and triage robotics assessment pending.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('cumulativeSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [15, 40, 75, 115, 160],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    title: { display: true, text: '5-Year Cumulative Savings', color: '#fff' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Robotic Throughput
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Process', 'Automated (RPA)'],
+                datasets: [{
+                    label: 'Data Points Processed (Annual)',
+                    data: [50000, 95000],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        '#7c3aed'
+                    ],
+                    borderColor: [
+                        '#94a3b8',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Throughput Comparison', color: '#fff' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
