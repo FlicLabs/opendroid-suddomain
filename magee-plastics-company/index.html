@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Automation Report - Magee Plastics Company</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        h1 {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--accent-orange);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card.blue {
+            background: linear-gradient(145deg, rgba(14, 165, 233, 0.2), rgba(15, 23, 42, 0.8));
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .metric-card.orange {
+            background: linear-gradient(145deg, rgba(249, 115, 22, 0.2), rgba(15, 23, 42, 0.8));
+            border-color: rgba(249, 115, 22, 0.4);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Layout */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .chart-container {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            height: 300px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Sections */
+        .section-title {
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .pathway-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--accent-purple);
+        }
+
+        .roadmap-timeline {
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .roadmap-step {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .roadmap-step::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .roadmap-step h4 {
+            margin: 0 0 5px 0;
+            color: var(--text-primary);
+        }
+
+        .roadmap-step span {
+            color: var(--accent-orange);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header class="glass-card">
+        <div class="subtitle">Open Droids Consultation & Research</div>
+        <h1>STRATEGIC AUTOMATION REPORT</h1>
+        <p style="font-size: 1.1rem; color: var(--text-secondary);">
+            Client: Magee Plastics Company | Focus: Aviation Cleaning & Maintenance Automation
+        </p>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="charts-grid" style="grid-template-columns: 2fr 1fr;">
+        <div class="glass-card">
+            <h2 class="section-title">Executive Summary</h2>
+            <p style="color: var(--text-secondary);">
+                This report outlines a strategic vision for integrating robotic solutions into Magee Plastics Company's operations. By transitioning from labor-intensive manual processes to data-driven automation, the company targets a significant reduction in operational expenditures and enhanced sanitation compliance. The core objective is to deploy a modular fleet of autonomous units ensuring a 24-month payback period while standardizing service quality across the fleet.
+            </p>
+        </div>
+        <div class="glass-card">
+            <h2 class="section-title">Organizational Profile</h2>
+            <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2;">
+                <li><strong>Fleet Size:</strong> 50-75 Aircraft</li>
+                <li><strong>Primary Hubs:</strong> Regional Maintenance Centers</li>
+                <li><strong>Model:</strong> Manual Labor-Intensive</li>
+                <li><strong>Key Challenge:</strong> Turnaround Time</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2 class="section-title">Financial Model & Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card purple">
+                <span class="metric-value">$75k - $150k</span>
+                <span class="metric-label">CAPEX Per Unit</span>
+            </div>
+            <div class="metric-card blue">
+                <span class="metric-value">35% - 45%</span>
+                <span class="metric-label">OPEX Reduction</span>
+            </div>
+            <div class="metric-card orange">
+                <span class="metric-value">< 24 Months</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; text-align: center; margin-top: -10px;">
+            *Estimates based on current labor rates and utility costs for mid-sized aviation operations.
+        </p>
+    </section>
+
+    <!-- Robotics Pathways -->
+    <section class="glass-card">
+        <h2 class="section-title">Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h4>Pathway A: Cabin Cleaning</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Autonomous mobile robots for vacuuming and wiping. Reduces turnaround time by 40%.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway B: UV-C Disinfection</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Germicidal UV light units for non-chemical sanitization. Ensures regulatory compliance.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway C: Exterior Washing</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Automated gantry systems. Reduces water usage by 60% and labor by 80%.</p>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway D: AI Inspection</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Visual bots with thermal imaging. Shifts operations from reactive to predictive maintenance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Area -->
+    <div class="charts-grid">
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="glass-card chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        
+        <!-- Chart 2: Throughput Comparison -->
+        <div class="glass-card chart-container">
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Chart 3: Labor Redistribution -->
+        <div class="glass-card chart-container full-width">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card">
+        <h2 class="section-title">Implementation Roadmap (5-Year Strategy)</h2>
+        <div class="roadmap-timeline">
+            <div class="roadmap-step">
+                <span>PHASE 1 (0-6 Months)</span>
+                <h4>Pilot & Infrastructure Assessment</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Deployment of 2 Cabin Bots and 1 UV-C Unit. Staff training initiation.</p>
+            </div>
+            <div class="roadmap-step">
+                <span>PHASE 2 (7-18 Months)</span>
+                <h4>Standardization & Exterior Integration</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Installation of first Exterior Washing System. 40% Cabin coverage.</p>
+            </div>
+            <div class="roadmap-step">
+                <span>PHASE 3 (19-36 Months)</span>
+                <h4>AI Inspection & Data Integration</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Deployment of AI Inspection Bots. Integration with MRO software.</p>
+            </div>
+            <div class="roadmap-step">
+                <span>PHASE 4 (37-48 Months)</span>
+                <h4>Network Expansion</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Replication at secondary hubs. Wide-body aircraft compatibility.</p>
+            </div>
+            <div class="roadmap-step">
+                <span>PHASE 5 (49-60 Months)</span>
+                <h4>Full Autonomy & Optimization</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">100% fleet coverage. Predictive maintenance optimization.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($K)',
+                data: [150, 600, 1200, 1900, 2700],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } },
+                title: { display: true, text: '5-Year Cumulative Savings', color: '#94a3b8' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput (Bar Chart)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (hrs)', 'Exterior Wash (hrs)', 'Inspection (hrs)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [3.5, 4.0, 2.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [1.5, 1.0, 0.8],
+                    backgroundColor: 'rgba(249, 115, 22, 0.7)', // Aviation Orange
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } },
+                title: { display: true, text: 'Throughput: Manual vs. Robotic (Hours)', color: '#94a3b8' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Hour Redistribution (Pie Chart)
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Reallocated to Complex Maintenance', 'Supervisory Roles', 'Redundant (Automated)'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316'  // Aviation Orange
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: '#f8fafc' } },
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation (%)', color: '#94a3b8' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
