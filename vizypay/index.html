@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VizyPay Robotics Strategic Report</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --primary: #7c3aed;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 { margin-top: 0; color: #fff; }
+        h1 { font-weight: 700; font-size: 2.5rem; background: linear-gradient(to right, #fff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; font-size: 1.5rem; color: #c4b5fd; }
+        p, li { color: var(--text-muted); }
+        
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+        }
+
+        /* Layout */
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .pathway-list strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--glass-border);
+            margin-left: 10px;
+            padding-left: 20px;
+        }
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+        .timeline-year {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            .report-grid { grid-template-columns: 1fr 1fr; }
+            .full-width { grid-column: span 2; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="glass-card" style="text-align: center;">
+            <h1>VizyPay Robotics Strategy</h1>
+            <p style="font-size: 1.1rem; color: #cbd5e1;">Accelerating Hospitality Through Automation</p>
+        </div>
+
+        <!-- Executive Dashboard -->
+        <div class="glass-card">
+            <h2>Executive Dashboard: ROI Overview</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-value">15-25%</span>
+                    <span class="metric-label">Labor Cost Reduction</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">&lt;14mo</span>
+                    <span class="metric-label">Payback Period</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">$40k</span>
+                    <span class="metric-label">Max CAPEX/Unit</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">+15%</span>
+                    <span class="metric-label">Table Turnover Rate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Organizational Profile -->
+        <div class="report-grid">
+            <div class="glass-card full-width">
+                <h2>Organizational Profile</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <strong style="color: white;">Locations:</strong> 28 (Franchised)<br>
+                        <span style="color: var(--text-muted);">Network-wide scalability target</span>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <strong style="color: white;">Cuisine:</strong> Fast-Casual / QSR Hybrid<br>
+                        <span style="color: var(--text-muted);">High volume, speed-centric</span>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <strong style="color: white;">Service Model:</strong> Counter-Service<br>
+                        <span style="color: var(--text-muted);">Hybrid QSR/Fine Casual</span>
+                    </div>
+                </div>
+                <p style="margin-top: 15px;">Current state analysis reveals a bottleneck in table turnover during peak lunch hours and variance in order accuracy across franchise units. The proposed automation strategy targets these specific inefficiencies.</p>
+            </div>
+
+            <!-- Pathways -->
+            <div class="glass-card full-width">
+                <h2>Robotics Opportunity Pathways</h2>
+                <ul class="pathway-list">
+                    <li>
+                        <strong>Pathway A: Front-of-House Serving Robots</strong>
+                        Deployment of autonomous bussing runners to clear tables 40% faster.
+                        <br><em>Focus: Staff Support & Table Turnover</em>
+                    </li>
+                    <li>
+                        <strong>Pathway B: Back-of-House Automation</strong>
+                        Robotic frying arms ensuring 100% consistency and safety.
+                        <br><em>Focus: Consistency & Safety</em>
+                    </li>
+                    <li>
+                        <strong>Pathway C: AI Voice & Kiosks</strong>
+                        Generative AI agents for drive-thru upselling and error reduction.
+                        <br><em>Focus: Upselling & Accuracy</em>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Visualizations -->
+            <div class="glass-card full-width">
+                <h2>Financial Modeling & ROI</h2>
+                <div class="chart-container">
+                    <canvas id="roiChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card full-width">
+                <h2>Operational Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="glass-card full-width">
+                <h2>Implementation Roadmap</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">Year 1: Pilot & Validation</div>
+                        <p>Deploy 1 FOH Bot & AI Kiosk in 2 flagship locations. Focus on data collection and ROI validation.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Year 2: BOH Integration</div>
+                        <p>Roll out automated frying stations to top 30% volume locations. Standardize tech stack.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Year 3: Franchise Expansion</div>
+                        <p>Network-wide incentives. AI Drive-Thru agents deployed across all drive-thru units.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Year 4: Data Optimization</div>
+                        <p>Predictive maintenance protocols. Menu optimization based on AI upsell data.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Year 5: Full Ecosystem</div>
+                        <p>Integrated Smart Kitchen. Human staff focus exclusively on culinary arts and guest experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // Chart 1: 5-Year Cumulative Labor Cost Savings
+        const ctxROI = document.getElementById('roiChart').getContext('2d');
+        new Chart(ctxROI, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [120000, 380000, 750000, 1200000, 1800000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: (context) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                        gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+                        gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+                        return gradient;
+                    },
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: '5-Year Cumulative Labor Savings', align: 'start', color: '#fff' }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Rate Comparison
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Lunch Peak', 'Dinner Peak', 'Weekend Avg'],
+                datasets: [
+                    {
+                        label: 'Manual Service',
+                        data: [2.5, 2.2, 2.0],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robot-Assisted',
+                        data: [3.2, 2.8, 2.6],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { color: '#fff' } },
+                    title: { display: true, text: 'Table Turnover Rate (Turns per Hour)', align: 'start', color: '#fff' }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 4, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
