@@ -1,0 +1,513 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weber LLC: Industry 4.0 Strategic Report</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        /* Glassmorphism Utility */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--primary-glow);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Metrics */
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        /* Pathways */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .pathway-item {
+            border-top: 2px solid var(--primary);
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap {
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--glass-border);
+        }
+
+        .roadmap-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+
+        .roadmap-dot {
+            position: absolute;
+            left: 11px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-deep);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-glow);
+            z-index: 1;
+        }
+
+        .roadmap-year {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <h1>WEBER LLC</h1>
+            <p style="font-size: 1.2rem; color: #fff;">Industry 4.0 Strategic Automation Report</p>
+            <p style="max-width: 600px; margin: 20px auto;">
+                Prepared by Open Droids Senior Consultation & Research Agent. A comprehensive roadmap for flexible manufacturing and robotics integration.
+            </p>
+        </header>
+
+        <!-- Executive Dashboard -->
+        <section>
+            <h2>Executive Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="glass-card metric-card">
+                    <div class="metric-value">18<span style="font-size: 1.5rem;">MO</span></div>
+                    <div class="metric-label">Target Payback Period</div>
+                    <p style="margin-top: 10px; font-size: 0.8rem;">Via labor reallocation & scrap reduction</p>
+                </div>
+                <div class="glass-card metric-card">
+                    <div class="metric-value">+30%</div>
+                    <div class="metric-label">OEE Increase Target</div>
+                    <p style="margin-top: 10px; font-size: 0.8rem;">Improving Availability, Performance, Quality</p>
+                </div>
+                <div class="glass-card metric-card">
+                    <div class="metric-value">$60k-$120k</div>
+                    <div class="metric-label">Per Robotic Cell</div>
+                    <p style="margin-top: 10px; font-size: 0.8rem;">Estimated CAPEX for standard deployment</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Analysis -->
+        <section>
+            <h2>Organizational Profile & Strategy</h2>
+            <div class="glass-card">
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h3>Current State</h3>
+                        <p>Weber LLC operates in <strong>Discrete Manufacturing</strong> with a centralized facility (approx. 150k sq. ft.). Current processes rely on a mix of manual and semi-automated assembly, creating bottlenecks in material handling and end-of-line packaging.</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Production: 5k - 10k units/month</li>
+                            <li>Shifts: 2-shift system (16 hours)</li>
+                            <li>Primary Process: Batch Assembly & Fabrication</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h3>Industry 4.0 Vision</h3>
+                        <p>To transition from reactive manufacturing to a proactive, data-driven Smart Factory. This involves deploying cyber-physical systems that enable flexible manufacturing—adapting to custom orders rapidly without sacrificing efficiency.</p>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <strong>Core Objective:</strong> Elevate human workforce to supervision roles while automating hazardous/repetitive tasks.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Robotics Pathways -->
+        <section>
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="glass-card pathway-item">
+                    <span class="pathway-tag">Pathway A</span>
+                    <h3>Cobots (Machine Tending)</h3>
+                    <p><strong>Focus:</strong> Safety & Precision</p>
+                    <p>Deploying collaborative robots for CNC tending and assembly. Safe for human interaction, no caging required.</p>
+                    <ul style="margin-top: 10px; font-size: 0.85rem; padding-left: 15px;">
+                        <li>±0.03mm Repeatability</li>
+                        <li>Lights-out operation</li>
+                        <li>Reduced ergonomic strain</li>
+                    </ul>
+                </div>
+                <div class="glass-card pathway-item">
+                    <span class="pathway-tag">Pathway B</span>
+                    <h3>AMRs (Logistics)</h3>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                    <p>Autonomous Mobile Robots for material transport and line-side replenishment.</p>
+                    <ul style="margin-top: 10px; font-size: 0.85rem; padding-left: 15px;">
+                        <li>Dynamic path planning</li>
+                        <li>Eliminates forklift dependency</li>
+                        <li>Real-time inventory tracking</li>
+                    </ul>
+                </div>
+                <div class="glass-card pathway-item">
+                    <span class="pathway-tag">Pathway C</span>
+                    <h3>Automated End-of-Line</h3>
+                    <p><strong>Focus:</strong> Throughput & Yield</p>
+                    <p>Robotic palletizing combined with machine vision inspection.</p>
+                    <ul style="margin-top: 10px; font-size: 0.85rem; padding-left: 15px;">
+                        <li>100% Visual inspection</li>
+                        <li>High-speed packaging (60+ UPH)</li>
+                        <li>Consistent load stability</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Modeling Charts -->
+        <section>
+            <h2>Financial Impact & Modeling</h2>
+            <div class="glass-card">
+                <div class="charts-container">
+                    <div>
+                        <h3>Cumulative Production Cost Savings</h3>
+                        <p style="font-size: 0.85rem;">Projected savings over 5 years from labor reduction, scrap minimization, and increased throughput.</p>
+                        <div class="chart-wrapper">
+                            <canvas id="savingsChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Output Comparison (Units/Hour)</h3>
+                        <p style="font-size: 0.85rem;">Comparative analysis of manual process efficiency vs. Cobot-assisted workflows.</p>
+                        <div class="chart-wrapper">
+                            <canvas id="outputChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Roadmap -->
+        <section>
+            <h2>Implementation Roadmap (Year 1 - 5)</h2>
+            <div class="glass-card roadmap">
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-year">Year 1: Foundation & Pilot</div>
+                    <p><strong>Q1-Q2:</strong> Facility audit, network upgrade.</p>
+                    <p><strong>Q3-Q4:</strong> Deploy Pilot Cobot Cell (Pathway A). Train staff. Validate baseline OEE metrics.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-year">Year 2: Expansion & Integration</div>
+                    <p><strong>Focus:</strong> Scale to 3-5 Cobot cells. Deploy AMRs (Pathway B) for logistics.</p>
+                    <p><strong>Tech:</strong> Implement IoT Gateway for data collection and Digital Twin creation.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-year">Year 3: End-of-Line Automation</div>
+                    <p><strong>Focus:</strong> Automate packaging/inspection (Pathway C).</p>
+                    <p><strong>Integration:</strong> Connect all systems to ERP for real-time inventory and scheduling.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-year">Year 4: AI & Predictive Analytics</div>
+                    <p><strong>Focus:</strong> Leverage 3 years of data for AI-driven predictive maintenance.</p>
+                    <p><strong>Optimization:</strong> Dynamic scheduling algorithms for production flow.</p>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-dot"></div>
+                    <div class="roadmap-year">Year 5: Lights-Out & Ecosystem</div>
+                    <p><strong>Focus:</strong> Semi-autonomous 2nd shift (lights-out).</p>
+                    <p><strong>Sustainability:</strong> Energy optimization modules and green manufacturing protocols.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section style="text-align: center; margin-top: 60px; padding-bottom: 40px;">
+            <h2 style="border: none;">Ready to Transform?</h2>
+            <p style="max-width: 600px; margin: 0 auto 20px auto;">Weber LLC is positioned for rapid automation adoption. Contact Open Droids to schedule a facility assessment.</p>
+            <a href="#" class="btn-primary">Schedule Consultation</a>
+        </section>
+
+    </div>
+
+    <!-- Chart Scripts -->
+    <script>
+        // Common Chart Options
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#e2e8f0', font: { family: 'Inter' } }
+                }
+            },
+            scales: {
+                x: { 
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                y: { 
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        };
+
+        // Chart 1: Cumulative Savings (Line Chart)
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 220000, 450000, 720000, 1050000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison (Bar Chart)
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Cobot Assisted'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [25, 65],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', // Gray for Manual
+                        '#7c3aed' // Purple for Cobot
+                    ],
+                    borderColor: [
+                        '#94a3b8',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        beginAtZero: true,
+                        max: 80
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+```
