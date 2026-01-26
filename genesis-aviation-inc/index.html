@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Aviation Inc. - Robotics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(124, 58, 237, 0.3);
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--sky-blue);
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--electric-purple);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--electric-purple), var(--aviation-orange));
+            box-shadow: 0 0 10px var(--electric-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(15, 23, 42, 0.6);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 3px solid var(--sky-blue);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-icon {
+            color: var(--aviation-orange);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Chart Containers */
+        .chart-wrapper {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px;
+            height: 350px;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--electric-purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--aviation-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--aviation-orange);
+        }
+        .year {
+            color: var(--aviation-orange);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Genesis Aviation Inc. Strategic Automation Report</h1>
+
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Genesis Aviation Inc. stands at the precipice of an operational revolution. The integration of robotic cleaning and maintenance automation represents a transformative leap toward maximizing fleet availability, enhancing passenger safety, and driving significant cost efficiencies. By deploying Open Droids’ advanced robotic solutions, Genesis Aviation will transition from traditional, labor-intensive cleaning cycles to a high-velocity, data-driven maintenance model. This strategic shift promises to minimize ground time, reduce human error, and establish Genesis Aviation as an industry leader in hygiene innovation and operational excellence.</p>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Fleet Size:</strong> Approximately 120 aircraft (Narrow & Wide-body).</p>
+            <p><strong>Hub Presence:</strong> Dallas, Denver, Atlanta (150+ destinations).</p>
+            <p><strong>Current Model:</strong> Heavy reliance on manual labor for cleaning and visual inspections. Vulnerable to labor shortages and weather delays. Focus is on shifting from reactive to predictive maintenance.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Model</h2>
+            <div class="metric-card" style="margin-bottom: 10px;">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card" style="margin-bottom: 10px;">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 24 Months</div>
+                <div class="metric-label">Projected Payback Period</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <ul>
+            <li><span class="pathway-icon">[A]</span> <strong>Autonomous Cabin Cleaning Robots:</strong> Mobile units for trash collection and surface wiping during short turnarounds.</li>
+            <li><span class="pathway-icon">[B]</span> <strong>UV-C Disinfection Robots:</strong> Chemical-free pathogen neutralization for high-touch surfaces and lavatories.</li>
+            <li><span class="pathway-icon">[C]</span> <strong>Exterior Aircraft Washing Systems:</strong> Gantry/Track systems reducing water usage by 60% and cleaning time by 50%.</li>
+            <li><span class="pathway-icon">[D]</span> <strong>AI-Powered Inspection Bots:</strong> LiDAR-equipped bots for detecting micro-fractures and FOD in hard-to-reach areas.</li>
+        </ul>
+    </div>
+
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">Year 1: Pilot & Validation</div>
+                <p>Deploy 5 Cabin & 2 Inspection bots at Dallas Hub. Establish baseline metrics.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Year 2: Expansion</div>
+                <p>Scale to Denver/Atlanta. Integrate data feeds. Test UV-C on long-haul fleet.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Year 3: Fleet Rollout</div>
+                <p>60% fleet coverage. Implement Exterior Washing Systems at hangars.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Year 4: Predictive AI</div>
+                <p>Fleet-wide AI Inspection. Utilize data for predictive component failure.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Year 5: Ecosystem</div>
+                <p>Full automation integration. Achieve 45% OPEX reduction. Workforce upskilling.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial & Throughput Analytics</h2>
+        <div class="grid-3">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart.js Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+    Chart.defaults.borderColor = 'rgba(124, 58, 237, 0.2)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 2.2, 5.8, 10.5, 16.2],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9',
+                pointBorderColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true },
+                title: { display: true, text: 'Cumulative Operational Savings' }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (min)', 'Ext. Wash (min)', 'Inspection (min)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 120, 30],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic',
+                    data: [15, 60, 10],
+                    backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Throughput Comparison (Minutes per Aircraft)' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed (Maintenance/Tech)', 'Reduced Headcount', 'Retained (Supervision)'],
+            datasets: [{
+                data: [40, 35, 25],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#f97316', // Aviation Orange
+                    '#7c3aed'  // Electric Purple
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right' },
+                title: { display: true, text: 'Labor Hour Redistribution Post-Automation' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
