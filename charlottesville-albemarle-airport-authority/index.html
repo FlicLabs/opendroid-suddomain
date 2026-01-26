@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHO Automation Report</title>
+    <!-- Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --primary: #7c3aed;
+            --secondary: #0ea5e9;
+            --accent: #f97316;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        h2 { font-size: 1.5rem; color: var(--secondary); margin-bottom: 15px; }
+        h3 { font-size: 1.1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        p { line-height: 1.6; color: var(--text-muted); }
+
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+            border-color: var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-wrapper canvas {
+            flex: 1;
+        }
+
+        /* Section Highlights */
+        .highlight-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .financial-note {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            border-left: 2px solid var(--glass-border);
+            margin-left: 20px;
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-period {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+            .chart-wrapper { height: 300px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="glass-card" style="text-align: center; padding: 40px;">
+            <h1 style="border: none; font-size: 2rem; margin-bottom: 10px;">Charlottesville-Albemarle Airport Authority</h1>
+            <p style="font-size: 1.2rem; color: #fff;">Strategic Automation Report: Aviation Cleaning & Maintenance</p>
+            <div style="width: 60px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--secondary)); margin: 20px auto;"></div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>The integration of robotic automation at CHO represents a pivotal shift in operational strategy. By deploying autonomous units for cabin cleaning, UV-C disinfection, and exterior maintenance, the airport targets a <span class="financial-note">35% to 45% reduction in operational expenditures</span>. This report outlines the pathway to achieving full deployment within a 5-year horizon, ensuring enhanced safety standards and superior passenger experiences.</p>
+            
+            <div class="highlight-box">
+                <strong>Core Vision:</strong> Transform CHO into a regional leader in automated aviation hygiene and maintenance efficiency.
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="glass-card">
+            <h2>Financial Dashboard</h2>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$85K</div>
+                    <div class="metric-label">Avg. Unit CAPEX</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">40%</div>
+                    <div class="metric-label">Target OPEX Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">24 Mo</div>
+                    <div class="metric-label">Max Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">5 Yrs</div>
+                    <div class="metric-label">Full Integration Timeline</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.9rem; margin-top: 20px;">*Financial estimates based on initial pilot fleet deployment strategy.</p>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div>
+                    <h3>Pathway A: Cabin Cleaning</h3>
+                    <p>Autonomous vacuums and wipers for regional jets. Reduces manual labor during short turnarounds.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: UV-C Disinfection</h3>
+                    <p>Mobile UV-C units for terminal and cabin sanitation. Reduces chemical usage and improves hygiene.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: Exterior Washing</h3>
+                    <p>Automated fuselage cleaning systems. Improves aerodynamics and prevents corrosion.</p>
+                </div>
+                <div>
+                    <h3>Pathway D: AI Inspection</h3>
+                    <p>Drones and bots for structural and runway inspections. Enables predictive maintenance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <!-- Cumulative Savings Chart -->
+            <div class="chart-wrapper">
+                <h3 style="text-align: center; margin-bottom: 10px;">5-Year Cumulative Savings</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+
+            <!-- Throughput Comparison Chart -->
+            <div class="chart-wrapper">
+                <h3 style="text-align: center; margin-bottom: 10px;">Manual vs. Robotic Throughput</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap (5 Years)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-period">Year 1: Assessment & Pilot</span>
+                    <p>Audit workflows, select vendors, and deploy initial pilot fleet (2 Cabin Robots, 1 UV-C Unit).</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-period">Year 2: Optimization & Expansion</span>
+                    <p>Analyze pilot data, deploy Exterior Washing System, scale cabin fleet.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-period">Year 3: Full Integration</span>
+                    <p>75% daily coverage with robotics, centralized command center go-live.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-period">Year 4: Advanced AI</span>
+                    <p>Predictive maintenance integration, drone inspections for runway safety.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-period">Year 5: Autonomy Maturity</span>
+                    <p>24/7 autonomous operations, ROI realization, next-gen tech review.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Labor Redistribution Chart -->
+        <div class="glass-card">
+            <h2>Labor Hour Redistribution Post-Automation</h2>
+            <div class="chart-wrapper" style="height: 300px; width: 100%; max-width: 600px; margin: 0 auto;">
+                <canvas id="laborChart"></canvas>
+            </div>
+            <p style="text-align: center; margin-top: 15px;">Shift from repetitive manual tasks to specialized supervisory roles.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart.js Global Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [25000, 150000, 325000, 550000, 850000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Clean (mins)', 'Disinfection (mins)', 'Exterior Wash (hrs)'],
+                datasets: [
+                    {
+                        label: 'Manual',
+                        data: [45, 20, 4],
+                        backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                        borderColor: '#f97316',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic',
+                        data: [25, 10, 2.5],
+                        backgroundColor: 'rgba(14, 165, 233, 0.6)',
+                        borderColor: '#0ea5e9',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // 3. Labor Redistribution Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Repetitive Manual Tasks', 'Supervisory/QA', 'Robot Maintenance', 'Specialized Ops'],
+                datasets: [{
+                    data: [20, 35, 15, 30],
+                    backgroundColor: [
+                        '#f97316', // Orange
+                        '#7c3aed', // Purple
+                        '#0ea5e9', // Sky Blue
+                        '#334155'  // Slate
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#fff', boxWidth: 12 } }
+                },
+                cutout: '70%'
+            }
+        });
+    </script>
+</body>
+</html>
