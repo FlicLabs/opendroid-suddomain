@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATI Jet - Robotics Automation Strategic Report</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathway List */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-item {
+            background: rgba(14, 165, 233, 0.05);
+            border-left: 3px solid var(--sky-blue);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .pathway-item strong {
+            color: var(--sky-blue);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center;">
+        <h1>ATI Jet Robotics Strategy</h1>
+        <p>Strategic Research for Aviation Cleaning and Maintenance Automation</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The integration of robotics into ATI Jet's operations signifies a transformative leap toward next-generation aviation standards. By deploying autonomous systems, ATI Jet aims to enhance hygiene consistency, operational efficiency, and cost control. This roadmap transitions ATI Jet from labor-intensive models to a data-driven, automated ecosystem, maximizing fleet availability and ensuring superior passenger safety.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$1.5M</div>
+                <div class="metric-label">Max CAPEX (10 Units)</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--aviation-orange); background: rgba(249, 115, 22, 0.15);">
+                <div class="metric-value">45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card" style="border-color: var(--sky-blue); background: rgba(14, 165, 233, 0.15);">
+                <div class="metric-value">&lt; 24 Months</div>
+                <div class="metric-label">Projected Payback</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">5 Years</div>
+                <div class="metric-label">Implementation Roadmap</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organizational Profile & Opportunity Pathways -->
+    <div class="charts-grid">
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            <ul class="pathway-list">
+                <li class="pathway-item">
+                    <strong>Path A: Autonomous Cabin Cleaning</strong><br>
+                    SLAM-enabled AMRs for vacuuming and surface wiping, ensuring rapid turnaround.
+                </li>
+                <li class="pathway-item">
+                    <strong>Path B: UV-C Disinfection Robots</strong><br>
+                    Autonomous UV-C units for medical-grade sanitation and pathogen reduction.
+                </li>
+                <li class="pathway-item">
+                    <strong>Path C: Exterior Washing Systems</strong><br>
+                    Automated gantry systems for fuselage cleaning, reducing fuel drag and downtime.
+                </li>
+                <li class="pathway-item">
+                    <strong>Path D: AI Inspection Bots</strong><br>
+                    Thermal and visual AI sensors for predictive maintenance and structural checks.
+                </li>
+            </ul>
+        </div>
+        
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <h3>ATI Jet Operational Model</h3>
+            <p><strong>Fleet Composition:</strong> Mid-to-large cabin business jets requiring specialized detailing.</p>
+            <p><strong>Hub Presence:</strong> Strategic regional hubs with high-frequency schedules.</p>
+            <p><strong>Current Status:</strong> Labor-intensive manual cleaning with variable quality control and high dependency on seasonal workforce availability.</p>
+            <p><strong>Challenge:</strong> Tight turnaround windows create bottlenecks, limiting aircraft availability for revenue flights.</p>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="glass-card">
+        <h2>Analytics & Projections</h2>
+        <div class="charts-grid">
+            <div>
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 24px; text-align: center;">
+             <h3>Labor Hour Redistribution Post-Automation</h3>
+             <div class="chart-container" style="height: 250px; max-width: 500px; margin: 0 auto;">
+                <canvas id="laborPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 10px; border-left: 4px solid var(--electric-purple); background: rgba(124, 58, 237, 0.1);">
+                <strong>Year 1: Pilot Phase</strong> - Single hub testing, safety certification, data baseline establishment.
+            </div>
+            <div style="padding: 10px; border-left: 4px solid var(--electric-purple); background: rgba(124, 58, 237, 0.1);">
+                <strong>Year 2: Hub Expansion</strong> - Scaling Cabin/UV-C units at primary hub, refining algorithms.
+            </div>
+            <div style="padding: 10px; border-left: 4px solid var(--electric-purple); background: rgba(124, 58, 237, 0.1);">
+                <strong>Year 3: Fleet Integration</strong> - Secondary hubs, Exterior Washing deployment, MRO software sync.
+            </div>
+            <div style="padding: 10px; border-left: 4px solid var(--electric-purple); background: rgba(124, 58, 237, 0.1);">
+                <strong>Year 4: Optimization</strong> - AI Inspection primary role, predictive maintenance models active.
+            </div>
+            <div style="padding: 10px; border-left: 4px solid var(--electric-purple); background: rgba(124, 58, 237, 0.1);">
+                <strong>Year 5: Total Automation</strong> - Coordinated swarm operations, fully autonomous data ecosystem.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Open Droids Consultation. All Rights Reserved.
+    </div>
+
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. 5-Year Cumulative Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 450000, 900000, 1600000, 2500000],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#f8fafc',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison (Bar Chart)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean (Min)', 'Fuselage Wash (Min)', 'Inspection (Min)'],
+            datasets: [
+                {
+                    label: 'Manual',
+                    data: [45, 120, 30],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic',
+                    data: [25, 60, 15],
+                    backgroundColor: 'rgba(249, 115, 22, 0.8)', // Aviation Orange
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { color: '#f8fafc' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution (Pie Chart)
+    const ctxLabor = document.getElementById('laborPieChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Redeployed to Customer Service', 'Redeployed to Technical Maintenance', 'Redundant'],
+            datasets: [{
+                data: [50, 35, 15],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316'  // Aviation Orange
+                ],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#f8fafc' } }
+            },
+            cutout: '70%'
+        }
+    });
+</script>
+
+</body>
+</html>
