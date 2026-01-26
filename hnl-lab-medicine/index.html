@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HNL Lab Medicine - Robotics Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary-accent: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Headers */
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--primary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--primary-accent);
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+        }
+
+        /* Layout Grid for Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--primary-accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-accent);
+            box-shadow: var(--glow);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .chart-wrapper {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        /* Logo */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-text {
+            font-family: 'Orbitron', sans-serif; /* Fallback if not loaded, but simulating tech feel */
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 3px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-accent);
+        }
+
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        ul li::before {
+            content: "►";
+            color: var(--primary-accent);
+            margin-right: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="logo-section">
+        <div class="logo-text">OPEN DROIDS</div>
+        <div style="font-size: 0.9rem; color: var(--primary-accent);">HNL LAB MEDICINE RESEARCH</div>
+    </div>
+
+    <h1>HNL Lab Medicine Opportunities</h1>
+
+    <!-- Executive Summary Card -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            HNL Lab Medicine operates as a high-volume diagnostic network requiring precision, speed, and reliability. The integration of robotics focuses on automating the pre-analytical and post-analytical workflow to reduce bottlenecks. The primary opportunity lies in Total Lab Automation (TLA) which allows for a 50% increase in capacity while reducing manual touchpoints by 75%. The secondary focus is on logistics and internal transport, ensuring sample integrity from collection to result.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard Metrics -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">$3.5M</span>
+            <span class="metric-label">Estimated CapEx</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">-20 FTE</span>
+            <span class="metric-label">Labor Reallocation</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">Throughput Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">42 Mo</span>
+            <span class="metric-label">ROI Payback</span>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>1. Central Laboratory Automation (TLA)</h3>
+        <p>High-value automation of the sample processing track. Eliminates manual sorting and centrifugation.</p>
+        <ul>
+            <li><strong>Scope:</strong> Automated track systems, robotic arms for aliquoting.</li>
+            <li><strong>Impact:</strong> 30-50% throughput increase; 15-25% TAT improvement.</li>
+            <li><strong>Value Driver:</strong> Capacity expansion without real estate growth.</li>
+        </ul>
+
+        <h3>2. Logistics Automation (AMRs)</h3>
+        <p>Autonomous Mobile Robots for internal transport within the lab and hospital network.</p>
+        <ul>
+            <li><strong>Scope:</strong> Courier robots for ER-to-Lab transport.</li>
+            <li><strong>Impact:</strong> 10-15% reduction in transport labor; 24/7 availability.</li>
+            <li><strong>Value Driver:</strong> Reliability and cost avoidance.</li>
+        </ul>
+
+        <h3>3. Point-of-Care Robotics</h3>
+        <p>Automated dispensing and micro-sampling to standardize patient intake.</p>
+        <ul>
+            <li><strong>Scope:</strong> Automated dispensing cabinets; robotic phlebotomy guides.</li>
+            <li><strong>Impact:</strong> Reduced medication errors; standardized sample volumes.</li>
+            <li><strong>Value Driver:</strong> Patient safety and liability reduction.</li>
+        </ul>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="glass-card">
+        <h2>Financial Impact Visualization</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 5-Year Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (in Millions)',
+                data: [-1.5, 0.2, 2.1, 4.5, 7.2], // Negative in Year 1 due to CapEx
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 5,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings (CapEx Recovery)' },
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Manual vs Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Current (Manual)', 'Proposed (Robotics)'],
+            datasets: [{
+                label: 'Daily Sample Capacity',
+                data: [50000, 75000],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.6)', // Grey for Manual
+                    'rgba(124, 58, 237, 0.8)'   // Purple for Robotic
+                ],
+                borderColor: [
+                    '#94a3b8',
+                    '#7c3aed'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Daily Throughput Capacity' },
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
