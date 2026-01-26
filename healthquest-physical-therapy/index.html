@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthQuest Robotics Research Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a78bfa;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #c4b5fd;
+            margin-top: 20px;
+        }
+        p, li {
+            color: #cbd5e1;
+            font-size: 1rem;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a78bfa;
+            margin-top: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
+            margin: 40px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li::before {
+            content: "•";
+            color: #7c3aed;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        th {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: rgba(124, 58, 237, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header glass-card">
+            <div class="logo">OPEN DROIDS</div>
+            <h1>HealthQuest Physical Therapy</h1>
+            <p style="color: #a78bfa; margin-top: 10px;">Robotics & Automation Research Portfolio</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Dashboard</h2>
+            <p style="margin-bottom: 20px;">Key performance indicators and projected returns for robotics implementation pathways.</p>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">$1.3M</div>
+                    <div class="metric-label">Annual Net Benefit (Pathway A)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">6-9 Months</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+15%</div>
+                    <div class="metric-label">Therapist Utilization Uplift</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$6-7M</div>
+                    <div class="metric-label">5-Year Cumulative Net</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>HealthQuest Physical Therapy is a multi-site outpatient rehabilitation provider focused on orthopedic, neurological, and sports medicine recovery. The company operates across a dense suburban network, handling high-volume patient throughput with a mix of physical therapists, assistants, and aides. The primary operational bottlenecks are patient transport logistics, equipment sanitation between sessions, and high-intensity rehabilitation consistency.</p>
+            <p>Robotics and automation offer three primary pathways: (1) Automated patient transfer and mobility assistance to reduce therapist physical strain and increase treatment time; (2) Automated sanitation and inventory management for high-touch equipment; and (3) AI-driven scheduling and clinical workflow optimization. The strongest ROI driver is improved therapist utilization and patient throughput, enabling incremental annual margin with rapid payback periods.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <h3>Model</h3>
+            <p>Outpatient physical therapy, sports rehabilitation, and post-operative recovery delivered via licensed therapists in clinic-based settings.</p>
+            
+            <h3>Scale</h3>
+            <p>Estimated 15–20 clinic locations, 50–75 therapists, 100–150 daily patient visits per high-volume site.</p>
+            
+            <h3>Partnerships</h3>
+            <p>Referral networks with local orthopedic surgeons, sports medicine physicians, and workers' compensation insurers.</p>
+            
+            <h3>Economics</h3>
+            <p>Blended revenue per visit ~$125–175; annual revenue estimated at ~$25–40M.</p>
+            
+            <p>Operational bottlenecks are primarily in patient mobilization (lifting/transfer), equipment turnover time, and scheduling efficiency, making HealthQuest ideal for physical automation and workflow robotics.</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <h3>Pathway A – Patient Mobility & Transfer Robotics (Highest Value)</h3>
+            <p><strong>Scope:</strong> Semi-autonomous patient transfer devices, robotic exoskeletons for gait training, and ceiling-mounted lifts for safe patient handling.</p>
+            <p><strong>Key levers:</strong> Reduced physical strain on therapists (lower injury rates and workers' comp claims). Faster patient setup and transfer between modalities (treadmill, mat, parallel bars). Consistent, high-repetition gait training via robotic assistance.</p>
+            <p><strong>Impact (mid-case):</strong> Therapist time reallocated from manual transfer to active treatment (+10–15% clinical time). 20–30% reduction in therapist injury-related absenteeism. 10–15% increase in daily patient visits per therapist.</p>
+
+            <h3>Pathway B – Automated Sanitation & Equipment Management (High Efficiency)</h3>
+            <p><strong>Scope:</strong> UV-C light disinfection robots for treatment rooms, automated equipment tracking via RFID, and robotic delivery carts for moving weights/resistance bands between stations.</p>
+            <p><strong>Benefits:</strong> Reduced downtime between patient visits (sanitation cycle time). Lower supply costs via precise inventory tracking. Consistent adherence to infection control standards.</p>
+            <p><strong>Impact:</strong> 15–20% reduction in room turnover time. 5–10% reduction in supply waste.</p>
+
+            <h3>Pathway C – AI-Driven Scheduling & Clinical Workflow (Complementary)</h3>
+            <p><strong>Scope:</strong> AI algorithmic software for dynamic scheduling, predicting no-shows, and optimizing therapist assignment based on acuity and specialty.</p>
+            <p><strong>Benefits:</strong> Higher utilization of premium time slots (early morning/late evening). Reduced no-show rates via proactive reminders and rescheduling. Balanced caseloads to prevent burnout.</p>
+            <p><strong>Impact:</strong> 5–8% increase in overall clinic utilization. Improved patient satisfaction and retention.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Model – Pathway A (Selected)</h2>
+            <p><strong>Network baseline:</strong> 10 high-volume clinics × 10 therapists × 12 visits/day × 250 days ≈ 30,000 visits/year (high-volume subset). Blended revenue ~$150/visit mid-case.</p>
+            <p><strong>Automation scenario:</strong> Utilization uplift to 13.5 visits/day → +10,125 incremental visits/year across 10 clinics. Incremental revenue: ~$1.5M/year. Operating savings: ~$200k/year (reduced injury costs, retention, overtime). Platform cost (hardware + SaaS + training): ~$400k/year (capital amortized over 5 years).</p>
+            <p><strong>Result:</strong> Net incremental benefit: ~$1.3M/year. Payback: 6–9 months; 5-year cumulative net ~$6–7M.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Comparative View of Pathways</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: Mobility Robotics</th>
+                        <th>Pathway B: Sanitation Robotics</th>
+                        <th>Pathway C: AI Scheduling</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Scope</td>
+                        <td>All clinics, high-volume sites first</td>
+                        <td>All clinics</td>
+                        <td>All clinics</td>
+                    </tr>
+                    <tr>
+                        <td>Main Value Driver</td>
+                        <td>Therapist utilization & safety</td>
+                        <td>Turntime reduction & supply savings</td>
+                        <td>Utilization & noshow reduction</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Benefit (Mid)</td>
+                        <td>~$1.3M</td>
+                        <td>~$300K</td>
+                        <td>~$500K</td>
+                    </tr>
+                    <tr>
+                        <td>Payback</td>
+                        <td>6–9 Months</td>
+                        <td>4–6 Months</td>
+                        <td>1–3 Months (Software)</td>
+                    </tr>
+                    <tr>
+                        <td>Risk</td>
+                        <td>Low–Moderate</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <p><strong>Year 1 – Pilot Pathway B & C</strong></p>
+            <ul>
+                <li>Deploy UV-C sanitation robots and RFID inventory tracking in 2 flagship clinics.</li>
+                <li>Implement AI scheduling module across network.</li>
+                <li>Measure room turnover reduction and no-show decrease.</li>
+            </ul>
+
+            <p><strong>Year 2 – Pathway A Pilot & Scale</strong></p>
+            <ul>
+                <li>Introduce patient transfer robots and ceiling lifts in 3 high-volume orthopedic clinics.</li>
+                <li>Train therapists on exoskeleton-assisted gait training.</li>
+                <li>Scale successful pilots to 10 clinics if injury rates drop and throughput increases.</li>
+            </ul>
+
+            <p><strong>Year 3 – Network-Wide Expansion</strong></p>
+            <ul>
+                <li>Roll out mobility robotics to remaining clinics.</li>
+                <li>Integrate data from all systems into a central dashboard for continuous optimization.</li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h2>Strategic Positioning</h2>
+            <p>Executing this roadmap positions HealthQuest as a <strong>tech-forward rehabilitation network</strong>, enhancing therapist retention, patient safety, and clinical outcomes. The integration of physical automation with AI-driven workflow management differentiates HealthQuest in a competitive outpatient PT market, attracting payer partnerships and direct-to-employer contracts for occupational health and sports performance.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Interactive Charts</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 5-Year Cumulative Savings Line Chart
+        const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+        new Chart(savingsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($M)',
+                    data: [1.3, 2.6, 3.9, 5.2, 6.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointHoverBackgroundColor: '#7c3aed',
+                    pointHoverBorderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e2e8f0', font: { family: 'Inter' } }
+                    },
+                    title: {
+                        display: true,
+                        text: '5-Year Cumulative Savings (Pathway A)',
+                        color: '#ffffff',
+                        font: { size: 16, family: 'Inter', weight: 'bold' }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#a78bfa' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#a78bfa' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Manual vs Robotic Throughput Bar Chart
+        const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+        new Chart(throughputCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Manual System', 'Robotic Assisted'],
+                datasets: [{
+                    label: 'Visits per Therapist per Day',
+                    data: [12, 13.5],
+                    backgroundColor: [
+                        'rgba(203, 213, 225, 0.6)',
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        '#cbd5e1',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e2e8f0', font: { family: 'Inter' } }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Daily Throughput Comparison (High-Volume Site)',
+                        color: '#ffffff',
+                        font: { size: 16, family: 'Inter', weight: 'bold' }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#a78bfa' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: '#a78bfa' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
