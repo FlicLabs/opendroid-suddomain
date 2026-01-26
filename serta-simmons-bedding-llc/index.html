@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Automation Report: Serta Simmons Bedding LLC</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --accent-blue: #38bdf8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Containers */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            margin-top: 15px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Dashboard Elements */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathway Tabs */
+        .pathways {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        /* Roadmap */
+        .timeline {
+            position: relative;
+            border-left: 2px solid var(--glass-border);
+            margin-left: 10px;
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media(min-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header-section">
+            <h1>Automation Strategy Report</h1>
+            <div class="meta-info">
+                <span>Entity: Serta Simmons Bedding LLC</span>
+                <span>Prepared by: Open Droids</span>
+                <span>Date: October 2023</span>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Serta Simmons Bedding LLC is positioned to lead the sleep sector through Industry 4.0 adoption. The strategic vision focuses on flexible manufacturing capable of handling "Mass Customization"—producing personalized mattresses at mass-production speeds. By integrating semi-autonomous robotic cells, SSB can transition from linear manual processes to discrete smart manufacturing, ensuring resilience against labor shortages and optimizing supply chain logistics.</p>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">20-30%</div>
+                <div class="metric-label">Target OEE Increase</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-label">Max Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$60k-$120k</div>
+                <div class="metric-label">Est. CAPEX per Cell</div>
+            </div>
+        </div>
+
+        <!-- Organizational Profile -->
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <h3>Production Scale & Locations</h3>
+            <p>Operating as a high-volume discrete manufacturer, SSB maintains major hubs in:</p>
+            <ul>
+                <li><strong>Wayne, PA:</strong> Strategic Corporate HQ</li>
+                <li><strong>Athens/Newnan, GA:</strong> Primary high-volume manufacturing</li>
+                <li><strong>CRE Plants (West Coast/South):</strong> Specialized and contract manufacturing</li>
+            </ul>
+            <h3>Current Manufacturing Process</h3>
+            <p>SSB utilizes a linear Discrete Manufacturing flow. While some legacy automation exists (quilting), the process relies heavily on manual material handling and assembly. This creates bottlenecks where machine speed exceeds human throughput, specifically in foam layering and end-of-line palletizing.</p>
+        </div>
+
+        <!-- Robotics Opportunity Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathways">
+                <div class="pathway-item">
+                    <h3>Pathway A: Cobots</h3>
+                    <p><strong>Focus:</strong> Safety & Precision</p>
+                    <p><strong>Application:</strong> Machine tending for presses and assistant roles in mattress assembly (layer positioning). Force-sensing cobots work alongside humans without caging.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway B: AMRs</h3>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                    <p><strong>Application:</strong> Autonomous transport of raw materials (foam rolls, springs) to line-side. Reduces operator walking time and enables Just-in-Time delivery.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway C: End-of-Line</h3>
+                    <p><strong>Focus:</strong> Throughput & Yield</p>
+                    <p><strong>Application:</strong> High-speed robotic palletizing and AI-driven visual inspection. Eliminates ergonomic injuries and reduces shipping defects.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Charts -->
+        <div class="glass-card">
+            <h2>Financial Analysis & Projections</h2>
+            <div class="charts-grid">
+                <!-- Chart 1: Cost Savings -->
+                <div>
+                    <h3>5-Year Cumulative Savings</h3>
+                    <p>Projection based on labor reallocation, scrap reduction, and OEE gains.</p>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <!-- Chart 2: Output Comparison -->
+                <div>
+                    <h3>Output Comparison (Units/Hour)</h3>
+                    <p>Manual process vs. Cobot-assisted workflows.</p>
+                    <div class="chart-container">
+                        <canvas id="outputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap (Year 1 - 5)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year-badge">Year 1</span>
+                    <strong>Assessment & Pilot</strong>
+                    <p>Time-motion studies, deployment of Pilot Pathway A (Cobots) for foam layering. Establish baseline OEE.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 2</span>
+                    <strong>Material Handling (AMRs)</strong>
+                    <p>Standardize AMR deployment for line-side replenishment. Reduce internal logistics lead time by 30%.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 3</span>
+                    <strong>End-of-Line Automation</strong>
+                    <p>Roll out Pathway C (Robotic Palletizing & Vision Inspection) across primary hubs.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 4</span>
+                    <strong>Digital Twin & IoT</strong>
+                    <p>Implement predictive maintenance sensors. Create digital twins for simulating changeovers.</p>
+                </div>
+                <div class="timeline-item">
+                    <span class="year-badge">Year 5</span>
+                    <strong>Full Autonomy</strong>
+                    <p>AI-optimized "Lights Out" manufacturing capability for standard models. Fully flexible custom assembly lines.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Confidential: Internal Use Only | Open Droids Industrial Research Division</p>
+        </footer>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Production Cost Savings (Line Chart)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.2, 1.1, 2.5, 4.2, 6.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#38bdf8',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs. Cobot-Assisted Output (Bar Chart)
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Foam Layering', 'Spring Insert', 'Ticking Encasement', 'Palletizing'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [25, 30, 28, 15],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Hr)',
+                        data: [45, 50, 48, 40],
+                        backgroundColor: 'rgba(56, 189, 248, 0.6)',
+                        borderColor: '#38bdf8',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
