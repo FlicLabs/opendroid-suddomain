@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Automation Report: Onto Innovation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            margin-top: 20px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-item {
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: absolute;
+            left: -7px;
+            top: 5px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .section-highlight {
+            background: rgba(124, 58, 237, 0.05);
+            border-left: 3px solid var(--accent);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="glass-card">
+        <h1>Automation Strategic Report</h1>
+        <p style="font-size: 1.1rem; color: var(--accent);">Onto Innovation: Smart Manufacturing Integration</p>
+        <div class="section-highlight">
+            <strong>Executive Vision:</strong> Transitioning semiconductor equipment manufacturing to Industry 4.0 standards through precision robotics, AI integration, and autonomous logistics.
+        </div>
+    </div>
+
+    <!-- KPI Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">20-30%</span>
+            <span class="metric-label">Target OEE Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">18 Mo</span>
+            <span class="metric-label">Max Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$120k</span>
+            <span class="metric-label">Est. CAPEX Per Cell</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">5 Yr</span>
+            <span class="metric-label">Full Maturity Roadmap</span>
+        </div>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Manufacturing Type</h3>
+                <p>Primarily <strong>Discrete Manufacturing</strong> (High-mix, low-to-medium volume). Specialized capital equipment assembly requiring precise optical integration and rigorous calibration.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Key Locations</h3>
+                <ul>
+                    <li>Wilmington, MA (Optical & Assembly)</li>
+                    <li>Santa Clara, CA (R&D & HQ)</li>
+                    <li>Vilnius, Lithuania (Optical Coating & Sub-assembly)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-bottom: 20px;">
+            <h3 style="color: #fff;">A. Collaborative Robots (Cobots)</h3>
+            <p><strong>Focus:</strong> Machine Tending & Assembly</p>
+            <p>Deploy 6-axis cobots with force feedback for handling fragile optical components. Improves repeatability in screwdriving and lens alignment while maintaining safe shared workspaces with technicians.</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h3 style="color: #fff;">B. Autonomous Mobile Robots (AMRs)</h3>
+            <p><strong>Focus:</strong> Material Transport & WIP Flow</p>
+            <p>Replace manual forklifts for sub-assembly movement. Integrates with MES for JIT line-side replenishment, reducing technician walking time by ~40% and minimizing high-value component damage.</p>
+        </div>
+
+        <div>
+            <h3 style="color: #fff;">C. Automated End-of-Line</h3>
+            <p><strong>Focus:</strong> Palletizing & Quality Inspection</p>
+            <p>Gantry robots for heavy system crating combined with Machine Vision for final defect detection. Ensures shipping integrity and automates serial verification.</p>
+        </div>
+    </div>
+
+    <!-- Financial Model -->
+    <div class="glass-card">
+        <h2>Financial Model</h2>
+        <div class="section-highlight">
+            <p><strong>Estimated CAPEX:</strong> $60,000 - $120,000 per robotic cell (Semiconductor-grade standards).</p>
+            <p><strong>Payback Target:</strong> &lt; 18 months via labor reallocation (techs moved to calibration) and scrap reduction (optics damage).</p>
+        </div>
+        <div class="chart-container">
+            <canvas id="costSavingsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Performance Comparison -->
+    <div class="glass-card">
+        <h2>Performance Analysis</h2>
+        <p>Comparative throughput: Manual Assembly vs. Cobot-Assisted Assembly for repetitive sub-assembly tasks.</p>
+        <div class="chart-container">
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (Year 1 - 5)</h2>
+        
+        <div class="roadmap-item">
+            <div class="year-label">Year 1: Foundation & Pilot</div>
+            <p><strong>Focus:</strong> High-impact pain points (Optical Assembly).</p>
+            <p><strong>Action:</strong> Pilot Cobot cells & initial AMR fleet deployment. Validate safety in mixed environments.</p>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-label">Year 2: Expansion</div>
+            <p><strong>Focus:</strong> Scale successful pilots.</p>
+            <p><strong>Action:</strong> Expand AMR logistics. Deploy End-of-Line automation. Begin MES integration.</p>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-label">Year 3: Optimization</div>
+            <p><strong>Focus:</strong> Data & AI.</p>
+            <p><strong>Action:</strong> AI-driven visual inspection. Autonomous quality sampling. 20% OEE target.</p>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-label">Year 4: Full Ecosystem</div>
+            <p><strong>Focus:</strong> Flexibility & Reconfiguration.</p>
+            <p><strong>Action:</strong> Reconfigurable cells for new product variants. "Lights Out" sub-assembly.</p>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-label">Year 5: Autonomy</div>
+            <p><strong>Focus:</strong> Industry 4.0 Maturity.</p>
+            <p><strong>Action:</strong> Digital Twin simulation. Fully autonomous material flow. &lt;18mo ROI on all investments.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+        Generated by Open Droids Consultation & Research Agent | Industrial Automation & Smart Manufacturing
+    </div>
+</div>
+
+<script>
+    // 5-Year Cumulative Production Cost Savings
+    const ctxCost = document.getElementById('costSavingsChart').getContext('2d');
+    new Chart(ctxCost, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [75000, 250000, 600000, 1100000, 1800000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Manual vs Cobot Assisted Output
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Optical Alignment', 'Sub-Assembly', 'Final Testing'],
+            datasets: [
+                {
+                    label: 'Manual (Units/Hr)',
+                    data: [4, 6, 3],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [6.5, 9.5, 5],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
