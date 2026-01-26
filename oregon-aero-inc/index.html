@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oregon Aero Inc. Robotics Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --purple: #7c3aed;
+            --electric-blue: #0ea5e9;
+            --orange: #f97316;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #1e1b4b, var(--bg-dark));
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-main);
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--electric-blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--orange);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h3 {
+            color: var(--electric-blue);
+            font-size: 1.2rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Metrics */
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card.blue {
+            background: rgba(14, 165, 233, 0.15);
+            border-color: var(--electric-blue);
+        }
+
+        .metric-card.orange {
+            background: rgba(249, 115, 22, 0.15);
+            border-color: var(--orange);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            height: 300px;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--orange);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            border-left: 2px solid var(--purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--electric-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--electric-blue);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--orange);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .metrics-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>OREGON AERO INC.</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted);">Strategic Robotics & Automation Research Report</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>EXECUTIVE SUMMARY</h2>
+        <p>This report presents a high-level vision for integrating robotic automation into Oregon Aero Inc.'s operations. The strategic shift focuses on deploying autonomous systems for cabin cleaning, UV-C disinfection, exterior washing, and AI-powered inspections. By adopting these technologies, Oregon Aero aims to standardize hygiene, optimize turnaround times, and significantly reduce operational expenditures over a five-year horizon.</p>
+    </div>
+
+    <!-- Organizational Profile & Financial Dashboard -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>ORGANIZATIONAL PROFILE</h2>
+            <p><strong>Hubs:</strong> PDX (Primary), EUG (Secondary)</p>
+            <p><strong>Fleet Composition:</strong></p>
+            <ul>
+                <li>Regional Jets: 30 Units</li>
+                <li>Turboprops: 15 Units</li>
+            </ul>
+            <p><strong>Current Challenge:</strong> Manual labor dependency causing bottlenecks in turnaround times and variable cleaning quality.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+            <h2>FINANCIAL DASHBOARD</h2>
+            <div class="metrics-container">
+                <div class="metric-card blue">
+                    <span class="metric-label">CAPEX Per Unit</span>
+                    <span class="metric-value">$75k - $150k</span>
+                </div>
+                <div class="metric-card orange">
+                    <span class="metric-label">OPEX Reduction</span>
+                    <span class="metric-value">35-45%</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Payback Period</span>
+                    <span class="metric-value">&lt; 24 Mos</span>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Financial projections based on current labor market rates and efficiency gains.</p>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="card">
+        <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Pathway A: Autonomous Cabin Cleaning</h3>
+                <p>Robots vacuuming and sanitizing cabins during short turnarounds.</p>
+            </div>
+            <div>
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Automated UV-C light cycles to eliminate pathogens post-cleaning.</p>
+            </div>
+            <div>
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated systems for fuselage cleaning and aerodynamic maintenance.</p>
+            </div>
+            <div>
+                <h3>Pathway D: AI Inspection Bots</h3>
+                <p>Drones and crawlers for structural integrity and damage detection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="card">
+        <h2>PERFORMANCE ANALYTICS</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Cumulative Savings (5 Years)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h3>Labor Hour Redistribution</h3>
+            <div class="chart-wrapper" style="height: 250px; display: flex; justify-content: center;">
+                <div style="width: 250px;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>IMPLEMENTATION ROADMAP</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">Year 1: Foundation</div>
+                <p>Pilot deployment of 2 Cabin Cleaning Robots and 1 UV-C unit at PDX. Baseline data collection.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 2: Interior Scaling</div>
+                <p>Expand cabin fleet to 40% coverage. Integrate AI Inspection Bots for pre-flight checks.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 3: Exterior Automation</div>
+                <p>Install first Exterior Washing System. Full fleet UV-C coverage.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 4: Hub Expansion</div>
+                <p>Replicate protocols at EUG hub. Deploy mobile exterior units.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 5: Optimization</div>
+                <p>System-wide integration. Predictive maintenance synchronization. Achieve 45% OPEX reduction.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Configuration for colors
+    const colorPalette = {
+        purple: '#7c3aed',
+        blue: '#0ea5e9',
+        orange: '#f97316',
+        text: '#f8fafc',
+        grid: 'rgba(255, 255, 255, 0.1)'
+    };
+
+    // Chart 1: Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 650000, 1400000, 2300000, 3500000],
+                borderColor: colorPalette.blue,
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: colorPalette.purple,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    grid: { color: colorPalette.grid },
+                    ticks: { color: colorPalette.text }
+                },
+                x: {
+                    grid: { color: colorPalette.grid },
+                    ticks: { color: colorPalette.text }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Disinfection', 'Exterior Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [4, 2, 8, 6],
+                    backgroundColor: 'rgba(249, 115, 22, 0.6)',
+                    borderColor: colorPalette.orange,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [1.5, 0.5, 3, 2],
+                    backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                    borderColor: colorPalette.purple,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: colorPalette.text } } },
+            scales: {
+                y: {
+                    grid: { color: colorPalette.grid },
+                    ticks: { color: colorPalette.text }
+                },
+                x: {
+                    grid: { color: colorPalette.grid },
+                    ticks: { color: colorPalette.text }
+                }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution Pie Chart
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Direct Cleaning', 'Supervision/Ops', 'Maintenance', 'Reallocation'],
+            datasets: [{
+                data: [35, 25, 20, 20],
+                backgroundColor: [
+                    colorPalette.blue,
+                    colorPalette.purple,
+                    colorPalette.orange,
+                    '#64748b'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { 
+                    position: 'right', 
+                    labels: { color: colorPalette.text, boxWidth: 12 } 
+                } 
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
