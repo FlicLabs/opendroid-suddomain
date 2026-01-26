@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Coupling: Industry 4.0 Strategy Report</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --border-color: rgba(124, 58, 237, 0.3);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --glow: rgba(124, 58, 237, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(circle at 15% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.1) 0%, transparent 25%);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--glow);
+            border-color: var(--accent);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--glow);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .section-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Timeline Roadmap */
+        .roadmap-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .section-split {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="glass-card">
+            <h1>PT COUPLING</h1>
+            <p style="font-size: 1.1rem;">Strategic Automation & Industry 4.0 Roadmap</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Executive Report | Prepared by Open Droids Consultation</p>
+        </header>
+
+        <!-- Production Dashboard Metrics -->
+        <section class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <span class="metric-value">18mo</span>
+                <span class="metric-label">Target Payback Period</span>
+            </div>
+            <div class="glass-card metric-card">
+                <span class="metric-value">+25%</span>
+                <span class="metric-label">Projected OEE Increase</span>
+            </div>
+            <div class="glass-card metric-card">
+                <span class="metric-value">$90k</span>
+                <span class="metric-label">Avg. CAPEX per Cell</span>
+            </div>
+        </section>
+
+        <!-- Executive Summary & Profile -->
+        <div class="section-split">
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p>The transition to Industry 4.0 for PT Coupling represents a shift toward a "Flexible Factory" model. By integrating smart automation and modular robotics, the facility aims to decouple production volume from labor constraints. The core objective is digitizing the production floor to achieve real-time visibility, reduce waste, and elevate human operators from manual labor to oversight roles, ensuring resilience in a high-mix environment.</p>
+            </div>
+            <div class="glass-card">
+                <h2>Organizational Profile</h2>
+                <ul>
+                    <li><strong>Manufacturing Type:</strong> Discrete Manufacturing</li>
+                    <li><strong>Strategy:</strong> High-Mix / Low-Volume (Custom Couplings)</li>
+                    <li><strong>Processes:</strong> Raw Material -> CNC/Heat Treat -> Assembly -> QC</li>
+                    <li><strong>Current State:</strong> Manual-heavy; susceptible to ergonomic risks and variability.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="section-split">
+                <div>
+                    <h3>Pathway A: Cobot Machine Tending</h3>
+                    <p><strong>Focus:</strong> Safety & Precision</p>
+                    <p>Deploy 6-axis cobots for CNC loading/unloading and assembly assistance. Operates safely alongside humans without caging.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: AMR Material Transport</h3>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                    <p>Autonomous Mobile Robots for JIT delivery of raw materials and WIP transport, eliminating bottlenecks.</p>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <h3>Pathway C: End-of-Line Automation</h3>
+                <p><strong>Focus:</strong> Throughput & Yield</p>
+                <p>Automated palletizing and 3D vision inspection to guarantee 100% quality verification and rapid shipping.</p>
+            </div>
+        </div>
+
+        <!-- Financial Model Visuals -->
+        <div class="section-split">
+            <div class="glass-card">
+                <h2>Financial Model: CAPEX & OPEX</h2>
+                <ul>
+                    <li><strong>Unit Cost:</strong> $60k - $120k per robotic cell.</li>
+                    <li><strong>OPEX Impact:</strong> Target 20-30% OEE increase via reduced downtime and scrap.</li>
+                    <li><strong>Payback:</strong> Achieved via labor reallocation to high-value tasks and scrap reduction.</li>
+                </ul>
+                <div style="margin-top:20px; height: 200px;">
+                    <canvas id="manualVsCobotChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <p>Projected financial impact of full automation rollout, factoring in labor reallocation, scrap reduction, and increased throughput.</p>
+                <div style="margin-top:20px; height: 200px;">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 1: Pilot & Foundation</span>
+                <p>Process mapping, deployment of Pathway A (Cobot Tending), workforce training, and KPI benchmarking.</p>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 2: Expansion & Integration</span>
+                <p>Roll out Pathway C (End-of-Line), IoT sensor integration for predictive maintenance on CNCs.</p>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 3: Logistics & Flow</span>
+                <p>Deployment of Pathway B (AMRs), connecting WMS and MES for autonomous material handling.</p>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 4: Full Connectivity (Industry 4.0)</span>
+                <p>Digital Twin implementation for virtual process simulation and optimization.</p>
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 5: Autonomy & AI</span>
+                <p>AI-driven closed-loop quality control and "Lights Out" autonomous shifts for standard orders.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Manual vs Cobot Assisted Output
+        const ctx1 = document.getElementById('manualVsCobotChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Machine Tending', 'Assembly', 'Packaging', 'Palletizing'],
+                datasets: [{
+                    label: 'Manual Output (Units/Hr)',
+                    data: [12, 15, 20, 8],
+                    backgroundColor: 'rgba(148, 163, 184, 0.2)',
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Cobot-Assisted Output (Units/Hr)',
+                    data: [18, 22, 35, 16],
+                    backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: 5-Year Cumulative Savings
+        const ctx2 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 180000, 450000, 850000, 1400000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: (context) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                        gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+                        gradient.addColorStop(1, 'rgba(124, 58, 237, 0)');
+                        return gradient;
+                    },
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
