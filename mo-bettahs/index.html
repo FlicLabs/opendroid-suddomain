@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mo' Bettahs Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(124, 58, 237, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #c4b5fd;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        /* Charts Container */
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(124, 58, 237, 0.15);
+            color: #c4b5fd;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .pathway-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .pathway-item strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .roadmap-timeline {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .roadmap-year {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .roadmap-year::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .roadmap-year h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <header class="glass-card" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1>Open Droids</h1>
+            <p style="margin:0; font-size: 1.2rem; color: #a78bfa;">Strategic Robotics Consultation</p>
+        </div>
+        <div style="text-align: right;">
+            <h2 style="border: none; margin: 0; font-size: 1.5rem;">Mo' Bettahs</h2>
+            <span class="tag">Hospitality & Automation</span>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Executive Summary & Profile</h2>
+            <span class="tag">Overview</span>
+        </div>
+        <p style="font-size: 1.1rem;">
+            Mo' Bettahs stands at the intersection of high-volume fast-casual dining and the next generation of labor automation. The strategy focuses on creating a hybrid ecosystem where robotic systems handle repetitive tasks (frying, bussing, order taking), allowing human staff to elevate the guest experience. This approach addresses critical labor shortages while maximizing throughput and consistency in the Hawaiian plate lunch segment.
+        </p>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Service Model</div>
+                <div class="metric-value" style="font-size: 1.5rem;">Fast-Casual</div>
+                <div style="color: #64748b;">Counter-Service Hybrid</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Target Cuisine</div>
+                <div class="metric-value" style="font-size: 1.5rem;">Hawaiian</div>
+                <div style="color: #64748b;">Katsu & Teriyaki Focus</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Deployment Type</div>
+                <div class="metric-value" style="font-size: 1.5rem;">Hybrid</div>
+                <div style="color: #64748b;">FOH + BOH Integration</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Financial Model</h2>
+            <span class="tag">ROI Analysis</span>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Estimated CAPEX</div>
+                <div class="metric-value">$50k - $100k</div>
+                <div style="color: #64748b;">Per Location (Hybrid)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Savings</div>
+                <div class="metric-value">15-25%</div>
+                <div style="color: #64748b;">FOH Cost Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 14 Mo</div>
+                <div style="color: #64748b;">Via Efficiency & Savings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Robotics Opportunity Pathways</h2>
+            <span class="tag">Strategic Verticals</span>
+        </div>
+        <div class="pathway-list">
+            <div class="pathway-item">
+                <strong>Pathway A: Front-of-House Serving Robots</strong>
+                <p>Autonomous bussing and runners to reduce physical strain on staff and increase table turnover rates during peak lunch hours.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway B: Back-of-House Automated Frying/Grilling</strong>
+                <p>Robotic arms for Katsu and chicken frying. Ensures perfect consistency, reduces oil waste, and improves kitchen safety.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway C: AI-Driven Kiosks & Voice Agents</strong>
+                <p>Self-service ordering for visual customization and AI voice agents for drive-thru accuracy and upselling.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Dashboard Section -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Hospitality ROI Dashboard</h2>
+            <span class="tag">5-Year Projection</span>
+        </div>
+        <div class="charts-wrapper">
+            <!-- Chart 1: Cumulative Savings -->
+            <div class="chart-card">
+                <h3 style="font-size: 1rem; margin-bottom: 10px; color: #cbd5e1;">Cumulative Labor Cost Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <!-- Chart 2: Table Turnover -->
+            <div class="chart-card">
+                <h3 style="font-size: 1rem; margin-bottom: 10px; color: #cbd5e1;">Table Turnover Rate Impact</h3>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <div class="section-header">
+            <h2>Implementation Roadmap</h2>
+            <span class="tag">Year 1 - Year 5</span>
+        </div>
+        <div class="roadmap-timeline">
+            <div class="roadmap-year">
+                <h3>Year 1: Pilot & Integration</h3>
+                <p>Deploy AI Kiosks and pilot 1 BOH Frying station. Data collection on upselling metrics and kitchen throughput.</p>
+            </div>
+            <div class="roadmap-year">
+                <h3>Year 2: Expansion</h3>
+                <p>Scale BOH robots to 20% of fleet. Introduce FOH bussing robots in high-traffic locations. Implement AI Voice Agents.</p>
+            </div>
+            <div class="roadmap-year">
+                <h3>Year 3: Standardization</h3>
+                <p>All new builds are "Robotics Ready." Full integration of data systems. Focus on Menu Engineering via robot data.</p>
+            </div>
+            <div class="roadmap-year">
+                <h3>Year 4: Optimization</h3>
+                <p>Predictive maintenance integration. Software upgrades for energy efficiency and cooking precision.</p>
+            </div>
+            <div class="roadmap-year">
+                <h3>Year 5: Maturity</h3>
+                <p>Full ROI realization. Staff retrained as "Robotics Coordinators." Brand positioning as high-tech hospitality leader.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-secondary); font-size: 0.8rem; padding: 20px;">
+        &copy; 2024 Open Droids. Confidential Consultation Report.
+    </footer>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Cost Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [25000, 85000, 180000, 320000, 500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#a78bfa',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate (Bar Chart)
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    const turnoverChart = new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Peak', 'Dinner Peak'],
+            datasets: [
+                {
+                    label: 'Manual (Current)',
+                    data: [4.2, 3.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [5.8, 4.8],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' },
+                    title: { display: true, text: 'Turns per Hour', color: '#64748b' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
