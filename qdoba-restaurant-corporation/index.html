@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QDOBA Robotics Strategy Report</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-deep: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-purple-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Metric Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-purple-glow) 0%, transparent 70%);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Chart Containers */
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* HTML Report Structure */
+        .report-section {
+            margin-bottom: 30px;
+        }
+
+        .pathway-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .pathway-card {
+            flex: 1 1 250px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .timeline {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .year-label {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .chart-wrapper { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none; padding-bottom: 0;">
+        <h1>QDOBA AUTOMATION STRATEGY</h1>
+        <p style="font-size: 1.2rem; color: #cbd5e1;">Future-Proofing Fast-Casual Operations</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card report-section">
+        <h2>Executive Summary</h2>
+        <p>The fast-casual sector faces a labor crisis. The strategic integration of robotics offers a path to <strong>margin protection</strong> and <strong>service scaling</strong>. For Qdoba, the vision is a hybrid model where automation handles repetitive logistics (food running, frying) while human staff pivot to high-value guest engagement. This shift ensures consistency, speed, and upsell opportunities, driving an estimated <strong>20% reduction in operational friction</strong> and securing a competitive edge in the Mexican cuisine market.</p>
+    </section>
+
+    <!-- Key Metrics Dashboard -->
+    <section class="report-section">
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">750+</span>
+                <span class="metric-label">Total Locations</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$40k</span>
+                <span class="metric-label">Max CAPEX/Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">14 Mo</span>
+                <span class="metric-label">Payback Target</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">25%</span>
+                <span class="metric-label">Labor Cost Red.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Organizational Profile -->
+    <section class="glass-card report-section">
+        <h2>Organizational Profile</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+                <h3>Service Model</h3>
+                <p>Primarily <strong>Counter Service (QSR-adjacent)</strong>. Distinct separation between FOH (expedite/dining) and BOH (grill/fry). Digital ordering is present but requires significant manual fulfillment.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h3>Cuisine & Volume</h3>
+                <p>Fast-Casual Mexican. High mix of customized orders. Peak volumes occur during lunch and dinner rushes, creating "bottlenecks" at the grill and expo line.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Opportunity Pathways -->
+    <section class="glass-card report-section">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-row">
+            <div class="pathway-card">
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 10px;">A</div>
+                <h3>FOH Serving Robots</h3>
+                <p><strong>Focus:</strong> Table Turnover & Staff Support.</p>
+                <p><strong>Impact:</strong> Autonomous carts run food to tables and bus dishes. Reduces server steps by 60%.</p>
+            </div>
+            <div class="pathway-card">
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 10px;">B</div>
+                <h3>BOH Automated Grilling</h3>
+                <p><strong>Focus:</strong> Consistency & Safety.</p>
+                <p><strong>Impact:</strong> Robotic arms manage the grill. Precise temperature control reduces waste and eliminates burn risks.</p>
+            </div>
+            <div class="pathway-card">
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 10px;">C</div>
+                <h3>AI Voice Agents</h3>
+                <p><strong>Focus:</strong> Upselling & Accuracy.</p>
+                <p><strong>Impact:</strong> Drive-thru AI suggests add-ons (guac, queso) 100% of the time, increasing average ticket size.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Model -->
+    <section class="glass-card report-section">
+        <h2>Financial Model</h2>
+        <div class="chart-wrapper">
+            <canvas id="laborSavingsChart"></canvas>
+        </div>
+        <div style="margin-top: 20px;">
+            <p><strong>CAPEX:</strong> Deployment scales from $15k (basic kiosks) to $40k (BOH automation). A typical pilot site invests ~$45k for 2 FOH robots + 1 AI kiosk.</p>
+            <p><strong>Payback Period:</strong> Through a combination of 20% labor reduction and 5% ticket increase via AI upsell, the target ROI is achieved in <strong>under 14 months</strong>.</p>
+        </div>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="glass-card report-section">
+        <h2>Implementation Roadmap</h2>
+        <div class="chart-wrapper" style="height: auto; margin-bottom: 20px;">
+            <canvas id="turnoverChart"></canvas>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="year-label">Year 1: Pilot</span>
+                <p>Deploy FOH robots in 5 corporate high-volume stores. Test AI voice agents in 50 drive-thrus.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 2: BOH Focus</span>
+                <p>Introduce automated frying stations to alleviate lunch bottlenecks. Refine software based on Year 1 data.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 3: Expansion</span>
+                <p>Scale FOH robots to 200 franchise locations. Centralized fleet management dashboard launched.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 4: Standardization</span>
+                <p>Robotics becomes standard in new store builds. Franchise financing programs introduced.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="year-label">Year 5: Hybrid Ecosystem</span>
+                <p>Human staff act as "Experience Managers." Full predictive AI staffing integration.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // 5-Year Cumulative Labor Cost Savings Line Chart
+    const ctxSavings = document.getElementById('laborSavingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1 (Pilot)', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($k)',
+                data: [85, 280, 750, 1800, 3500],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } },
+                title: { display: true, text: '5-Year Cumulative Labor Cost Savings (Scaled)', color: '#e2e8f0' }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Table Turnover Rate Bar Chart
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Traditional Service', 'Robot-Assisted Service'],
+            datasets: [{
+                label: 'Average Turns per Hour',
+                data: [2.5, 4.2],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    '#94a3b8',
+                    '#7c3aed'
+                ],
+                borderWidth: 2,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Table Turnover Rate Comparison', color: '#e2e8f0' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
