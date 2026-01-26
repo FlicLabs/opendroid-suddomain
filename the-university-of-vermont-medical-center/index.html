@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UVMMC Robotics Opportunity Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Layout Grid for Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        /* List Styling */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .phase-tag {
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>UVMMC Robotics Opportunity Portfolio</h1>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            The University of Vermont Medical Center (UVMMC) is a regional academic medical center with a strategic commitment to robotics for clinical excellence rather than labor substitution. UVMMC's robotics portfolio focuses on two primary domains: robotic-assisted rehabilitation and robotic-assisted surgery. Investments in ceiling-mounted gait systems for the Mobility Gym and multi-arm surgical platforms aim to improve patient outcomes, reduce complications, and retain complex case volume within the network. The value proposition centers on clinical differentiation, safety, and throughput efficiency, supported by academic research capabilities.
+        </p>
+    </div>
+
+    <!-- Key Metrics Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">100%</span>
+            <span class="metric-label">Surgical Precision</span>
+            <p style="font-size: 0.8rem; margin-top: 5px;">3D Visualization & Guidance</p>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">High</span>
+            <span class="metric-label">Intensity Rehab</span>
+            <p style="font-size: 0.8rem; margin-top: 5px;">Weight-Supported Gait Training</p>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">Regional</span>
+            <span class="metric-label">Referral Hub</span>
+            <p style="font-size: 0.8rem; margin-top: 5px;">Case Retention Strategy</p>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">Academic</span>
+            <span class="metric-label">Research Focus</span>
+            <p style="font-size: 0.8rem; margin-top: 5px;">UVM Engineering Partnerships</p>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="phase-tag">Pathway 1</span>
+                <h3>Robotic Rehabilitation (Mobility Gym)</h3>
+                <p><strong>Current State:</strong> Ceiling-suspended Vector systems for stroke, TBI, and Guillain-Barré patients. Recent expansion funded via philanthropy.</p>
+                <p><strong>Strategic Value:</strong></p>
+                <ul>
+                    <li>Enables high-repetition gait training impossible manually.</li>
+                    <li>Reduces staff injury risk via automated fall protection.</li>
+                    <li>Retains complex neuro-rehab cases locally.</li>
+                </ul>
+                <p><strong>ROI Consideration:</strong> Value captured through reduced Length of Stay (LOS) and avoidance of out-of-network referrals.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="phase-tag">Pathway 2</span>
+                <h3>Robotic Surgery Platforms</h3>
+                <p><strong>Current State:</strong> Multi-arm surgical suites (Urology, GYN, General) and Mako systems for joint replacement (Orthopedics).</p>
+                <p><strong>Strategic Value:</strong></p>
+                <ul>
+                    <li>Precision alignment reduces revision rates in joint replacements.</li>
+                    <li>Minimally invasive approaches shorten hospital stays.</li>
+                    <li>Essential tool for recruiting top surgical talent.</li>
+                </ul>
+                <p><strong>ROI Consideration:</strong> Justified by maintaining high-margin elective volume and reducing penalty costs under value-based care.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="phase-tag">Pathway 3</span>
+                <h3>Data-Driven Optimization</h3>
+                <p><strong>Concept:</strong> AI layers over existing robotic assets to optimize scheduling and outcome tracking.</p>
+                <p><strong>Strategic Value:</strong></p>
+                <ul>
+                    <li>Maximizes utilization of expensive capital assets.</li>
+                    <li>Generates evidence for payer negotiations.</li>
+                    <li>Positions UVMMC for clinical trials in assistive tech.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model Section -->
+    <div class="glass-card">
+        <h2>Financial Model & ROI Analysis</h2>
+        <div class="chart-container">
+            <canvas id="cumulativeChart"></canvas>
+        </div>
+        
+        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3>Rehabilitation ROI</h3>
+                <ul>
+                    <li><strong>Capital:</strong> High facility renovation cost ($500k+), offset by philanthropy.</li>
+                    <li><strong>Revenue:</strong> Indirect via case retention and bundled payment savings.</li>
+                    <li><strong>Payback:</strong> 3-5 years (Quality/Outcomes focus).</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Surgical ROI</h3>
+                <ul>
+                    <li><strong>Capital:</strong> $1M - $2M per system + service contract.</li>
+                    <li><strong>Revenue:</strong> Volume retention (1 complex case covers monthly service costs).</li>
+                    <li><strong>Payback:</strong> 12-24 months (Volume/Margin focus).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+        </div>
+        
+        <div class="timeline" style="margin-top: 20px;">
+            <div class="timeline-item">
+                <span class="phase-tag">Phase 1</span>
+                <h3>Optimization (0-12 Months)</h3>
+                <p>Implement data tracking for utilization and outcomes. Deploy scheduling software. Launch "Center of Excellence" marketing.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="phase-tag">Phase 2</span>
+                <h3>Expansion (12-36 Months)</h3>
+                <p>Expand Mobility Gym capacity if utilization >85%. Assess volume trends for surgical robots. Explore spinal/soft tissue robotics.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="phase-tag">Phase 3</span>
+                <h3>Innovation (36+ Months)</h3>
+                <p>Establish engineering research partnerships for next-gen assistive robots. Pilot logistics automation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Positioning -->
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>
+            Executing this roadmap transforms UVMMC from a traditional academic hospital into a <strong>Technology-Integrated Tertiary Care Hub</strong>.
+        </p>
+        <ul>
+            <li><strong>Clinical Leadership:</strong> Commitment to precision medicine and advanced recovery.</li>
+            <li><strong>Regional Dominance:</strong> Creates a competitive moat in high-margin service lines (Orthopedics, Neurosurgery).</li>
+            <li><strong>Academic Prestige:</strong> Attracts top faculty and residents through access to cutting-edge technology.</li>
+            <li><strong>Financial Resilience:</strong> Anchors value proposition in quality and efficiency, essential for value-based care survival.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('cumulativeChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Financial Benefit (Scaled)',
+                data: [-0.8, 0.5, 2.0, 4.2, 7.0, 10.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointRadius: 6,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0', font: { family: 'Inter' } } },
+                title: { display: true, text: '5-Year Cumulative Savings (Rehab + Surgery)', color: '#fff', font: { size: 16 } }
+            },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+            }
+        }
+    });
+
+    // Manual vs Robotic Throughput Bar Chart
+    const ctx2 = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Orthopedic Joint Replacements', 'Neuro-Rehab Sessions (Daily)', 'OR Turnover Efficiency'],
+            datasets: [
+                {
+                    label: 'Manual / Traditional',
+                    data: [100, 100, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [115, 140, 85],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } },
+                title: { display: true, text: 'Throughput Comparison (Index = 100)', color: '#fff', font: { size: 16 } }
+            },
+            scales: {
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' }, min: 0, max: 160 }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
