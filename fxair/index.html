@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fxair Robotics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 1.8rem;
+            border-bottom: var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 3rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-item {
+            border-left: 3px solid var(--accent-orange);
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        .pathway-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--accent-orange);
+        }
+
+        .roadmap-timeline {
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .roadmap-step {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .roadmap-step::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .roadmap-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>FXAIR AVIATION AUTOMATION RESEARCH</h1>
+        
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>EXECUTIVE SUMMARY</h2>
+            <p>Fxair is positioned to revolutionize its operations through robotic automation. The strategic integration of autonomous systems for cleaning, disinfection, and inspection will drive efficiency, ensure safety compliance, and reduce operational costs. This report outlines a comprehensive pathway to achieving a 45% reduction in operational expenditures through a phased five-year deployment of advanced robotics.</p>
+            
+            <!-- Financial Dashboard Metrics -->
+            <div class="metrics-container">
+                <div class="metric-card">
+                    <div class="metric-value">75k-150k</div>
+                    <div class="metric-label">CAPEX Per Unit</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">45%</div>
+                    <div class="metric-label">Max OPEX Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">24 Mo</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Organizational Profile -->
+            <div class="glass-card">
+                <h2>ORGANIZATIONAL PROFILE</h2>
+                <p><strong>Fleet Composition:</strong> 150+ Aircraft</p>
+                <p><strong>Hubs:</strong> Major International Airports</p>
+                <p><strong>Operational Model:</strong> Current manual workflows face scalability issues. Automation offers a solution to maintain high-frequency schedules while adhering to strict hygiene and safety standards.</p>
+            </div>
+
+            <!-- Financial Model -->
+            <div class="glass-card">
+                <h2>FINANCIAL MODEL</h2>
+                <p><strong>Investment Strategy:</strong> Initial CAPEX is offset by rapid ROI. Labor constitutes the primary OPEX driver; automation targets this area specifically.</p>
+                <p><strong>Savings Breakdown:</strong></p>
+                <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                    <li>• Labor Efficiency: 35-45%</li>
+                    <li>• Consumables: 15%</li>
+                    <li>• Energy/Water: 10-20%</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+            <div class="grid-2">
+                <div class="pathway-item">
+                    <h4>Pathway A: Autonomous Cabin Cleaning</h4>
+                    <p>AMRs for vacuuming and surface wiping. Optimized for tight turnarounds.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>Pathway B: UV-C Disinfection</h4>
+                    <p>Autonomous UV-C light application for pathogen neutralization without chemicals.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>Pathway C: Exterior Washing</h4>
+                    <p>Robotic crawlers for fuselage washing, reducing water usage by 40%.</p>
+                </div>
+                <div class="pathway-item">
+                    <h4>Pathway D: AI Inspection</h4>
+                    <p>Drones equipped with thermal/optical sensors for predictive maintenance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="glass-card">
+            <h2>IMPLEMENTATION ROADMAP (5-YEAR)</h2>
+            <div class="roadmap-timeline">
+                <div class="roadmap-step">
+                    <span class="roadmap-year">YEAR 1: Pilot Program</span>
+                    <p class="roadmap-desc">Deploy Pathways A & B at two primary hubs. Establish performance baselines.</p>
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">YEAR 2: Expansion</span>
+                    <p class="roadmap-desc">Scale to 50% of fleet. Introduce AI Inspection (Pathway D).</p>
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">YEAR 3: Hub Integration</span>
+                    <p class="roadmap-desc">Full deployment at primary hubs. Introduce Exterior Washing (Pathway C).</p>
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">YEAR 4: Optimization</span>
+                    <p class="roadmap-desc">Data-driven route optimization. Predictive maintenance cycles.</p>
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">YEAR 5: Standardization</span>
+                    <p class="roadmap-desc">Fleet-wide adoption. Achieve max OPEX reduction (45%).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Charts -->
+        <div class="grid-2">
+            <div class="glass-card">
+                <h2>5-YEAR CUMULATIVE SAVINGS</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>THROUGHPUT: MANUAL VS. ROBOTIC</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <h2>LABOR HOUR REDISTRIBUTION</h2>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings (Line Chart)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.5, 2.5, 6.0, 10.0, 15.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0ea5e9',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison (Bar Chart)
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Clean (min)', 'Disinfection (min)', 'Exterior Wash (min)'],
+                datasets: [
+                    {
+                        label: 'Manual',
+                        data: [45, 30, 120],
+                        backgroundColor: '#f97316',
+                    },
+                    {
+                        label: 'Robotic',
+                        data: [25, 15, 60],
+                        backgroundColor: '#0ea5e9',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Labor Redistribution (Pie Chart)
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Skilled Maintenance', 'Robot Supervision', 'Manual Cleaning', 'Quality Assurance'],
+                datasets: [{
+                    data: [30, 25, 10, 35], // Hypothetical redistribution percentages
+                    backgroundColor: [
+                        '#7c3aed', // Purple
+                        '#0ea5e9', // Blue
+                        '#f97316', // Orange
+                        '#64748b'  // Slate
+                    ],
+                    borderColor: '#0f172a',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
