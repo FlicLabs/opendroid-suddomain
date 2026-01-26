@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeauTech Robotics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--deep-space);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--electric-purple);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--aviation-orange);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card.purple {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-card.orange {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding-left: 0;
+            color: var(--text-muted);
+        }
+
+        ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        ul li:before {
+            content: "›";
+            color: var(--aviation-orange);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            border-left: 2px solid var(--electric-purple);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--sky-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--sky-blue);
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--sky-blue);
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="glass-card" style="text-align: center; border: none; background: transparent; box-shadow: none;">
+        <h1>BEAUTECH AUTOMATION STRATEGY</h1>
+        <p style="font-size: 1.2rem;">Senior Consultation & Research Report | Open Droids Aviation Division</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>BeauTech stands at the precipice of a transformative era in aviation maintenance. The integration of robotic cleaning automation represents a strategic pivot from labor-intensive manual processes to a data-driven, high-efficiency operational model. This shift promises to elevate BeauTech's brand reputation for cleanliness, enhance passenger safety, and optimize asset utilization across its fleet. By deploying specialized robotic units, BeauTech can achieve consistent, superior cleaning standards that exceed human limitations, particularly in high-frequency turnarounds. The vision is to create a seamless, autonomous workflow where aircraft are cleaned, inspected, and cleared for service with minimal downtime.</p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="glass-card">
+        <h2>Organizational Profile</h2>
+        <div class="section-grid">
+            <div>
+                <p>BeauTech operates a modern, agile fleet focused on short-to-medium-haul routes, connecting major metropolitan hubs with high-frequency service. The airline’s operational model is built on speed, reliability, and customer satisfaction, requiring rapid turnarounds (TAT) at key hub airports.</p>
+                <p>Current operational data indicates a fleet size of approximately 50 aircraft, with a primary hub presence at high-traffic international airports. The current maintenance and cleaning protocol relies heavily on manual labor, presenting challenges regarding consistency, staffing availability, and chemical exposure.</p>
+            </div>
+            <div>
+                <ul>
+                    <li>Fleet Size: ~50 Aircraft (Narrow & Wide Body)</li>
+                    <li>Primary Hubs: 2 Major International Airports</li>
+                    <li>Current Model: Manual Labor-Intensive Cleaning</li>
+                    <li>Key Challenge: Tight Turnaround Times (TAT)</li>
+                    <li>Structure: Centralized Maintenance Division</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card sky">
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">CAPEX Per Unit</div>
+            </div>
+            <div class="metric-card purple">
+                <div class="metric-value">35% - 45%</div>
+                <div class="metric-label">OPEX Reduction Target</div>
+            </div>
+            <div class="metric-card orange">
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+        
+        <!-- Chart.js Canvas for Cumulative Savings -->
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways & Comparisons -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="section-grid">
+            <div>
+                <h3>Technology Streams</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">Pathway A</div>
+                        <p><strong>Autonomous Cabin Cleaning:</strong> AMRs for vacuuming and wiping tray tables.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Pathway B</div>
+                        <p><strong>UV-C Disinfection:</strong> Chemical-free sterilization of high-touch surfaces.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Pathway C</div>
+                        <p><strong>Exterior Washing:</strong> Automated rail systems reducing water usage by 50%.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Pathway D</div>
+                        <p><strong>AI Inspection Bots:</strong> Drones detecting micro-damage and structural anomalies.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (5-Year Strategy)</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">Year 1: Pilot Phase</div>
+                <p>Deploy 5 Cabin Cleaning & 2 UV-C units at Primary Hub. Establish KPIs and IT infrastructure.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 2: Hub Expansion</div>
+                <p>Expand to Secondary Hub. Install first Exterior Washing System. Begin staff upskilling.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 3: Fleet Rollout Phase 1</div>
+                <p>Full deployment at major hubs. Introduce AI Inspection Bots for narrow-body fleet. Central command dashboard integration.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 4: Fleet Rollout Phase 2</div>
+                <p>Wide-body deployment. Secondary base washing systems. Achieve target 35% OPEX reduction.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">Year 5: Optimization</div>
+                <p>Full AI maturity. Predictive scheduling based on load factors. Focus on sustainability metrics.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Labor Redistribution -->
+    <div class="glass-card">
+        <h2>Labor Hour Redistribution Post-Automation</h2>
+        <p>Shifting manual labor to high-value supervision and maintenance roles.</p>
+        <div class="chart-container" style="height: 350px; max-width: 600px; margin: 0 auto;">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.5, 6.0, 11.0, 18.0],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0ea5e9'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs. Robotic Throughput (Bar Chart)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Cleaning', 'Disinfection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Aircraft/Day)',
+                    data: [12, 8, 2],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)', // Slate
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Aircraft/Day)',
+                    data: [24, 20, 8],
+                    backgroundColor: 'rgba(249, 115, 22, 0.7)', // Aviation Orange
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution (Pie Chart)
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Robot Supervision', 'Maintenance Tech', 'Data Analysis'],
+            datasets: [{
+                data: [20, 35, 30, 15],
+                backgroundColor: [
+                    '#94a3b8', // Slate
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Electric Purple
+                    '#f97316'  // Aviation Orange
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: '#e2e8f0' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
