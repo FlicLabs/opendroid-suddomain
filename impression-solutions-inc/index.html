@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impression Solutions Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-blue: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--electric-purple);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            background: rgba(124, 58, 237, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #a78bfa;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .chart-container { grid-template-columns: 1fr; }
+        }
+
+        h2 { color: var(--electric-purple); text-transform: uppercase; font-size: 1.2rem; margin-top: 0; }
+        p { line-height: 1.6; opacity: 0.9; }
+
+        .tag {
+            background: var(--electric-purple);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Impression Solutions Inc.</h1>
+        <p>Automation Strategy & Financial Projections</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">$75K</span>
+            <span class="metric-label">Avg. Cost Per Station</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">35%</span>
+            <span class="metric-label">Labor Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">19 Mo</span>
+            <span class="metric-label">Estimated Payback</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Target Accuracy</span>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h2>Throughput Performance</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <p><span class="tag">YEAR 1</span> Pilot Program focusing on AMR integration for toner and high-volume consumables.</p>
+        <p><span class="tag">YEAR 3</span> Expansion into AI-driven predictive slotting and full ASRS deployment for spare parts.</p>
+        <p><span class="tag">YEAR 5</span> Full autonomous orchestration of inbound/outbound logistics with zero-touch configuration zones.</p>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings (USD)',
+                data: [120000, 350000, 680000, 1100000, 1650000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Picking'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [45, 185],
+                backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
