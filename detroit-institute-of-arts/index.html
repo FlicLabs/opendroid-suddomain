@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detroit Institute of Arts - Robotics Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --accent: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .metric-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-weight: 600;">Detroit Institute of Arts</div>
+            <div style="opacity: 0.6; font-size: 14px;">Robotics & Automation Portfolio</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="glass-card">
+            <div class="metric-value">$2.5M</div>
+            <div class="metric-label">Est. Annual Savings</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-value">16 Mo</div>
+            <div class="metric-label">Average Payback</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-value">60%</div>
+            <div class="metric-label">Security Optimization</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Surveillance Efficiency (Rounds/Hr)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h3>Comparative Pathway Analysis</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Security Robotics</td>
+                    <td>Labor Efficiency</td>
+                    <td>$2,100,000</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Art Logistics</td>
+                    <td>Risk Mitigation</td>
+                    <td>$400,000</td>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Visitor Engagement</td>
+                    <td>Membership Growth</td>
+                    <td>$300,000</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Millions Saved ($)',
+                    data: [0.8, 2.5, 4.8, 7.5, 10.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Rounds per Hour',
+                    data: [1.2, 5.0],
+                    backgroundColor: ['#475569', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
