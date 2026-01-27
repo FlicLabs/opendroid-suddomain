@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snack POS | Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: #10b981; /* Green for positive */
+            margin-top: 5px;
+        }
+
+        /* Content Sections */
+        .report-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #fff;
+            margin-top: 25px;
+            font-size: 1.1rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            margin-right: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research Agent</div>
+                <h1>Snack POS Strategy</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Status</div>
+                <div style="font-weight: bold;">Executive Review</div>
+            </div>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="grid-dashboard">
+            <div class="card">
+                <span class="metric-label">Projected Labor Savings</span>
+                <div class="metric-value">22%</div>
+                <div class="metric-sub">Reduction in OpEx per location</div>
+            </div>
+            <div class="card">
+                <span class="metric-label">ROI Payback Period</span>
+                <div class="metric-value">10.5</div>
+                <div class="metric-sub">Months to break even</div>
+            </div>
+            <div class="card">
+                <span class="metric-label">Throughput Efficiency</span>
+                <div class="metric-value">1.3x</div>
+                <div class="metric-sub">Increase in table turnover</div>
+            </div>
+        </div>
+
+        <!-- Strategy Content -->
+        <div class="report-section">
+            <h2>Executive Vision</h2>
+            <p>
+                The integration of robotics into the Snack POS ecosystem represents a shift from "Service Management" to "Service Automation." 
+                By offloading high-repetition tasks (food running, frying) to autonomous units, Snack POS merchants can reallocate human capital to guest hospitality.
+            </p>
+            <div style="margin-top: 20px;">
+                <span class="badge">FOH AUTOMATION</span>
+                <span class="badge">BOH ROBOTICS</span>
+                <span class="badge">AI VOICE AGENTS</span>
+            </div>
+
+            <h3>Primary Deployment Pathways</h3>
+            <p><strong>Pathway A (FOH):</strong> Autonomous food runners handle the "last mile" of delivery, allowing servers to manage larger sections with less fatigue.</p>
+            <p><strong>Pathway B (BOH):</strong> Automated frying arms integrated with Snack KDS ensure consistent cook times and reduce hazardous labor conditions.</p>
+            <p><strong>Pathway C (AI):</strong> Voice-activated kiosks increase ticket size by 12-18% through algorithmic upselling.</p>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <!-- Line Chart: 5 Year Savings -->
+            <div class="card">
+                <span class="metric-label">5-Year Cumulative Labor Savings (USD)</span>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Bar Chart: Turnover Rate -->
+            <div class="card">
+                <span class="metric-label">Table Turnover Time (Minutes)</span>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="report-section" style="margin-top: 24px;">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.9rem;">
+                <div>
+                    <strong style="color: #fff;">Year 1</strong><br>Pilot & Integration
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 2</strong><br>Standardization
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 3</strong><br>Full Fleet Rollout
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 5</strong><br>Autonomy
+                </div>
+            </div>
+            <div style="width: 100%; height: 4px; background: var(--card-border); margin-top: 10px; position: relative;">
+                <div style="width: 25%; height: 100%; background: var(--accent-purple); box-shadow: 0 0 10px var(--accent-purple);"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+        
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [72000, 150000, 235000, 325000, 420000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradientSavings,
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { callback: function(value) { return '$' + value/1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Rate Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Minutes per Table',
+                    data: [55, 38],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
