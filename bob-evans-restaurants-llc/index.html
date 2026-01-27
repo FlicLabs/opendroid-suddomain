@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bob Evans Strategic Automation Report</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #22d3ee;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-label {
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div>
+                <div class="tag">OPEN DROIDS RESEARCH</div>
+                <h1>Bob Evans Restaurants LLC</h1>
+                <p>Strategic Automation & Robotics Feasibility Report</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="margin: 0; font-weight: bold; color: var(--text-main);">CONFIDENTIAL</p>
+                <p style="margin: 0; font-size: 0.8rem;">Generated for Senior Management</p>
+            </div>
+        </header>
+
+        <!-- ROI DASHBOARD -->
+        <div class="dashboard-grid">
+            <div class="glass-card" style="text-align: center;">
+                <div class="metric-label">Target CAPEX / Unit</div>
+                <div class="metric-value">$40k</div>
+                <p style="font-size: 0.8rem; margin: 0;">Hardware + Install</p>
+            </div>
+            <div class="glass-card" style="text-align: center;">
+                <div class="metric-label">Labor Savings</div>
+                <div class="metric-value">18%</div>
+                <p style="font-size: 0.8rem; margin: 0;">Front-of-House OPEX Reduction</p>
+            </div>
+            <div class="glass-card" style="text-align: center;">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">11 Mo</div>
+                <p style="font-size: 0.8rem; margin: 0;">Via Turn Rate & Wage Savings</p>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings (USD)</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3>Table Turnover Efficiency</h3>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RESEARCH CONTENT -->
+        <div class="glass-card">
+            <h2>01. Executive Summary</h2>
+            <p>Bob Evans represents the heart of American family dining. As the industry faces unprecedented labor shortages, the vision is not to replace the human warmth of "Farm-Fresh" hospitality, but to augment it. By integrating robotics for heavy lifting and AI for logistics, we protect the server-guest relationship.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--accent-cyan);">Pathway A: FOH Serving Robots</h3>
+                <p><strong>Goal:</strong> Increase table turns and reduce physical strain.</p>
+                <p>Implementing shelf-style AMRs (Autonomous Mobile Robots) to run food from the expo line to the dining zone. This allows servers to remain in their sections, increasing beverage sales and guest satisfaction.</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: var(--accent-cyan);">Pathway B: BOH Automated Frying</h3>
+                <p><strong>Goal:</strong> Consistency and Safety.</p>
+                <p>Automated baskets for hash browns and fried chicken products ensure consistent cook times and reduce grease-related injuries in the kitchen.</p>
+            </div>
+
+            <div>
+                <h3 style="color: var(--accent-cyan);">Pathway C: AI Voice Agents</h3>
+                <p><strong>Goal:</strong> Upselling and Order Accuracy.</p>
+                <p>Deploying AI to handle the high volume of carryout phone orders. This system never misses an upsell opportunity and frees up staff to focus on in-store guests.</p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <h3>Implementation Phase 1</h3>
+                <p><strong>Pilot Program (Year 1)</strong><br>Deploy 2 robots per store in 20 Ohio locations. Establish baseline metrics.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Implementation Phase 2</h3>
+                <p><strong>Regional Rollout (Year 2-3)</strong><br>Expansion to 150 locations. Integration of Voice AI for holiday ordering.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Implementation Phase 3</h3>
+                <p><strong>System Maturity (Year 4-5)</strong><br>Full fleet integration, Smart Kitchen communication, and advanced data analytics.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2023 Open Droids Consultation Division. All Rights Reserved.
+        </div>
+
+    </div>
+
+    <!-- Chart Configuration -->
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings (Millions)',
+                    data: [1.2, 4.5, 12.8, 28.5, 52.0],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Table Turnover Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Average Turn Time (Minutes)',
+                    data: [52, 39],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        'rgba(34, 211, 238, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        '#22d3ee'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
