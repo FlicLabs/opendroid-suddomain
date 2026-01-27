@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burial Beer Co. | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: 1px solid rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-purple);
+        }
+
+        .col-span-4 { grid-column: span 4; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-12 { grid-column: span 12; }
+
+        @media (max-width: 768px) {
+            .col-span-4, .col-span-6, .col-span-8 { grid-column: span 12; }
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-delta {
+            font-size: 0.85rem;
+            color: #10b981; /* Green */
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* TEXT SECTIONS */
+        .content-section {
+            margin-bottom: 30px;
+        }
+        
+        .content-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .content-body {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+        .roadmap-list li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .roadmap-list li::before {
+            content: "•";
+            color: var(--accent-purple);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h2>Open Droids Research</h2>
+                <h1>Burial Beer Co.</h1>
+            </div>
+            <div class="sub-header">
+                Status: Strategic Analysis<br>
+                Date: October 2023
+            </div>
+        </header>
+
+        <!-- ROI DASHBOARD -->
+        <div class="dashboard-grid">
+            <!-- Metric Cards -->
+            <div class="card col-span-4">
+                <div class="metric-label">Est. Labor Savings (Yr 1)</div>
+                <div class="metric-value">$42,500</div>
+                <div class="metric-delta">▲ 18% Efficiency Gain</div>
+            </div>
+            <div class="card col-span-4">
+                <div class="metric-label">Target Break-Even</div>
+                <div class="metric-value">12.5 Mo</div>
+                <div class="metric-delta">▼ CapEx Recovery</div>
+            </div>
+            <div class="card col-span-4">
+                <div class="metric-label">Table Turnover Lift</div>
+                <div class="metric-value">15%</div>
+                <div class="metric-delta">▲ Peak Hour Revenue</div>
+            </div>
+
+            <!-- Charts -->
+            <div class="card col-span-8">
+                <div class="metric-label">Cumulative Labor Cost Savings (5 Year Projection)</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card col-span-4">
+                <div class="metric-label">Table Turnover Rate (Minutes)</div>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT CONTENT -->
+        <div class="dashboard-grid">
+            <div class="card col-span-6">
+                <div class="content-section">
+                    <div class="content-title">Executive Vision</div>
+                    <div class="content-body">
+                        Integration of robotics at Burial Beer Co. is not about replacing the artisanal soul of the brand, but handling the logistics of volume. By automating "the carry"—moving heavy beer trays and food across large footprints—we preserve staff energy for guest education and narrative building.
+                    </div>
+                </div>
+                <div class="content-section">
+                    <div class="content-title">Robotics Opportunities</div>
+                    <div class="content-body">
+                        <strong>Pathway A (FOH):</strong> Deployment of "Runner Bots" (e.g., Servi/Pudu) to support large beer garden service.<br><br>
+                        <strong>Pathway B (BOH):</strong> Auto-lift fryers to manage burger/fry consistency during surges.<br><br>
+                        <strong>Pathway C (Digital):</strong> Integrated QR/Kiosk ordering to reduce bar line fatigue.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card col-span-6">
+                <div class="content-section">
+                    <div class="content-title">Implementation Roadmap</div>
+                    <ul class="roadmap-list content-body">
+                        <li><strong>Year 1:</strong> Pilot 2 Runner Units at South Slope HQ.</li>
+                        <li><strong>Year 2:</strong> Expand to Forestry Camp; Introduce Auto-Fryers.</li>
+                        <li><strong>Year 3:</strong> Centralized Fleet Management & POS Integration.</li>
+                        <li><strong>Year 4:</strong> 50% of food running automated across all sites.</li>
+                        <li><strong>Year 5:</strong> Predictive Supply Chain AI integration.</li>
+                    </ul>
+                </div>
+                <div class="content-section">
+                    <div class="content-title">Financial Snapshot</div>
+                    <div class="content-body">
+                        <strong>Total CapEx (Pilot):</strong> ~$41,000<br>
+                        <strong>OpEx Impact:</strong> 20% Reduction in FOH labor burden.<br>
+                        <strong>Unit Cost:</strong> ~$18k per robot hardware.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global Default Chart Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [42500, 95000, 155000, 220000, 310000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { borderDash: [5, 5] }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Bar Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        const turnoverChart = new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic Assist'],
+                datasets: [{
+                    label: 'Avg Turn Time (Mins)',
+                    data: [65, 52],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderRadius: 8,
+                    barThickness: 50
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Minutes per Table' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
