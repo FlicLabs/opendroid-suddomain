@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharkys Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --accent: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text: #f8fafc;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .metric-card {
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+        .metric-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .content-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .content-section { grid-template-columns: 1fr; }
+        }
+        h2 { color: var(--accent); font-weight: 600; margin-bottom: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 15px; padding-left: 20px; border-left: 2px solid var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SHARKYS AUTOMATION STRATEGY</h1>
+            <p>Open Droids Hospitality ROI Dashboard</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card metric-card">
+                <div class="metric-value">14 Mo</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value">20%</div>
+                <div class="metric-label">Table Turn Increase</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>5-Year Savings Projection</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="card">
+                <h2>Strategic Pathways</h2>
+                <ul>
+                    <li><strong>FOH Autonomy:</strong> Robotic runners focusing on clearing and delivery to boost hospitality engagement.</li>
+                    <li><strong>BOH Consistency:</strong> Automated frying and prep modules to ensure woodfired side-dish quality.</li>
+                    <li><strong>AI Interface:</strong> Kiosks that drive a 15% increase in average check via intelligent upselling.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>Implementation Roadmap</h2>
+                <ul>
+                    <li><strong>Year 1:</strong> Pilot Program (SoCal Locations)</li>
+                    <li><strong>Year 2:</strong> Regional Expansion & AI Kiosks</li>
+                    <li><strong>Year 3:</strong> Back-of-House Integration</li>
+                    <li><strong>Year 4-5:</strong> Full Autonomous Ecosystem</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($k)',
+                    data: [50, 150, 320, 580, 950],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Turns Per Shift',
+                    data: [4.2, 5.8],
+                    backgroundColor: ['#1e293b', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
