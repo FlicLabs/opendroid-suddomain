@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park DuValle Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; }
+        h2 { font-size: 1.25rem; color: var(--accent-blue); margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
+        p { color: var(--text-muted); line-height: 1.6; }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Charts Layout */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row { grid-template-columns: 1fr; }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Section */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        
+        .highlight-green { color: #4ade80; }
+        .highlight-blue { color: #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <nav>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="badge">CONSULTATION: PDCHC</div>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="glass-card">
+        <h2>Target Profile</h2>
+        <h1>Park DuValle Community Health Center</h1>
+        <p>A strategic analysis of robotics integration for operational efficiency in FQHC environments. Moving beyond surgical robotics to high-impact pharmacy automation, administrative RPA, and facility logistics.</p>
+    </div>
+
+    <!-- KPI Dashboard -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-value">$1.5M+</span>
+            <span class="kpi-label">5-Year Net Benefit</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-value">50%</span>
+            <span class="kpi-label">Rx Fill Time Reduction</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-value">9-14 Mo</span>
+            <span class="kpi-label">ROI Payback Period</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-value">20k</span>
+            <span class="kpi-label">Addt'l Annual Scripts</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-row">
+        <div class="glass-card">
+            <h2>Financial Projection</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Throughput Analysis</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Grid -->
+    <div class="pathways-grid">
+        <div class="glass-card">
+            <span class="pathway-tag">Pathway A: Highest Impact</span>
+            <h3>Pharmacy Automation</h3>
+            <p>Implementation of robotic pill counters and automated dispensing cabinets to handle 70,000+ annual prescriptions.</p>
+            <ul>
+                <li>Reduce fill errors to near 0%</li>
+                <li>Optimize 340B revenue capture</li>
+                <li>Free up pharmacists for counseling</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-tag">Pathway B: Strategic</span>
+            <h3>Administrative RPA</h3>
+            <p>"Software Robotics" to automate revenue cycle management and sliding fee verification.</p>
+            <ul>
+                <li>Automated claim coding</li>
+                <li>Reduction in insurance denials</li>
+                <li>Patient eligibility checks</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-tag">Pathway C: Facility</span>
+            <h3>Service Robotics</h3>
+            <p>Autonomous sanitation and logistics robots for the main center and satellite clinics.</p>
+            <ul>
+                <li>UV-C Disinfection</li>
+                <li>Nightly autonomous floor cleaning</li>
+                <li>Consistent compliance standards</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Table -->
+    <div class="glass-card">
+        <h2>Comparative ROI Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Pharmacy Robotics</th>
+                    <th>Admin RPA</th>
+                    <th>Service Robotics</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Benefit (Mid-Case)</td>
+                    <td class="highlight-green">$350,000</td>
+                    <td class="highlight-blue">$150,000</td>
+                    <td>$40,000</td>
+                </tr>
+                <tr>
+                    <td>Primary Driver</td>
+                    <td>Volume & Safety</td>
+                    <td>Labor Efficiency</td>
+                    <td>Sanitation</td>
+                </tr>
+                <tr>
+                    <td>Payback Period</td>
+                    <td>< 12 Months</td>
+                    <td>6-9 Months</td>
+                    <td>24 Months</td>
+                </tr>
+                <tr>
+                    <td>Implementation Risk</td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Moderate (Integration)</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($)',
+                data: [290000, 600000, 950000, 1300000, 1750000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Daily Prescriptions', 'Admin Claims/Day', 'Patient Visits'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [200, 150, 85],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: 6,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255,255,255,0.2)'
+                },
+                {
+                    label: 'Robotic/Auto Process',
+                    data: [320, 400, 110],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
