@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Greene Turtle | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            border-left: 3px solid #7c3aed;
+            padding-left: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Metrics Dashboard */
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+            border-top: 4px solid #7c3aed;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        /* Pathway Cards */
+        .pathway-card {
+            transition: transform 0.3s ease;
+        }
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .badge-foh { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .badge-boh { background: rgba(244, 63, 94, 0.2); color: #f43f5e; }
+        .badge-ai { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            margin-top: 40px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h2>Open Droids Strategic Research</h2>
+            <h1>The Greene Turtle Sports Bar & Grille</h1>
+            <p style="color: #94a3b8; margin-top: 10px;">Hospitality ROI Dashboard & Automation Roadmap</p>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="glass-card">
+            <div class="grid-3">
+                <div class="metric-card">
+                    <div class="metric-value">11 Mo</div>
+                    <div class="metric-label">Projected ROI Payback</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">22%</div>
+                    <div class="metric-label">Labor Cost Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">$55k</div>
+                    <div class="metric-label">CAPEX Per Location</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Pathways -->
+        <div class="grid-3">
+            <div class="glass-card pathway-card">
+                <span class="badge badge-foh">PATHWAY A: FOH</span>
+                <h3>Robotic Servers</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">
+                    Deployment of multi-shelf units for food running and bussing. Reduces server fatigue and keeps staff on the floor during "Game Day" surges.
+                </p>
+            </div>
+            <div class="glass-card pathway-card">
+                <span class="badge badge-boh">PATHWAY B: BOH</span>
+                <h3>Auto-Frying</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">
+                    Automated basket lifting for wings and appetizers. Ensures consistent cook times and improved safety during high-volume rushes.
+                </p>
+            </div>
+            <div class="glass-card pathway-card">
+                <span class="badge badge-ai">PATHWAY C: AI</span>
+                <h3>Tableside AI</h3>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">
+                    Tablet integration for second-round drinks and payments. Captures impulse revenue without waiting for a server.
+                </p>
+            </div>
+        </div>
+
+        <!-- Data Visualization -->
+        <div class="grid-2">
+            <!-- Chart 1 -->
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="laborSavingsChart"></canvas>
+                </div>
+            </div>
+            <!-- Chart 2 -->
+            <div class="glass-card">
+                <h3>Table Turnover Velocity</h3>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h3>Implementation Timeline</h3>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
+                <div style="flex: 1; min-width: 150px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <div style="color: #7c3aed; font-weight: bold;">YEAR 1</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">Pilot Phase (MD)</div>
+                </div>
+                <div style="flex: 1; min-width: 150px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <div style="color: #7c3aed; font-weight: bold;">YEAR 2</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">Hybrid Rollout</div>
+                </div>
+                <div style="flex: 1; min-width: 150px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1);">
+                    <div style="color: #7c3aed; font-weight: bold;">YEAR 3</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">Full Fleet Integration</div>
+                </div>
+                <div style="flex: 1; min-width: 150px; text-align: center;">
+                    <div style="color: #7c3aed; font-weight: bold;">YEAR 5</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">AI Kitchen Predictive Ops</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            CONFIDENTIAL REPORT - OPEN DROIDS CONSULTATION UNIT
+        </footer>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Labor Savings
+        const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [65000, 140000, 225000, 315000, 410000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Standard Operations', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Avg Turn Time (Minutes)',
+                    data: [65, 52],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(56, 189, 248, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(56, 189, 248, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Minutes', color: '#64748b' },
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#cbd5e1', font: { size: 14, weight: 'bold' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
