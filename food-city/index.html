@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food City Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .pathway-tag {
+            background: var(--accent-purple);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p style="color: var(--accent-purple); font-weight: 600;">OPEN DROIDS CONSULTATION</p>
+        <h1>Food City Robotics Strategy</h1>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Estimated CAPEX</span>
+            <span class="metric-value">$11.25M</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">OPEX Reduction</span>
+            <span class="metric-value">35%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Payback Period</span>
+            <span class="metric-value">< 22 Mo</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Accuracy Rate</span>
+            <span class="metric-value">99.9%</span>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>Cumulative Savings Forecast</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Manual vs. Robotic Throughput</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div>
+                <h4><span class="pathway-tag">Pathway A</span> AMR Transport</h4>
+                <p>Autonomous mobile robots for long-haul pallet movement. Eliminates travel time and reduces forklift congestion in the Abingdon DC.</p>
+            </div>
+            <div>
+                <h4><span class="pathway-tag">Pathway B</span> Piece Picking</h4>
+                <p>High-density ASRS for pharmacy and health beauty items. Perfect for the 'Food City Go' curbside fulfillment model.</p>
+            </div>
+            <div>
+                <h4><span class="pathway-tag">Pathway C</span> AI Integration</h4>
+                <p>Predictive slotting and fleet orchestration to manage seasonal grocery surges and perishable inventory rotation.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings in Millions ($)',
+                data: [0.5, 4.2, 9.8, 16.5, 25.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Picking'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [120, 450],
+                backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
