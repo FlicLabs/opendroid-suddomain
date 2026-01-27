@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Southside Market Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--electric-purple);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #a78bfa;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #7c3aed;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-two { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>SOUTHSIDE MARKET & BARBEQUE</h1>
+        <p>Automation & Robotics Strategic Consultation | Open Droids</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <span class="metric-label">Target Labor Savings</span>
+            <span class="metric-value">25%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Est. Payback Period</span>
+            <span class="metric-value">14 Mo.</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Table Turnover Increase</span>
+            <span class="metric-value">18%</span>
+        </div>
+    </div>
+
+    <div class="grid-two">
+        <div class="glass-card">
+            <h2>Labor Cost Savings (5-Year Projection)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Turnover Rate Analysis</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <p><strong>Phase 1:</strong> Integration of tray-delivery robotics in the Elgin Flagship. Focus on communal table navigation and heavy payload transport.</p>
+        <p><strong>Phase 2:</strong> Implementation of AI Voice Agents for the Bastrop and Hutto locations to handle high-volume take-out demand.</p>
+        <p><strong>Phase 3:</strong> Centralized AI Smokehouse Monitoring across all 4 locations to ensure legendary consistency.</p>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($k)',
+                data: [45, 110, 240, 420, 650],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Tables Per Hour',
+                data: [4.2, 5.8],
+                backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
