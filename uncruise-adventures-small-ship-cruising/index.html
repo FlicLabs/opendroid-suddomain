@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnCruise Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.5));
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7c3aed;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        h2 {
+            color: #7c3aed;
+            margin-top: 0;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            color: #7c3aed;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div>Robotics Portfolio: UnCruise Adventures</div>
+        </header>
+
+        <div class="grid">
+            <div class="metric-card">
+                <div class="metric-label">Estimated 5-Year Net Benefit</div>
+                <div class="metric-value">£1.4M / Vessel</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Projected Payback Period</div>
+                <div class="metric-value">12 Months</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Fuel Efficiency Gain</div>
+                <div class="metric-value">+8.0%</div>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top: 30px;">
+            <div class="glass-card">
+                <h2>Financial Growth Projection</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Efficiency Improvement</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Comparative Financial Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operational Factor</th>
+                        <th>Manual Method</th>
+                        <th>Robotic Method</th>
+                        <th>Economic Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gear Deployment</td>
+                        <td>60 Minutes</td>
+                        <td>18 Minutes</td>
+                        <td>+42 Mins Activity Time</td>
+                    </tr>
+                    <tr>
+                        <td>Hull Maintenance</td>
+                        <td>Quarterly Diver</td>
+                        <td>Daily Autonomous</td>
+                        <td>£55k Fuel Savings/Yr</td>
+                    </tr>
+                    <tr>
+                        <td>Crew Safety</td>
+                        <td>High Strain Risk</td>
+                        <td>Automated Lift</td>
+                        <td>-90% Injury Liability</td>
+                    </tr>
+                    <tr>
+                        <td>Guest Experience</td>
+                        <td>Standard Viewing</td>
+                        <td>4K ROV Live Stream</td>
+                        <td>3% Ticket Premium</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+        new Chart(savingsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (£)',
+                    data: [250000, 550000, 850000, 1150000, 1450000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+        new Chart(throughputCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Deployments Per Day',
+                    data: [4, 12],
+                    backgroundColor: ['#0f172a', '#7c3aed'],
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
