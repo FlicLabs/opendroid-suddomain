@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDV Hospitality - Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .metric-card h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .content-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .grid-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-two-col { grid-template-columns: 1fr; }
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>LDV HOSPITALITY</h1>
+        <p>Strategic Automation & Robotics Research Report</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <h3>Target Labor Reduction</h3>
+            <div class="value">25%</div>
+        </div>
+        <div class="metric-card">
+            <h3>Avg. Payback Period</h3>
+            <div class="value">14 Months</div>
+        </div>
+        <div class="metric-card">
+            <h3>Est. CAPEX Per Unit</h3>
+            <div class="value">$27,500</div>
+        </div>
+        <div class="metric-card">
+            <h3>Service Accuracy</h3>
+            <div class="value">99.8%</div>
+        </div>
+    </div>
+
+    <div class="grid-two-col">
+        <div class="content-section">
+            <h2>Labor Cost Savings</h2>
+            <p>5-Year cumulative projection of Front-of-House operational savings through autonomous augmentation.</p>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="content-section">
+            <h2>Operational Efficiency</h2>
+            <p>Comparison of table turnover rates (Tables per Shift) between manual and robot-assisted models.</p>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Strategic Pathways</h2>
+        <div class="grid-two-col">
+            <div>
+                <h3 style="color: #a78bfa;">Pathway A: FOH Support</h3>
+                <p>Deploying heavy-lift runners to handle the transit of courses from kitchen to floor, allowing elite servers more "face-time" with high-net-worth guests.</p>
+            </div>
+            <div>
+                <h3 style="color: #a78bfa;">Pathway B: BOH Consistency</h3>
+                <p>Automated precision cooking for pasta and proteins to ensure the "Scarpetta Quality" is identical in NYC, London, and Miami.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [40000, 110000, 240000, 420000, 650000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Table Turns / Shift',
+                data: [2.1, 2.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.1)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+</script>
+
+</body>
+</html>
