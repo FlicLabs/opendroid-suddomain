@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Becks Prime Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --primary-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-purple);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section { grid-template-columns: 1fr; }
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--primary-purple);
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .year-tag {
+            background: var(--primary-purple);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-right: 20px;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>BECKS PRIME AUTOMATION REPORT</h1>
+        <p>Open Droids Hospitality Consulting Group</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Estimated CAPEX</div>
+            <div class="metric-value">$40,000</div>
+            <div class="metric-label">Per Robot Unit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Reduction</div>
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Front of House</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">14 Mo.</div>
+            <div class="metric-label">Target Efficiency</div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <h2>Strategic Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="year-tag">Y1</div>
+            <div><strong>Pilot Program:</strong> Deploying autonomous delivery robots in 2 flagship Houston locations.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-tag">Y2</div>
+            <div><strong>Expansion:</strong> Fleet-wide rollout of serving robots and Voice AI for drive-thrus.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-tag">Y3</div>
+            <div><strong>BOH Automation:</strong> Integration of automated fry stations and grill monitoring.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-tag">Y5</div>
+            <div><strong>Full Ecosystem:</strong> 100% automation of low-value tasks across all Becks Prime units.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($100k)',
+                data: [1.2, 3.5, 7.8, 12.4, 18.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Table Turns per Peak Hour',
+                data: [2.1, 3.4],
+                backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
