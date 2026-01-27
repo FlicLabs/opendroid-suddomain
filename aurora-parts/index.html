@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Parts Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --primary: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #a78bfa;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-two { grid-template-columns: 1fr; }
+            body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Aurora Parts Strategy</h1>
+        <p>Open Droids Robotics Consultation & Logistics Research</p>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-label">Target OPEX Reduction</span>
+            <span class="metric-value">40%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Est. Payback Period</span>
+            <span class="metric-value">&lt;22mo</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Throughput Increase</span>
+            <span class="metric-value">35%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Inventory Accuracy</span>
+            <span class="metric-value">99.9%</span>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Executive Opportunity</h2>
+        <p>By leveraging Aurora Parts' massive scale in Lebanon, IN, we propose a transition toward a software-defined warehouse. The primary objective is to decouple growth from labor availability by automating the most repetitive and physically demanding tasks in the trailer parts lifecycle.</p>
+    </div>
+
+    <div class="grid-two">
+        <div class="glass-card">
+            <h2>Financial Projection</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Performance Benchmark</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 3px solid var(--primary); padding-left: 20px;">
+                <strong>Year 1: Foundations</strong> - Pilot AMR systems and warehouse digital twin setup.
+            </div>
+            <div style="border-left: 3px solid var(--primary); padding-left: 20px;">
+                <strong>Year 3: Acceleration</strong> - Integration of Goods-to-Person (G2P) robotic picking.
+            </div>
+            <div style="border-left: 3px solid var(--primary); padding-left: 20px;">
+                <strong>Year 5: Autonomy</strong> - Fully autonomous hub-and-spoke distribution network.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (Millions $)',
+                data: [0.5, 2.8, 6.2, 10.5, 15.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#f8fafc' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Hybrid', 'Full Autonomy'],
+            datasets: [{
+                label: 'Picks Per Hour (Avg)',
+                data: [65, 140, 280],
+                backgroundColor: ['#4b5563', '#7c3aed', '#a78bfa'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#f8fafc' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
