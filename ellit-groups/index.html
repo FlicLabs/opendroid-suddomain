@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellit Groups Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: #7c3aed;
+            letter-spacing: 2px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1, h2 {
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7c3aed;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            color: #7c3aed;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #64748b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <span style="display: block; font-weight: 600;">ELLIT GROUPS</span>
+            <span style="font-size: 12px; color: #94a3b8;">Strategic Automation Portfolio 2024</span>
+        </div>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">£15.7M</span>
+            <span class="metric-label">5-Year Projected Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">87%</span>
+            <span class="metric-label">Efficiency Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">4 Months</span>
+            <span class="metric-label">Average ROI Payback</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">Zero</span>
+            <span class="metric-label">Manual Testing Errors</span>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Performance Dashboard</h2>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Comparison of Operational Models</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Legacy Consulting Model</th>
+                    <th>Robotic Orchestration Model</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Delivery Speed</td>
+                    <td>Slow (Manual Labor)</td>
+                    <td>Accelerated (Bot Driven)</td>
+                </tr>
+                <tr>
+                    <td>Cost per Project</td>
+                    <td>£180,000 (Base)</td>
+                    <td>£22,500 (Base)</td>
+                </tr>
+                <tr>
+                    <td>Scalability</td>
+                    <td>Linear (Hire more staff)</td>
+                    <td>Exponential (Deploy more bots)</td>
+                </tr>
+                <tr>
+                    <td>Error Margin</td>
+                    <td>Variable (Human Error)</td>
+                    <td>Near-Zero (Pre-programmed)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        CONFIDENTIAL RESEARCH REPORT | PREPARED BY OPEN DROIDS CONSULTING
+    </div>
+
+    <script>
+        // Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (Millions GBP)',
+                    data: [1.2, 3.8, 7.5, 11.2, 15.7],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#f8fafc' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Throughput Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Testing', 'Robotic Testing'],
+                datasets: [{
+                    label: 'Tasks Completed per 100 Hours',
+                    data: [100, 850],
+                    backgroundColor: ['#1e293b', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#f8fafc' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
