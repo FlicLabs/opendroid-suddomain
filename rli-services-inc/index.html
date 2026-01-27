@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLI Services Inc. | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-glow);
+            margin-top: 0;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard Styles */
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .metric-delta {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-purple);
+        }
+
+        .pathway-title {
+            color: white;
+            font-weight: 600;
+            display: block;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .col-4, .col-6, .col-8, .col-12 { grid-column: span 1; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">OPEN DROIDS RESEARCH UNIT</div>
+                <h1>RLI SERVICES INC.</h1>
+                <div class="subtitle">Strategic Automation & Robotics Report</div>
+            </div>
+            <div style="text-align: right; color: var(--accent-purple); font-weight: 600;">
+                RESTRICTED // STRATEGIC
+            </div>
+        </header>
+
+        <!-- Executive Summary & Org Profile -->
+        <div class="grid">
+            <div class="card col-8">
+                <h2>01. Executive Vision</h2>
+                <h3>The Smart-Hub Ecosystem</h3>
+                <p>RLI Services Inc. is positioned to transition from traditional freight forwarding to a high-velocity automated node model. Our research indicates that deploying Autonomous Mobile Robots (AMRs) combined with AI-driven sorting will immunize operations against labor volatility while ensuring 99.9% SLA compliance. This is a shift from reactive logistics to predictive fulfillment.</p>
+            </div>
+            <div class="card col-4">
+                <h2>02. Quick Stats</h2>
+                <div style="display: flex; flex-direction: column; justify-content: space-between; height: 80%;">
+                    <div>
+                        <span style="color: white; font-weight: bold;">Focus:</span>
+                        <span style="color: var(--text-muted);">Complex Freight & Logistics</span>
+                    </div>
+                    <div>
+                        <span style="color: white; font-weight: bold;">Current Model:</span>
+                        <span style="color: var(--text-muted);">Hub-and-Spoke (Manual)</span>
+                    </div>
+                    <div>
+                        <span style="color: white; font-weight: bold;">Target ROI:</span>
+                        <span style="color: var(--text-muted);">&lt; 14 Months</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="grid">
+            <div class="card col-4">
+                <h2>Est. Initial CAPEX</h2>
+                <div class="metric-value">$600k</div>
+                <div class="metric-label">Based on 10 AMRs + 2 Picking Stations</div>
+            </div>
+            <div class="card col-4">
+                <h2>Proj. Annual Savings</h2>
+                <div class="metric-value">$600k</div>
+                <div class="metric-label">Labor + Energy + Error Reduction</div>
+                <div class="metric-delta">▲ 30% OPEX Reduction</div>
+            </div>
+            <div class="card col-4">
+                <h2>Throughput Gain</h2>
+                <div class="metric-value">200%</div>
+                <div class="metric-label">Increase in Units Per Hour (UPH)</div>
+                <div class="metric-delta">▲ Efficiency</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid">
+            <div class="card col-6">
+                <h2>Financial Projection (5-Year Cumulative Savings)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card col-6">
+                <h2>Throughput Analysis (Manual vs. Robotic)</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opportunity Pathways & Roadmap -->
+        <div class="grid">
+            <div class="card col-6">
+                <h2>03. Robotics Opportunity Pathways</h2>
+                <ul class="pathway-list">
+                    <li>
+                        <span class="pathway-title">Pathway A: AMRs for Transport</span>
+                        <p>Decouple travel time from labor. Robots handle the long hauls between receiving and shipping.</p>
+                    </li>
+                    <li>
+                        <span class="pathway-title">Pathway B: Robotic Piece Picking</span>
+                        <p>High-density ASRS systems utilizing Goods-to-Person tech to reduce errors by 90%.</p>
+                    </li>
+                    <li>
+                        <span class="pathway-title">Pathway C: AI Predictive Logistics</span>
+                        <p>Software layers that predict inbound surges and optimize outbound truck loading.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="card col-6">
+                <h2>04. Implementation Roadmap</h2>
+                
+                <div class="roadmap-step">
+                    <div class="step-year">YR 1</div>
+                    <div>
+                        <div style="color:white; font-weight:600;">The Pilot</div>
+                        <div style="color:var(--text-muted); font-size:0.9rem;">Deploy 10 AMRs. Integrate WMS with Robotics Control System.</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-year">YR 2</div>
+                    <div>
+                        <div style="color:white; font-weight:600;">Expansion & Density</div>
+                        <div style="color:var(--text-muted); font-size:0.9rem;">Roll out to secondary hubs. Install vertical ASRS for storage density.</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-year">YR 3</div>
+                    <div>
+                        <div style="color:white; font-weight:600;">Network-Wide AI</div>
+                        <div style="color:var(--text-muted); font-size:0.9rem;">Full AI deployment. Robotic palletizing arms at shipping docks.</div>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-year">YR 5</div>
+                    <div>
+                        <div style="color:white; font-weight:600;">Optimization</div>
+                        <div style="color:var(--text-muted); font-size:0.9rem;">Preventative maintenance IoT. 24/7 lights-out capability.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Start', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($)',
+                    data: [-600000, 0, 600000, 1200000, 1800000, 2400000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Bar Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Picking', 'Robotic Assist', 'Full ASRS'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [60, 150, 350],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        '#7c3aed',
+                        '#10b981'
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
