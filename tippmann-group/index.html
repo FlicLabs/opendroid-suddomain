@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tippmann Group | Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-delta {
+            font-size: 0.9rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        /* Pathways Section */
+        .pathways-section {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .pathway-title {
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .pathway-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container, .pathway-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                align-items: start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Strategic Research</div>
+            <h1>Tippmann Group</h1>
+        </div>
+        <div style="text-align: right; color: var(--text-muted);">
+            <div>Logistics & Cold Chain</div>
+            <div>Automation Assessment</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Projected Labor Reduction</div>
+            <div class="metric-value">35%</div>
+            <div class="metric-delta">▼ OPEX Impact</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Energy Savings</div>
+            <div class="metric-value">15%</div>
+            <div class="metric-delta">▼ Cooling Cost</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback</div>
+            <div class="metric-value">22 Mo</div>
+            <div class="metric-delta">▲ Accelerated Cycle</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Accuracy Target</div>
+            <div class="metric-value">99.9%</div>
+            <div class="metric-delta">▲ From 99.1%</div>
+        </div>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="charts-container">
+        <div class="chart-card">
+            <div class="card-header">5-Year Cumulative Savings (Millions USD)</div>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <div class="card-header">Throughput Velocity (Pallets/Hour)</div>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="pathways-section">
+        <div class="card-header">Strategic Automation Pathways</div>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <div class="pathway-title">A. Cold-Rated AMRs</div>
+                <div class="pathway-desc">
+                    Deployment of autonomous transport for -20°F environments to reduce human freezer exposure and increase dock-to-stock velocity.
+                </div>
+            </div>
+            <div class="pathway-item">
+                <div class="pathway-title">B. High-Density ASRS</div>
+                <div class="pathway-desc">
+                    Vertical automated storage solutions maximizing cubic efficiency, reducing cooling footprint and increasing pallet density by 40%.
+                </div>
+            </div>
+            <div class="pathway-item">
+                <div class="pathway-title">C. AI Inbound/Outbound</div>
+                <div class="pathway-desc">
+                    Predictive modeling for freezing cycles and dynamic slotting to optimize compressor usage and robot travel paths.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Confidential Research | Generated by Open Droids for Tippmann Group | 2023
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Net Savings',
+                data: [0.5, 2.2, 5.8, 9.4, 14.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Inbound', 'QFR Loading', 'Picking', 'Outbound'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 30, 55, 50],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [65, 80, 95, 85],
+                    backgroundColor: '#10b981',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#94a3b8' } } },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
