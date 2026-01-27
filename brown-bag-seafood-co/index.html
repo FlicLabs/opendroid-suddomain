@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Brown Bag Seafood Co. Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.5));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .pathway-item {
+            font-size: 0.95rem;
+        }
+
+        .pathway-item b {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .pathway-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <p style="text-transform: uppercase; letter-spacing: 3px; font-weight: 600; color: var(--accent-purple);">Strategic Research</p>
+        <h1>Brown Bag Seafood Co.</h1>
+        <p>Automation & Robotics Consultation Report by Open Droids</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Labor Reduction Target</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">14mo</div>
+            <div class="metric-label">Target Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">15%</div>
+            <div class="metric-label">Table Turnover Increase</div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Executive Opportunity Overview</h2>
+        <p>Brown Bag Seafood Co. is uniquely positioned to leverage Front-of-House (FOH) logistics robotics to bridge the gap between premium seafood quality and the speed of fast-casual dining. By automating the "final mile" of food delivery within the restaurant, staff can focus on the guest experience and hospitality touchpoints.</p>
+        
+        <div class="pathway-grid" style="margin-top: 30px;">
+            <div class="pathway-item">
+                <b>Pathway A: FOH</b>
+                Autonomous serving robots to reduce staff travel time by 40% during peak hours.
+            </div>
+            <div class="pathway-item">
+                <b>Pathway B: BOH</b>
+                Smart frying systems to ensure thermal consistency for sensitive seafood proteins.
+            </div>
+            <div class="pathway-item">
+                <b>Pathway C: AI</b>
+                Predictive ordering kiosks that increase average check size via smart upselling.
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px;">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Table Turnover Comparison</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+            <div style="text-align: center; flex: 1;">
+                <div style="color: var(--accent-purple); font-weight: 800; font-size: 1.2rem;">Y1</div>
+                <div style="font-size: 0.8rem;">Pilot Program</div>
+            </div>
+            <div style="text-align: center; flex: 1;">
+                <div style="color: var(--accent-purple); font-weight: 800; font-size: 1.2rem;">Y2</div>
+                <div style="font-size: 0.8rem;">Regional Expansion</div>
+            </div>
+            <div style="text-align: center; flex: 1;">
+                <div style="color: var(--accent-purple); font-weight: 800; font-size: 1.2rem;">Y3</div>
+                <div style="font-size: 0.8rem;">AI Kiosks</div>
+            </div>
+            <div style="text-align: center; flex: 1;">
+                <div style="color: var(--accent-purple); font-weight: 800; font-size: 1.2rem;">Y5</div>
+                <div style="font-size: 0.8rem;">Full Integration</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings (USD)',
+                data: [50000, 150000, 350000, 650000, 1100000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { display: false }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+
+    // Turnover Chart
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Turns Per Shift',
+                data: [4.2, 5.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.1)', '#7c3aed'],
+                borderColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 1,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { display: false }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
