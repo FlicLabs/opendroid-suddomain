@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darvin Furniture Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            font-weight: 600;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--accent-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p class="subtitle">Open Droids Consultation</p>
+        <h1>Darvin Furniture & Mattress</h1>
+        <p>Strategic Automation Framework & Financial Projection</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <div class="metric-value">$1.5M</div>
+            <div class="metric-label">Estimated CAPEX</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">35%</div>
+            <div class="metric-label">OPEX Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">22mo</div>
+            <div class="metric-label">Target ROI Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+25%</div>
+            <div class="metric-label">Throughput Boost</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="card">
+            <h2>5-Year Savings Projection</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Manual vs. Robotic Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="efficiencyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="card">
+            <h2>Implementation Pathways</h2>
+            <ul>
+                <li><strong>AMR Fleet:</strong> Heavy-duty units for sofa and crate transport across the 200k sq ft DC.</li>
+                <li><strong>Vertical ASRS:</strong> Automated storage for high-density hardware and accessories.</li>
+                <li><strong>AI Logistics:</strong> Predictive staging based on seasonal Chicago market trends.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h2>Strategic Roadmap</h2>
+            <p><strong>Year 1-2:</strong> Foundation and Horizontal Transport Automation.</p>
+            <p><strong>Year 3-4:</strong> Density Optimization and Software Intelligence Layer.</p>
+            <p><strong>Year 5:</strong> Achieving full "Dark Warehouse" storage capabilities.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (Millions $)',
+                data: [0.2, 0.8, 1.9, 3.2, 5.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#888' } },
+                x: { grid: { display: false }, ticks: { color: '#888' } }
+            }
+        }
+    });
+
+    // Efficiency Chart
+    const ctx2 = document.getElementById('efficiencyChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Picking', 'Manual Transit', 'Robotic Transit'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [45, 110, 20, 85],
+                backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed', 'rgba(255,255,255,0.2)', '#7c3aed'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#888' } },
+                x: { grid: { display: false }, ticks: { color: '#888' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
