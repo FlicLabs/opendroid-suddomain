@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathmark Robotics Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            height: 350px;
+            position: relative;
+        }
+
+        .section-title {
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--accent-purple);
+            margin-right: 10px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            body { padding: 20px; }
+        }
+
+        .status-badge {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="status-badge">STRATEGIC ANALYSIS 2024</div>
+        <h1>Pathmark Transportation</h1>
+        <p style="opacity: 0.6;">Warehouse & Logistics Automation Roadmap</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">$100k</span>
+            <span class="metric-label">Max Capex / Station</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Target Opex Reduction</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">&lt; 24mo</span>
+            <span class="metric-label">Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Picking Accuracy</span>
+        </div>
+    </div>
+
+    <div class="grid-layout">
+        <div class="glass-card">
+            <div class="section-title">Cumulative Savings (5yr)</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <div class="section-title">Throughput Comparison</div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-title">Pathway Summary</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="color: var(--accent-purple);">AMR Integration</h4>
+                <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">Autonomous Mobile Robots for internal transport. Eliminates manual travel time and boosts safety.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent-purple);">ASRS Systems</h4>
+                <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">High-density vertical storage for maximum space utilization in mid-market hubs.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent-purple);">AI Analytics</h4>
+                <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">Predictive algorithms that stage inventory before it is needed, optimizing dock flow.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Config
+    Chart.defaults.color = '#f8fafc';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Chart
+    const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+    new Chart(savingsCtx, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings in Millions ($)',
+                data: [0.5, 1.8, 4.2, 7.5, 12.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 6,
+                pointBackgroundColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const throughputCtx = document.getElementById('throughputChart').getContext('2d');
+    new Chart(throughputCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robotic'],
+            datasets: [{
+                label: 'Pallets Per Hour',
+                data: [12, 45],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 10,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
