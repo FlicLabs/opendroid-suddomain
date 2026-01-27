@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynora's Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: left;
+            margin-bottom: 50px;
+            border-left: 5px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px; }
+        p.subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .content-card {
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        h2 { color: var(--accent-purple); font-size: 1.5rem; margin-top: 0; }
+        ul { padding-left: 20px; color: var(--text-secondary); }
+        li { margin-bottom: 12px; }
+
+        @media (max-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>LYNORA'S</h1>
+        <p class="subtitle">Hospitality Automation & Robotics Integration Strategy</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <span class="metric-value">25%</span>
+            <span class="metric-label">Labor Cost Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">&lt; 14mo</span>
+            <span class="metric-label">Target Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">+15%</span>
+            <span class="metric-label">Table Turnover Rate</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$40k</span>
+            <span class="metric-label">Max Unit CAPEX</span>
+        </div>
+    </div>
+
+    <div class="grid-layout">
+        <div class="chart-container">
+            <h2>5-Year Cumulative Savings Forecast</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Table Turnover Comparison</h2>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <div class="grid-layout">
+        <div class="content-card">
+            <h2>Strategic Pathways</h2>
+            <ul>
+                <li><strong>Front-of-House:</strong> Autonomous runners to handle heavy tray transport, allowing servers to focus on the "Art of the Upsell".</li>
+                <li><strong>Back-of-House:</strong> Automated pasta boiling and dough management to ensure brand consistency across all South Florida locations.</li>
+                <li><strong>AI Integration:</strong> Natural Language Processing agents to manage high-volume phone orders and reservations at Lynora's Market.</li>
+            </ul>
+        </div>
+        <div class="content-card">
+            <h2>Roadmap Highlights</h2>
+            <ul>
+                <li><strong>Year 1:</strong> Pilot Program Launch</li>
+                <li><strong>Year 2:</strong> Brand-Wide Deployment</li>
+                <li><strong>Year 3:</strong> Kitchen Automation</li>
+                <li><strong>Year 5:</strong> Fully Autonomous Logistics</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [45000, 120000, 280000, 510000, 850000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Turnover Chart
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Avg. Tables/Hour',
+                data: [1.2, 1.45],
+                backgroundColor: ['#1e1b4b', '#7c3aed'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
