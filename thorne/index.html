@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thorne Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header & Logo */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #7c3aed;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .report-title {
+        font-size: 18px;
+        color: #94a3b8;
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: #f8fafc;
+        font-size: 22px;
+        border-left: 4px solid #7c3aed;
+        padding-left: 15px;
+        margin-bottom: 20px;
+    }
+
+    .card h3 {
+        color: #7c3aed;
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+        font-size: 15px;
+    }
+
+    /* Dashboard Metrics */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.6));
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+    }
+
+    .metric-label {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 1px;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .chart-wrapper {
+        background: rgba(15, 23, 42, 0.4);
+        border-radius: 12px;
+        padding: 15px;
+        height: 300px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        background-color: rgba(124, 58, 237, 0.1);
+        color: #e2e8f0;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #cbd5e1;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-text {
+        color: #a78bfa;
+        font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        margin-top: 50px;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client: Thorne HealthTech</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Thorne HealthTech is a vertically integrated wellness company operating at the intersection of manufacturing and personalized health data. With a massive 272,000 sq ft facility in Summerville, SC, Thorne's primary friction points are labor-intensive kitting and biological sample turnaround times.</p>
+        <p>The dominant ROI drivers are <strong>(1) Autonomous Mobile Robots (AMRs)</strong> for intralogistics, <strong>(2) High-speed robotic pick-and-pack</strong> for personalized subscriptions, and <strong>(3) Lab automation</strong>. These levers can generate over £20M in 5-year net value.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Dashboard & ROI Model</h2>
+        
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Annual Revenue Uplift</div>
+                <div class="metric-value">£15.2M</div>
+                <div class="metric-label">Via Improved Throughput</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Savings</div>
+                <div class="metric-value">£2.8M</div>
+                <div class="metric-label">Per Year (Recurring)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">14 MO</div>
+                <div class="metric-label">From Go-Live</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways Table -->
+    <div class="card">
+        <h2>Comparative Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Intralogistics</th>
+                    <th>Pathway B: Fulfillment</th>
+                    <th>Pathway C: Lab Automation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Facility-wide Material Transport</td>
+                    <td>Personalized Subscription Kitting</td>
+                    <td>Health Test Processing</td>
+                </tr>
+                <tr>
+                    <td><strong>Primary Value</strong></td>
+                    <td>Indirect Labor Reduction</td>
+                    <td>Speed & Accuracy (Brand Trust)</td>
+                    <td>Turnaround Time Reduction</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>~£2.0M - £2.5M</td>
+                    <td>~£8.0M - £10.0M</td>
+                    <td>~£3.0M - £5.0M</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td><span style="color: #4ade80">Low</span></td>
+                    <td><span style="color: #facc15">Moderate</span></td>
+                    <td><span style="color: #4ade80">Low</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Strategic Implementation Roadmap</h2>
+        <p><strong>Phase 1 (Months 0-6):</strong> Deployment of AMRs for raw material transport and pilot of one high-speed robotic kitting cell.</p>
+        <p><strong>Phase 2 (Months 6-18):</strong> Full rollout of automated packaging lines and WMS integration.</p>
+        <p><strong>Phase 3 (Months 18-36):</strong> Upgrade of lab facilities with automated liquid handling and exploration of robotic compounding.</p>
+    </div>
+
+    <div class="footer">
+        Generated by Open Droids Research Terminal | Confidential
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [1.5, 5.2, 11.8, 19.5, 28.4],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                title: { display: true, text: '5-Year Cumulative Net Value', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Kitting (Units/Hr)', 'Lab Tests (Daily)', 'Palletizing (Hr)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [150, 400, 20],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Automation',
+                    data: [850, 1200, 120],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                title: { display: true, text: 'Throughput Comparison: Manual vs. Robotic', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
