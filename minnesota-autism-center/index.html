@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC Robotics Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .full-width {
+            grid-column: span 3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-purple);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-weight: 600;">MN Autism Center</div>
+            <div style="font-size: 12px; opacity: 0.7;">Healthcare Portfolio 2024</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <div class="metric-label">Estimated Annual Margin Lift</div>
+            <div class="metric-value">£5.4M</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Projected ROI Period</div>
+            <div class="metric-value">3 Months</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Staff Efficiency Gain</div>
+            <div class="metric-value">+25%</div>
+        </div>
+
+        <div class="glass-card full-width">
+            <h2>Financial Impact Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Investment</th>
+                        <th>Annual Benefit</th>
+                        <th>Payback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pathway A: Clinical Robotics</td>
+                        <td>£200,000</td>
+                        <td>£2,000,000</td>
+                        <td>12 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway B: Analytics & AI</td>
+                        <td>£400,000</td>
+                        <td>£5,000,000</td>
+                        <td>3 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway C: Telepresence</td>
+                        <td>£150,000</td>
+                        <td>£1,000,000</td>
+                        <td>6 Months</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="glass-card" style="grid-column: span 2;">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Therapeutic Throughput</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Benefit (£ Millions)',
+                    data: [5, 10.5, 16.5, 23, 30],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic-Assisted'],
+                datasets: [{
+                    label: 'Daily Billable Hours',
+                    data: [6, 7.5],
+                    backgroundColor: ['rgba(255,255,255,0.2)', '#7c3aed']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    x: { grid: { display: false }, ticks: { color: '#fff' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
