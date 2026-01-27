@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harri Hospitality | Automation ROI Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            grid-column: span 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric-title {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Chart Cards */
+        .chart-card {
+            grid-column: span 6;
+            min-height: 400px;
+        }
+
+        .full-width {
+            grid-column: span 12;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 10px;
+        }
+
+        /* Roadmap Styles */
+        .roadmap-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .milestone {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .milestone::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--card-border);
+            z-index: 0;
+        }
+
+        .dot {
+            width: 30px;
+            height: 30px;
+            background: var(--bg-color);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-purple);
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .milestone-title {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .milestone-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .metric-card { grid-column: span 6; }
+            .chart-card { grid-column: span 12; }
+        }
+        @media (max-width: 600px) {
+            .metric-card { grid-column: span 12; }
+            .roadmap-container { flex-direction: column; gap: 20px; }
+            .milestone::before { width: 2px; height: 100%; left: 15px; top: 0; }
+            .dot { margin: 0 0 10px 0; }
+            .milestone { text-align: left; padding-left: 50px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research</div>
+                <h1>Harri Hospitality Strategic Report</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Status</div>
+                <div style="color: var(--success); font-weight: bold;">Ready for Deployment</div>
+            </div>
+        </header>
+
+        <!-- KPI Metrics Row -->
+        <div class="grid">
+            <div class="card metric-card">
+                <div class="metric-title">Target Labor Savings</div>
+                <div class="metric-value">22%</div>
+                <div class="metric-sub">▼ FOH Variable Costs</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-title">Payback Period</div>
+                <div class="metric-value">11 Mos</div>
+                <div class="metric-sub">▲ Based on $70k savings</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-title">Avg Check Increase</div>
+                <div class="metric-value">12%</div>
+                <div class="metric-sub">▲ Driven by AI Upsell</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-title">Est. CAPEX Per Unit</div>
+                <div class="metric-value">$18k</div>
+                <div class="metric-sub">◆ Hardware + Install</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid">
+            <!-- Line Chart -->
+            <div class="card chart-card">
+                <h2>5-Year Cumulative Labor Savings</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            
+            <!-- Bar Chart -->
+            <div class="card chart-card">
+                <h2>Table Turnover Efficiency</h2>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="grid">
+            <div class="card full-width">
+                <h2>Implementation Roadmap (Y1 - Y5)</h2>
+                <div class="roadmap-container">
+                    <div class="milestone">
+                        <div class="dot">Y1</div>
+                        <div class="milestone-title">Pilot Phase</div>
+                        <div class="milestone-desc">3 Flagship locations. FOH serving robots only. Data calibration.</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="dot">Y2</div>
+                        <div class="milestone-title">Expansion</div>
+                        <div class="milestone-desc">Full FOH rollout. Pilot AI Kiosks for revenue boost.</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="dot">Y3</div>
+                        <div class="milestone-title">BOH Integration</div>
+                        <div class="milestone-desc">Automated frying & grilling in new builds. Retrofit profitable units.</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="dot">Y4</div>
+                        <div class="milestone-title">Connectivity</div>
+                        <div class="milestone-desc">Full loop: Kiosk → KDS → Auto-Cooker → Robot Runner.</div>
+                    </div>
+                    <div class="milestone">
+                        <div class="dot">Y5</div>
+                        <div class="milestone-title">Optimization</div>
+                        <div class="milestone-desc">Hardware refresh & menu engineering for total automation.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary Text -->
+        <div class="grid">
+            <div class="card full-width">
+                <h2>Executive Strategic Insight</h2>
+                <p style="color: var(--text-muted); line-height: 1.6;">
+                    Harri Hospitality is positioned to leverage "Pathway A" (FOH Robotics) immediately. By offloading the logistical burden of food running, your brand can maintain high-touch hospitality with a leaner staff. The projected ROI indicates a break-even point in under 12 months, funded largely by the reduction in runner/busser hours and increased peak-hour throughput.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [70000, 150000, 240000, 350000, 480000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradientSavings,
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Rate Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Tables Per Hour',
+                    data: [4.2, 5.8],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderColor: ['transparent', '#7c3aed'],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
