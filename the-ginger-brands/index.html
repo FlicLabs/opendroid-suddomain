@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ginger Brands | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 20px 40px;
+            margin-bottom: 40px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tag {
+            background: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-color: var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent);
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>The Ginger Brands</h1>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Strategic Automation Report</span>
+            </div>
+            <div class="brand-tag">OPEN DROIDS ANALYSIS</div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <span class="metric-value">13 Months</span>
+                <span class="metric-label">Projected ROI Payback</span>
+            </div>
+            <div class="glass-card">
+                <span class="metric-value">22%</span>
+                <span class="metric-label">Labor Cost Reduction</span>
+            </div>
+            <div class="glass-card">
+                <span class="metric-value">$57k</span>
+                <span class="metric-label">Max Capex Per Location</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3 style="margin-top:0;">Cumulative Labor Savings (5 Years)</h3>
+                <canvas id="laborSavingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3 style="margin-top:0;">Table Turnover Efficiency</h3>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <div class="section-title">Robotics Pathways</div>
+                <p style="color: var(--text-muted);">
+                    <strong style="color: #fff;">Pathway A (Front-of-House):</strong> Deployment of serving robots to handle logistics, reducing server transit by 6-8 miles daily.<br><br>
+                    <strong style="color: #fff;">Pathway B (Back-of-House):</strong> Automated wok and frying stations to ensure 99.9% consistency and safety.<br><br>
+                    <strong style="color: #fff;">Pathway C (AI/Kiosk):</strong> Algorithmic upselling via kiosks to increase average ticket size by 15%.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-title">Implementation Roadmap</div>
+                <ul class="roadmap-list">
+                    <li class="roadmap-item">
+                        <span class="roadmap-year">Year 1</span>
+                        Pilot deployment in 3 flagship locations.
+                    </li>
+                    <li class="roadmap-item">
+                        <span class="roadmap-year">Year 2</span>
+                        Regional rollout to 20 locations + AI Kiosks.
+                    </li>
+                    <li class="roadmap-item">
+                        <span class="roadmap-year">Year 3</span>
+                        BOH Auto-Wok integration in high-volume units.
+                    </li>
+                    <li class="roadmap-item">
+                        <span class="roadmap-year">Year 5</span>
+                        100% Fleet deployment and Hardware Refresh.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Labor Savings Line Chart
+        const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 0.8, 1.8, 3.2, 5.0],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Bar Chart
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Tables Turned Per Shift',
+                    data: [45, 62],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        '#7c3aed'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#fff', font: { weight: 'bold' } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
