@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegnato Robotics ROI Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --primary: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #7c3aed;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .content-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7c3aed;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Pegnato Roof Intelligence Network LLC</h1>
+        <p>Hospitality Automation Strategy | Open Droids Consultation</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Target Labor Reduction</div>
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Year 3 Proj.</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Avg. Payback Period</div>
+            <div class="metric-value">13.2 Mo</div>
+            <div class="metric-label">CAPEX Recovery</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Table Turnover Increase</div>
+            <div class="metric-value">+12%</div>
+            <div class="metric-label">FOH Efficiency</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Unit CAPEX Range</div>
+            <div class="metric-value">$15k-$40k</div>
+            <div class="metric-label">Per Robot Unit</div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-container">
+            <h3>5-Year Cumulative Labor Savings</h3>
+            <canvas id="laborChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Table Turnover Rate (Trips/Hr)</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <h2>Strategic Pathway Overview</h2>
+        <p>By implementing a multi-modal robotics strategy, Pegnato can transition from manual service bottlenecks to an automated intelligence network. Pathway A focuses on the front-of-house logistics, Pathway B secures the back-of-house culinary consistency, and Pathway C optimizes the digital revenue stream through AI voice and kiosk agents.</p>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings (USD Millions)',
+                data: [0.5, 1.8, 4.2, 7.8, 12.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#fff' } } },
+            scales: {
+                y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Table Turns per Shift',
+                data: [4.2, 5.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#fff' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
