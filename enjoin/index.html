@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enjoin Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .logo-header {
+            font-weight: 800;
+            font-size: 2rem;
+            color: #7c3aed;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Financial Dashboard Table */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 10px;
+        }
+
+        .dashboard-table th {
+            text-align: left;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-table td {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .dashboard-table tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            color: #a78bfa;
+        }
+
+        .dashboard-table tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .highlight-green {
+            color: #34d399 !important;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+
+        .grid-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-charts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo-header">OPEN DROIDS</div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Enjoin: Cognitive Automation Analysis</h2>
+        <p>
+            Enjoin is a leader in physician-led clinical documentation integrity (CDI). The primary robotics opportunity is the deployment of "Software Robotics" (RPA) and AI-driven Clinical Intelligence. 
+            By shifting from manual chart review to an AI-augmented workflow, Enjoin can resolve bottlenecks in mid-revenue cycle operations. 
+            The strategic lever is augmenting human physician advisors with NLP (Natural Language Processing) bots, increasing throughput by 40-50% while reducing claim denials.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Impact Dashboard (Pathway A+B)</h2>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Automated (Robotic)</th>
+                    <th>Impact / Uplift</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Review Capacity (Annual)</td>
+                    <td>200,000 Charts</td>
+                    <td>350,000 Charts</td>
+                    <td class="highlight-green">+75% Uplift</td>
+                </tr>
+                <tr>
+                    <td>Avg Cost Per Review</td>
+                    <td>£45.00</td>
+                    <td>£28.00</td>
+                    <td class="highlight-green">-37% Cost Red.</td>
+                </tr>
+                <tr>
+                    <td>Revenue Recovery (Client)</td>
+                    <td>£120M</td>
+                    <td>£185M</td>
+                    <td class="highlight-green">+£65M Value</td>
+                </tr>
+                <tr>
+                    <td>Net Internal Benefit</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td class="highlight-green">£13M - £18M / Yr</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="grid-charts">
+        <div class="card">
+            <h3>5-Year Cumulative Net Savings (£M)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Daily Throughput: Manual vs. Robotic</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy -->
+    <div class="card">
+        <h2>Strategic Roadmap</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 1: Foundation</h3>
+                <p>Deploy RPA for data ingestion and status checks. Pilot NLP assistive tools with 10 senior physician advisors.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 2: Scaling</h3>
+                <p>Roll out Cognitive NLP to entire workforce. Activate autonomous denial management agents.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 3: Platform</h3>
+                <p>Transition to SaaS model. Offer autonomous pre-bill review engine to health system partners.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [3.5, 12.0, 28.5, 46.0, 68.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Charts Per Hour', 'Clean Claim Rate (%)', 'Revenue Velocity'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [1.2, 82, 40], 
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                },
+                {
+                    label: 'Robotic Augmented',
+                    data: [3.5, 96, 85], 
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
