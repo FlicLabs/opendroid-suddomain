@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ameriworld Fulfillment | Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .sub-header {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px var(--accent-glow);
+            display: block;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .growth-indicator {
+            color: var(--success-green);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-purple);
+            color: var(--text-secondary);
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Ameriworld Fulfillment</h1>
+                <div class="sub-header">Strategic Robotics & Automation Assessment</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="sub-header">CONFIDENTIAL</div>
+                <div style="color: var(--accent-purple); font-weight: bold;">OPEN DROIDS AGENT</div>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                The transition from manual 3PL operations to a Tech-Enabled Fulfillment Ecosystem is critical. By deploying targeted automation, Ameriworld can decouple revenue growth from headcount dependency, ensuring resilience against labor shortages and peak season volatility. The goal is intelligent orchestration: AMRs and AI governing the flow of goods.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="card metric-card">
+                <span class="metric-label">Target OPEX Reduction</span>
+                <span class="metric-value">35%</span>
+                <span class="growth-indicator">▼ Labor & Energy Costs</span>
+            </div>
+            <div class="card metric-card">
+                <span class="metric-label">ROI Payback Period</span>
+                <span class="metric-value">18 Mo</span>
+                <span class="growth-indicator">Target < 24 Months</span>
+            </div>
+            <div class="card metric-card">
+                <span class="metric-label">Picking Accuracy</span>
+                <span class="metric-value">99.9%</span>
+                <span class="growth-indicator">▲ With ASRS/Vision</span>
+            </div>
+            <div class="card metric-card">
+                <span class="metric-label">Storage Density</span>
+                <span class="metric-value">4x</span>
+                <span class="growth-indicator">▲ Vertical Utilization</span>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Robotics Pathways -->
+            <div class="card">
+                <h2>02. Opportunity Pathways</h2>
+                
+                <h3>Pathway A: AMRs (Internal Transport)</h3>
+                <ul>
+                    <li>Replaces manual carts for non-value-added travel.</li>
+                    <li>Reduces picker walking time by 50%.</li>
+                    <li>Scales easily by adding units during peak season.</li>
+                </ul>
+
+                <h3>Pathway B: Robotic Picking & ASRS</h3>
+                <ul>
+                    <li>Goods-to-Person technology for high-velocity SKUs.</li>
+                    <li>Maximizes vertical warehouse space.</li>
+                    <li>Drastically reduces picking errors.</li>
+                </ul>
+
+                <h3>Pathway C: AI Logistics</h3>
+                <ul>
+                    <li>Computer vision at loading docks.</li>
+                    <li>Automated dimensioning and damage inspection.</li>
+                    <li>Predictive labor scheduling.</li>
+                </ul>
+            </div>
+
+            <!-- Charts -->
+            <div class="card">
+                <h2>03. Financial Projection</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <br>
+                <div class="chart-container" style="height: 200px;">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>04. Implementation Roadmap</h2>
+            <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div>
+                    <div class="roadmap-step">
+                        <div class="step-number">01</div>
+                        <h3>Foundation</h3>
+                    </div>
+                    <p class="sub-header">WCS Software deployment & AMR Pilot for receiving transport.</p>
+                </div>
+                <div>
+                    <div class="roadmap-step">
+                        <div class="step-number">02</div>
+                        <h3>Density</h3>
+                    </div>
+                    <p class="sub-header">ASRS implementation for top 20% high-velocity SKUs.</p>
+                </div>
+                <div>
+                    <div class="roadmap-step">
+                        <div class="step-number">03</div>
+                        <h3>AI Integration</h3>
+                    </div>
+                    <p class="sub-header">Computer Vision at docks & centralized dashboarding.</p>
+                </div>
+                <div>
+                    <div class="roadmap-step">
+                        <div class="step-number">05</div>
+                        <h3>Ecosystem</h3>
+                    </div>
+                    <p class="sub-header">Full "Lights-Out" capability for core zones.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 0.9, 1.8, 3.2, 4.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        const throughputChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Picking', 'Robotic Assist', 'Full Automation'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [80, 250, 450],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(124, 58, 237, 0.6)',
+                        'rgba(16, 185, 129, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)',
+                        'rgba(16, 185, 129, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
