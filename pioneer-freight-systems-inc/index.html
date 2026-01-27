@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pioneer Freight Systems Inc. | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-color: #7c3aed;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--success);
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-year {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        strong {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Strategic Report</div>
+            <h1>Pioneer Freight Systems Inc.</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Date</div>
+            <div style="color: white;">October 2023</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="card metric-card">
+            <div class="metric-label">Estimated CAPEX (Pilot)</div>
+            <div class="metric-value">$800k</div>
+            <div class="metric-sub">10 AMRs + Integration</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">OPEX Reduction</div>
+            <div class="metric-value">35%</div>
+            <div class="metric-sub">Target Labor/Energy Savings</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">18 Mo</div>
+            <div class="metric-sub">Based on 2-Shift Operation</div>
+        </div>
+    </div>
+
+    <div class="grid-2-col">
+        <!-- Visualizing Savings -->
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Visualizing Throughput -->
+        <div class="card">
+            <h2>Throughput Comparison</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p style="color: var(--text-secondary);">
+            Pioneer Freight Systems Inc. is positioned to transition from manual-heavy cross-docking to Orchestrated Autonomy. By integrating Autonomous Mobile Robots (AMRs) and AI analytics, the company can decouple throughput growth from labor market volatility, targeting a 30-40% reduction in operational overhead.
+        </p>
+    </div>
+
+    <div class="grid-2-col">
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <ul>
+                <li><strong>Pathway A (AMRs):</strong> Automating long-haul pallet movement to reduce forklift travel time by 100%.</li>
+                <li><strong>Pathway B (ASRS):</strong> High-density automated storage for fulfillment operations, targeting 99.9% picking accuracy.</li>
+                <li><strong>Pathway C (AI Logistics):</strong> Predictive dock scheduling to minimize truck dwell time by 25%.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 1</div>
+                <div>Pilot Launch: 10 AMRs at primary hub.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 2</div>
+                <div>Expansion to 3 regional hubs & AI Integration.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 3</div>
+                <div>ASRS Deployment for dense storage optimization.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 5</div>
+                <div>Full Autonomy & Network-wide standardization.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.2, 0.8, 1.8, 3.2, 5.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Pallets/Hour', 'Accuracy %', 'Uptime (Hrs/Day)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 96, 16],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [75, 99.9, 23],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
