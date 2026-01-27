@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fehr Bros. Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Pathways */
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .year-marker {
+            min-width: 80px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+        .milestone {
+            border-left: 1px solid var(--card-border);
+            padding-left: 20px;
+            margin-left: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .dashboard-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="subtitle">Open Droids | Senior Consultation Research</div>
+        <h1>Fehr Bros. Industries Inc.</h1>
+        <div style="margin-top: 10px; color: var(--text-muted);">Warehouse & Logistics Automation Strategy</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>01. Executive Vision</h2>
+        <p>
+            Fehr Bros. Industries stands at a pivotal junction. As a leader in industrial rigging and hardware, the transition from manual bulk handling to a <strong>"Smart Industrial Hub"</strong> is essential to secure future market dominance. Our strategy integrates high-payload robotics to manage heavy wire rope inventory while utilizing vertical automation for high-density hardware. This approach targets a 99.9% accuracy rate and a significant reduction in physical labor strain.
+        </p>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <div class="grid-3">
+        <div class="glass-card">
+            <span class="pathway-badge">PATHWAY A</span>
+            <h3 style="margin-top:0">Heavy AMRs</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Internal Transport Automation</p>
+            <p>Deployment of 1000kg+ capacity Autonomous Mobile Robots to handle bulk wire reels and chain drums. Reduces forklift travel time by 40%.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-badge">PATHWAY B</span>
+            <h3 style="margin-top:0">Robotic Picking</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">AS/RS & VLMs</p>
+            <p>Vertical Lift Modules for small hardware (shackles, clips). Increases storage density by 60% and eliminates walking for pickers.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-badge">PATHWAY C</span>
+            <h3 style="margin-top:0">AI Logistics</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Predictive Efficiency</p>
+            <p>AI-driven inventory analysis to predict stockouts on high-velocity items and optimize warehouse slotting dynamically.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <section class="glass-card">
+        <h2>04. Financial Model & Projections</h2>
+        
+        <div class="dashboard-metrics">
+            <div class="metric-card">
+                <div class="metric-label">Est. Initial CAPEX</div>
+                <div class="metric-value">$385k</div>
+                <div style="color: #4ade80; font-size: 0.8rem;">Modular Pilot Program</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">35%</div>
+                <div style="color: #4ade80; font-size: 0.8rem;">Labor & Energy Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">22 Mo</div>
+                <div style="color: #4ade80; font-size: 0.8rem;">Target < 24 Months</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div style="padding: 10px;">
+                <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 20px;">5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div style="padding: 10px;">
+                <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 20px;">Throughput Comparison (Lines/Hour)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="glass-card">
+        <h2>05. Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="year-marker">YEAR 1</div>
+            <div class="milestone">
+                <strong>Foundation & Pilot.</strong> Data cleaning, WMS integration planning, and deployment of 3 Heavy Payload AMRs.
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-marker">YEAR 2</div>
+            <div class="milestone">
+                <strong>Small Parts Expansion.</strong> Installation of Vertical Lift Modules (VLMs) for hardware. AI integration for slotting.
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-marker">YEAR 3</div>
+            <div class="milestone">
+                <strong>Full Scale Integration.</strong> Full fleet expansion to cover 100% of internal transport. "Lights-out" staging capabilities.
+            </div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year-marker">YEAR 5</div>
+            <div class="milestone">
+                <strong>The Autonomous Hub.</strong> Fully semi-automated facility setting the industry standard for industrial distribution.
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        Generated by Open Droids Research Division | Confidential Report for Fehr Bros. Industries Inc.
+    </div>
+</div>
+
+<script>
+    // Configuration for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [210000, 560000, 1010000, 1560000, 2200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Assist'],
+            datasets: [{
+                label: 'Lines Per Hour',
+                data: [45, 120],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#38bdf8'],
+                borderColor: ['transparent', '#38bdf8'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
