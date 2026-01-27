@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialClime | Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-delta {
+            font-size: 0.9rem;
+            color: #4ade80; /* Green for positive */
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        p, li {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 2px solid var(--accent-color);
+        }
+
+        .pathway-title {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            color: #475569;
+            margin-top: 60px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid, .charts-container, .pathway-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">OPEN DROIDS RESEARCH</div>
+            <h1>SocialClime</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">STATUS: PRE-DEPLOYMENT</div>
+            <div style="font-weight: bold; color: var(--accent-color);">CONFIDENTIAL</div>
+        </div>
+    </header>
+
+    <!-- Hospitality ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Proj. Labor Savings</div>
+            <div class="metric-value">22.5%</div>
+            <div class="metric-delta">▼ FOH OpEx Year 1</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Table Turn Velocity</div>
+            <div class="metric-value">1.4x</div>
+            <div class="metric-delta">▲ Faster Reset Time</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">11 Mo.</div>
+            <div class="metric-delta">Based on $18k Unit Cost</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+        <div class="chart-card">
+            <h3 style="margin:0 0 15px 0; font-size: 0.9rem; color: #94a3b8;">5-Year Cumulative Savings ($ Millions)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3 style="margin:0 0 15px 0; font-size: 0.9rem; color: #94a3b8;">Turns Per Shift (Manual vs. Robotic)</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="content-card">
+        <h2>Executive Vision</h2>
+        <p>
+            SocialClime stands at the precipice of a hospitality evolution. By integrating collaborative robotics, we do not aim to replace the human touch, but to elevate it. Our strategy shifts the burden of heavy lifting and logistics to autonomous units, allowing your staff to focus purely on the guest experience. This hybrid model promises to resolve labor shortages while simultaneously increasing revenue through higher table turnover velocity.
+        </p>
+    </div>
+
+    <!-- Pathways -->
+    <div class="content-card">
+        <h2>Strategic Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <span class="pathway-title">PATHWAY A: FOH Service</span>
+                <p style="font-size: 0.9rem;">Deployment of "Runner" bots to carry shared plates and bus tables. Reduces server walking distance by 40%.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">PATHWAY B: BOH Auto-Fry</span>
+                <p style="font-size: 0.9rem;">Automated frying baskets for appetizers. Ensures safety and perfect consistency for calamari/fries.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">PATHWAY C: AI Integration</span>
+                <p style="font-size: 0.9rem;">Voice-assisted ordering and POS integration to reduce ticket times by 3-5 minutes per table.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financials -->
+    <div class="content-card">
+        <h2>Financial Impact Model</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; margin-right: 20px;">
+                <h3 style="color:white;">CAPEX Estimates</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0;"><strong>Unit Cost:</strong> $15k - $18k / Robot</li>
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0;"><strong>Setup Fee:</strong> $4k / Location</li>
+                    <li style="padding: 10px 0; color: #4ade80;"><strong>Lease Options Available</strong></li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color:white;">Operational Gains</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0;"><strong>Daily Saving:</strong> ~8 Labor Hours</li>
+                    <li style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0;"><strong>Monthly Net:</strong> +$2,900 / Location</li>
+                    <li style="padding: 10px 0; color: var(--accent-color);"><strong>Payback:</strong> < 14 Months</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Generated by Open Droids Senior Consultation Agent | Internal Use Only
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings',
+                data: [0.2, 0.8, 1.8, 3.2, 5.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Turns Per Shift',
+                data: [3.2, 4.5],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#fff', font: { weight: 'bold' } } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
