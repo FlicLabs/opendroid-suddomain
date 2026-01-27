@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueStar Resort & Golf | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.05em; }
+        p { line-height: 1.6; color: var(--text-muted); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header h1 { font-size: 2.5rem; background: linear-gradient(to right, #fff, var(--text-muted)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub-header { color: var(--accent-purple); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--accent-purple); }
+
+        .card h3 { color: var(--text-main); margin-bottom: 15px; font-size: 1.2rem; }
+        
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        /* KPI Metrics */
+        .metric-value { font-size: 3rem; font-weight: 800; color: var(--accent-blue); }
+        .metric-label { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Pathways List */
+        .pathway-item {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-purple);
+        }
+        .pathway-title { color: var(--text-main); font-weight: 600; display: block; }
+        .pathway-desc { font-size: 0.9rem; }
+
+        /* Roadmap Timeline */
+        .timeline { display: flex; justify-content: space-between; margin-top: 20px; }
+        .timeline-point { text-align: center; position: relative; flex: 1; }
+        .timeline-point::before {
+            content: ''; width: 12px; height: 12px; background: var(--accent-purple);
+            border-radius: 50%; display: block; margin: 0 auto 10px auto;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+        .year { font-weight: bold; color: var(--text-main); }
+        .milestone { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
+
+        /* Chart Containers */
+        .chart-container { position: relative; height: 250px; width: 100%; }
+
+        @media (max-width: 768px) {
+            .grid { display: flex; flex-direction: column; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .timeline { flex-direction: column; gap: 20px; }
+            .timeline-point { text-align: left; padding-left: 20px; }
+            .timeline-point::before { margin: 0; position: absolute; left: 0; top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <div class="sub-header">Open Droids Intelligence</div>
+            <h1>BlueStar Resort & Golf</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Report Type</div>
+            <div style="font-weight: 600;">Strategic Automation</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary & KPI -->
+    <div class="grid">
+        <div class="card col-8">
+            <h3>Executive Vision</h3>
+            <p>To implement a "Hybrid Service Model" across BlueStar properties. This strategy leverages robotics for high-repetition logistics (food running, frying) to mitigate staffing volatility, allowing human staff to focus exclusively on member engagement and the luxury experience.</p>
+        </div>
+        <div class="card col-4" style="text-align: center;">
+            <h3>Target ROI Horizon</h3>
+            <div class="metric-value">13.5</div>
+            <div class="metric-label">Months to Break Even</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid">
+        <div class="card col-6">
+            <h3>Cumulative Labor Savings (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-6">
+            <h3>Table Turnover Velocity</h3>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways & Financials -->
+    <div class="grid">
+        <div class="card col-4">
+            <h3>Strategic Pathways</h3>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway A: FOH Logistics</span>
+                <span class="pathway-desc">Autonomous runners for sprawling patios.</span>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway B: BOH Consistency</span>
+                <span class="pathway-desc">Automated frying for "Turn Grill" speed.</span>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway C: AI Revenue</span>
+                <span class="pathway-desc">Voice-agent upselling on golf courses.</span>
+            </div>
+        </div>
+        
+        <div class="card col-8">
+            <h3>Financial Impact Model</h3>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                <div>
+                    <div class="metric-label">Pilot CAPEX</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">$100,000</div>
+                </div>
+                <div>
+                    <div class="metric-label">Monthly Labor Savings</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; color: #4ade80;">$9,500</div>
+                </div>
+                <div>
+                    <div class="metric-label">Efficiency Gain</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; color: var(--accent-blue);">22%</div>
+                </div>
+            </div>
+            <p>Targeting a 25% reduction in Front-of-House labor costs by offloading non-guest-facing transport tasks. Capital expenditure estimates based on a standard 3-unit deployment per clubhouse.</p>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="grid">
+        <div class="card col-12">
+            <h3>Implementation Roadmap</h3>
+            <div class="timeline">
+                <div class="timeline-point">
+                    <div class="year">Year 1</div>
+                    <div class="milestone">Pilot Program<br>(AZ Flagship)</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="year">Year 2</div>
+                    <div class="milestone">Standardization<br>(Top 5 Resorts)</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="year">Year 3</div>
+                    <div class="milestone">AI Integration<br>(Voice Ordering)</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="year">Year 4</div>
+                    <div class="milestone">Fleet Command<br>(Remote Ops)</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="year">Year 5</div>
+                    <div class="milestone">Full Ecosystem<br>(Autonomous Flow)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [114000, 240000, 380000, 550000, 750000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Daily Table Turns (Avg)',
+                data: [3.2, 4.1],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#38bdf8'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
