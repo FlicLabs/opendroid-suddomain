@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Boy Restaurants | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(56, 189, 248, 0.05) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tagline {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px var(--accent-glow);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap List */
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .roadmap-item:last-child {
+            border-bottom: none;
+        }
+
+        .year-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="tagline">Open Droids Intelligence Report</div>
+            <h1>Big Boy Restaurants</h1>
+            <p>Automated Systems & Robotics Integration Strategy</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Vision</h2>
+            <p>Big Boy represents a heritage of American comfort. To preserve this legacy while combating modern labor shortages, our strategy focuses on "Augmented Hospitality." By deploying robotics for heavy lifting (bussing/running), we protect the physical well-being of staff and ensure they remain at the table, focused on the guest experience. This is not replacement; it is elevation.</p>
+        </div>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <span class="metric-value">12 Mo</span>
+                <span class="metric-label">Target ROI Payback</span>
+            </div>
+            <div class="glass-card metric-card">
+                <span class="metric-value">22%</span>
+                <span class="metric-label">Labor Cost Reduction</span>
+            </div>
+            <div class="glass-card metric-card">
+                <span class="metric-value">$20k</span>
+                <span class="metric-label">Avg Unit CAPEX</span>
+            </div>
+            <div class="glass-card metric-card">
+                <span class="metric-value">1.2x</span>
+                <span class="metric-label">Table Turn Velocity</span>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h2>Cumulative Labor Savings (5 Years)</h2>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="pathways-grid">
+            <div class="glass-card">
+                <h2>Pathway A: FOH Service</h2>
+                <h3>Robotic Food Runners</h3>
+                <p><strong>Deployment:</strong> PuduBella or Servi Units.<br>
+                <strong>Focus:</strong> Running heavy burger platters and milkshakes from kitchen to zone.<br>
+                <strong>Impact:</strong> Reduces server fatigue and prevents spills.</p>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway B: BOH Auto</h2>
+                <h3>Precision Grilling</h3>
+                <p><strong>Deployment:</strong> Automated Flipping Assists.<br>
+                <strong>Focus:</strong> Ensuring the signature double-decker patty is perfectly seared every time.<br>
+                <strong>Impact:</strong> Consistency and safety.</p>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway C: AI Voice</h2>
+                <h3>Drive-Thru Agents</h3>
+                <p><strong>Deployment:</strong> Voice AI Integration.<br>
+                <strong>Focus:</strong> Upselling combos and shakes at order points.<br>
+                <strong>Impact:</strong> +15% Average Check Size.</p>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 1</span>
+                <div>
+                    <h3>Pilot & Calibration</h3>
+                    <p>Deploy FOH robots in 5 high-volume Michigan locations. Gather staff sentiment data.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 2</span>
+                <div>
+                    <h3>Regional Expansion</h3>
+                    <p>Expand fleet to 50% of corporate stores. Begin BOH grill automation tests.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 3</span>
+                <div>
+                    <h3>Franchise Integration</h3>
+                    <p>Roll out standardized robotics packages to franchise partners. Full Voice AI deployment.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 5</span>
+                <div>
+                    <h3>Full Modernization</h3>
+                    <p>Robotics established as a brand standard. Predictive maintenance ecosystem active.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+        
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.25, 0.8, 2.1, 4.5, 7.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Table Turnover Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Tables Served per Hour',
+                    data: [4.5, 6.2],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', // Muted for manual
+                        '#7c3aed' // Bright for Robot
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
