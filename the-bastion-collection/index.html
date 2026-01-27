@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bastion Collection | Robotics Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Intelligence</div>
+            <h1>The Bastion Collection</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Research Report</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Ref: AUTO-BASTION-24</div>
+        </div>
+    </header>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Est. Annual Savings</div>
+            <div class="metric-value">$80k</div>
+            <div class="metric-label">Per Location</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">6.2</div>
+            <div class="metric-label">Months</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Guest Face Time</div>
+            <div class="metric-value">+30%</div>
+            <div class="metric-label">Via Automated Bussing</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">CAPEX Entry</div>
+            <div class="metric-value">$41k</div>
+            <div class="metric-label">Total Deployment</div>
+        </div>
+    </div>
+
+    <div class="section-grid">
+        <!-- Main Research Content -->
+        <div class="content-card">
+            <h2>Strategic Analysis</h2>
+            <p>The integration of robotics into The Bastion Collection's ecosystem requires a philosophy of "Invisible Efficiency." Unlike QSR models, automation here serves to elevate the human connection by removing logistical burdens from sommeliers and captains.</p>
+            
+            <h3>Pathway A: The Silent Runner</h3>
+            <span class="pathway-badge">Front-of-House</span>
+            <p>Deployment of autonomous mobile robots to handle kitchen-to-station transit. By automating the "long haul" of food running, staff remain on the floor, increasing wine sales and guest engagement.</p>
+
+            <h3>Pathway B: Precision Prep</h3>
+            <span class="pathway-badge">Back-of-House</span>
+            <p>Automated temperature control and blanching systems to ensure Michelin-star consistency while reducing repetitive strain injuries for commis chefs.</p>
+
+            <h3>Pathway C: AI Concierge</h3>
+            <span class="pathway-badge">Digital Support</span>
+            <p>24/7 AI Voice Agents to handle reservations and private dining inquiries, ensuring zero missed revenue opportunities and automated CRM population.</p>
+        </div>
+
+        <!-- Charts Column -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            <div class="content-card">
+                <h2>Cumulative Labor Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px;">*Projected 5-year cumulative savings based on 1.5 FTE reduction per venue.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>Table Turnover Velocity</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px;">*Reduction in dead-time between courses allows for optimized seating.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="content-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div>
+                <h3 style="margin-top: 0; color: white;">Year 1</h3>
+                <p style="font-size: 0.9rem;">Pilot Program in Miami. Deployment of 2 Logistics Robots.</p>
+            </div>
+            <div>
+                <h3 style="margin-top: 0; color: white;">Year 2</h3>
+                <p style="font-size: 0.9rem;">Expansion to NY/Houston. BOH Prep Automation Trials.</p>
+            </div>
+            <div>
+                <h3 style="margin-top: 0; color: white;">Year 3</h3>
+                <p style="font-size: 0.9rem;">Full POS Integration. Transition of "Runner" roles to "Captains."</p>
+            </div>
+            <div>
+                <h3 style="margin-top: 0; color: white;">Year 5</h3>
+                <p style="font-size: 0.9rem;">Full Ecosystem Maturity. 20% EBITDA Margin Increase.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [80000, 165000, 255000, 350000, 460000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Table Turnover Bar Chart
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Turn Time (Minutes)',
+                data: [135, 115],
+                backgroundColor: ['rgba(255, 255, 255, 0.1)', '#3b82f6'],
+                borderRadius: 8,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    title: { display: true, text: 'Average Table Duration (Min)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
