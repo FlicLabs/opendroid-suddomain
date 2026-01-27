@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xander Staffing | Strategic Robotics Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 25px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* KPI Dashboard */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .kpi-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .kpi-sub {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .year-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 20px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Senior Consultation</div>
+            <h1>Xander Staffing</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Research Report</div>
+            <div style="color: var(--text-muted);">Logistics Automation Strategy</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Est. Capex / Station</div>
+            <div class="kpi-value">$75k</div>
+            <div class="kpi-sub">Avg. Hardware Cost</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Opex Reduction</div>
+            <div class="kpi-value">35%</div>
+            <div class="kpi-sub">Target Labor/Energy Savings</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Payback Period</div>
+            <div class="kpi-value">20 Mo</div>
+            <div class="kpi-sub">Break-even Estimate</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Throughput Gain</div>
+            <div class="kpi-value">2.1x</div>
+            <div class="kpi-sub">Picks Per Hour Increase</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <section class="card">
+        <h2>Executive Summary: The Hybrid Workforce</h2>
+        <p>
+            The logistics staffing industry faces an inflection point. Traditional headcount-based revenue models are being challenged by labor shortages and wage inflation. For Xander Staffing, the strategic vision must shift from being a supplier of temporary labor to a provider of <strong>Managed Hybrid Workforces</strong>.
+        </p>
+        <p>
+            Our research indicates that Xander Staffing is uniquely positioned to bridge the gap between human intuition and robotic consistency. By integrating Autonomous Mobile Robots (AMRs) and AI-driven management tools, Xander can offer clients guaranteed throughput rates rather than just guaranteed hours.
+        </p>
+    </section>
+
+    <!-- Visualizations -->
+    <section class="charts-container">
+        <div class="card">
+            <h3 style="margin-top:0">Cumulative Savings (5 Years)</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0">Manual vs. Robotic Throughput</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robotics Opportunities -->
+    <section class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: AMRs for Internal Transport</h3>
+        <p><strong>Goal:</strong> Reduce non-value-added travel time.<br>
+        Warehouse associates spend up to 50% of shifts walking. Deploying "fetch-and-freight" AMRs changes the associate's role from "walker" to "zone specialist," doubling pick rates.</p>
+
+        <h3>Pathway B: Robotic Piece Picking & ASRS</h3>
+        <p><strong>Goal:</strong> High density and accuracy.<br>
+        Xander will transition from supplying manual pickers to training "Robot Operators." This shift increases pick accuracy from 98.5% to 99.9% while significantly increasing storage density.</p>
+
+        <h3>Pathway C: AI-Driven Logistics</h3>
+        <p><strong>Goal:</strong> Predictive Efficiency.<br>
+        Integration of workforce management AI allows for predictive staffing, reducing "bench time" and overtime costs by aligning workforce count precisely with predicted robotic throughput.</p>
+    </section>
+
+    <!-- Implementation Roadmap -->
+    <section class="card">
+        <h2>Implementation Roadmap</h2>
+        
+        <div class="roadmap-item">
+            <div class="year-badge">YEAR 1</div>
+            <div>
+                <strong>Pilot & Train</strong><br>
+                <span style="color:var(--text-muted)">Select one major client facility for a hybrid pilot. Deploy 10 AMRs. Upskill 5 top associates to "Automation Leads."</span>
+            </div>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-badge">YEAR 2</div>
+            <div>
+                <strong>Standardization</strong><br>
+                <span style="color:var(--text-muted)">Standardize the "Xander Hybrid Pod" module. Expand to 3 regional hubs. Introduce outcome-based billing.</span>
+            </div>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-badge">YEAR 3</div>
+            <div>
+                <strong>Integration</strong><br>
+                <span style="color:var(--text-muted)">Full AI scheduling integration. Launch "Turnkey Fulfillment Teams" (Staff + Robots package).</span>
+            </div>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-badge">YEAR 4</div>
+            <div>
+                <strong>Scaling</strong><br>
+                <span style="color:var(--text-muted)">Expansion into Robotic Piece Picking. Target 30% of revenue from Hybrid Workforce contracts.</span>
+            </div>
+        </div>
+
+        <div class="roadmap-item">
+            <div class="year-badge">YEAR 5</div>
+            <div>
+                <strong>Market Leadership</strong><br>
+                <span style="color:var(--text-muted)">Establish Xander Staffing as the premier "Human-in-the-Loop" provider. Achieve 40% reduction in total operational costs.</span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Hybrid (AMR)', 'Full Robotic'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [90, 210, 350],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed',
+                    '#10b981'
+                ],
+                borderWidth: 0,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
