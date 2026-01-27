@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMS Robotics Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --accent: #7c3aed;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #0f172a 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #a78bfa;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        canvas {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .pathway-box h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p class="subtitle">Open Droids Consulting</p>
+        <h1>IMS LOGISTICS AUTOMATION</h1>
+    </header>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <span class="metric-value">35%</span>
+            <span class="metric-label">Target OPEX Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">18-22</span>
+            <span class="metric-label">Months Payback</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$100k</span>
+            <span class="metric-label">Max CAPEX per Station</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Kitting Accuracy</span>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Robotics Pathways</h2>
+        <div class="grid-3">
+            <div class="pathway-box">
+                <h3>AMR Integration</h3>
+                <p>Autonomous Mobile Robots to eliminate worker travel time between kitting stations and loading docks.</p>
+            </div>
+            <div class="pathway-box">
+                <h3>ASRS Density</h3>
+                <p>Vertical storage automation to maximize warehouse cubic volume and increase SKU capacity by 60%.</p>
+            </div>
+            <div class="pathway-box">
+                <h3>AI Orchestration</h3>
+                <p>Predictive WES software to align robotic labor with upcoming retail marketing campaign schedules.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h2>Throughput Comparison</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <p><strong>Year 1:</strong> Pilot Program & AI Integration<br>
+        <strong>Year 2-3:</strong> Multi-facility AMR Expansion & Piece Picking<br>
+        <strong>Year 4-5:</strong> Full Network Synchronization & Autonomous Freight</p>
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (Millions $)',
+                data: [0.5, 2.2, 5.8, 10.5, 16.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: '#fff' } } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Picking'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [85, 240],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
