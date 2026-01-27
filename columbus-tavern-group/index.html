@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Columbus Tavern Group | Robotics Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 15px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-card {
+            grid-column: span 3;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-card {
+            grid-column: span 6;
+            height: 350px;
+        }
+
+        .strategy-section {
+            grid-column: span 12;
+            margin-top: 20px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pathway-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .pathway-header {
+            color: var(--accent-purple);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .metric-card { grid-column: span 6; }
+            .chart-card { grid-column: span 12; }
+            .pathway-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Columbus Tavern Group</h1>
+        <div class="subtitle">Automated Hospitality ROI Dashboard & Strategic Analysis</div>
+    </div>
+
+    <!-- KPI METRICS -->
+    <div class="dashboard-grid">
+        <div class="card metric-card">
+            <div class="metric-label">Target Labor Savings</div>
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Front of House</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">11mo</div>
+            <div class="metric-label">Break-even Point</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Est. CapEx</div>
+            <div class="metric-value">$32k</div>
+            <div class="metric-label">Per Location (Start)</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">+18%</div>
+            <div class="metric-label">Table Turnover</div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="dashboard-grid">
+        <div class="card chart-card">
+            <h3>5-Year Cumulative Labor Savings (Projected)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card chart-card">
+            <h3>Table Turnover: Manual vs. Robot-Assisted</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- STRATEGIC PATHWAYS -->
+    <div class="card strategy-section">
+        <h3>Strategic Opportunity Pathways</h3>
+        <p style="color: var(--text-muted);">Three-pronged approach to modernizing the tavern experience without sacrificing atmosphere.</p>
+        
+        <div class="pathway-grid">
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY A</span>
+                <h4>FOH Service Robots</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Deployment of runners for heavy tray delivery and bussing. Allows human servers to remain in their sections, focusing on drink refills and guest interaction.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY B</span>
+                <h4>Automated Frying</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Back-of-House integration of auto-basket fryers for wings and fries. Ensures perfect consistency, reduces food waste, and minimizes burn risks.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY C</span>
+                <h4>Voice AI Agents</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Implementation of AI for phone orders and reservations. Captures 100% of inbound calls during loud service hours, ensuring zero lost revenue.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [30000, 95000, 180000, 290000, 420000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Friday Night', 'Saturday Night', 'Sunday Lunch'],
+                datasets: [
+                    {
+                        label: 'Manual Service (Turns)',
+                        data: [2.5, 3.0, 2.2],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Robot-Assisted (Turns)',
+                        data: [3.2, 3.8, 2.8],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
