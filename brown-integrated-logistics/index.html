@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Integrated Logistics - Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --primary: #7c3aed;
+            --accent: #a78bfa;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container { grid-template-columns: 1fr; }
+        }
+
+        h2 { color: var(--accent); border-left: 4px solid var(--primary); padding-left: 15px; }
+        p { line-height: 1.6; color: #cbd5e1; }
+        .footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>BROWN INTEGRATED LOGISTICS</h1>
+        <p>Strategic Automation & Robotics Initiative - Open Droids Consultation</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <span class="metric-value">$100K</span>
+            <span class="metric-label">Max Capex Per Station</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">OPEX Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">24mo</span>
+            <span class="metric-label">Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">3.5x</span>
+            <span class="metric-label">Throughput Multiplier</span>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>This initiative leverages modular robotics to transition Brown Integrated Logistics into a technology-first 3PL. By focusing on Autonomous Mobile Robots (AMRs) and AI-driven predictive logistics, the company will achieve unprecedented efficiency in its Southeast distribution hubs.</p>
+    </div>
+
+    <div class="chart-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput: Manual vs. Robotic</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div>
+                <h4 style="color:var(--accent)">AMR Integration</h4>
+                <p style="font-size: 0.9rem;">Automating dock-to-stock workflows to reduce worker fatigue and increase safety.</p>
+            </div>
+            <div>
+                <h4 style="color:var(--accent)">Piece Picking</h4>
+                <p style="font-size: 0.9rem;">Deploying high-speed robotic arms for e-commerce fulfillment accuracy.</p>
+            </div>
+            <div>
+                <h4 style="color:var(--accent)">AI Yard Management</h4>
+                <p style="font-size: 0.9rem;">Using predictive intelligence to optimize trucking and trailer flow.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        CONFIDENTIAL REPORT - OPEN DROIDS ROBOTICS RESEARCH DIVISION 2024
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Savings (Millions USD)',
+                data: [0.8, 2.1, 4.5, 7.8, 12.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robotic Hybrid'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [120, 420],
+                backgroundColor: ['#475569', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
