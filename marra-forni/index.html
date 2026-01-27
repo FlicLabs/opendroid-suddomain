@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marra Forni: Automation Strategy Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .glass-header {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.4), rgba(15, 23, 42, 0.8));
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            text-align: center;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #e2e8f0;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #a78bfa;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            background: #7c3aed;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+        
+        .step-year {
+            background: #7c3aed;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="glass-header">
+            <h1>Marra Forni</h1>
+            <div class="subtitle">Strategic Automation & Robotics Assessment</div>
+            <div style="margin-top: 15px; font-size: 0.9rem; color: #a78bfa;">OPEN DROIDS CONSULTATION</div>
+        </div>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Est. Annual Savings</div>
+                <div class="metric-value">$45,000</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Per Location / Year</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">11.5 Mo</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Target < 14 Months</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Labor Reduction</div>
+                <div class="metric-value">22%</div>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Front-of-House OPEX</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            
+            <!-- Left Column: Strategy -->
+            <div>
+                <div class="glass-card">
+                    <h2>Executive Summary</h2>
+                    <p style="color: #cbd5e1;">
+                        Marra Forni stands at the precipice of a culinary revolution. By integrating high-performance "Rotator" ovens with Open Droids robotics, we can create a turnkey "Smart Pizzeria" ecosystem. This strategy shifts the focus from equipment sales to holistic operational solutions, directly addressing the labor crisis in the hospitality sector.
+                    </p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Robotics Pathways</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <span class="pathway-badge">PATHWAY A</span>
+                        <h3 style="display:inline-block; margin-left: 10px;">FOH Serving Robots</h3>
+                        <p style="font-size: 0.9rem; color: #cbd5e1;">Deployment of autonomous runners to handle heavy pizza trays (40kg capacity), increasing table touchpoints by 30%.</p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <span class="pathway-badge">PATHWAY B</span>
+                        <h3 style="display:inline-block; margin-left: 10px;">Automated Oven Tending</h3>
+                        <p style="font-size: 0.9rem; color: #cbd5e1;">Cobot integration for "Landing Zone" management, ensuring 100% bake consistency and zero charring.</p>
+                    </div>
+
+                    <div>
+                        <span class="pathway-badge">PATHWAY C</span>
+                        <h3 style="display:inline-block; margin-left: 10px;">AI Upselling Kiosks</h3>
+                        <p style="font-size: 0.9rem; color: #cbd5e1;">Visual AI driven kiosks to increase average check size by 12-15% via smart ingredient suggestions.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Implementation Roadmap</h2>
+                    <div class="roadmap-step">
+                        <div class="step-year">Y1</div>
+                        <div><strong>The Smart Lab:</strong> Retrofit Beltsville HQ with Proof of Concept units.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-year">Y2</div>
+                        <div><strong>Pilot Program:</strong> Deploy to 5 high-volume client locations.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-year">Y3</div>
+                        <div><strong>API Integration:</strong> Sync Rotator Oven controls with Robotics.</div>
+                    </div>
+                    <div class="roadmap-step">
+                        <div class="step-year">Y5</div>
+                        <div><strong>AI Maturity:</strong> Predictive dough management systems.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Data Visualization -->
+            <div>
+                <div class="glass-card">
+                    <h2>Cumulative Savings Analysis</h2>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 15px;">5-Year Projection: Manual Labor vs. Robotic Automation</p>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Efficiency Metrics</h2>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 15px;">Table Turnover Rate (Parties per Shift)</p>
+                    <div class="chart-container">
+                        <canvas id="turnoverChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Financial Model</h2>
+                    <ul>
+                        <li><strong>CAPEX:</strong> $55k - $63k (Pilot Total)</li>
+                        <li><strong>OPEX Savings:</strong> ~$3,750 / Month</li>
+                        <li><strong>Maint. Cost:</strong> $200 / Month</li>
+                        <li><strong>ROI Speed:</strong> < 1 Year</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [45000, 95000, 150000, 210000, 275000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Turnover Rate
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Tables Turned per Night',
+                    data: [45, 62],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
