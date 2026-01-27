@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tractor Beverage Co. Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section { grid-template-columns: 1fr; }
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .roadmap {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        .year {
+            font-weight: 800;
+            color: var(--accent-purple);
+            min-width: 80px;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Tractor Beverage Co.</h1>
+        <p>Automation & Hospitality ROI Dashboard</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="metric-card">
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Labor Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$140k</div>
+            <div class="metric-label">5-Year Savings/Unit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">14mo</div>
+            <div class="metric-label">Target Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Pour Consistency</div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-container">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Table Turnover Rate (Hourly)</h2>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <div class="roadmap">
+        <h2>Strategic Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="year">YEAR 1</div>
+            <div>Deployment of autonomous beverage runners and pilot pouring kiosks.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year">YEAR 2</div>
+            <div>AI voice integration for personalized beverage ordering.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year">YEAR 3</div>
+            <div>BOH automated inventory and syrup management systems.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year">YEAR 4</div>
+            <div>Fleet-wide robotic connectivity and preventative maintenance AI.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="year">YEAR 5</div>
+            <div>Full ecosystem optimization and global expansion.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [15000, 42000, 75000, 110000, 145000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#f8fafc' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Table Turns per Shift',
+                data: [3.2, 4.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.1)', '#7c3aed'],
+                borderColor: '#7c3aed',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#f8fafc' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f8fafc' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
