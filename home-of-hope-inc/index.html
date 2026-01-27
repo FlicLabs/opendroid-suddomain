@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home of Hope Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --accent-purple: #7c3aed;
+        --accent-blue: #3b82f6;
+        --accent-green: #10b981;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .report-title span {
+        font-size: 0.85rem;
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        margin-top: 0;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    h2::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent-purple);
+        border-radius: 50%;
+        margin-right: 10px;
+        box-shadow: 0 0 10px var(--accent-purple);
+    }
+
+    p {
+        line-height: 1.6;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    /* Financial Dashboard */
+    .dashboard-metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(124, 58, 237, 0.05);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+        font-size: 0.9rem;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-row {
+        background: rgba(124, 58, 237, 0.05);
+    }
+
+    .positive {
+        color: var(--accent-green);
+    }
+
+    /* Chart Container */
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <span>Client Portfolio</span>
+            <h1>Home of Hope Inc.</h1>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Synthesis</h2>
+        <p>Home of Hope Inc. stands at a critical juncture where labor scarcity in the care sector necessitates a shift from manual dependency to robotic augmentation. By integrating assistive transfer robotics and telepresence monitoring, the organization can convert its primary liability—high-turnover labor—into an optimized, scalable asset. The projected ROI indicates a break-even point within 16 months, with long-term gains centered on liability reduction and capacity expansion.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Impact Dashboard</h2>
+        
+        <div class="dashboard-metrics">
+            <div class="metric-card">
+                <div class="metric-label">Annual Net Benefit</div>
+                <div class="metric-value">$390k</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">5-Year Cumulative</div>
+                <div class="metric-value">$1.8M+</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Injury Reduction</div>
+                <div class="metric-value">-30%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">16 Mo</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Opportunity Pathway</th>
+                    <th>Scope</th>
+                    <th>Annual Benefit (Est.)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: #fff; font-weight: 600;">Pathway A: Assistive Transfer</td>
+                    <td>High Acuity ICFs</td>
+                    <td>$120,000</td>
+                    <td class="positive">Low</td>
+                </tr>
+                <tr>
+                    <td style="color: #fff; font-weight: 600;">Pathway B: Telepresence Fleet</td>
+                    <td>Waiver Homes</td>
+                    <td>$450,000</td>
+                    <td style="color: #f59e0b;">Moderate</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td style="color: #fff; font-weight: 600;">Combined Net Impact</td>
+                    <td>Network Wide</td>
+                    <td class="positive">+$570,000 / yr</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Incident Reduction Projection</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; gap: 20px; margin-top: 20px;">
+            <div style="flex: 1; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px solid var(--glass-border);">
+                <div style="color: var(--accent-blue); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px;">Phase 1 (0-6 Mo)</div>
+                <strong style="display: block; margin-bottom: 5px;">Pilot & Safety</strong>
+                <p style="font-size: 0.85rem; margin: 0;">Deploy smart hoists in top 5 high-risk homes. Establish safety baseline.</p>
+            </div>
+            <div style="flex: 1; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px solid var(--glass-border);">
+                <div style="color: var(--accent-purple); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px;">Phase 2 (6-12 Mo)</div>
+                <strong style="display: block; margin-bottom: 5px;">Remote Hub</strong>
+                <p style="font-size: 0.85rem; margin: 0;">Activate telepresence hub. Transition 10 homes to hybrid night staffing.</p>
+            </div>
+            <div style="flex: 1; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px solid var(--glass-border);">
+                <div style="color: var(--accent-green); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px;">Phase 3 (Year 2+)</div>
+                <strong style="display: block; margin-bottom: 5px;">Network Scale</strong>
+                <p style="font-size: 0.85rem; margin: 0;">Full fleet integration. Automated dispensing rollout. Data-driven HR.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 5-Year Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($)',
+                data: [390000, 750000, 1150000, 1500000, 1850000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value / 1000 + 'k';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Throughput/Safety Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current State', 'Year 1 Target', 'Year 2 Target'],
+            datasets: [
+                {
+                    label: 'Staff Injuries (Annual)',
+                    data: [45, 30, 15],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Medication Errors (Annual)',
+                    data: [120, 20, 5],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
