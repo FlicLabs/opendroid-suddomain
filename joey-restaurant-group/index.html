@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joey Restaurant Group - Robotics Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-glow);
+        }
+
+        .metric-big {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Intelligence</div>
+            <h1>Joey Restaurant Group</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="metric-label">Report ID</div>
+            <div style="color: #fff; font-weight: 600;">OD-JOEY-2024</div>
+        </div>
+    </header>
+
+    <!-- ROI DASHBOARD -->
+    <div class="grid">
+        <div class="card col-4">
+            <div class="metric-label">Projected Labor Reduction</div>
+            <div class="metric-big" style="color: #4ade80;">22%</div>
+            <p>Target savings in Front-of-House runner logistics via Pathway A implementation.</p>
+        </div>
+        <div class="card col-4">
+            <div class="metric-label">Breakeven Velocity</div>
+            <div class="metric-big" style="color: #fbbf24;">8.5</div>
+            <p>Months to full ROI based on current labor rates and table turnover increase.</p>
+        </div>
+        <div class="card col-4">
+            <div class="metric-label">CAPEX Per Location</div>
+            <div class="metric-big" style="color: #a78bfa;">$56k</div>
+            <p>Includes 3 premium units, mapping, installation, and initial training.</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="grid">
+        <div class="card col-8">
+            <span class="badge">Executive Strategy</span>
+            <h2>The Hybrid Service Model</h2>
+            <p>For a brand like Joey, automation must be invisible to the guest experience but tangible to the bottom line. Our strategy focuses on "Logistical Automation"—offloading the heavy lifting of food running and bussing to robotics.</p>
+            <p>This allows human servers to remain in their sections, increasing guest touchpoints, upselling opportunities for wine/cocktails, and overall service speed.</p>
+        </div>
+        <div class="card col-4">
+            <span class="badge">Scope</span>
+            <h2>Target Profile</h2>
+            <ul>
+                <li><strong>Type:</strong> Premium Casual FSR</li>
+                <li><strong>Key Pain Point:</strong> Peak Hour Consistency</li>
+                <li><strong>Solution:</strong> Multi-tray Runner Bots</li>
+                <li><strong>Outcome:</strong> Higher Table Turnover</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="grid">
+        <div class="card col-6">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card col-6">
+            <h2>Table Turnover Efficiency</h2>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="grid">
+        <div class="card col-12">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; gap: 20px; margin-top: 20px;">
+                <div>
+                    <strong style="color: #fff;">Year 1</strong>
+                    <p>Pilot Program in 3 Flagship Locations.</p>
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 2</strong>
+                    <p>US-Wide Rollout & BOH Testing.</p>
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 3</strong>
+                    <p>POS & Kitchen Display Integration.</p>
+                </div>
+                <div>
+                    <strong style="color: #fff;">Year 5</strong>
+                    <p>Full AI Ecosystem Maturity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Confidential Research by Open Droids | Senior Consultation Division
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($M)',
+                data: [0.3, 1.2, 2.8, 4.5, 6.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Avg Turns Per Night',
+                data: [3.2, 4.1],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
