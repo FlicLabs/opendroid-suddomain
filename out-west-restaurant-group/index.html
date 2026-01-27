@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Out West Restaurant Group | Automation Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #a78bfa;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--text-main);
+        }
+
+        h3 {
+            color: var(--accent-glow);
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        ul {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="sub-header">Open Droids Intelligence</div>
+            <h1>Out West Restaurant Group</h1>
+            <p style="color: var(--text-muted); margin-top: 5px;">Strategic Automation & Robotics Feasibility Study</p>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="card metric-card">
+                <div class="metric-value">13mo</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value">18%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value">$38k</div>
+                <div class="metric-label">Initial CAPEX / Unit</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-value">+0.5</div>
+                <div class="metric-label">Daily Table Turns Gained</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="card">
+                <h2>5-Year Cumulative Savings</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Table Turnover Efficiency</h2>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <span class="tag">Vision</span>
+            <span class="tag">Hospitality</span>
+            <h2>Executive Summary</h2>
+            <p>Out West Restaurant Group stands at a pivotal juncture where hospitality meets efficiency. The strategic integration of robotics is designed not to replace the human touch, but to amplify it. By automating high-friction tasks like food running and bussing, we empower servers to focus on the guest experience. This hybrid model addresses the critical challenges of labor shortages in the Western region while securing long-term profitability.</p>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <div style="margin-bottom: 25px;">
+                <h3>Pathway A: FOH Serving Robots</h3>
+                <p><strong>Primary Focus:</strong> Table Turnover & Staff Support.</p>
+                <p>Deployment of collaborative runners (e.g., BellaBot) to transport heavy trays from the expo line to dining zones. This reduces physical fatigue and keeps servers on the floor with guests.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3>Pathway B: BOH Automated Frying</h3>
+                <p><strong>Primary Focus:</strong> Consistency & Safety.</p>
+                <p>Automation of the appetizer station. Robotic fry baskets ensure precise cook times for signature items while reducing burn risks for kitchen staff.</p>
+            </div>
+
+            <div>
+                <h3>Pathway C: AI Voice Agents</h3>
+                <p><strong>Primary Focus:</strong> Upselling & Accuracy.</p>
+                <p>Integration of Conversational AI for phone orders. This system never misses a call, consistently upsells add-ons, and integrates directly into the POS system.</p>
+            </div>
+        </div>
+
+        <!-- Financial Model -->
+        <div class="card">
+            <h2>Financial Projections</h2>
+            <ul>
+                <li><strong>CAPEX:</strong> Estimated hardware costs range between $32k - $38k per location.</li>
+                <li><strong>OPEX Impact:</strong> Targeting a net monthly savings of $3,200 per location via reduced overtime and support staff hours.</li>
+                <li><strong>ROI:</strong> Break-even projected between month 11 and 13, with a 220% return on hardware investment by Year 3.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings ($)',
+                    data: [38000, 92000, 156000, 230000, 315000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Rate Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Avg Table Turns (Fri/Sat)',
+                    data: [3.1, 4.2],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', // Muted Grey
+                        'rgba(124, 58, 237, 0.8)'  // Electric Purple
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
