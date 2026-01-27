@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midstate Radiology Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --accent-purple: #7c3aed;
+        --accent-blue: #3b82f6;
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Header */
+    .header {
+        background: rgba(124, 58, 237, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-area h1 {
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2rem;
+    }
+
+    .logo-area span {
+        color: var(--accent-purple);
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .client-name {
+        text-align: right;
+    }
+
+    .client-name h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+    }
+
+    /* Dashboard Grid */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 25px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-purple);
+    }
+
+    .card h3 {
+        color: var(--accent-purple);
+        margin-top: 0;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 10px 0;
+        background: linear-gradient(to right, #fff, var(--accent-blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        color: var(--text-secondary);
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.95rem;
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+        color: #fff;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-top: 40px;
+    }
+
+    .chart-box {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 25px;
+        min-height: 350px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .tag-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; }
+    .tag-med { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .tag-low { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+        .header { flex-direction: column; text-align: center; gap: 20px; }
+        .client-name { text-align: center; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-area">
+            <span>Consultation & Research</span>
+            <h1>OPEN DROIDS</h1>
+        </div>
+        <div class="client-name">
+            <span>Portfolio Analysis For:</span>
+            <h2>Midstate Radiology Associates LLC</h2>
+        </div>
+    </div>
+
+    <!-- Executive Summary Card -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h3>Executive Overview</h3>
+        <p style="color: #cbd5e1;">Midstate Radiology Associates is uniquely positioned to leverage "Virtual Cockpit" remote command centers and AI-driven scheduling. These technologies solve the critical bottleneck of technologist shortages while increasing MRI/CT utilization rates. The projected financial impact is substantial, driven by volume throughput rather than labor replacement.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid">
+        <div class="card">
+            <h3>Net Annual Benefit</h3>
+            <div class="metric-value">£5.7M</div>
+            <div class="metric-label">Projected by Year 3 (Mid-Case)</div>
+        </div>
+        <div class="card">
+            <h3>Throughput Uplift</h3>
+            <div class="metric-value">+18%</div>
+            <div class="metric-label">Scan Volume Increase</div>
+        </div>
+        <div class="card">
+            <h3>ROI Payback</h3>
+            <div class="metric-value">8 Mos</div>
+            <div class="metric-label">For Remote Command Center</div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h3>Pathway Comparison Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>A: AI Orchestration</strong></td>
+                    <td>Schedule Efficiency</td>
+                    <td>£2.5M</td>
+                    <td><span class="tag tag-low">Low Risk</span></td>
+                </tr>
+                <tr>
+                    <td><strong>B: Remote Command</strong></td>
+                    <td>Labor Scaling</td>
+                    <td>£6.0M</td>
+                    <td><span class="tag tag-med">Moderate Risk</span></td>
+                </tr>
+                <tr>
+                    <td><strong>C: Interventional Bot</strong></td>
+                    <td>Precision & Safety</td>
+                    <td>£0.8M</td>
+                    <td><span class="tag tag-low">Low Risk</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="charts-container">
+        <div class="chart-box">
+            <h3>5-Year Cumulative Net Benefit</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h3>Daily Scans Per Machine (Throughput)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [1.2, 4.5, 9.8, 16.5, 24.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current Manual', 'With AI Scheduling', 'With Remote Command'],
+            datasets: [{
+                label: 'Scans Per Day (Avg)',
+                data: [18, 22, 26],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(124, 58, 237, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
