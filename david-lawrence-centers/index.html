@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Lawrence Centers - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        h1, h2, h3 {
+            color: #7c3aed;
+            margin-top: 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            display: block;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.6);
+        }
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #cbd5e1;
+        }
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #7c3aed;
+            color: #7c3aed;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div>DLC Robotics Portfolio 2024</div>
+        </header>
+
+        <div class="card">
+            <h1>Executive Dashboard: David Lawrence Centers</h1>
+            <p>Strategic automation roadmap for community behavioral health excellence.</p>
+            <div class="grid">
+                <div class="metric-card">
+                    <span class="metric-value">£2.2M</span>
+                    <span class="metric-label">Est. Annual Net Benefit</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">31,200</span>
+                    <span class="metric-label">Hours Reclaimed / Year</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">3-6 Mo</span>
+                    <span class="metric-label">Average ROI Payback</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">9,000</span>
+                    <span class="metric-label">Patients Served Annually</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Clinician Throughput</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Pathway Financial Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opportunity</th>
+                        <th>Investment</th>
+                        <th>Annual Savings</th>
+                        <th>Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Workflow Automation</td>
+                        <td>£250k</td>
+                        <td>£2.2M</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Robotic Med Dispensing</td>
+                        <td>£600k</td>
+                        <td>£450k</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Telepresence Robotics</td>
+                        <td>£150k</td>
+                        <td>£300k</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Benefit (£ Millions)',
+                    data: [1.8, 4.2, 6.8, 9.5, 12.4],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'AI-Assisted'],
+                datasets: [{
+                    label: 'Patients per Week',
+                    data: [22, 34],
+                    backgroundColor: ['#1e293b', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
