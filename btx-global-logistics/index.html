@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTX Global Logistics - Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 4px solid var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+        }
+
+        .year-tag {
+            background: var(--accent-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container, .pathway-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>BTX GLOBAL LOGISTICS</h1>
+            <p style="color: var(--text-dim);">Open Droids Strategic Automation Report</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">$100k</div>
+                <div class="metric-label">Max Capex Per Station</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Target OPEX Reduction</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">< 24mo</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">99.9%</div>
+                <div class="metric-label">Picking Accuracy</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div>
+                    <h3 style="color: #fff;">AMR Integration</h3>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">Deployment of Autonomous Mobile Robots to streamline internal transport and dock-to-stock workflows.</p>
+                </div>
+                <div>
+                    <h3 style="color: #fff;">ASRS & Picking</h3>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">High-density vertical storage and robotic arms to handle micro-fulfillment and e-commerce growth.</p>
+                </div>
+                <div>
+                    <h3 style="color: #fff;">AI Orchestration</h3>
+                    <p style="color: var(--text-dim); font-size: 0.9rem;">Predictive logistics engine to synchronize robotic movements with real-time global freight data.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="glass-card">
+                <h2 style="font-size: 1.2rem;">5-Year Cumulative Savings</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h2 style="font-size: 1.2rem;">Throughput Comparison (Units/Hr)</h2>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-step">
+                <div class="year-tag">Year 1</div>
+                <div>Pilot AMR programs at primary regional hubs.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="year-tag">Year 2</div>
+                <div>Network scaling and infrastructure modernization.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="year-tag">Year 3</div>
+                <div>Integration of robotic piece picking for e-commerce.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="year-tag">Year 4</div>
+                <div>Network-wide optimization and AI synchronization.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="year-tag">Year 5</div>
+                <div>Full Autonomous Ecosystem realization.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Savings (Millions USD)',
+                    data: [0.5, 1.8, 4.2, 7.5, 12.0],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+
+        // Throughput Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Operations', 'Robotic Hybrid'],
+                datasets: [{
+                    label: 'Units Per Hour',
+                    data: [120, 450],
+                    backgroundColor: ['rgba(148, 163, 184, 0.3)', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
