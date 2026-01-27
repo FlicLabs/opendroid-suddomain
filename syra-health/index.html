@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syra Health Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-card h2 {
+        color: #7c3aed;
+        margin-top: 0;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .glass-card h3 {
+        color: #fff;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(124, 58, 237, 0.1));
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        margin-top: 5px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        background: rgba(124, 58, 237, 0.2);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 4px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Chart Container */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .col-6 {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .highlight {
+        color: #7c3aed;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="font-size: 0.9rem; color: #94a3b8;">ROBOTICS CONSULTATION: SYRA HEALTH</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <h3>Syra Health: The Digital Workforce Transformation</h3>
+        <p>Syra Health's primary opportunity lies in <strong>Process Robotics (RPA)</strong> and AI-driven workforce logistics. By shifting from manual staffing operations to an automated digital workforce model, the company can decouple revenue growth from administrative costs.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">60%</div>
+            <div class="metric-label">Faster Time-to-Fill</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$8M</div>
+            <div class="metric-label">Annual Margin Uplift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">3 Mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row">
+        <div class="col-6 glass-card">
+            <h2>Financial Projection</h2>
+            <h3>5-Year Cumulative Net Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="col-6 glass-card">
+            <h2>Operational Efficiency</h2>
+            <h3>Recruiter Throughput (Placements/Month)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Matrix Table -->
+    <div class="glass-card">
+        <h2>Opportunity Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Technology Scope</th>
+                    <th>Primary Value Driver</th>
+                    <th>Est. Annual Impact</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>A. Recruitment RPA</strong></td>
+                    <td>Auto-Sourcing & Vetting Agents</td>
+                    <td>Speed to Revenue</td>
+                    <td>$5M - $10M</td>
+                    <td style="color: #4ade80;">Low</td>
+                </tr>
+                <tr>
+                    <td><strong>B. Data Automation</strong></td>
+                    <td>Pop-Health Data Bots</td>
+                    <td>Contract Retention</td>
+                    <td>$1M - $3M</td>
+                    <td style="color: #fbbf24;">Moderate</td>
+                </tr>
+                <tr>
+                    <td><strong>C. Telepresence</strong></td>
+                    <td>Remote Monitoring Hardware</td>
+                    <td>Market Differentiation</td>
+                    <td>Strategic</td>
+                    <td style="color: #f87171;">High</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Financial Model Detail -->
+    <div class="glass-card">
+        <h2>Pathway A: Financial Model Detail</h2>
+        <p>Analysis based on deployment of 50 Digital Workers replacing administrative burden for 100+ recruiters.</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Baseline Placements / Recruiter</td>
+                    <td style="text-align: right;">12 / month</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Robotic Enhanced Placements</span></td>
+                    <td style="text-align: right; font-weight: bold;">28 / month</td>
+                </tr>
+                <tr>
+                    <td>Platform Cost (Annual)</td>
+                    <td style="text-align: right;">$750,000</td>
+                </tr>
+                <tr>
+                    <td>Net Incremental Benefit</td>
+                    <td style="text-align: right; color: #4ade80;">$8,200,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // 5-Year Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [3.5, 8.2, 14.5, 20.1, 26.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Throughput Comparison Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic/AI Assisted'],
+            datasets: [{
+                label: 'Placements Per Recruiter/Month',
+                data: [12, 28],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#7c3aed'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
