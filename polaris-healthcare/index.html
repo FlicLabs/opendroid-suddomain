@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polaris Healthcare Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 { font-weight: 800; font-size: 3rem; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        h2 { font-weight: 600; font-size: 1.5rem; color: var(--text-muted); margin-top: 0; }
+        h3 { font-size: 1.2rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        p { line-height: 1.6; color: var(--text-muted); }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid var(--accent);
+            padding: 10px 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+
+        /* Dashboard Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+        th {
+            text-align: left;
+            padding: 12px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        td {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 1.1rem;
+        }
+        .metric-big { font-size: 2.5rem; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; }
+        .metric-label { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
+        .trend-up { color: var(--success); font-size: 0.9rem; font-weight: 600; }
+        
+        /* Badge */
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--accent);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+        <div>
+            <h1>Polaris Healthcare</h1>
+            <h2>Robotics Opportunity Portfolio & ROI Analysis</h2>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h3>Executive Summary</h3>
+        <p>Polaris Healthcare is uniquely positioned to leverage robotics to stabilize workforce dynamics in the post-acute sector. The strategic deployment of <strong>Autonomous Mobile Robots (AMRs)</strong> for logistics and <strong>Robotic Rehabilitation systems</strong> will drive operational efficiency and revenue growth. Our analysis indicates a potential net operational benefit of over <strong>£720k annually</strong> in the initial phase alone, with payback periods of less than 12 months for logistics automation.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h3>Financial Dashboard (Pathway A: Logistics)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Automated (Robotic)</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Transport Hours</td>
+                    <td>300,000 Hours</td>
+                    <td>190,500 Hours</td>
+                    <td><span class="trend-up">▼ 36% Reduction</span></td>
+                </tr>
+                <tr>
+                    <td>Staff Efficiency (FTE)</td>
+                    <td>Low (Walking Heavy)</td>
+                    <td>High (Top-of-License)</td>
+                    <td><span class="trend-up">▲ 2.5 FTE / Site</span></td>
+                </tr>
+                <tr>
+                    <td>Net Annual Benefit</td>
+                    <td>£0 (Baseline)</td>
+                    <td>£720,000</td>
+                    <td><span class="trend-up">▲ Positive Cash Flow</span></td>
+                </tr>
+                <tr>
+                    <td>Payback Period</td>
+                    <td>N/A</td>
+                    <td><span class="badge">Immediate (RaaS)</span></td>
+                    <td>Risk Adjusted</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Net Savings (£M)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Daily Task Throughput (Per Facility)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="grid-3">
+        <!-- Pathway A -->
+        <div class="glass-card">
+            <span class="badge">Highest ROI</span>
+            <div style="margin-top: 15px;">
+                <h3>Pathway A: Logistics</h3>
+                <p><strong>Scope:</strong> Autonomous Mobile Robots for dietary, laundry, and waste transport.</p>
+                <span class="metric-big">£200k</span>
+                <span class="metric-label">Savings Per Facility</span>
+            </div>
+        </div>
+
+        <!-- Pathway B -->
+        <div class="glass-card">
+            <span class="badge">Strategic Growth</span>
+            <div style="margin-top: 15px;">
+                <h3>Pathway B: Rehab</h3>
+                <p><strong>Scope:</strong> Exoskeletons and gait trainers to drive referrals and high-acuity billing.</p>
+                <span class="metric-big">15%</span>
+                <span class="metric-label">Projected Referral Uplift</span>
+            </div>
+        </div>
+
+        <!-- Pathway C -->
+        <div class="glass-card">
+            <span class="badge">Quality & Safety</span>
+            <div style="margin-top: 15px;">
+                <h3>Pathway C: Telepresence</h3>
+                <p><strong>Scope:</strong> Remote physician access and night-shift monitoring support.</p>
+                <span class="metric-big">Low</span>
+                <span class="metric-label">Readmission Risk</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h3>Implementation Roadmap</h3>
+        <table>
+            <tr>
+                <td style="width: 20%; color: var(--accent); font-weight: bold;">Year 1</td>
+                <td><strong>Pilot & Stabilize:</strong> Deploy AMRs in flagship facility. Establish Wi-Fi infrastructure. Validate labor hour recovery.</td>
+            </tr>
+            <tr>
+                <td style="width: 20%; color: var(--accent); font-weight: bold;">Year 2</td>
+                <td><strong>Scale & Diversify:</strong> Roll out AMRs to 10 facilities. Introduce Robotic Rehab at 2 Centers of Excellence.</td>
+            </tr>
+            <tr>
+                <td style="width: 20%; color: var(--accent); font-weight: bold;">Year 3</td>
+                <td><strong>Full Integration:</strong> Complete fleet integration with nurse call systems. Night-shift telepresence deployment.</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£M)',
+                data: [0.72, 1.8, 3.2, 4.9, 6.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Delivery', 'Linen Transport', 'Waste Removal'],
+            datasets: [
+                {
+                    label: 'Manual Staff',
+                    data: [120, 80, 40],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 4,
+                    borderWidth: 0
+                },
+                {
+                    label: 'Robotic Fleet',
+                    data: [180, 140, 90],
+                    backgroundColor: '#10b981',
+                    borderRadius: 4,
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true,
+                    title: { display: true, text: 'Tasks Completed / Day' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
