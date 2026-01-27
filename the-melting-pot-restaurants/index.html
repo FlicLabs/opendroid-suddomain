@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | The Melting Pot Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tag {
+            background: var(--accent-purple);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p, li {
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="metric-label">Client Entity</div>
+                <h1>The Melting Pot</h1>
+            </div>
+            <div class="brand-tag">Open Droids Research</div>
+        </div>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="metric-label">Projected CAPEX</div>
+                <div class="metric-value">$65k</div>
+                <div class="metric-sub">Per Location / Avg</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Labor Reduction</div>
+                <div class="metric-value">22%</div>
+                <div class="metric-sub">Front-of-House OPEX</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">ROI Velocity</div>
+                <div class="metric-value">13 Mo</div>
+                <div class="metric-sub">Payback Period</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Safety Impact</div>
+                <div class="metric-value">-80%</div>
+                <div class="metric-sub">Burn/Spill Incidents</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="content-section">
+            <h2 class="section-title">Executive Vision</h2>
+            <p>The strategic integration of automation for The Melting Pot is not about replacing the human connection, but elevating it. By utilizing autonomous mobile robots (AMRs) for heavy lifting—specifically the transport of hot fondue pots and refill trays—we unlock the server's capacity to focus entirely on the experiential dining narrative.</p>
+        </div>
+
+        <!-- Robotics Opportunities -->
+        <div class="content-section">
+            <h2 class="section-title">Robotics Opportunity Pathways</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3 style="color: #fff;">Pathway A: FOH Serving Robots</h3>
+                    <p>Focus: Staff Safety & Table Turns</p>
+                    <ul>
+                        <li>Automated transport of heavy, hot liquids.</li>
+                        <li>Reduced physical strain on servers.</li>
+                        <li>Faster table resets increasing revenue per night.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #fff;">Pathway B: BOH Automation</h3>
+                    <p>Focus: Consistency & Prep</p>
+                    <ul>
+                        <li>Automated precision slicing for proteins.</li>
+                        <li>Induction automation for sauce consistency.</li>
+                        <li>High-volume dishwashing automation.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Visualization -->
+        <div class="content-section">
+            <h2 class="section-title">Projected Financial Impact</h2>
+            <div class="charts-container">
+                <div class="chart-box">
+                    <canvas id="laborChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Labor Savings Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        const laborChart = new Chart(ctxLabor, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings ($)',
+                    data: [45000, 110000, 190000, 280000, 390000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: '5-Year Cumulative Savings (Per Location)', color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Table Turnover Comparison Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        const turnoverChart = new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Friday PM', 'Saturday PM', 'Sunday PM'],
+                datasets: [
+                    {
+                        label: 'Manual Service Turns',
+                        data: [2.1, 2.5, 2.0],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robot-Assisted Turns',
+                        data: [2.8, 3.4, 2.7],
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                        borderColor: '#10b981',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Table Turnover Rate (Turns Per Night)', color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
