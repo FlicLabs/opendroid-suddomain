@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suncoast Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+        }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        h1, h2, h3 {
+            color: var(--text-main);
+            margin-top: 0;
+        }
+        .metric-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .metric-label {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            text-align: left;
+            color: var(--accent-purple);
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        canvas {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div style="text-align: right">
+                <span class="metric-label">Client:</span><br>
+                <strong>Suncoast Community Health Centers</strong>
+            </div>
+        </header>
+
+        <div class="glass-card">
+            <h1>Executive Summary</h1>
+            <p>Deployment of Robotics and AI at Suncoast focuses on high-volume efficiency. By automating pharmacy dispensing and administrative compliance, Suncoast can achieve a projected 5-year benefit of £2.4M, significantly enhancing community care capacity.</p>
+        </div>
+
+        <div class="grid">
+            <div class="glass-card">
+                <div class="metric-label">Annual Savings Potential</div>
+                <div class="metric-value">£485,000</div>
+                <p>Based on pharmacy labor reallocation and RPA efficiency gains.</p>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label">Throughput Increase</div>
+                <div class="metric-value">+12%</div>
+                <p>Estimated increase in patient volume capacity without new hires.</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3>Manual vs. Robotic Throughput</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3>Financial Modeling & Projections</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Manual Baseline</th>
+                        <th>Robotic Optimized</th>
+                        <th>Net Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pharmacy Dispensing</td>
+                        <td>450k Scripts/yr</td>
+                        <td>510k Scripts/yr</td>
+                        <td>+60k Scripts</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Compliance</td>
+                        <td>2,500 Hours</td>
+                        <td>450 Hours</td>
+                        <td>-82% Labor</td>
+                    </tr>
+                    <tr>
+                        <td>Wait Times</td>
+                        <td>45 Minutes</td>
+                        <td>12 Minutes</td>
+                        <td>-73% Reduction</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (£)',
+                    data: [150000, 600000, 1150000, 1750000, 2400000],
+                    borderColor: '#7c3aed',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Patients per Day',
+                    data: [280, 365],
+                    backgroundColor: ['#1e293b', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
