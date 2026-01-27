@@ -1,0 +1,318 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pei Wei Automation Research | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 15px 0;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 800; color: white; }
+        h2 { font-size: 1.5rem; color: var(--accent-color); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(45deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        ul { padding-left: 20px; line-height: 1.6; }
+        li { margin-bottom: 10px; }
+
+        .highlight-box {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            background: rgba(124, 58, 237, 0.1);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="badge">Open Droids Intelligence</div>
+                <h1>Pei Wei Asian Kitchen</h1>
+                <p style="opacity: 0.7;">Strategic Automation & Robotics Assessment</p>
+            </div>
+            <div style="text-align: right;">
+                <h3>Status: <span style="color: #4ade80;">Active</span></h3>
+                <p>Report ID: PW-2023-X1</p>
+            </div>
+        </div>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Projected Annual Savings</div>
+                <div class="metric-value">$52k</div>
+                <div class="metric-label">Per Location</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">ROI Break-Even</div>
+                <div class="metric-value">14.1</div>
+                <div class="metric-label">Months</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Labor Efficiency</div>
+                <div class="metric-value">20%</div>
+                <div class="metric-label">FOH Cost Reduction</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h2>Cumulative Labor Savings (5 Years)</h2>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Content -->
+        <div class="content-grid">
+            
+            <!-- Column 1 -->
+            <div>
+                <div class="glass-card">
+                    <h2>Executive Vision</h2>
+                    <p>Pei Wei stands to gain significant competitive advantage by pivoting to a technology-assisted hybrid model. The implementation of robotics will not replace the culinary artistry of the wok, but rather streamline the logistics of service, allowing staff to focus on high-value guest interactions.</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Robotics Pathways</h2>
+                    <p><strong>Pathway A: FOH Service</strong><br>Autonomous runners to handle heavy tray delivery, reducing staff physical strain and increasing dining room presence.</p>
+                    <p><strong>Pathway B: BOH Automation</strong><br>Rotary induction woks to ensure "Wok Hei" consistency and mitigate skilled labor shortages.</p>
+                    <p><strong>Pathway C: AI Integration</strong><br>Voice agents for drive-thru and phone orders to maximize upselling accuracy.</p>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div>
+                <div class="glass-card">
+                    <h2>Financial Impact Model</h2>
+                    <ul>
+                        <li><strong>CAPEX:</strong> Est. $55,000 per store (2 Robots + 1 Auto-Wok).</li>
+                        <li><strong>OPEX Savings:</strong> Elimination of 1 runner shift/day + increased throughput.</li>
+                        <li><strong>Revenue Boost:</strong> 12% faster table turnover during peak lunch hours.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        "Targeting a < 14 month payback period through combined labor reduction and increased table turns."
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Implementation Roadmap</h2>
+                    <ul>
+                        <li><strong>Year 1:</strong> Pilot Program (5 High-Volume Locations).</li>
+                        <li><strong>Year 2:</strong> Regional Rollout (FOH Robots).</li>
+                        <li><strong>Year 3:</strong> BOH Wok Automation Integration.</li>
+                        <li><strong>Year 5:</strong> Full Ecosystem Maturity & Predictive Analytics.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Chart.js Logic -->
+    <script>
+        // Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Line Chart: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [52000, 108000, 170000, 240000, 320000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart: Turnover Rate
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Tables Served Per Hour',
+                    data: [12, 18],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+```
