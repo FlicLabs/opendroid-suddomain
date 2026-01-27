@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Oklahoma Aquarium Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: #7c3aed;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7c3aed;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #f8fafc;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        /* Layout assignments */
+        .col-full { grid-column: span 12; }
+        .col-half { grid-column: span 6; }
+        .col-third { grid-column: span 4; }
+        
+        @media (max-width: 900px) {
+            .col-half, .col-third { grid-column: span 12; }
+        }
+
+        /* Dashboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 8px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        td {
+            padding: 16px 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .metric-value {
+            font-family: 'Courier New', monospace;
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .highlight-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid #7c3aed;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .badge-a { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-b { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-c { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div class="report-title">Client: Oklahoma Aquarium</div>
+        </header>
+
+        <div class="grid">
+            <!-- Executive Summary -->
+            <div class="card col-full">
+                <div class="card-header">Executive Summary</div>
+                <h1>Robotics Analysis & ROI Model</h1>
+                <p>The Oklahoma Aquarium (Jenks, OK) operates a high-volume facility with distinct challenges in large-predator habitat maintenance. By shifting from manual scuba labor to automated systems, the organization can significantly reduce risk and operational costs.</p>
+                <div class="highlight-box">
+                    <strong>Primary Opportunity:</strong> Automated underwater hull cleaning robots for the "Shark Adventure" exhibit, reducing diver exposure to Bull Sharks and saving ~1,000 labor hours annually.
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="card col-third">
+                <div class="card-header">Organizational Profile</div>
+                <p><strong>Type:</strong> Non-Profit 501(c)(3)</p>
+                <p><strong>Scale:</strong> 72,000 sq ft / 500k+ Gallons</p>
+                <p><strong>Key Asset:</strong> Largest collection of Bull Sharks globally.</p>
+                <p><strong>Pain Point:</strong> High-risk manual cleaning of acrylic tunnels and substrates.</p>
+            </div>
+
+            <!-- Pathways -->
+            <div class="card col-half" style="grid-column: span 8;">
+                <div class="card-header">Strategic Pathways</div>
+                <p><span class="badge badge-a">Pathway A</span> <strong>Automated Tank Maintenance:</strong> Deployment of industrial underwater scrubbers to maintain 24/7 clarity and reduce diver risk.</p>
+                <p><span class="badge badge-b">Pathway B</span> <strong>Telepresence Education:</strong> Roving robots for virtual field trips, generating revenue from remote schools globally.</p>
+                <p><span class="badge badge-c">Pathway C</span> <strong>Env. Monitoring:</strong> Automated sensor arrays for real-time water quality assurance (pH, Salinity, Nitrates).</p>
+            </div>
+
+            <!-- Financial Dashboard -->
+            <div class="card col-full">
+                <div class="card-header">Pathway A: Financial Dashboard (Tank Automation)</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Baseline (Manual)</th>
+                            <th>Automated Scenario</th>
+                            <th>Net Benefit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Annual Cleaning Labor</td>
+                            <td>~2,500 Hours</td>
+                            <td>~1,500 Hours</td>
+                            <td class="metric-value">-1,000 hrs</td>
+                        </tr>
+                        <tr>
+                            <td>Labor Cost (est.)</td>
+                            <td>$87,500 / yr</td>
+                            <td>$52,500 / yr</td>
+                            <td class="metric-value">+$35,000 / yr</td>
+                        </tr>
+                        <tr>
+                            <td>Capital Expenditure</td>
+                            <td>$0</td>
+                            <td>$25,000 (One-time)</td>
+                            <td class="metric-value">9 Month Payback</td>
+                        </tr>
+                        <tr>
+                            <td>5-Year Cumulative Savings</td>
+                            <td>$0</td>
+                            <td>$140,000</td>
+                            <td class="metric-value">High ROI</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Chart 1: Cumulative Savings -->
+            <div class="card col-half">
+                <div class="card-header">5-Year Cumulative Net Savings ($)</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Throughput/Hours -->
+            <div class="card col-half">
+                <div class="card-header">Annual Diver Exposure Hours (Risk Reduction)</div>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Implementation -->
+            <div class="card col-full">
+                <div class="card-header">Implementation Roadmap</div>
+                <div style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h2 style="color: #34d399;">Year 1</h2>
+                        <p>Pilot Phase: Deploy single hull-cleaning robot in Shark Adventure. Launch Telepresence pilot with 5 local schools.</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h2 style="color: #60a5fa;">Year 2</h2>
+                        <p>Scale: Second robot for Reef exhibit. Commercialize Virtual Tour product for national sales.</p>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h2 style="color: #fbbf24;">Year 3</h2>
+                        <p>Optimize: Full AI integration for overnight cleaning cycles and automated water quality logging.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($)',
+                    data: [8000, 41000, 74000, 107000, 140000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Diver Hours (Risk)
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Current Manual Ops', 'Robotic Assisted'],
+                datasets: [{
+                    label: 'Hours Spent in Tanks/Year',
+                    data: [2500, 1500],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.7)', // Red for high risk
+                        'rgba(16, 185, 129, 0.7)'  // Green for reduced risk
+                    ],
+                    borderColor: [
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(16, 185, 129, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
