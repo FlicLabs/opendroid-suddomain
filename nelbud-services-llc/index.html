@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nelbud Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #a78bfa;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-weight: 600;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>NELBUD SERVICES LLC</h1>
+        <p>Hospitality Automation ROI Strategy</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Target Payback</span>
+            <span class="metric-value">14 Mo.</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Labor Reduction</span>
+            <span class="metric-value">25%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Turnover Increase</span>
+            <span class="metric-value">20%</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">CAPEX per Unit</span>
+            <span class="metric-value">$15k+</span>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Labor Cost Savings (5 Years)</h2>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Table Turnover Comparison</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <p><strong>Phase 1: Deployment</strong> - Integration of autonomous tray-delivery bots to minimize human transit time between kitchen and floor.</p>
+        <p><strong>Phase 2: Back-of-House</strong> - Automated fire-safe frying systems to enhance Nelbud’s core mission of safety and efficiency.</p>
+        <p><strong>Phase 3: AI Ecosystem</strong> - Voice-driven ordering and predictive maintenance analytics.</p>
+    </div>
+</div>
+
+<script>
+    // Labor Savings Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD)',
+                data: [45000, 110000, 240000, 410000, 650000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Turnover Chart
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Avg turns per shift',
+                data: [4.2, 5.8],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
