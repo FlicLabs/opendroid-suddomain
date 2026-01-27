@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NWAFB Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: var(--glass-border);
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Header */
+        .report-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        .client-tag {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-icon {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Roadmap */
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+
+        .year-badge {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="report-header">
+        <div>
+            <span class="client-tag">Open Droids Intelligence</span>
+            <h1>Strategic Research Report</h1>
+            <p style="margin: 0;">Client: Northwest Arkansas Food Bank</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="margin: 0; font-size: 0.9rem;">Status: <strong>Confidential</strong></p>
+            <p style="margin: 0; font-size: 0.9rem;">Date: October 2023</p>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Vision</h2>
+        <h3 style="color: white;">Zero Hunger via Zero Latency</h3>
+        <p>
+            To meet the growing demands of the NWA region, the Northwest Arkansas Food Bank must transition from a manual hub-and-spoke model to a data-driven, automated logistics center. By integrating AMRs and AI, we target a reduction in food waste and an increase in calorie distribution velocity, ensuring donor funds directly translate to community nourishment rather than operational overhead.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">$450k</span>
+            <span class="metric-label">Est. Full Scale CAPEX</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">22 Mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">35%</span>
+            <span class="metric-label">Labor Efficiency Gain</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Daily Throughput (Pallets)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>03. Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div style="padding: 10px;">
+                <span class="pathway-icon">A.</span>
+                <h3 style="color:white;">AMR Transport</h3>
+                <p>Deploying Autonomous Mobile Robots for dock-to-staging transport. Reduces volunteer physical strain and forklift traffic in pedestrian zones.</p>
+            </div>
+            <div style="padding: 10px; border-left: 1px solid rgba(255,255,255,0.1);">
+                <span class="pathway-icon">B.</span>
+                <h3 style="color:white;">Robotic Piece Picking</h3>
+                <p>Utilization of "Follow-Me" bots for kitting mobile pantry boxes and VLM systems for high-density cold storage optimization.</p>
+            </div>
+            <div style="padding: 10px; border-left: 1px solid rgba(255,255,255,0.1);">
+                <span class="pathway-icon">C.</span>
+                <h3 style="color:white;">AI Logistics</h3>
+                <p>Predictive analytics for inbound donation spikes and outbound agency demand, ensuring FIFO compliance and reduced spoilage.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>04. Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="year-badge">YR 1</div>
+            <div><strong>Foundation & Safety:</strong> WMS Audit, Safety Protocol establishment, and deployment of 2 pilot AMRs.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">YR 2</div>
+            <div><strong>Intelligent Inventory:</strong> Integration of AI-tracking and "Zone Picking" assistance for dry goods.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">YR 3</div>
+            <div><strong>Cold Chain:</strong> Installation of high-density freezer automation to reduce energy costs.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">YR 5</div>
+            <div><strong>Autonomous Hub:</strong> Full ecosystem integration serving as a model for the Feeding America network.</div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+        Open Droids Consulting | Automation Intelligence for NWA
+    </footer>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 180000, 380000, 650000, 980000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Inbound Receiving', 'Staging', 'Order Picking', 'Outbound Loading'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [40, 55, 30, 45],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [75, 90, 65, 80],
+                    backgroundColor: '#38bdf8',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
