@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ohmite Automation Strategy | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>OHMITE MANUFACTURING</h1>
+        <p>Strategic Automation & Robotics Initiative - Open Droids Consulting</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">$1.2M</div>
+            <div class="metric-label">Est. Year 1 Savings</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">OPEX Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">&lt;22mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">300%</div>
+            <div class="metric-label">Density Increase</div>
+        </div>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <h2>Executive Strategy</h2>
+        <p>This report details the integration of cutting-edge robotics for Ohmite Manufacturing. By focusing on <strong>Autonomous Mobile Robots (AMRs)</strong> and <strong>ASRS</strong>, Ohmite will secure its position as a global leader in electronic component fulfillment. The strategy focuses on rapid ROI, high-density storage, and AI-driven logistics precision.</p>
+    </div>
+
+    <div class="content-card">
+        <h2>Implementation Phases</h2>
+        <ul>
+            <li><strong>Year 1:</strong> Data foundations and AMR Pilot Program.</li>
+            <li><strong>Year 2:</strong> High-density ASRS deployment for resistive components.</li>
+            <li><strong>Year 3:</strong> Robotic piece picking integration for micro-fulfillment.</li>
+            <li><strong>Year 4:</strong> Predictive AI layer for global supply chain sync.</li>
+            <li><strong>Year 5:</strong> Achieving autonomous "lights-out" logistics.</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        CONFIDENTIAL - OPEN DROIDS ROBOTICS CONSULTATION &copy; 2024
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.8, 2.1, 4.5, 7.8, 12.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: '#fff' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic ASRS'],
+            datasets: [{
+                label: 'Lines Per Hour',
+                data: [45, 320],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                x: { grid: { display: false }, ticks: { color: '#fff' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
