@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updike Logistics Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #7c3aed, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #7c3aed;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #c084fc;
+            font-size: 1.4rem;
+            margin-top: 0;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .year-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-header">
+        <h1>Updike Distribution Logistics</h1>
+        <p style="color: #94a3b8;">Strategic Automation & Robotics Initiative - Open Droids Consultation</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">OPEX Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">&lt;24mo</span>
+            <span class="metric-label">Target ROI</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Picking Accuracy</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">2X</span>
+            <span class="metric-label">Throughput Gain</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="main-column">
+            <div class="glass-card">
+                <h2>Executive Strategic Vision</h2>
+                <p>Updike Distribution Logistics is primed for a digital transformation. By shifting from manual processes to an AI-coordinated AMR (Autonomous Mobile Robot) framework, Updike will secure its position as the leading tech-enabled 3PL in the Southwest. This transition focuses on reducing labor dependency while maximizing existing facility volume through vertical ASRS integration.</p>
+                
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Opportunity Pathways</h2>
+                <p><strong>Path A: AMRs for Internal Transport.</strong> Eliminating the "travel waste" in large-scale warehouses by automating the horizontal movement of pallets and bins.</p>
+                <p><strong>Path B: Robotic Piece Picking.</strong> Utilizing high-speed robotic arms to handle the surge in e-commerce fulfillment orders with zero-error tolerance.</p>
+            </div>
+        </div>
+
+        <div class="side-column">
+            <div class="glass-card">
+                <h2>Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation</h2>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y1</div>
+                    <span>Phoenix Pilot Fleet</span>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y2</div>
+                    <span>ASRS Scaling</span>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y3</div>
+                    <span>Multi-Market Rollout</span>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year-badge">Y5</div>
+                    <span>Full Network AI</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.1, 5.8, 10.5, 18.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robotic'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [120, 310],
+                backgroundColor: ['#1e1b4b', '#7c3aed'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { display: false }, ticks: { display: false } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
