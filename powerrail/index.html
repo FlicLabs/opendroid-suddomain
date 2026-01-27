@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerRail Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at top right, #1e1b4b 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, #312e81 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .pathway-item {
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        ul {
+            color: var(--text-muted);
+            line-height: 1.6;
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight-text {
+            color: var(--accent-glow);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>PowerRail</h1>
+            <div class="subtitle">AUTOMATION STRATEGY & RESEARCH REPORT</div>
+        </div>
+        <div style="text-align: right; color: var(--accent-purple); font-weight: 600;">
+            OPEN DROIDS<br>
+            <span style="font-size: 0.7em; color: var(--text-muted); font-weight: 400;">CONFIDENTIAL ANALYSIS</span>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value">$475k</div>
+            <div class="metric-label">Est. Initial CAPEX</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">26 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">Labor Efficiency Gain</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label">Target Pick Accuracy</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Main Research Column -->
+        <div>
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p style="color: var(--text-muted); line-height: 1.6;">
+                    PowerRail is positioned to transition from a traditional heavy-part distribution model to a digitized "Smart Hub" ecosystem. By integrating heavy-payload AMRs and vertical storage density, PowerRail can decouple material movement from human labor schedules, drastically reducing the safety risks associated with moving locomotive components while ensuring 24/7 internal logistics capability.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Robotics Opportunity Pathways</h2>
+                
+                <div class="pathway-item">
+                    <div class="pathway-title">Pathway A: AMRs for Heavy Transport</div>
+                    <div style="color: var(--text-muted);">Deployment of 1,000kg+ payload Autonomous Mobile Robots to handle engine parts and wheelsets, reducing forklift dependency and transit accidents.</div>
+                </div>
+
+                <div class="pathway-item">
+                    <div class="pathway-title">Pathway B: Vertical Lift Modules (ASRS)</div>
+                    <div style="color: var(--text-muted);">Utilization of VLMs for small SKU management (sensors, gaskets), recovering 85% of floor space currently utilized by static shelving.</div>
+                </div>
+
+                <div class="pathway-item">
+                    <div class="pathway-title">Pathway C: Predictive AI Logistics</div>
+                    <div style="color: var(--text-muted);">Integration of predictive maintenance data from rail operators to automate inventory pre-positioning and ordering.</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                <ul>
+                    <li><span class="highlight-text">Year 1:</span> Data sanitization and Pilot Pilot (2 AMRs + 2 VLMs).</li>
+                    <li><span class="highlight-text">Year 2:</span> ERP Integration and Fleet Scaling to Manufacturing.</li>
+                    <li><span class="highlight-text">Year 3:</span> AI-Driven Predictive Purchasing Implementation.</li>
+                    <li><span class="highlight-text">Year 5:</span> Network Replication (FL & DE Hubs).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Charts Column -->
+        <div>
+            <div class="glass-card">
+                <h2>Cumulative Savings (5 Yr)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                    Projected cumulative operational savings post-implementation.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                    Manual vs. Automated Lines per Hour.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [0, 215000, 480000, 850000, 1300000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) { return '$' + value/1000 + 'k'; }
+                    }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robotic Assist'],
+            datasets: [{
+                label: 'Lines Per Hour',
+                data: [45, 110],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderWidth: 0,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
