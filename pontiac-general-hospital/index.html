@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontiac General Hospital - Robotics Research Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: #7c3aed;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 28px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title p {
+            margin: 5px 0 0;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* Typography */
+        h2 {
+            font-size: 18px;
+            color: #7c3aed;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            color: #7c3aed;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border: 1px solid rgba(124, 58, 237, 0.5); }
+        .badge-med { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.5); }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="report-title">
+            <h1>Pontiac General Hospital</h1>
+            <p>Robotics & Automation Research Portfolio</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Pontiac General Hospital, a critical safety-net institution specializing in behavioral health, stands to gain significant operational leverage through targeted automation. Unlike tertiary care centers requiring high-end surgical robotics, Pontiac General's opportunity lies in <strong>operational efficiency</strong> and <strong>safety monitoring</strong>. The strategic deployment of AI-driven telepresence and logistics robots addresses acute staffing shortages and improves margin in a challenging reimbursement environment.</p>
+    </div>
+
+    <!-- Key Metrics Dashboard -->
+    <div class="grid-3">
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-value">£700k+</div>
+            <div class="metric-label">Annual Net Benefit</div>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-value">9-14 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-value">-60%</div>
+            <div class="metric-label">Reduction in Sitter Costs</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings (GBP)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Workflow Efficiency: Manual vs Robotic</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways Table -->
+    <div class="glass-card">
+        <h2>Comparative Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit (Est)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A: Behavioral AI</strong></td>
+                    <td>Psych & Med/Surg</td>
+                    <td>Sitter Labor Reduction</td>
+                    <td>£600,000</td>
+                    <td><span class="badge badge-med">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B: Logistics AMR</strong></td>
+                    <td>Hospital-wide</td>
+                    <td>Nursing Efficiency</td>
+                    <td>£250,000</td>
+                    <td><span class="badge badge-high">Low</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C: Disinfection</strong></td>
+                    <td>Env. Services</td>
+                    <td>Infection Control</td>
+                    <td>£150,000</td>
+                    <td><span class="badge badge-high">Low</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Phase 1 (Year 1):</strong> Pilot AI video monitoring in high-acuity psychiatric wings to reduce sitter dependency.</li>
+                <li><strong>Phase 2 (Year 2):</strong> Deploy Autonomous Mobile Robots (TUGs) for linen and dietary transport.</li>
+                <li><strong>Phase 3 (Year 3):</strong> Full facility integration including UV disinfection robots and facility-wide AI tracking.</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <h2>Strategic Positioning</h2>
+            <p>Adopting this portfolio transforms Pontiac General from a traditional facility into a <strong>Tech-Enabled Community Care Center</strong>. It enables the hospital to operate sustainably within safety-net margins while providing higher safety standards for its psychiatric patient population, creating a regional center of excellence for efficient mental health care.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global defaults for dark theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [150000, 600000, 1200000, 1900000, 2500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Patient Checks/Hr', 'Linen Runs/Day', 'Room Turnover (Min)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [4, 12, 45],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI Assisted',
+                    data: [12, 35, 25],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
