@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOB Hospitality | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 12px 40px 0 rgba(124, 58, 237, 0.2);
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px var(--accent-glow);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathways Section */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .roadmap-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="sub-header">Open Droids Research Division</div>
+                <h1>SOB Hospitality Assessment</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="sub-header">Status</div>
+                <div style="font-weight: bold; color: #fff;">Strategic Draft</div>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>
+                SOB Hospitality stands at the precipice of a technological evolution. By integrating a hybrid workforce model—utilizing robotics for logistics and humans for hospitality—the group can mitigate labor volatility while increasing operational throughput. This report outlines a capital-efficient path to modernizing service delivery, focusing on a <strong style="color:white">Service-First Automation</strong> philosophy.
+            </p>
+        </section>
+
+        <!-- ROI Dashboard -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">12.5</span>
+                <span class="metric-label">Months to ROI</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">20%</span>
+                <span class="metric-label">Labor Cost Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$145k</span>
+                <span class="metric-label">Annual EBITDA Impact</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <section class="glass-card">
+            <h2>Projected Performance Analytics</h2>
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="laborSavingsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pathways -->
+        <div class="pathway-grid">
+            <div class="glass-card">
+                <h2>Pathway A: FOH Robotics</h2>
+                <p>Deployment of autonomous runners for food delivery and busing.</p>
+                <ul>
+                    <li>Reduces server physical fatigue.</li>
+                    <li>Increases face-time with guests.</li>
+                    <li><strong>Target:</strong> 4 Units across flagship sites.</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway B: BOH Automation</h2>
+                <p>Automated frying solutions for high-volume consistency.</p>
+                <ul>
+                    <li>Standardizes cooking times.</li>
+                    <li>Improves late-night safety.</li>
+                    <li><strong>Target:</strong> 2 Automated Basket modules.</li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway C: AI Agents</h2>
+                <p>Voice AI for reservation management and ordering.</p>
+                <ul>
+                    <li>0% Missed Call Rate.</li>
+                    <li>Upsell integration script.</li>
+                    <li><strong>Target:</strong> Full CRM integration.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <section class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul class="roadmap-list">
+                <li class="roadmap-item">
+                    <span class="roadmap-year">Year 1</span>
+                    <div>
+                        <strong style="color: white; display:block; margin-bottom:5px;">Pilot Phase</strong>
+                        Deploy FOH runners at flagship location. Map floor plans and integrate AI Voice for reservations.
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <span class="roadmap-year">Year 2</span>
+                    <div>
+                        <strong style="color: white; display:block; margin-bottom:5px;">Standardization</strong>
+                        Scale robotics to all locations. Install BOH automated fryers for late-night menu consistency.
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <span class="roadmap-year">Year 3</span>
+                    <div>
+                        <strong style="color: white; display:block; margin-bottom:5px;">Data Integration</strong>
+                        Deep POS integration. Optimize staffing pars based on robot uptime and efficiency data.
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <span class="roadmap-year">Year 5</span>
+                    <div>
+                        <strong style="color: white; display:block; margin-bottom:5px;">Full Autonomy</strong>
+                        Complete ecosystem integration including inventory robots. Market leadership in tech-enabled dining.
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Labor Savings (Line Chart)
+        const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [25000, 145000, 290000, 450000, 620000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } },
+                    title: { display: true, text: '5-Year Cumulative Labor Savings', color: '#f8fafc' }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Comparison (Bar Chart)
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Avg Table Turn Time (Minutes)',
+                    data: [55, 42],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderWidth: 0,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Table Turnover Efficiency (Lower is Better)', color: '#f8fafc' }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
