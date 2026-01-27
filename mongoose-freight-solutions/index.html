@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mongoose Freight Solutions | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 15px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--success);
+            margin-top: 5px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-list li {
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 2px solid var(--glass-border);
+        }
+
+        .pathway-list strong {
+            color: var(--accent);
+        }
+
+        /* Roadmap Timeline */
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .year-marker {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .year-marker::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: -1;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .year-title {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .year-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="sub-header">Open Droids Research</div>
+                <h1>Mongoose Freight Solutions</h1>
+            </div>
+            <div style="text-align: right;">
+                <span class="sub-header">Report Status</span><br>
+                <span style="color: #fff; font-weight: bold;">FINALIZED</span>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <p style="line-height: 1.6; color: var(--text-muted);">
+                Transitioning Mongoose Freight Solutions into a High-Velocity Automated Hub. By leveraging AMRs and AI-driven logistics, we project a 40% increase in throughput velocity while stabilizing OPEX. This strategy shifts the operational model from manual cross-docking to a predictive, data-first ecosystem.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="card metric-card">
+                <div class="metric-label">Projected ROI</div>
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-sub">Payback Period</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">Labor Reduction</div>
+                <div class="metric-value">35%</div>
+                <div class="metric-sub">OPEX Savings</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">Throughput</div>
+                <div class="metric-value">+40%</div>
+                <div class="metric-sub">Velocity Increase</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="content-grid">
+            <div class="card">
+                <h2>02. 5-Year Cumulative Savings</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>03. Manual vs. Robotic Throughput</h2>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card">
+            <h2>04. Robotics Opportunity Pathways</h2>
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway A: Internal Transport (AMR)</strong><br>
+                    <span style="font-size: 0.9rem; color: #cbd5e1;">Replacement of manual jacks with heavy-payload AMRs. Target: 25% gain in pallets moved per hour.</span>
+                </li>
+                <li>
+                    <strong>Pathway B: Piece Picking & ASRS</strong><br>
+                    <span style="font-size: 0.9rem; color: #cbd5e1;">High-density buffering reducing staging footprint by 60% and errors to < 0.1%.</span>
+                </li>
+                <li>
+                    <strong>Pathway C: AI Logistics</strong><br>
+                    <span style="font-size: 0.9rem; color: #cbd5e1;">Predictive algorithms for dock scheduling to reduce truck dwell time by 30%.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>05. Implementation Roadmap</h2>
+            <div class="roadmap">
+                <div class="year-marker">
+                    <span class="dot"></span>
+                    <span class="year-title">Year 1</span>
+                    <span class="year-desc">Pilot Phase<br>(AMR Launch)</span>
+                </div>
+                <div class="year-marker">
+                    <span class="dot"></span>
+                    <span class="year-title">Year 2</span>
+                    <span class="year-desc">Expansion<br>(ASRS Setup)</span>
+                </div>
+                <div class="year-marker">
+                    <span class="dot"></span>
+                    <span class="year-title">Year 3</span>
+                    <span class="year-desc">Integration<br>(AI Logic)</span>
+                </div>
+                <div class="year-marker">
+                    <span class="dot"></span>
+                    <span class="year-title">Year 5</span>
+                    <span class="year-desc">Ecosystem<br>(Full Auto)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Pallet Moving', 'Piece Picking', 'Truck Loading'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [20, 150, 4],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic (Units/Hr)',
+                        data: [35, 450, 7],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4,
+                        boxShadow: '0 0 10px #7c3aed'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
