@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2941 Mediterranean Street Food - Automation Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-size: 1.5rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--electric-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            margin-right: 10px;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header style="margin-bottom: 50px;">
+            <div style="font-size: 0.9rem; color: var(--electric-purple); letter-spacing: 2px; font-weight: 700; margin-bottom: 10px;">OPEN DROIDS CONSULTING</div>
+            <h1>2941 Mediterranean Street Food</h1>
+            <p style="font-size: 1.2rem; max-width: 600px;">Strategic Automation Roadmap & Financial Projection</p>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">11.5</span>
+                <span class="metric-label">Months Payback</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$165k</span>
+                <span class="metric-label">Proj. Annual Savings</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">18%</span>
+                <span class="metric-label">Labor Cost Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">+12%</span>
+                <span class="metric-label">Ticket Size (Kiosk)</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2-col">
+            <div class="glass-card">
+                <h2>Cumulative Labor Savings (5 Years)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>For 2941 Mediterranean Street Food, automation is the key to scaling the "Bazaar" experience without compromising quality. By integrating <strong>Pathways A, B, and C</strong>, we shift the labor focus from repetitive logistics to culinary consistency and guest hospitality.</p>
+            <p>The proposed model creates a hybrid service environment: an "Express Lane" for digital efficiency and a "Traditional Lane" for guided customization, both supported by robotic back-end logistics.</p>
+        </div>
+
+        <!-- Strategic Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <div style="margin-bottom: 25px;">
+                <h3><span class="badge">PATHWAY A</span> Front-of-House Robotics</h3>
+                <p>Deployment of autonomous bussing units to patrol dining areas. This removes the burden of heavy lifting from staff and ensures rapid table clearing during the lunch rush.</p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h3><span class="badge">PATHWAY B</span> Automated Culinary Prep</h3>
+                <p>Integration of smart-grills and automated vegetable processors. This standardizes the cooking of proteins (Chicken/Steak) across all franchises, ensuring safety and consistency.</p>
+            </div>
+
+            <div>
+                <h3><span class="badge">PATHWAY C</span> AI Kiosks & Voice</h3>
+                <p>Implementation of recommendation-engine kiosks. These units are programmed to upsell sides and drinks, increasing the average ticket size while reducing line congestion.</p>
+            </div>
+        </div>
+
+        <!-- Financial Model Detail -->
+        <div class="glass-card">
+            <h2>Financial Deployment Model</h2>
+            <div class="grid-2-col">
+                <div>
+                    <h3>CAPEX (Pilot - 3 Stores)</h3>
+                    <p style="font-size: 1.5rem; color: white; font-weight: bold;">$135,000</p>
+                    <ul style="color: var(--text-muted); list-style: none; padding: 0;">
+                        <li>• 3x Bussing Robots ($45k)</li>
+                        <li>• 3x Auto-Grills ($60k)</li>
+                        <li>• 6x AI Kiosks ($30k)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>OPEX Impact</h3>
+                    <p style="font-size: 1.5rem; color: var(--accent-green); font-weight: bold;">-18% Labor Costs</p>
+                    <p>Targeting specific reduction in non-value-added tasks (bussing, manual chopping), allowing for a leaner, higher-paid core team.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Labor Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [55000, 120000, 240000, 380000, 550000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8', callback: function(value) { return '$' + value/1000 + 'k'; } },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Comparison
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Table Turns per Hour (Peak)',
+                    data: [3.2, 4.8],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#10b981'],
+                    borderRadius: 8,
+                    barThickness: 50
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#e2e8f0', font: { size: 14 } },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
