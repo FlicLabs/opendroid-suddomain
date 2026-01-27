@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Noodles & Co Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #7c3aed;
+            letter-spacing: -1px;
+        }
+
+        .client-tag {
+            background: rgba(124, 58, 237, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #7c3aed;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-sub {
+            color: #7c3aed;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #e2e8f0;
+            margin-top: 0;
+        }
+
+        p, li {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .highlight {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS <span style="color:#fff; font-weight:300;">RESEARCH</span></div>
+        <div class="client-tag">CLIENT: NOODLES & COMPANY</div>
+    </header>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <div class="metric-label">Estimated CAPEX</div>
+            <div class="metric-value">$35k - $40k</div>
+            <div class="metric-sub">Per Location (Initial)</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Labor Reduction</div>
+            <div class="metric-value">20%</div>
+            <div class="metric-sub">Front-of-House Target</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">&lt; 14 Mo</div>
+            <div class="metric-sub">Based on Labor & Turn Rate</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Check Increase</div>
+            <div class="metric-value">+12%</div>
+            <div class="metric-sub">Via AI Upselling</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Labor Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Table Turnover Velocity (Mins)</h3>
+            <div class="chart-wrapper">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Content -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The fast-casual dining landscape faces a critical pivot point. For Noodles & Company, the vision is not merely replacing labor but augmenting the service model. Our strategic objective is the deployment of collaborative robotics to bridge the gap between QSR speed and full-service hospitality.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3 class="highlight">Pathway A: Front-of-House</h3>
+                <p><strong>Serving Robots:</strong> Deploying autonomous shelf-delivery robots allows expediters to load multiple orders. This keeps human staff in the dining room focusing on guest satisfaction rather than ferrying plates.</p>
+            </div>
+            <div>
+                <h3 class="highlight">Pathway B: Back-of-House</h3>
+                <p><strong>Automated Sauté:</strong> Implementation of automated induction woks to handle high-heat, repetitive motion tasks. This ensures consistency in sauce distribution and reduces repetitive strain injuries.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <ul>
+            <li><strong>Year 1:</strong> Pilot Phase in 10 high-volume locations.</li>
+            <li><strong>Year 2:</strong> Regional Rollout & KDS Integration (50 locations).</li>
+            <li><strong>Year 3:</strong> BOH Automated Sauté Pilots & 75% FOH Fleet.</li>
+            <li><strong>Year 4:</strong> Full fleet saturation & Voice AI implementation.</li>
+            <li><strong>Year 5:</strong> Hardware refresh and optimization.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Thousands)',
+                data: [45, 120, 280, 450, 650],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Average Table Turn Time (Minutes)',
+                data: [45, 36],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#cbd5e1', font: { size: 14 } } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
