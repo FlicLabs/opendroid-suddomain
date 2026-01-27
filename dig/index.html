@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Integration Strategy for DIG - Executive Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-space-blue: #0f172a;
+            --electric-purple: #7c3aed;
+            --light-purple: #a855f7;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space-blue);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            .full-width {
+                grid-column: 1 / -1;
+            }
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--deep-space-blue) 0%, var(--electric-purple) 50%, var(--deep-space-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.7);
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 var(--glass-shadow), 0 0 20px var(--light-purple);
+        }
+
+        .card h2, .card h3 {
+            color: var(--electric-purple);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-purple);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card p, .card ul {
+            color: var(--text-color);
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .card ul li::before {
+            content: '•';
+            color: var(--light-purple);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* ROI Dashboard specific styles */
+        .roi-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            pointer-events: none;
+            box-shadow: 0 0 15px var(--electric-purple), 0 0 30px var(--light-purple), inset 0 0 5px var(--electric-purple);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+
+        .metric-card h3 {
+            color: var(--text-color);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            z-index: 1;
+            position: relative;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .metric-card .value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--electric-purple);
+            text-shadow: 0 0 10px var(--light-purple);
+            z-index: 1;
+            position: relative;
+        }
+
+        .chart-container {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-card {
+            min-height: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Robotics Integration Strategy for DIG</h1>
+        <p>Enhancing Hospitality & Restaurant Automation</p>
+    </header>
+
+    <div class="container">
+        <div class="card full-width">
+            <h2>EXECUTIVE SUMMARY</h2>
+            <p>This report outlines a strategic vision for integrating advanced robotics and artificial intelligence within DIG's fast-casual restaurant operations. The primary objective is to enhance operational efficiency, improve customer experience, and optimize labor utilization. In the fast-casual segment, robotics can address challenges such as labor shortages, demand for consistent product quality, and the need for rapid service without compromising customer interaction. For DIG, the implementation focuses on augmenting existing staff, automating repetitive back-of-house tasks, and streamlining order processing, thereby freeing human teams to concentrate on hospitality and complex culinary execution. This approach is designed to improve throughput, ensure food safety, and drive measurable return on investment through reduced operational expenditure and increased revenue opportunities.</p>
+        </div>
+
+        <div class="card">
+            <h2>ORGANIZATIONAL PROFILE</h2>
+            <p>DIG, formerly known as Dig Inn, operates approximately 30-40 locations primarily across major East Coast cities like New York City, Boston, and Philadelphia. Its cuisine type is best described as healthy, seasonal, American comfort food with a strong emphasis on locally sourced ingredients and a farm-to-table philosophy. The service model is predominantly Quick Service Restaurant (QSR) or Fast Casual, where customers typically build their own bowls or choose from pre-set menu items at a counter. The current model involves a combination of in-person ordering, digital pre-ordering for pickup, and delivery services, with a focus on efficiency and fresh, customizable meals.</p>
+        </div>
+
+        <div class="card full-width">
+            <h2>ROBOTICS OPPORTUNITY PATHWAYS</h2>
+            <h3>Pathway A: Front-of-House Serving Robots</h3>
+            <p>Focus: Table Turnover and Staff Support</p>
+            <p>Application for DIG: While DIG operates as a counter-service model, many locations feature dining areas. Robots can be deployed for bussing tables, delivering online orders to designated pick-up zones, or bringing food to customers who have taken a seat after ordering. This frees human staff from repetitive clearing tasks, allowing them to focus on greeting customers, assisting with complex orders, and maintaining a high level of cleanliness and ambiance in the dining area. Faster bussing directly leads to quicker table turnover, especially during peak hours, increasing capacity and customer satisfaction. These robots act as tireless assistants, ensuring dining areas remain tidy and ready for new guests without adding strain to the human team.</p>
+
+            <h3>Pathway B: Back-of-House Automated Frying/Grilling</h3>
+            <p>Focus: Consistency and Safety</p>
+            <p>Application for DIG: DIG's menu heavily relies on perfectly cooked proteins (chicken, salmon, tofu) and roasted or grilled vegetables. Automated frying and grilling stations can ensure consistent cooking temperatures, precise timing, and standardized portioning. This eliminates human error, reduces food waste from over or undercooking, and maintains the high quality and taste profile that DIG customers expect, regardless of the chef on duty. Furthermore, automating hot line tasks improves kitchen safety by reducing staff exposure to hot surfaces and oil, and it alleviates the most demanding, labor-intensive roles, making the kitchen environment more appealing and sustainable for human employees. The result is a more efficient kitchen, enhanced food safety, and consistently delicious offerings.</p>
+
+            <h3>Pathway C: AI-Driven Kiosks or Drive-Thru Voice Agents</h3>
+            <p>Focus: Upselling and Order Accuracy</p>
+            <p>Application for DIG: Given DIG's QSR model, AI-driven kiosks are a natural fit for streamlining the ordering process. These kiosks can be integrated with advanced AI that learns customer preferences, suggests complementary items, and intelligently up-sells based on order history or popular combinations, leading to increased average transaction value. For locations with potential for drive-thru expansion or dedicated pickup windows, AI voice agents can offer a seamless, personalized ordering experience, reducing wait times and ensuring accuracy. Both solutions minimize order errors, reduce reliance on human staff for basic order taking, and free up counter staff to focus on food preparation and customer engagement, particularly with complex dietary needs or questions. This results in faster service, enhanced order customization, and a boost in revenue through strategic upselling.</p>
+        </div>
+
+        <div class="card full-width">
+            <h2>FINANCIAL MODEL</h2>
+            <h3>Hospitality ROI Dashboard</h3>
+            <div class="roi-dashboard">
+                <div class="metric-card">
+                    <h3>Estimated Initial CAPEX</h3>
+                    <div class="value">$150K - $1.2M</div>
+                </div>
+                <div class="metric-card">
+                    <h3>FOH Labor OPEX Reduction</h3>
+                    <div class="value">15-25%</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Target Payback Period</h3>
+                    <div class="value">&lt; 14 Months</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px;">
+                Estimated CAPEX (Capital Expenditure): Deployment Size: An initial rollout would likely target 5-10 pilot locations. Cost per robot unit: Ranging from $15,000 to $40,000 per unit depending on complexity. Estimated total CAPEX for initial phase (e.g., 2-3 units per pilot location, 5-10 locations): $150,000 - $1,200,000. This includes robots, integration software, and initial training.
+            </p>
+            <p>
+                OPEX Impact (Operating Expenditure): Target 15-25% reduction in Front-of-House labor costs in pilot locations. This is achieved by reallocating human staff to higher-value tasks, reducing the need for additional hires during peak hours, and minimizing overtime. Additional OPEX reductions from Back-of-House automation include reduced food waste (consistency), lower utility costs (optimized cooking), and potentially lower injury-related expenses (improved safety).
+            </p>
+            <p>
+                Payback Period: Target: Less than 14 months. Achieved through a combination of: Direct labor cost savings (15-25% FOH reduction). Increased table turns or order fulfillment speed. Enhanced consistency and reduced waste. Increased average transaction value through AI-driven upselling. The efficiency gains and revenue uplift are projected to offset the initial CAPEX within this timeframe.
+            </p>
+
+            <div class="chart-container">
+                <div class="card chart-card">
+                    <h3>5-Year Cumulative Labor Cost Savings</h3>
+                    <canvas id="laborSavingsChart"></canvas>
+                </div>
+                <div class="card chart-card">
+                    <h3>Dining Area Efficiency (Turnover Rate)</h3>
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card full-width">
+            <h2>IMPLEMENTATION ROADMAP</h2>
+            <h3>Year 1: Pilot and Proof of Concept</h3>
+            <ul>
+                <li>Identify 2-3 strategic DIG locations for initial pilot deployment.</li>
+                <li>Focus on one primary robotics pathway per location.</li>
+                <li>Vendor selection, procurement, and installation of robotic units.</li>
+                <li>Intensive staff training and integration into existing workflows.</li>
+                <li>Establish key performance indicators (KPIs) for labor savings, consistency, throughput, and customer satisfaction.</li>
+                <li>Gather extensive data and conduct post-implementation reviews to refine processes and robot capabilities.</li>
+            </ul>
+
+            <h3>Year 2: Optimization and Targeted Expansion</h3>
+            <ul>
+                <li>Analyze pilot data, refine robotic operations, and iterate on integration strategies.</li>
+                <li>Expand successful pathways to 5-7 additional locations, strategically chosen for maximum impact.</li>
+                <li>Begin exploring multi-robot deployment within a single location if initial pilots are highly successful.</li>
+                <li>Continue staff training and develop internal robotics champions.</li>
+            </ul>
+
+            <h3>Year 3: Scaled Rollout</h3>
+            <ul>
+                <li>Based on accumulated data and optimized processes, initiate a larger rollout to 10-15 additional DIG locations.</li>
+                <li>Focus on standardizing the implementation process and training modules across the chain.</li>
+                <li>Evaluate opportunities for new robotics applications or advanced features.</li>
+                <li>Negotiate bulk purchasing agreements with robotics vendors.</li>
+            </ul>
+
+            <h3>Year 4: Chain Integration and Advanced Capabilities</h3>
+            <ul>
+                <li>Integrate robotics into the majority of DIG locations (aim for 75-80% coverage).</li>
+                <li>Explore advanced AI features, predictive maintenance for robots, and integration with inventory management systems.</li>
+                <li>Continuously monitor ROI and fine-tune deployments for maximum efficiency and guest experience.</li>
+            </ul>
+
+            <h3>Year 5: Full Optimization and Future Innovation</h3>
+            <ul>
+                <li>Full chain-wide integration of proven robotics solutions.</li>
+                <li>Establish a dedicated internal team for robotics management, maintenance, and future innovation.</li>
+                <li>Begin researching next-generation robotics and AI technologies that could further enhance DIG's operational model and competitive advantage.</li>
+                <li>Leverage accumulated data to inform strategic business decisions and menu development.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Data for charts
+        const laborSavingsData = {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Cost Savings',
+                data: [150000, 600000, 1350000, 2250000, 3150000], // Example data
+                borderColor: 'var(--electric-purple)',
+                backgroundColor: 'rgba(124, 58, 237, 0.4)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: 'var(--light-purple)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'var(--electric-purple)'
+            }]
+        };
+
+        const turnoverData = {
+            labels: ['Manual', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Average Turns per Hour',
+                data: [2.0, 2.6], // Example: 2.0 turns/hr manual, 2.6 turns/hr robot-assisted
+                backgroundColor: [
+                    'rgba(124, 58, 237, 0.6)',
+                    'rgba(168, 85, 247, 0.8)'
+                ],
+                borderColor: [
+                    'var(--electric-purple)',
+                    'var(--light-purple)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Chart.js common options
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'var(--text-color)',
+                        font: {
+                            family: 'Inter'
+                        }
+                    }
+                },
+                tooltip: {
+                    bodyFont: {
+                        family: 'Inter'
+                    },
+                    titleFont: {
+                        family: 'Inter'
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: 'var(--text-color)',
+                        font: {
+                            family: 'Inter'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: 'var(--text-color)',
+                        font: {
+                            family: 'Inter'
+                        },
+                        callback: function(value, index, values) {
+                            return '$' + value.toLocaleString();
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        };
+
+        // Render Labor Savings Chart
+        const laborSavingsCtx = document.getElementById('laborSavingsChart').getContext('2d');
+        new Chart(laborSavingsCtx, {
+            type: 'line',
+            data: laborSavingsData,
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    x: commonChartOptions.scales.x,
+                    y: commonChartOptions.scales.y
+                }
+            }
+        });
+
+        // Render Turnover Rate Chart
+        const turnoverCtx = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(turnoverCtx, {
+            type: 'bar',
+            data: turnoverData,
+            options: {
+                ...commonChartOptions,
+                scales: {
+                    x: commonChartOptions.scales.x,
+                    y: {
+                        ticks: {
+                            color: 'var(--text-color)',
+                            font: {
+                                family: 'Inter'
+                            },
+                            callback: function(value, index, values) {
+                                return value + ' turns/hr';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
