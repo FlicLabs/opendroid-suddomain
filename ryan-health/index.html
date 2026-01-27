@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryan Health Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-purple: #7c3aed;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 24px;
+            color: var(--text-light);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #e2e8f0;
+            margin-top: 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-purple);
+            font-weight: 600;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 12px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <p style="color: #94a3b8; margin: 0;">Consultation & Research Division</p>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: bold;">RYAN HEALTH</div>
+        </div>
+    </div>
+
+    <h1>Robotics Opportunities Portfolio</h1>
+    <p style="color: #cbd5e1; max-width: 800px; margin-bottom: 40px;">
+        Analysis of high-impact automation levers for FQHC operations, focusing on pharmacy throughput, 
+        administrative efficiency, and mobile care logistics.
+    </p>
+
+    <!-- KPI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <div class="metric-label">Projected Annual Savings</div>
+            <div class="metric-value">$1.25M</div>
+            <div style="color: #4ade80; font-size: 0.9rem;">▲ From Pharmacy Automation</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">+50%</div>
+            <div style="color: #60a5fa; font-size: 0.9rem;">Prescription Throughput</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">9-14</div>
+            <div style="color: #c4b5fd; font-size: 0.9rem;">Months (Estimated)</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (Pathway A)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Daily Prescription Throughput</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Analysis Table -->
+    <div class="glass-card">
+        <h2>Comparative View of Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Pharmacy Robotics</th>
+                    <th>Pathway B: Admin RPA</th>
+                    <th>Pathway C: Mobile Diagnostics</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>High-volume pharmacy sites</td>
+                    <td>Network-wide back office</td>
+                    <td>Mobile vans & schools</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>340B revenue & labor efficiency</td>
+                    <td>Staff retention & denial reduction</td>
+                    <td>Access & grant competitiveness</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>$1.2M - $2.0M</td>
+                    <td>$500k - $800k</td>
+                    <td>$200k - $400k (Indirect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback</strong></td>
+                    <td>< 1.5 Years</td>
+                    <td>6 - 9 Months</td>
+                    <td>2 - 3 Years</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td><span class="tag">Low</span> Mature Tech</td>
+                    <td><span class="tag">Moderate</span> Integration</td>
+                    <td><span class="tag">Moderate</span> Adoption</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Strategic Summary -->
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p style="color: #cbd5e1;">
+            Adopting this roadmap transforms Ryan Health from a traditional community clinic into a 
+            <strong>Tech-Enabled FQHC Leader</strong>. This distinction opens new doors for federal innovation grants, 
+            private philanthropic funding, and partnerships with major hospital systems looking for efficient 
+            downstream ambulatory partners. It directly addresses the workforce crisis by using automation to 
+            allow staff to operate at the top of their license.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [0.8, 2.1, 3.5, 5.0, 6.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Automation'],
+            datasets: [{
+                label: 'Scripts Per Day (Avg Site)',
+                data: [450, 700],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                borderRadius: 8,
+                barThickness: 60
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
