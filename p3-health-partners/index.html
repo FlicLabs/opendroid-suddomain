@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P3 Health Partners Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #7c3aed;
+            --text: #f1f5f9;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+        h1, h2, h3 {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">OPEN DROIDS</div>
+            <div class="status">STRATEGIC DOSSIER 2024</div>
+        </header>
+
+        <section style="margin-top: 40px;">
+            <h1>P3 Health Partners: Robotics ROI Dashboard</h1>
+            <div class="grid">
+                <div class="glass-card metric-card">
+                    <div class="metric-label">Annual Revenue Lift</div>
+                    <div class="metric-value">£38M</div>
+                </div>
+                <div class="glass-card metric-card">
+                    <div class="metric-label">Payback Period</div>
+                    <div class="metric-value">4mo</div>
+                </div>
+                <div class="glass-card metric-card">
+                    <div class="metric-label">Efficiency Gain</div>
+                    <div class="metric-value">+24%</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Operational Throughput</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <section class="glass-card">
+            <h2>Pathway Financial Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Initiative</th>
+                        <th>Primary Value Driver</th>
+                        <th>Implementation Cost</th>
+                        <th>Annual Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pathway A: AI Risk Adj.</td>
+                        <td>Revenue Capture</td>
+                        <td>£4.0M</td>
+                        <td>£38.0M</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway B: Social Robots</td>
+                        <td>MLR Reduction</td>
+                        <td>£6.5M</td>
+                        <td>£12.0M</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway C: Workflow AI</td>
+                        <td>Provider Productivity</td>
+                        <td>£1.2M</td>
+                        <td>£6.0M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (£M)',
+                    data: [34, 72, 115, 162, 215],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f1f5f9' } },
+                    x: { grid: { display: false }, ticks: { color: '#f1f5f9' } }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Coding', 'AI Robotic Coding', 'Manual Monitoring', 'Social Robotics'],
+                datasets: [{
+                    label: 'Cases Managed / Hour',
+                    data: [12, 45, 8, 32],
+                    backgroundColor: ['#1e293b', '#7c3aed', '#1e293b', '#7c3aed'],
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#f1f5f9' } },
+                    x: { grid: { display: false }, ticks: { color: '#f1f5f9' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
