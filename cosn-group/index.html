@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosán Group Robotics Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.3);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+            -webkit-text-fill-color: var(--accent-purple);
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #fff;
+        }
+
+        .report-title p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .metric-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px 0;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            color: #38bdf8; 
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .tag-high { background: rgba(124, 58, 237, 0.2); color: #d8b4fe; border: 1px solid rgba(124, 58, 237, 0.4); }
+        .tag-med { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="report-title">
+            <h1>Cosán Group Analysis</h1>
+            <p>Robotics & Automation Portfolio</p>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Cosán Group operates at the intersection of healthcare and technology, managing chronic care for vulnerable populations. The primary robotics opportunity lies in <strong>"Software Robotics" (RPA)</strong> and AI-driven orchestration. By automating the administrative workflow of care coordination, Cosán can uncouple revenue growth from linear labor costs, achieving a projected <strong>$5.25M annual margin expansion</strong> through improved panel utilization and logistics automation.</p>
+    </div>
+
+    <!-- Pathways Grid -->
+    <div class="grid-3">
+        <div class="card">
+            <span class="tag tag-high">Highest ROI</span>
+            <h3>Pathway A</h3>
+            <p class="metric-label">Intelligent Care Orchestration</p>
+            <p>Deployment of AI agents to automate EHR data scraping, billing compliance, and risk stratification.</p>
+            <div class="metric-big">+40%</div>
+            <p class="metric-label">Coordinator Efficiency</p>
+        </div>
+        <div class="card">
+            <span class="tag tag-med">Operational</span>
+            <h3>Pathway B</h3>
+            <p class="metric-label">RPM Logistics Automation</p>
+            <p>Automated inventory systems for the deployment, tracking, and retrieval of remote monitoring hardware.</p>
+            <div class="metric-big">-15%</div>
+            <p class="metric-label">Inventory Loss Reduction</p>
+        </div>
+        <div class="card">
+            <span class="tag tag-med">Clinical Quality</span>
+            <h3>Pathway C</h3>
+            <p class="metric-label">Predictive Clinical AI</p>
+            <p>Algorithmic filtering of patient vitals to reduce alert fatigue and identify pre-acute decompensation.</p>
+            <div class="metric-big">60%</div>
+            <p class="metric-label">False Alert Reduction</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3">
+        <!-- Table Data -->
+        <div class="card" style="grid-column: span 1;">
+            <h2>Financial Impact Model</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Baseline</th>
+                        <th>Automated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Panel Size (Patients/FTE)</td>
+                        <td>250</td>
+                        <td class="highlight">375</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per FTE (Annual)</td>
+                        <td>$126,000</td>
+                        <td class="highlight">$189,000</td>
+                    </tr>
+                    <tr>
+                        <td>Admin Time (% of Day)</td>
+                        <td>40%</td>
+                        <td class="highlight">15%</td>
+                    </tr>
+                    <tr>
+                        <td>Net Benefit (Annual)</td>
+                        <td>--</td>
+                        <td class="highlight">$5.25M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts -->
+        <div class="card" style="grid-column: span 2;">
+            <h2>5-Year Cumulative Net Benefit ($M)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Throughput Analysis: Manual vs. Robotic</h2>
+        <div class="chart-container" style="height: 200px;">
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [4.5, 9.8, 15.5, 21.2, 27.5],
+                borderColor: '#7c3aed',
+                backgroundColor: savingsGradient,
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Patients Managed per Coordinator'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [250],
+                    backgroundColor: '#334155',
+                    borderRadius: 8,
+                    barPercentage: 0.5
+                },
+                {
+                    label: 'Robotic/AI Augmented',
+                    data: [375],
+                    backgroundColor: '#38bdf8',
+                    borderRadius: 8,
+                    barPercentage: 0.5
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                y: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
