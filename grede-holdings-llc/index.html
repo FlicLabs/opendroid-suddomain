@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grede Holdings | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            border-top: 3px solid var(--accent);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .year {
+            font-weight: 800;
+            color: var(--accent);
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>GREDE HOLDINGS LLC</h1>
+        <div class="subtitle">Strategic Automation & Research Report</div>
+    </header>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="metrics-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Target OEE Increase</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">&lt; 18 mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">$90k</div>
+            <div class="metric-label">Avg. Cell CAPEX</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">Zero</div>
+            <div class="metric-label">Safety Incidents Goal</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- LEFT COLUMN: RESEARCH & PATHWAYS -->
+        <div>
+            <div class="glass-card">
+                <h2>Executive Vision</h2>
+                <p>Grede Holdings is positioned to transition from a traditional foundry model to a "Smart Foundry" ecosystem. By targeting high-fatigue areas (grinding/pouring) for automation, Grede can resolve labor shortages while enhancing consistency in safety-critical iron castings.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Robotics Opportunity Pathways</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <span class="pathway-badge">PATHWAY A</span>
+                    <h3>Collaborative Finishing & Tending</h3>
+                    <p>Deployment of force-sensitive Cobots for grinding, deburring, and deflashing iron castings. Reduces ergonomic strain and ensures 100% machine utilization during tending cycles.</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <span class="pathway-badge">PATHWAY B</span>
+                    <h3>AMR Logistics</h3>
+                    <p>Autonomous Mobile Robots (AMRs) to replace forklifts for moving sand cores and cooled castings. Increases safety and reduces WIP stagnation.</p>
+                </div>
+
+                <div>
+                    <span class="pathway-badge">PATHWAY C</span>
+                    <h3>End-of-Line Automation</h3>
+                    <p>Heavy-payload arms for palletizing brake drums and suspension parts, integrated with vision systems for automated porosity inspection.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                <div class="roadmap-item">
+                    <div class="year">Year 1</div>
+                    <div><strong>Pilot Launch:</strong> Automated deburring cell & digital data infrastructure setup.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year">Year 2-3</div>
+                    <div><strong>Scaling:</strong> Expansion to 3 facilities; Introduction of AMRs in core rooms.</div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="year">Year 4-5</div>
+                    <div><strong>Smart Foundry:</strong> Full Digital Twin integration & semi-autonomous material flow.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: FINANCIALS & CHARTS -->
+        <div>
+            <div class="glass-card">
+                <h2>Financial Projection</h2>
+                <canvas id="savingsChart" height="250"></canvas>
+                <p style="font-size: 0.8rem; margin-top: 10px; text-align: center;">5-Year Cumulative Savings (USD Millions)</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Productivity Analysis</h2>
+                <canvas id="outputChart" height="250"></canvas>
+                <p style="font-size: 0.8rem; margin-top: 10px; text-align: center;">Units Per Hour: Manual vs. Cobot</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Strategic Impact</h2>
+                <ul>
+                    <li>Reduced scrap rates via precision handling.</li>
+                    <li>Reallocation of labor to Quality Assurance.</li>
+                    <li>Stabilized maintenance costs via predictive AI.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // GLOBAL CHART DEFAULTS
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // CHART 1: CUMULATIVE SAVINGS
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 1.8, 3.5, 5.8, 8.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // CHART 2: OUTPUT COMPARISON
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Grinding', 'Inspection', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 60, 80],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderWidth: 0,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [85, 110, 140],
+                    backgroundColor: '#10b981',
+                    borderWidth: 0,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
