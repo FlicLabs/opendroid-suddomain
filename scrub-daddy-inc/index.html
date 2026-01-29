@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrub Daddy Inc. | Automation Intelligence Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glass Card Utility */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .brand-accent {
+            color: var(--accent-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .meta-tag {
+            background: rgba(124, 58, 237, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            color: #f8fafc;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Pathways Section */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .pathway-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pathway-header {
+            color: var(--accent-glow);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Charts Area */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>OPEN DROIDS <span class="brand-accent">/ RESEARCH</span></h1>
+            <p style="margin: 5px 0 0 0; color: var(--text-muted);">Client: Scrub Daddy Inc.</p>
+        </div>
+        <div class="meta-tag">STATUS: CONFIDENTIAL</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Vision: Industry 4.0</h2>
+        <p>Scrub Daddy Inc. stands at the precipice of a major operational transformation. Moving from a high-growth consumer goods entity to a smart-manufacturing leader requires the adoption of Flexible Manufacturing Systems (FMS). By integrating collaborative robotics for delicate polymer handling and AMRs for logistics, the company can decouple labor costs from production volume.</p>
+    </div>
+
+    <!-- Production Dashboard Metrics -->
+    <div class="metrics-grid">
+        <div class="glass-card">
+            <div class="metric-label">Est. CapEx</div>
+            <div class="metric-value">$355k</div>
+            <div class="trend-up"><span>▲</span> Initial Pilot Deployment</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Target OEE Increase</div>
+            <div class="metric-value">22%</div>
+            <div class="trend-up"><span>▲</span> Efficiency Gain</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">15.2 Mo</div>
+            <div class="trend-up"><span>▼</span> Rapid Payback</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Scrap Reduction</div>
+            <div class="metric-value">15%</div>
+            <div class="trend-up"><span>▼</span> Material Waste</div>
+        </div>
+    </div>
+
+    <!-- Main Content & Charts -->
+    <div class="content-grid">
+        
+        <!-- Left Column: Strategy & Charts -->
+        <div>
+            <div class="glass-card">
+                <h2>Strategic Robotics Pathways</h2>
+                <div class="pathway-grid">
+                    <div class="pathway-card">
+                        <span class="pathway-header">Pathway A: Cobots</span>
+                        <p><strong>Machine Tending:</strong> Automating the loading of FlexTexture blocks into CNC/Waterjet cutters. Focus on reducing repetitive strain injuries and ensuring consistent cuts.</p>
+                    </div>
+                    <div class="pathway-card">
+                        <span class="pathway-header">Pathway B: AMRs</span>
+                        <p><strong>Internal Logistics:</strong> LiDAR-enabled mobile robots to transport cured foam buns from drying racks to cutting lines, smoothing WIP flow.</p>
+                    </div>
+                    <div class="pathway-card">
+                        <span class="pathway-header">Pathway C: End-of-Line</span>
+                        <p><strong>Palletizing & QC:</strong> Vision systems for "smile" defect detection combined with high-speed Delta robots for cartoning.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Production Output Analysis</h2>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Financials & Roadmap -->
+        <div>
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container" style="height: 200px;">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.85rem;">*Savings based on labor reallocation and material yield improvements.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                <ul style="padding-left: 20px; margin: 0;">
+                    <li style="margin-bottom: 10px;"><strong>Year 1:</strong> Pilot Palletizing & QC</li>
+                    <li style="margin-bottom: 10px;"><strong>Year 2:</strong> Machine Tending Expansion</li>
+                    <li style="margin-bottom: 10px;"><strong>Year 3:</strong> AMR Logistics Integration</li>
+                    <li style="margin-bottom: 10px;"><strong>Year 4:</strong> AI Optimization</li>
+                    <li><strong>Year 5:</strong> Smart Factory Status</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Savings Chart (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ USD)',
+                data: [280000, 610000, 980000, 1450000, 2100000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Output Chart (Bar)
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Packaging', 'Foam Cutting', 'Palletizing', 'QA Checks'],
+            datasets: [
+                {
+                    label: 'Manual Process (UPH)',
+                    data: [450, 320, 180, 200],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                },
+                {
+                    label: 'Cobot-Assisted (UPH)',
+                    data: [850, 580, 400, 900], // Huge jump in QA due to vision systems
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', align: 'end' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    title: { display: true, text: 'Units Per Hour' }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
