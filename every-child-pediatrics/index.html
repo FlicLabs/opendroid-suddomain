@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every Child Pediatrics - Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.5rem; margin: 0; }
+        h2 { font-size: 1.5rem; color: var(--accent-color); margin-top: 0; }
+        h3 { font-size: 1.1rem; margin-bottom: 15px; }
+
+        p { color: var(--text-secondary); }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        /* Custom Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--glass-border);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .tag-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; }
+        .tag-med { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+        .tag-low { background: rgba(255, 255, 255, 0.1); color: #cbd5e1; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Every Child Pediatrics</h1>
+            <p style="margin: 0; opacity: 0.7;">Robotics & Automation Feasibility Study</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Every Child Pediatrics serves over 24,000 children annually through a safety-net model. The primary opportunity lies in "Tech-Enabled Capacity Expansion." By deploying RPA for administrative tasks and Telepresence Robotics for School-Based Health Centers (SBHCs), the organization can bridge the gap between high patient demand and provider scarcity. The projected ROI focuses on reclaiming 30% of administrative time and converting travel time into clinical billable hours.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Projected Annual Benefit</div>
+            <div class="metric-value">$570k</div>
+            <p style="font-size: 0.8rem;">Net Impact (Rev + Savings)</p>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-value">+3,000</div>
+            <p style="font-size: 0.8rem;">Additional Visits / Year</p>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">4-6</div>
+            <p style="font-size: 0.8rem;">Months</p>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Admin Time Saved</div>
+            <div class="metric-value">30%</div>
+            <p style="font-size: 0.8rem;">Front Desk Efficiency</p>
+        </div>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Annual Throughput: Manual vs. Automated</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathway Comparison Table -->
+    <div class="glass-card">
+        <h3>Strategic Pathway Comparison</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Tech Focus</th>
+                    <th>Annual Benefit</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A</td>
+                    <td>RPA & Smart Scheduling</td>
+                    <td>$350,000</td>
+                    <td><span class="tag tag-high">Highest</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway B</td>
+                    <td>Telepresence Robotics</td>
+                    <td>$150,000</td>
+                    <td><span class="tag tag-med">High</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway C</td>
+                    <td>Vaccine Automation</td>
+                    <td>$70,000</td>
+                    <td><span class="tag tag-low">Medium</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($)',
+                data: [450000, 1100000, 1850000, 2700000, 3600000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current Capacity', 'With Automation'],
+            datasets: [{
+                label: 'Annual Patient Visits',
+                data: [65000, 68000],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#fff', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
