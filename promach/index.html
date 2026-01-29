@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProMach Strategic Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #fff;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-muted);
+            margin-top: 25px;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .highlight-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 2px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-wrapper {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            height: 350px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-muted);
+        }
+        
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--accent-color);
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <span class="subtitle">Open Droids Intelligence</span>
+            <h1>ProMach Strategic Analysis</h1>
+            <p style="color: var(--text-muted)">Industrial Automation & Smart Manufacturing Assessment</p>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">30%</span>
+                <span class="metric-label">Target OEE Increase</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt; 18 mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$120k</span>
+                <span class="metric-label">Max Cell CAPEX</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">Year 1</span>
+                <span class="metric-label">Pilot Implementation</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="section-card">
+            <h2>01. Executive Summary</h2>
+            <p>ProMach is a global leader in packaging machinery solutions. To maintain market dominance, the entity must pivot its internal manufacturing strategy towards Industry 4.0 connectivity. By transitioning from manual, batch-based workflows to automated, flexible manufacturing, ProMach can secure supply chain resilience and reduce lead times for capital equipment.</p>
+            <div class="highlight-box">
+                <strong>Vision:</strong> A fully connected ecosystem where machine tending, material flow, and quality assurance operate autonomously to support high-mix/low-volume production.
+            </div>
+        </div>
+
+        <!-- Robotics Opportunities -->
+        <div class="section-card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            
+            <h3>Pathway A: Collaborative Robots (Cobots)</h3>
+            <p><strong>Focus:</strong> Safety & Precision in Machine Tending.</p>
+            <p>Deployment of IP67-rated Cobots for CNC tending frees skilled machinists for programming and QC tasks. Includes torque-critical screwdriving for electrical panel assembly.</p>
+
+            <h3>Pathway B: Autonomous Mobile Robots (AMRs)</h3>
+            <p><strong>Focus:</strong> WIP Flow Efficiency.</p>
+            <p>Implementation of heavy-payload AMRs to transport raw sheet metal and finished sub-assemblies between fabrication islands, reducing non-value-added forklift travel.</p>
+
+            <h3>Pathway C: Automated Quality Inspection</h3>
+            <p><strong>Focus:</strong> Throughput & Yield.</p>
+            <p>Utilization of Automated Optical Inspection (AOI) to verify circuit board integrity and mechanical tolerances prior to Final Acceptance Testing (FAT).</p>
+        </div>
+
+        <!-- Financial & Roadmap -->
+        <div class="section-card">
+            <h2>03. Financial Model & Roadmap</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CAPEX</strong></td>
+                        <td>$60k - $120k per robotic cell (Cobot/AMR)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OPEX Impact</strong></td>
+                        <td>20-30% increase in OEE; 5% annual maintenance cost</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td>14-16 months via labor reallocation & scrap reduction</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Implementation Timeline</h3>
+            <p><strong>Year 1:</strong> Pilot audit of top 3 facilities. Deploy CNC Cobot cell.</p>
+            <p><strong>Year 2-3:</strong> Scale to 5 facilities and integrate MES data tracking.</p>
+            <p><strong>Year 4-5:</strong> AI-driven predictive maintenance and "Lights Out" fabrication.</p>
+        </div>
+    </div>
+
+    <!-- Chart.js Logic -->
+    <script>
+        // Chart 1: Cumulative Production Cost Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($ Millions)',
+                    data: [0.25, 0.8, 1.9, 3.5, 5.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    title: { display: true, text: '5-Year Cumulative Savings Projection', color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Cobot Output
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['CNC Loading', 'Panel Assembly', 'Kitting', 'Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Units/Hr)',
+                        data: [12, 8, 20, 45],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Cobot Assisted (Units/Hr)',
+                        data: [28, 18, 45, 120],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } },
+                    title: { display: true, text: 'Throughput: Manual vs. Automation', color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
