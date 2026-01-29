@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBCHC Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .report-title {
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .col-12 { grid-column: span 12; }
+        .col-8 { grid-column: span 8; }
+        .col-6 { grid-column: span 6; }
+        .col-4 { grid-column: span 4; }
+
+        h2 {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        /* Dashboard Specifics */
+        .metric-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .metric-box {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 8px;
+            color: var(--accent-purple);
+            border-bottom: 1px solid var(--glass-border);
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: rgba(124, 58, 237, 0.1);
+            color: white;
+            font-weight: 600;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client: Spring Branch Community Health Center</div>
+    </div>
+
+    <!-- Top Section: Executive Summary -->
+    <div class="grid-container">
+        <div class="card col-8">
+            <h2>Executive Summary</h2>
+            <p>SBCHC operates in a high-volume, resource-constrained environment. Our analysis identifies Pharmacy Automation (Pathway A) and Administrative RPA (Pathway B) as the critical levers. These technologies shift the optimization curve from "staffing harder" to "staffing smarter."</p>
+            <p>The strategic deployment of these assets will unlock an estimated £250k+ in annual incremental value per site through prescription throughput and 340B revenue optimization.</p>
+        </div>
+        <div class="card col-4">
+            <h2>Key Metrics (Proj.)</h2>
+            <div class="metric-container" style="flex-direction: column; gap: 15px;">
+                <div class="metric-box" style="text-align: left;">
+                    <span class="metric-value">9-14 Mos</span>
+                    <span class="metric-label">ROI Payback Period</span>
+                </div>
+                <div class="metric-box" style="text-align: left;">
+                    <span class="metric-value">+55%</span>
+                    <span class="metric-label">Rx Throughput Lift</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-container">
+        <div class="card col-12">
+            <h2>Financial Dashboard: Pathway A (Pharmacy Automation)</h2>
+            <div class="metric-container">
+                <div class="metric-box">
+                    <span class="metric-value">£200k</span>
+                    <span class="metric-label">Annual Net Benefit</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">1.5 FTE</span>
+                    <span class="metric-label">Labor Reallocation</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">~350</span>
+                    <span class="metric-label">Daily Scripts (Robotic)</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">0%</span>
+                    <span class="metric-label">Inventory Shrinkage</span>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: Pharmacy AI</th>
+                        <th>Pathway B: Admin RPA</th>
+                        <th>Pathway C: Tele-Health</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Scope</td>
+                        <td>Dispensary Operations</td>
+                        <td>Front Office / Billing</td>
+                        <td>Remote Access</td>
+                    </tr>
+                    <tr>
+                        <td>Primary Value</td>
+                        <td>Volume & Safety</td>
+                        <td>Efficiency & Denials</td>
+                        <td>Patient Retention</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Annual Benefit (Est)</td>
+                        <td>£150k - £250k</td>
+                        <td>£80k - £120k</td>
+                        <td>£40k - £60k</td>
+                    </tr>
+                    <tr>
+                        <td>Risk Profile</td>
+                        <td>Low (Mature Tech)</td>
+                        <td>Low (Integration)</td>
+                        <td>Moderate (Adoption)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-container">
+        <div class="card col-6">
+            <h2>5-Year Cumulative Savings (GBP)</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-6">
+            <h2>Throughput: Manual vs. Robotic</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings',
+                    data: [150000, 380000, 650000, 950000, 1300000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradientSavings,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Comparison Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Scripts/Day', 'Patient Capacity', 'Admin Tasks/Hr'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [200, 40, 15],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic/AI Process',
+                        data: [350, 65, 80],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        boxShadow: '0 0 10px #7c3aed' 
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
