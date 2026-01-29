@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AET Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .meta {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent-purple);
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: #fff;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>AET Automation Intelligence</h1>
+                <div style="color: var(--text-secondary); margin-top: 10px;">Strategic Research for American Engineering Testing Inc.</div>
+            </div>
+            <div class="meta">
+                OPEN DROIDS RESEARCH<br>
+                CONFIDENTIAL REPORT<br>
+                DATE: 2023-10-27
+            </div>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">35%</span>
+                <span class="metric-label">Target TAT Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">16 Mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">25%</span>
+                <span class="metric-label">OEE Efficiency Gain</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value" style="color: var(--success);">$140k</span>
+                <span class="metric-label">Yr 1 Projected Value</span>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            
+            <!-- Executive Summary -->
+            <div class="card full-width">
+                <h2>01. Executive Vision</h2>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Transitioning American Engineering Testing Inc. from manual laboratory processes to a <strong>Smart Inspection Hub</strong>. By treating sample processing as discrete manufacturing, AET can leverage flexible robotics to eliminate bottlenecks in concrete and soil testing, ensuring higher throughput and rigorous data integrity.
+                </p>
+            </div>
+
+            <!-- Robotics Pathways -->
+            <div class="card">
+                <h2>02. Robotics Pathways</h2>
+                <ul>
+                    <li><strong>Pathway A (Cobots):</strong> Automated machine tending for concrete cylinder compression tests. Increases safety by removing technicians from failure zones.</li>
+                    <li><strong>Pathway B (AMRs):</strong> Autonomous transport of heavy aggregate and soil samples between loading docks, curing rooms, and test cells.</li>
+                    <li><strong>Pathway C (End-of-Line):</strong> Automated sample archiving and disposal systems to manage waste yield efficiently.</li>
+                </ul>
+            </div>
+
+            <!-- Financials -->
+            <div class="card">
+                <h2>03. Financial Model</h2>
+                <ul>
+                    <li><strong>CAPEX Estimate:</strong> $170,000 (Pilot Cell: Cobot + AMR + Integration).</li>
+                    <li><strong>Labor Reallocation:</strong> 2,000 hrs/yr moved from manual lifting to data analysis.</li>
+                    <li><strong>Strategic Value:</strong> Ability to handle peak construction season volumes without temporary staffing.</li>
+                </ul>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="card">
+                <h2>Cost Savings Trajectory (5 Years)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Throughput Comparison: Manual vs. Cobot</h2>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="card full-width">
+                <h2>04. Implementation Roadmap</h2>
+                <div class="roadmap-step">
+                    <span class="step-year">YR 1</span>
+                    <span><strong>Pilot Launch:</strong> Deploy Cobot Machine Tending in St. Paul HQ for concrete cylinders.</span>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-year">YR 2</span>
+                    <span><strong>Intra-Logistics:</strong> Integrate AMRs for heavy sample transport in pilot facility.</span>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-year">YR 3</span>
+                    <span><strong>Network Expansion:</strong> Scale successful cells to 3-5 regional major hubs.</span>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-year">YR 4</span>
+                    <span><strong>AI Vision:</strong> Add computer vision for pre-test sample inspection and anomaly detection.</span>
+                </div>
+                <div class="roadmap-step">
+                    <span class="step-year">YR 5</span>
+                    <span><strong>Smart Ecosystem:</strong> Full 24/7 "lights-out" testing capability for standard materials.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings Line Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [20000, 140000, 310000, 520000, 780000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison Bar Chart
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Sample Prep', 'Transport', 'Testing', 'Disposal'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Units/Hr)',
+                        data: [12, 15, 20, 30],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Hr)',
+                        data: [18, 45, 32, 60],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
