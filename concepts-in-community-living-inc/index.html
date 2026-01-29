@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCL Robotics Research | OPEN DROIDS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .tag-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="font-size: 0.875rem; color: var(--text-muted);">Confidential Consultation</div>
+    </header>
+
+    <div class="glass-card">
+        <h1>Concepts in Community Living Inc.</h1>
+        <h2>Robotics Portfolio & ROI Analysis</h2>
+        <p style="color: var(--text-muted); max-width: 800px; line-height: 1.6;">
+            Deployment strategy for 15-20 Assisted Living communities. Focus on autonomous logistics to alleviate labor shortages and sensor-based AI for resident safety. Primary ROI driver is the recapture of 4,000+ annual labor hours per facility.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">£525.6k</div>
+            <div class="kpi-label">Gross Labor Value Saved</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">4 hrs/day</div>
+            <div class="kpi-label">Time Saved Per Facility</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">6 Months</div>
+            <div class="kpi-label">Break-Even Period</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">£600k+</div>
+            <div class="kpi-label">5-Year Net Benefit</div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3 style="margin-top: 0;">5-Year Cumulative Savings (Network Wide)</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3 style="margin-top: 0;">Operational Efficiency: Manual vs Robotic</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h3 style="margin-top: 0; margin-bottom: 1rem;">Pathway Comparison Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Primary Value Driver</th>
+                    <th>Annual Net Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">A: Logistics AMRs</td>
+                    <td>Labor Hour Reduction</td>
+                    <td>£90k - £120k</td>
+                    <td><span class="tag tag-high">Low Risk</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">B: Safety AI</td>
+                    <td>Liability & Occupancy</td>
+                    <td>~£200k (Retained)</td>
+                    <td><span class="tag tag-med">Medium Risk</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">C: Social Robots</td>
+                    <td>Marketing & Quality</td>
+                    <td>Intangible</td>
+                    <td><span class="tag tag-high">Low Risk</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Global Chart Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    const gradient1 = ctx1.createLinearGradient(0, 0, 0, 400);
+    gradient1.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradient1.addColorStop(1, 'rgba(124, 58, 237, 0)');
+
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£)',
+                data: [93600, 210000, 340000, 480000, 630000],
+                borderColor: '#7c3aed',
+                backgroundColor: gradient1,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '£' + value/1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput/Efficiency Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Service', 'Laundry Transport', 'Waste Removal'],
+            datasets: [{
+                label: 'Manual (Mins/Shift)',
+                data: [180, 90, 45],
+                backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                borderRadius: 4
+            },
+            {
+                label: 'Robotic Assisted (Mins/Shift)',
+                data: [60, 20, 10],
+                backgroundColor: '#7c3aed',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    title: { display: true, text: 'Staff Minutes Spent' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
