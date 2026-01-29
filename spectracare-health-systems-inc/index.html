@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpectraCare Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --accent: #7c3aed;
+        --text-main: #ffffff;
+        --text-muted: #94a3b8;
+        --font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: var(--font-family);
+        margin: 0;
+        padding: 40px;
+        background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+    }
+
+    h1, h2, h3, h4 {
+        margin: 0 0 10px 0;
+        font-weight: 600;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: var(--accent);
+        text-transform: uppercase;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin-top: 10px;
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .metric-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        text-align: left;
+        color: var(--accent);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    td {
+        padding: 12px 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        background: rgba(124, 58, 237, 0.2);
+        color: #c4b5fd;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <h2 style="font-size: 1.2rem;">SpectraCare Health Systems</h2>
+            <span style="font-size: 0.9rem; color: var(--text-muted);">Robotics Strategy & ROI Dashboard</span>
+        </div>
+    </div>
+
+    <!-- Top Metrics Row -->
+    <div class="grid-container">
+        <div class="card col-4">
+            <div class="metric-label">Annual Net Benefit (Est.)</div>
+            <div class="metric-value">$1.6M</div>
+            <div class="metric-sub">5-Year Cumulative Savings</div>
+        </div>
+        <div class="card col-4">
+            <div class="metric-label">Fleet Efficiency Lift</div>
+            <div class="metric-value">15-20%</div>
+            <div class="metric-sub">Route Optimization & Fuel</div>
+        </div>
+        <div class="card col-4">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">4 Months</div>
+            <div class="metric-sub">Pathway A: Logistics AI</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-container">
+        <div class="card col-8">
+            <div class="metric-label" style="margin-bottom: 15px;">5-Year Cumulative Savings Projection</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-4">
+            <div class="metric-label" style="margin-bottom: 15px;">Transport Capacity Uplift</div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="grid-container">
+        <div class="card col-12">
+            <div class="metric-label">Robotics Opportunity Pathways</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Core Tech</th>
+                        <th>Primary Value</th>
+                        <th>Annual Impact</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Pathway A</td>
+                        <td>Fleet AI & Routing</td>
+                        <td>Fuel & Labor Savings</td>
+                        <td>$375k OpEx Reduction</td>
+                        <td><span class="status-badge">Immediate Priority</span></td>
+                    </tr>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Pathway B</td>
+                        <td>Auto-Medication Dispensing</td>
+                        <td>Compliance & Safety</td>
+                        <td>$150k Labor Equivalent</td>
+                        <td><span class="status-badge">Phase 2 Pilot</span></td>
+                    </tr>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Pathway C</td>
+                        <td>Social & Tele-Robotics</td>
+                        <td>Specialist Reach</td>
+                        <td>High Clinical Value</td>
+                        <td><span class="status-badge">Strategic</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+        
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings (USD)',
+                    data: [275000, 580000, 910000, 1250000, 1600000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: savingsGradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Current Fleet', 'AI Optimized'],
+                datasets: [{
+                    label: 'Daily Rides Per Vehicle',
+                    data: [8, 12],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderRadius: 6,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
