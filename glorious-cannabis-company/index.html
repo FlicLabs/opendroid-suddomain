@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glorious Cannabis Co. - Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a;
+        color: #ffffff;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .report-title {
+        font-size: 14px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 { font-size: 32px; margin-top: 0; color: #f8fafc; }
+    h2 { font-size: 22px; color: #7c3aed; margin-top: 0; }
+    h3 { font-size: 16px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; margin-top: 25px;}
+    p, li { font-size: 15px; line-height: 1.6; color: #cbd5e1; }
+    
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 12px;
+        color: #a78bfa;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+    }
+
+    .chart-box {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* HTML Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #7c3aed;
+        color: #a78bfa;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 14px;
+    }
+
+    tr:hover td {
+        background: rgba(124, 58, 237, 0.05);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client: Glorious Cannabis Co.</div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Projected Annual ROI</div>
+            <div class="metric-value">$4.0M</div>
+            <div class="metric-label">High-End Estimate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Throughput Uplift</div>
+            <div class="metric-value">300%</div>
+            <div class="metric-label">Infused Manufacturing</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Cost Reduction</div>
+            <div class="metric-value">65%</div>
+            <div class="metric-label">Per Unit Basis</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">8 Mo</div>
+            <div class="metric-label">Pathway A Average</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Weekly Throughput (Units)</h2>
+            <div class="chart-box">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="glass-card">
+        <h1>Executive Summary</h1>
+        <p>Glorious Cannabis Company, a leader in the Michigan cannabis sector, faces scaling challenges typical of high-growth vertical operators. By shifting from manual manufacturing to robotics-driven infusion and packaging, the company can address critical bottlenecks. The analysis identifies three key pathways, with <strong>Automated Infused Pre-Roll Manufacturing</strong> offering the highest immediate impact, potentially generating millions in incremental margin annually.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Opportunity Pathways Analysis</h2>
+        
+        <h3>Pathway A: Infused Pre-Roll Automation</h3>
+        <p>Scope: Deployment of robotic injection and twisting systems. <br>
+        Impact: Reduces labor costs by 60-70% and triples production capacity.</p>
+
+        <h3>Pathway B: Harvest & Trim Automation</h3>
+        <p>Scope: Bladeless trimming and optical sorting.<br>
+        Impact: Standardizes product consistency and reduces seasonal labor dependency.</p>
+
+        <h3>Pathway C: Compliance & Vault Robotics</h3>
+        <p>Scope: ASRS and RFID tracking for Metrc compliance.<br>
+        Impact: Mitigates regulatory risk and eliminates inventory shrinkage.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Comparative Financial View</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Benefit</th>
+                    <th>Payback Period</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A</td>
+                    <td>Infused Manufacturing</td>
+                    <td>$3.0M - $4.0M</td>
+                    <td>6 - 9 Months</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td>Pathway B</td>
+                    <td>Harvest Processing</td>
+                    <td>$1.0M - $1.5M</td>
+                    <td>12 - 18 Months</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Pathway C</td>
+                    <td>Compliance/Logistics</td>
+                    <td>$0.5M (Indirect)</td>
+                    <td>24 - 36 Months</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [3.5, 7.8, 12.5, 17.5, 23.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Process'],
+            datasets: [{
+                label: 'Units Per Week',
+                data: [20000, 80000],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.5)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
