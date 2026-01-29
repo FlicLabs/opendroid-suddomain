@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloomy Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pathway Grid */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 50px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div style="margin-bottom: 40px;">
+            <div class="badge">OPEN DROIDS RESEARCH</div>
+            <h1>BLOOMY: STRATEGIC AUTOMATION</h1>
+            <p>Prepared for Senior Leadership | Focus: High-Mix/Low-Volume Efficiency</p>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">25%</span>
+                <span class="metric-label">Target OEE Increase</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">16 mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$295k</span>
+                <span class="metric-label">Pilot Phase CAPEX</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">40%</span>
+                <span class="metric-label">Scrap Reduction</span>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Vision</h2>
+            <p>
+                Bloomy stands at a critical juncture in the automated test equipment sector. The proposed strategy shifts operations from static workbenches to a dynamic <strong>Flexible Manufacturing Ecosystem</strong>. By integrating collaborative robotics and automated logistics, Bloomy can secure its position as the premier provider of Battery Management Systems (BMS) test rigs while mitigating skilled labor shortages.
+            </p>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Production Cost Savings</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput: Manual vs. Cobot</h3>
+                <div class="chart-wrapper">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <h3>Pathway A: Cobot Assembly</h3>
+                    <p>Deployment of 5-10kg payload Cobots for automated screwdriving and torque application. Ensures 100% compliance for aerospace/defense contracts.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway B: AMR Logistics</h3>
+                    <p>Autonomous Mobile Robots for moving heavy chassis and power supplies. Reduces non-value-added technician travel time by automating WIP flow.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway C: Auto-Inspection</h3>
+                    <p>End-of-Line automated optical inspection (AOI) to verify connector seating and labeling before final software validation. Improves yield.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>03. Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: var(--success);">Year 1-2</h3>
+                    <p>Foundation & Logistics. Deploy single Cobot cell and AMR fleet. Integrate MES for data tracking.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: var(--accent);">Year 3-4</h3>
+                    <p>Expansion. Implement Vision Inspection. Scale Cobots to wiring harness prep. Connect assets to dashboard.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <h3 style="color: #fff;">Year 5</h3>
+                    <p>Optimization. AI-driven process refinement. Modular floor capable of 4-hour reconfiguration.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2023 Open Droids Consulting. Confidential Research for Bloomy.
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Cost Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [45000, 180000, 420000, 750000, 1200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Chassis Assy', 'Wiring Prep', 'Final QC'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [4, 6, 8], // Units per shift (Hypothetical low volume high complexity)
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Cobot Assisted',
+                        data: [7, 11, 14],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        title: { display: true, text: 'Units Per Shift', color: '#64748b' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
