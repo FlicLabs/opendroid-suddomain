@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riverside Recovery Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+            font-weight: bold;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">CLIENT</div>
+            <div style="font-weight: 600;">Riverside Recovery of Tampa</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Riverside Recovery of Tampa is positioned to transform addiction treatment through the strategic integration of robotics. Operating in a high-liability environment, the implementation of <strong>Automated Medication Dispensing (Pathway A)</strong> and <strong>Autonomous Facility Logistics (Pathway B)</strong> offers immediate value. The dominant ROI drivers are risk mitigation (anti-diversion), nursing efficiency, and operational throughput, projected to yield over £150k in annual net margin impact.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h3 style="color: var(--accent-purple); margin-bottom: 20px;">Financial Dashboard & Projections</h3>
+    
+    <div class="metric-container">
+        <div class="metric-card">
+            <div class="metric-label">Annual Net Benefit</div>
+            <div class="metric-value">£135k</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">▲ 18% vs Baseline</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Nursing Hours Saved</div>
+            <div class="metric-value">1,500+</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Redeployed to Care</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Diversion Risk</div>
+            <div class="metric-value">~0%</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">▼ 99% Reduction</div>
+        </div>
+    </div>
+
+    <div class="grid-3">
+        <div class="card">
+            <h4 style="margin-top:0;">5-Year Cumulative Savings</h4>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h4 style="margin-top:0;">Nursing Efficiency Throughput</h4>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <h3 style="margin-top: 40px; color: var(--accent-purple);">Strategic Pathways</h3>
+    <div class="grid-3">
+        <div class="card">
+            <h4 style="color: var(--accent-purple);">Pathway A: Meds</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Automated Dispensing & Biometrics</p>
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+            <p>Eliminates narcotic count errors and diversion. Frees up nursing staff for direct patient counseling.</p>
+            <p class="highlight">Payback: 12 Months</p>
+        </div>
+        <div class="card">
+            <h4 style="color: var(--accent-purple);">Pathway B: Logistics</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Autonomous Mobile Robots (AMR)</p>
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+            <p>Automates linen, food, and waste transport. Reduces technician fatigue and improves facility hygiene.</p>
+            <p class="highlight">Payback: 24 Months</p>
+        </div>
+        <div class="card">
+            <h4 style="color: var(--accent-purple);">Pathway C: AI Safety</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Vitals & Room Monitoring</p>
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+            <p>Replaces manual 15-min checks in detox. Provides real-time seizure/distress alerts.</p>
+            <p class="highlight">Value: Premium Positioning</p>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h3>Comparative ROI Analysis</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Primary Value Driver</th>
+                    <th>Annual Benefit (Est.)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight:bold;">A: Med Automation</td>
+                    <td>Risk Mitigation & Labor</td>
+                    <td>£100,000 - £120,000</td>
+                    <td><span style="color:#4ade80">Low</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">B: Logistics Robots</td>
+                    <td>Staff Retention & Efficiency</td>
+                    <td>£45,000 - £60,000</td>
+                    <td><span style="color:orange">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">C: Safety AI</td>
+                    <td>Market Differentiation</td>
+                    <td>Intangible / Premium</td>
+                    <td><span style="color:orange">Moderate</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings (£)',
+                    data: [20000, 110000, 240000, 380000, 550000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput/Efficiency
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Med Pass Time', 'Logistics Wait', 'Admin Time'],
+                datasets: [
+                    {
+                        label: 'Manual (Current)',
+                        data: [100, 100, 100],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic (Target)',
+                        data: [60, 20, 40], // reduced percentages
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' },
+                        title: { display: true, text: '% of Baseline Time', color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
