@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assembly Health Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #7c3aed;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 600;
+        margin: 0;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 16px;
+        color: #cbd5e1;
+        margin-bottom: 15px;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(124, 58, 237, 0.3);
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        border-color: #7c3aed;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .chart-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .chart-container {
+        background: rgba(15, 23, 42, 0.4);
+        border-radius: 12px;
+        padding: 20px;
+        height: 300px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        text-align: left;
+        color: #94a3b8;
+        font-weight: 400;
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-text {
+        color: #7c3aed;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .chart-section {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Assembly Health</h1>
+            <div style="color: #94a3b8; margin-top: 5px;">Robotics & Automation Research Portfolio</div>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p style="line-height: 1.6; color: #cbd5e1;">
+            Assembly Health is positioned to transform from a tech-enabled MSO into an automation-first platform. By leveraging Robotic Process Automation (RPA) in revenue cycle management and AI-driven logistics for field clinician routing, the company can decouple revenue growth from headcount. The dominant ROI driver is the automation of high-volume claims processing and denial management.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard: Pathway A (RPA)</h2>
+        
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-label">Annual Savings</div>
+                <div class="metric-value">£2.5M</div>
+                <div class="metric-label">Recurring EBITDA Lift</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Cost Per Claim</div>
+                <div class="metric-value">-85%</div>
+                <div class="metric-label">Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">0.7</div>
+                <div class="metric-label">Years</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI (5-Year)</div>
+                <div class="metric-value">12x</div>
+                <div class="metric-label">Multiplier</div>
+            </div>
+        </div>
+
+        <h3>Comparative Pathways Analysis</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Benefit</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight-text">Pathway A: RPA Billing</td>
+                    <td>RCM & Finance</td>
+                    <td>£2.5M (High)</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Pathway B: Logistics AI</td>
+                    <td>Field Operations</td>
+                    <td>£1.5M (Med)</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td>Pathway C: Telepresence</td>
+                    <td>Clinical Delivery</td>
+                    <td>£0.5M (Low)</td>
+                    <td>High</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-section">
+        <div class="glass-card" style="margin-bottom: 0;">
+            <h3>5-Year Cumulative Savings (RPA)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card" style="margin-bottom: 0;">
+            <h3>Claims Processing Throughput (Per Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£ Millions)',
+                data: [1.2, 3.8, 6.5, 9.4, 12.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) { return '£' + value + 'M'; }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Human Agent', 'Robotic Process Automation'],
+            datasets: [{
+                label: 'Claims Processed Per Hour',
+                data: [12, 350],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Grey for manual
+                    '#7c3aed' // Electric Purple for bot
+                ],
+                borderRadius: 8,
+                barThickness: 60
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
