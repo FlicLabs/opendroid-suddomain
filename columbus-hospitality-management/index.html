@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHM Robotics Portfolio | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        .report-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            font-size: 28px;
+            margin: 10px 0;
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Financial Dashboard Styles */
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-delta {
+            font-size: 14px;
+            color: #10b981; /* Green for positive */
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            padding-bottom: 12px;
+            border-bottom: var(--glass-border);
+        }
+
+        td {
+            padding: 16px 0;
+            font-size: 14px;
+            border-bottom: var(--glass-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .grid { display: block; }
+            .card { margin-bottom: 24px; }
+            .col-4, .col-6, .col-8, .col-12 { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div class="report-title">Client: Columbus Hospitality Management</div>
+        </header>
+
+        <!-- Executive Summary & Profile -->
+        <div class="grid">
+            <div class="card col-8">
+                <h2>Executive Overview</h2>
+                <p>Columbus Hospitality Management (CHM) stands to gain significant operational leverage through the "Service-as-a-Platform" robotics model. By automating high-repetition logistics in dining (Runners) and facilities (Vacuuming), CHM can stabilize labor costs and improve guest throughput.</p>
+                <div style="margin-top: 20px;">
+                    <span class="tag">Food & Beverage</span>
+                    <span class="tag">Housekeeping</span>
+                    <span class="tag">Guest Experience</span>
+                </div>
+            </div>
+            <div class="card col-4">
+                <h2>Market Profile</h2>
+                <div class="metric-label">Managed Assets</div>
+                <div class="metric-value">Hotels & Venues</div>
+                <div class="metric-label" style="margin-top:15px;">Target ROI Baseline</div>
+                <div class="metric-value">9 Months</div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="grid">
+            <div class="card col-4">
+                <h2>Pathway A: F&B ROI</h2>
+                <div class="metric-label">Annual Savings / Unit</div>
+                <div class="metric-value">$42,500 <span class="metric-delta">▲</span></div>
+                <p style="font-size: 12px; margin-top: 10px;">Based on 1.5 FTE offset per robot deployment in banquet operations.</p>
+            </div>
+            <div class="card col-4">
+                <h2>Throughput Velocity</h2>
+                <div class="metric-label">Table Turn Improvement</div>
+                <div class="metric-value">18% <span class="metric-delta">▲</span></div>
+                <p style="font-size: 12px; margin-top: 10px;">Reduced server travel time correlates directly to faster check settlement.</p>
+            </div>
+            <div class="card col-4">
+                <h2>Operational Efficiency</h2>
+                <div class="metric-label">Daily Distance Saved</div>
+                <div class="metric-value">4.5 Miles <span class="metric-delta">▼</span></div>
+                <p style="font-size: 12px; margin-top: 10px;">Walking distance reduced per server per shift, decreasing fatigue.</p>
+            </div>
+        </div>
+
+        <!-- Comparative Table -->
+        <div class="grid">
+            <div class="card col-12">
+                <h2>Strategic Pathways Comparison</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pathway</th>
+                            <th>Scope</th>
+                            <th>Primary Value Driver</th>
+                            <th>Est. Annual Benefit (Net)</th>
+                            <th>Payback Period</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color: #c4b5fd; font-weight:600;">Pathway A: F&B Logistics</td>
+                            <td>Dining & Banquets</td>
+                            <td>Labor Offset & Throughput</td>
+                            <td>$40k - $50k</td>
+                            <td>6-9 Months</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight:600;">Pathway B: Housekeeping</td>
+                            <td>Facilities & Halls</td>
+                            <td>Consistency & Staff Retention</td>
+                            <td>$25k - $30k</td>
+                            <td>12-14 Months</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #fff; font-weight:600;">Pathway C: Delivery</td>
+                            <td>Guest Rooms</td>
+                            <td>Experience & Safety</td>
+                            <td>$15k - $20k</td>
+                            <td>18-24 Months</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid">
+            <div class="card col-6">
+                <h2>5-Year Cumulative Net Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card col-6">
+                <h2>Manual vs. Robotic Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global Chart Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (USD)',
+                    data: [35000, 72000, 115000, 160000, 210000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Robotic Throughput
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        const throughputChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Tables Served/Hr', 'Room Delivery Time (Min)', 'Hallway SqFt/Hr'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [4, 15, 2000],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [6, 8, 3500],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'logarithmic', // Used logarithmic because SqFt is much larger than other metrics
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
