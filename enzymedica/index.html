@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enzymedica Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #7c3aed;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Financial Dashboard Table Styling */
+        table.dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 10px;
+            margin-top: 20px;
+        }
+
+        td.metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 33%;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .list-group {
+            padding-left: 20px;
+        }
+        
+        .list-group li {
+            margin-bottom: 10px;
+            color: #cbd5e1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">OPEN DROIDS</div>
+            <h1 class="title">Enzymedica Robotics Analysis</h1>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>
+                Enzymedica is a global leader in natural digestive health. As the company scales its distribution of premium enzyme therapeutics, operational bottlenecks have shifted to high-velocity manufacturing and quality assurance. The robotic opportunity lies in automating high-speed bottling, integrating computer vision for QC, and deploying AMRs for logistics. This strategy promises to reduce unit costs while maintaining the rigorous "Clean Label" standards the brand is known for.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h2>Financial Dashboard & ROI Model</h2>
+            <table class="dashboard">
+                <tr>
+                    <td class="metric-card">
+                        <span class="metric-label">Annual Savings</span>
+                        <div class="metric-value">$2.5M</div>
+                    </td>
+                    <td class="metric-card">
+                        <span class="metric-label">Efficiency Lift</span>
+                        <div class="metric-value">+40%</div>
+                    </td>
+                    <td class="metric-card">
+                        <span class="metric-label">Payback Period</span>
+                        <div class="metric-value">1.5 Yrs</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <h2>5-Year Cumulative Savings</h2>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <h2>Throughput Comparison</h2>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card">
+            <h2>Strategic Pathways</h2>
+            <div class="row">
+                <div class="col">
+                    <h3 style="color: #fff; font-size: 1.1rem;">Pathway A: Production</h3>
+                    <p style="font-size: 0.9rem;">High-speed encapsulation with computer vision. The primary driver for unit cost reduction.</p>
+                </div>
+                <div class="col">
+                    <h3 style="color: #fff; font-size: 1.1rem;">Pathway B: Lab Ops</h3>
+                    <p style="font-size: 0.9rem;">Automated liquid handling for Thera-blend validation. Critical for maintaining quality at scale.</p>
+                </div>
+                <div class="col">
+                    <h3 style="color: #fff; font-size: 1.1rem;">Pathway C: Logistics</h3>
+                    <p style="font-size: 0.9rem;">Autonomous Mobile Robots (AMRs) for warehouse efficiency and safer material transport.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+        
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#cbd5e1' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        };
+
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [0.5, 2.2, 4.5, 7.1, 9.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff'
+                }]
+            },
+            options: commonOptions
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Bottling (UPM)', 'Lab Assays (Daily)', 'Packing (Cases/Hr)'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [120, 50, 200],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [180, 250, 320],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: commonOptions
+        });
+    </script>
+</body>
+</html>
