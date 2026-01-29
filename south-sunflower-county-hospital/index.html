@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids Research - SSCH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .full-width { grid-column: span 12; }
+        .half-width { grid-column: span 6; }
+        .third-width { grid-column: span 4; }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: white;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-purple);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 12px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .grid-container { display: block; }
+            .card { margin-bottom: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            Client: South Sunflower County Hospital<br>
+            Analysis: Robotics & Automation Portfolio
+        </div>
+    </header>
+
+    <div class="grid-container">
+
+        <!-- Executive Summary -->
+        <div class="card full-width">
+            <h2>Executive Summary</h2>
+            <p>South Sunflower County Hospital (SSCH) is a critical access hub in the Mississippi Delta. To combat rural staffing shortages and prevent revenue leakage from patient transfers, SSCH must pivot to a technology-integrated care model. The primary robotics opportunities are Tele-presence systems for stroke/specialist retention and Autonomous Mobile Robots (AMRs) for nursing logistics.</p>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="card third-width">
+            <h2>Est. Revenue Recapture</h2>
+            <div class="metric-value">$240k<span style="font-size:1rem; color:var(--success)">/yr</span></div>
+            <div class="metric-label">From Pathway A (Tele-Stroke Retention)</div>
+        </div>
+
+        <div class="card third-width">
+            <h2>Nursing Time Saved</h2>
+            <div class="metric-value">1,000+<span style="font-size:1rem; color:#94a3b8"> hrs</span></div>
+            <div class="metric-label">Annual hours returned to bedside care</div>
+        </div>
+
+        <div class="card third-width">
+            <h2>Payback Period</h2>
+            <div class="metric-value">&lt; 4 mo</div>
+            <div class="metric-label">For Primary Tele-Robotics implementation</div>
+        </div>
+
+        <!-- Financial Dashboard Table -->
+        <div class="card full-width">
+            <h2>Financial Dashboard: Pathway A (Tele-Robotics)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Baseline (Status Quo)</th>
+                        <th>Robotics (Year 1)</th>
+                        <th>Robotics (Year 3)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Stroke/Cardiac Transfers</td>
+                        <td>High Volume Outmigration</td>
+                        <td>-24 Transfers/Year</td>
+                        <td>-36 Transfers/Year</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue Capture (Net)</td>
+                        <td>$0 (Lost Revenue)</td>
+                        <td>$240,000</td>
+                        <td>$360,000</td>
+                    </tr>
+                    <tr>
+                        <td>Platform Costs</td>
+                        <td>$0</td>
+                        <td>($60,000)</td>
+                        <td>($55,000)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Net Operating Income Impact</strong></td>
+                        <td><strong>$0</strong></td>
+                        <td class="positive"><strong>+$180,000</strong></td>
+                        <td class="positive"><strong>+$305,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="card half-width">
+            <h2>5-Year Cumulative Net Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card half-width">
+            <h2>Throughput: Patient Retention</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Strategy Section -->
+        <div class="card full-width">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Phase 1 (Mo 1-6)</h3>
+                    <p>Deploy Tele-presence in ED. Secure Neurology partners. Focus on stopping transfers.</p>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Phase 2 (Mo 7-12)</h3>
+                    <p>Pilot Logistics AMR (Pharmacy run). Measure nurse step reduction.</p>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h3>Phase 3 (Year 2+)</h3>
+                    <p>Expand Tele-presence to Rehab/Swing Bed. Evaluate UV-C disinfection robots.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (USD)',
+                    data: [180000, 390000, 695000, 1050000, 1450000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput (Manual vs Robotic Retention)
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Stroke Cases', 'Cardiac Consults', 'Complex Med'],
+                datasets: [
+                    {
+                        label: 'Retained (Manual/Current)',
+                        data: [5, 10, 15],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Retained (Robotic Assisted)',
+                        data: [25, 35, 40],
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                        borderColor: '#10b981',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
