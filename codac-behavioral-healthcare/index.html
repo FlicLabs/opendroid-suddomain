@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODAC Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a; /* Deep Space Blue */
+        color: #ffffff;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-logo {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #7c3aed; /* Electric Purple */
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        display: inline-block;
+        border-bottom: 2px solid #7c3aed;
+        padding-bottom: 5px;
+    }
+
+    h1 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        font-size: 20px;
+        color: #7c3aed;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin-top: 0;
+        color: #e2e8f0;
+    }
+
+    p, li {
+        color: #cbd5e1;
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 1px;
+    }
+
+    /* Dashboard Table Styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 10px;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        color: #7c3aed;
+        font-size: 12px;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    td {
+        padding: 15px;
+        color: #cbd5e1;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .status-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .status-mid { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .status-pilot { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-logo">OPEN DROIDS</div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h1>CODAC Behavioral Healthcare</h1>
+        <p style="font-size: 18px; color: #94a3b8;">Robotics Transformation Portfolio & ROI Analysis</p>
+        <p>Strategic integration of automated dispensing and social robotics to address the opioid crisis and workforce shortages. The initiative targets a net operational savings of £400k+ annually while enhancing patient safety and retention.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Intelligence Dashboard</h2>
+        <div class="grid-2">
+            <!-- Metric 1 -->
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px;">
+                <div class="metric-label">5-Year Net Benefit</div>
+                <div class="metric-value">£1.8M</div>
+                <div style="color: #34d399; font-size: 13px;">▲ 450% ROI</div>
+            </div>
+             <!-- Metric 2 -->
+             <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px;">
+                <div class="metric-label">Nurse Hours Saved/Year</div>
+                <div class="metric-value">5,200+</div>
+                <div style="color: #60a5fa; font-size: 13px;">Reallocated to Care</div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="grid-2">
+            <!-- Chart 1: Savings -->
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px;">
+                <div class="metric-label" style="margin-bottom: 15px;">Cumulative Savings (GBP)</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <!-- Chart 2: Throughput -->
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px;">
+                <div class="metric-label" style="margin-bottom: 15px;">Daily Patient Throughput</div>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h2>Opportunity Pathways Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Impact</th>
+                    <th>Payback Period</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold; color: #fff;">Pathway A</td>
+                    <td>Medication Dispensing</td>
+                    <td>£400,000</td>
+                    <td>8 Months</td>
+                    <td><span class="status-badge status-high">High Priority</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; color: #fff;">Pathway B</td>
+                    <td>Therapeutic/Social</td>
+                    <td>£50,000 (Indirect)</td>
+                    <td>18 Months</td>
+                    <td><span class="status-badge status-pilot">Pilot Phase</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; color: #fff;">Pathway C</td>
+                    <td>RPA Admin/Billing</td>
+                    <td>£200,000</td>
+                    <td>4 Months</td>
+                    <td><span class="status-badge status-mid"> scalable</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Strategic Detail -->
+    <div class="glass-card">
+        <div class="grid-2">
+            <div>
+                <h3>Implementation Roadmap</h3>
+                <ul>
+                    <li><strong>Q1-Q2:</strong> Pilot Dispensing Units at HQ.</li>
+                    <li><strong>Q3:</strong> Launch RPA for Billing Claims.</li>
+                    <li><strong>Q4:</strong> Full rollout to satellite clinics.</li>
+                    <li><strong>Year 2:</strong> Social Robotics integration.</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Strategic Positioning</h3>
+                <p>CODAC transitions from a standard care provider to a tech-enabled behavioral health leader, utilizing automation to solve the critical shortage of nursing staff while improving medication safety standards.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Net Savings',
+                data: [150000, 450000, 800000, 1250000, 1800000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Dosing', 'Robotic Dosing'],
+            datasets: [{
+                label: 'Patients per Hour',
+                data: [20, 80],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
