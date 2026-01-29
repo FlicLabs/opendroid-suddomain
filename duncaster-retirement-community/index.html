@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duncaster Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 1.25rem;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    h3 {
+        color: #fff;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    p, li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    /* Financial Dashboard Specifics */
+    .metric-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    .highlight-purple {
+        color: #a78bfa;
+    }
+
+    /* Charts */
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        color: #7c3aed;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        color: #cbd5e1;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .tag-high { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+    .tag-med { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="logo">OPEN DROIDS</div>
+            <div style="font-size: 0.8rem; color: #64748b; margin-top: 5px;">CONSULTATION & RESEARCH AGENT</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: #94a3b8;">CLIENT</div>
+            <div style="font-size: 1.1rem; color: #fff; font-weight: 600;">Duncaster Retirement Community</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>Duncaster is a premier Life Plan Community (CCRC) in Bloomfield, CT. The organization faces sector-wide challenges regarding staff shortages in culinary and nursing departments. Robotics offers a strategic lever to automate low-value logistics (transport, bussing, cleaning) to preserve high-touch human care.</p>
+            <p><strong>Primary Opportunity:</strong> Implementation of dining runners and nursing logistics tugs to save estimated $180k+ annually in net margin.</p>
+        </div>
+        <div class="card">
+            <h2>Organization Profile</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <div class="metric-label">Type</div>
+                    <div style="color: #fff; margin-top: 5px;">Life Plan Community (CCRC)</div>
+                </div>
+                <div>
+                    <div class="metric-label">Location</div>
+                    <div style="color: #fff; margin-top: 5px;">Bloomfield, CT (94 Acres)</div>
+                </div>
+                <div>
+                    <div class="metric-label">Key Facility</div>
+                    <div style="color: #fff; margin-top: 5px;">Caleb Hitchcock Health Center</div>
+                </div>
+                <div>
+                    <div class="metric-label">Pain Points</div>
+                    <div style="color: #fff; margin-top: 5px;">Staffing, Nursing Logistics, Cleaning</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h2>Financial Dashboard & ROI Model</h2>
+        <div class="grid-3" style="margin-bottom: 0;">
+            <div style="text-align: center;">
+                <div class="metric-label">5-Year Net Benefit</div>
+                <div class="metric-value highlight-purple">$750k+</div>
+                <div style="font-size: 0.8rem; color: #64748b;">Cumulative Savings</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="metric-label">Annual Margin Uplift</div>
+                <div class="metric-value">$180,000</div>
+                <div style="font-size: 0.8rem; color: #64748b;">Recurring Benefit</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="metric-label">Staff Efficiency</div>
+                <div class="metric-value">+2.5 FTE</div>
+                <div style="font-size: 0.8rem; color: #64748b;">Labor Reallocation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Comparison</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h2>Strategic Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Application</th>
+                    <th>Est. Annual Benefit</th>
+                    <th>Payback Period</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A: Culinary</strong></td>
+                    <td>Dining Room Serving & Bussing Robots</td>
+                    <td>$60k - $80k</td>
+                    <td>Immediate (SaaS)</td>
+                    <td><span class="tag tag-high">High</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B: Clinical</strong></td>
+                    <td>Nursing Logistics Tugs (Meds/Linen)</td>
+                    <td>$80k - $100k</td>
+                    <td>9-12 Months</td>
+                    <td><span class="tag tag-high">High</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C: Facilities</strong></td>
+                    <td>Autonomous Floor Scrubbing/Vacuuming</td>
+                    <td>$40k - $50k</td>
+                    <td>18 Months</td>
+                    <td><span class="tag tag-med">Medium</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="grid-3">
+        <div class="card">
+            <h3 class="highlight-purple">Phase 1 (Months 1-3)</h3>
+            <p><strong>Dining Automation</strong></p>
+            <p>Launch Bear/Pudu style robots in main dining. Focus on server support and resident socialization.</p>
+        </div>
+        <div class="card">
+            <h3 class="highlight-purple">Phase 2 (Months 4-9)</h3>
+            <p><strong>Facility Hygiene</strong></p>
+            <p>Deploy autonomous cleaners in corridors during night shifts. Establish baseline cleanliness metrics.</p>
+        </div>
+        <div class="card">
+            <h3 class="highlight-purple">Phase 3 (Months 10+)</h3>
+            <p><strong>Clinical Logistics</strong></p>
+            <p>Integrate secure tugs in Caleb Hitchcock Health Center. Connect to elevator/door controls.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 5-Year Cumulative Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [120000, 260000, 410000, 580000, 750000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Throughput/Efficiency Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Table Touches/Hr', 'Nurse Bedside Time', 'Cleaning Coverage'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 45, 60], // Dummy relative units
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [22, 75, 95], // Improved units
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { display: false } // Hiding numbers for abstract comparison
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
