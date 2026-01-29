@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnePeak Medical Robotics Research</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --accent: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.3);
+        --success: #10b981;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(15, 118, 110, 0.15) 0%, transparent 20%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: -0.5px;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .logo span {
+        color: var(--accent);
+    }
+
+    .report-meta {
+        text-align: right;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    h1, h2, h3 {
+        color: white;
+        margin-top: 0;
+    }
+
+    h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    h2 { font-size: 1.5rem; border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 20px; }
+    h3 { font-size: 1.1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-top: 25px; }
+
+    p { color: var(--text-muted); margin-bottom: 15px; }
+
+    /* Financial Dashboard Table */
+    .dashboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-main);
+    }
+
+    .dashboard-table th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid var(--glass-border);
+        color: var(--accent);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .dashboard-table td {
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+        font-size: 0.95rem;
+    }
+
+    .metric-value {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: white;
+    }
+
+    .metric-positive { color: var(--success); }
+
+    /* Chart Layout */
+    .chart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* List Styling */
+    ul { list-style-type: none; padding: 0; }
+    li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+        color: var(--text-muted);
+    }
+    li::before {
+        content: "•";
+        color: var(--accent);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(124, 58, 237, 0.2);
+        color: #c4b5fd;
+        border: 1px solid rgba(124, 58, 237, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .chart-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="report-meta">
+            Target: OnePeak Medical<br>
+            Analysis: Robotics & Automation Portfolio
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>OnePeak Medical operates as a high-growth network of clinics in the Pacific Northwest, specializing in functional medicine, primary care, and urgent care. Their model prioritizes patient access, holistic treatment plans, and rapid service delivery.</p>
+        <p>The strongest robotics and automation levers for OnePeak are: <strong>(1) Ambient AI Clinical Documentation</strong> ("software robotics") to relieve provider burnout, <strong>(2) Automated Rapid Diagnostic Systems</strong> (benchtop robotics), and <strong>(3) Administrative Process Automation (RPA)</strong>.</p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Ambient AI Documentation <span class="badge">Highest ROI</span></h3>
+        <p>Deployment of Natural Language Processing (NLP) and ambient listening AI across all clinic examination rooms to autonomously generate SOAP notes.</p>
+        <ul>
+            <li>Elimination of after-hours charting (primary driver of burnout).</li>
+            <li>Real-time coding optimization for functional medicine complexity.</li>
+            <li><strong>Impact:</strong> Increase in provider capacity by 2-3 patients/day.</li>
+        </ul>
+
+        <h3>Pathway B: Automated Diagnostic Robotics</h3>
+        <p>Integration of compact benchtop robotic analyzers for blood chemistry and hormone panels within clinic labs.</p>
+        <ul>
+            <li>Reduction in turnaround time from days to minutes.</li>
+            <li>Lower staffing requirements for sample preparation.</li>
+            <li>Differentiation via immediate hormone optimization data.</li>
+        </ul>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Dashboard & ROI</h2>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current State</th>
+                    <th>Automated State (Pathway A)</th>
+                    <th>Net Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Visits Per Provider/Day</td>
+                    <td class="metric-value">18</td>
+                    <td class="metric-value">21</td>
+                    <td class="metric-value metric-positive">+16.6%</td>
+                </tr>
+                <tr>
+                    <td>Revenue Per Provider/Day</td>
+                    <td class="metric-value">$3,240</td>
+                    <td class="metric-value">$3,780</td>
+                    <td class="metric-value metric-positive">+$540</td>
+                </tr>
+                <tr>
+                    <td>Annual Network Revenue (60 Prov)</td>
+                    <td class="metric-value">~$46.6M</td>
+                    <td class="metric-value">~$54.4M</td>
+                    <td class="metric-value metric-positive">+$7.8M</td>
+                </tr>
+                <tr>
+                    <td>Documentation Time/Visit</td>
+                    <td class="metric-value">12 mins</td>
+                    <td class="metric-value">3 mins</td>
+                    <td class="metric-value metric-positive">-75%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Interactive Charts -->
+        <div class="chart-grid">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 1 (Months 1-3)</h3>
+                <p>Pilot Pathway A (Ambient AI) in two flagship clinics. Measure charting time reduction and claim accuracy.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 2 (Months 3-12)</h3>
+                <p>Network-wide rollout of Ambient AI. Begin Phase 1 of Pathway C (RPA) for insurance verification.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Phase 3 (Year 2)</h3>
+                <p>Deploy Pathway B (Lab Robotics) in top 5 performing clinics to establish Centers of Excellence.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. 5-Year Cumulative Savings/Benefit Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [7.5, 15.2, 23.5, 32.0, 41.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#7c3aed',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: '5-Year Cumulative Net Financial Benefit' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic/AI Assisted'],
+            datasets: [{
+                label: 'Patients Per Day (Avg Provider)',
+                data: [18, 21],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Daily Patient Throughput Comparison' }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
