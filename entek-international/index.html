@@ -1,0 +1,342 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entek International | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-positive {
+            color: #10b981;
+            font-size: 1rem;
+            vertical-align: middle;
+        }
+
+        /* Sections */
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-purple);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .badge-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-b { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+        .badge-c { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>ENTEK INTERNATIONAL</h1>
+        <div class="sub-header">Strategic Automation & Robotics Feasibility Study</div>
+        <div style="margin-top: 10px; font-size: 0.9rem; color: var(--accent-purple);">OPEN DROIDS RESEARCH DIVISION</div>
+    </header>
+
+    <!-- Executive Metrics Dashboard -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <div class="metric-label">Target OEE Increase</div>
+            <div class="metric-value">22% <span class="metric-positive">▲</span></div>
+            <div class="sub-header">Overall Equipment Effectiveness</div>
+        </div>
+        <div class="card">
+            <div class="metric-label">Est. Payback Period</div>
+            <div class="metric-value">14 <span style="font-size: 1.5rem; color: var(--text-muted);">Months</span></div>
+            <div class="sub-header">Based on Labor & Scrap Savings</div>
+        </div>
+        <div class="card">
+            <div class="metric-label">Pilot CAPEX</div>
+            <div class="metric-value">$255k</div>
+            <div class="sub-header">3 Robotic Cells Deployment</div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr;">
+        
+        <!-- Left Column: Strategy -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+            
+            <div class="card">
+                <h2>Executive Summary</h2>
+                <p>Entek International is positioned to dominate the supply chain for EV battery separators. However, scaling requires decoupling production capacity from labor availability. This report outlines a shift from traditional manufacturing to a data-driven, automated ecosystem focusing on machinery assembly and material handling.</p>
+            </div>
+
+            <div class="card">
+                <h2>Robotics Opportunity Pathways</h2>
+                
+                <span class="badge badge-a">PATHWAY A: COBOTS</span>
+                <h3>Machinery Assembly Assist</h3>
+                <p><strong>Focus:</strong> Safety & Precision. <br>Deployment of UR10e units to assist in gearbox assembly for twin-screw extruders, reducing technician fatigue and ensuring precise torque application.</p>
+                
+                <span class="badge badge-b">PATHWAY B: AMRs</span>
+                <h3>Intralogistics & WIP Flow</h3>
+                <p><strong>Focus:</strong> Efficiency. <br>Autonomous Mobile Robots to transport PE resin and finished rolls, integrating with MES for JIT delivery.</p>
+
+                <span class="badge badge-c">PATHWAY C: QUALITY</span>
+                <h3>Vision Inspection & Palletizing</h3>
+                <p><strong>Focus:</strong> Yield. <br>Automated handling of heavy separator rolls combined with micron-level vision inspection for pinhole defects.</p>
+            </div>
+
+            <div class="card">
+                <h2>Implementation Roadmap</h2>
+                <ul>
+                    <li><strong>Year 1:</strong> Pilot Cobot deployment in Oregon & Vision System integration.</li>
+                    <li><strong>Year 2:</strong> SCADA integration and AMR pilot in UK facility.</li>
+                    <li><strong>Year 3:</strong> Global standardization across US, UK, and Indonesia.</li>
+                    <li><strong>Year 4:</strong> AI Predictive Maintenance for Extruder parts.</li>
+                    <li><strong>Year 5:</strong> Fully autonomous supply chain ecosystem.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: Charts & Financials -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+            
+            <div class="card">
+                <h2>Output Efficiency</h2>
+                <div class="sub-header">Manual vs. Cobot Assisted (Units/Hr)</div>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Cumulative Savings</h2>
+                <div class="sub-header">5-Year Projection ($USD)</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Financial Model</h2>
+                <div style="margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 8px 0;">
+                        <span>Cell Cost (Avg)</span>
+                        <span style="color: var(--accent-purple);">$85,000</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 8px 0;">
+                        <span>Scrap Reduction</span>
+                        <span style="color: #10b981;">-15%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                        <span>ROI Target</span>
+                        <span style="color: #3b82f6;">18 Months</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Open Droids | Industrial Automation Research for Entek International
+    </footer>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Chart 1: Output Comparison
+    const ctx1 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Assembly', 'Palletizing', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 45, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [20, 75, 140],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Chart 2: Cumulative Savings
+    const ctx2 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.15, 0.45, 1.2, 2.1, 3.4],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
+```
