@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxbo Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 20%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-purple);
+            text-align: left;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .pathway-header {
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+        }
+        
+        td {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        td:first-child {
+            color: #fff;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="subtitle">Open Droids Intelligence Unit</div>
+    <h1>Strategic Research: Oxbo</h1>
+    <p style="color: var(--text-muted); max-width: 600px;">
+        Deep analysis of Industry 4.0 adoption strategies for specialty agriculture equipment manufacturing.
+    </p>
+
+    <!-- DASHBOARD SECTION -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Target OEE Increase</div>
+        </div>
+        <div class="metric-card" style="border-left-color: var(--accent-blue);">
+            <div class="metric-value">&lt;18m</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="metric-card" style="border-left-color: #10b981;">
+            <div class="metric-value">$120k</div>
+            <div class="metric-label">Max Capex Per Cell</div>
+        </div>
+        <div class="metric-card" style="border-left-color: #f59e0b;">
+            <div class="metric-value">5yr</div>
+            <div class="metric-label">Full Deployment Cycle</div>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="card">
+        <h2>01. Executive Summary</h2>
+        <p>
+            Oxbo stands at the precipice of a manufacturing revolution. As the agricultural sector demands "Smart Farming" solutions, the production floor must evolve into a "Smart Factory." The strategy outlined herein focuses on modular flexibility—utilizing high-mix, low-volume automation to enhance welding precision, streamline internal logistics, and secure manufacturing resilience against labor shortages.
+        </p>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="grid-split">
+        <div class="card">
+            <h3>Cumulative Cost Savings (5-Year Projection)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Output Efficiency: Manual vs. Cobot</h3>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- PATHWAYS -->
+    <div class="card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY A: COBOTS</span>
+                <p><strong>Focus:</strong> Welding & Machine Tending.</p>
+                <p style="font-size: 0.9em; color: var(--text-muted);">High-payload cobots for long-seam chassis welding. Removes operators from hazardous arc zones and ensures consistent penetration.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY B: AMRs</span>
+                <p><strong>Focus:</strong> Logistics & Flow.</p>
+                <p style="font-size: 0.9em; color: var(--text-muted);">Autonomous Mobile Robots for moving heavy hydraulic kits and sub-assemblies. Reduces forklift traffic by 40%.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-header">PATHWAY C: INSPECTION</span>
+                <p><strong>Focus:</strong> Quality & Yield.</p>
+                <p style="font-size: 0.9em; color: var(--text-muted);">Vision-guided arms for weld integrity scanning and aftermarket parts palletizing. Ensures zero-defect shipping.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINANCIAL & ROADMAP -->
+    <div class="grid-split">
+        <div class="card">
+            <h2>03. Financial Model</h2>
+            <table>
+                <tr>
+                    <td>Initial CAPEX</td>
+                    <td>$60k - $120k per cell</td>
+                </tr>
+                <tr>
+                    <td>Pilot Program</td>
+                    <td>~$300k (3 Cells)</td>
+                </tr>
+                <tr>
+                    <td>OPEX Savings</td>
+                    <td>Labor reallocation & Scrap reduction</td>
+                </tr>
+                <tr>
+                    <td>ROI Target</td>
+                    <td>14-18 Months</td>
+                </tr>
+            </table>
+        </div>
+        <div class="card">
+            <h2>04. Roadmap</h2>
+            <table>
+                <tr>
+                    <td>Year 1</td>
+                    <td>Pilot Phase (WI Facility)</td>
+                </tr>
+                <tr>
+                    <td>Year 2</td>
+                    <td>Standardization & Software Integration</td>
+                </tr>
+                <tr>
+                    <td>Year 3</td>
+                    <td>Global Scaling (UK, Brazil, NL)</td>
+                </tr>
+                <tr>
+                    <td>Year 5</td>
+                    <td>Full Smart Ecosystem Maturity</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Chart Defaults for Dark Theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Cobot Output
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Welding (in/min)', 'Kitting (kits/hr)', 'Inspection (units/hr)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 4, 15],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [35, 12, 45],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
