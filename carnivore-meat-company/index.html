@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids Research: Carnivore Meat Co.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 1rem;
+            margin-top: 0;
+            color: white;
+        }
+
+        h3 {
+            color: var(--accent-blue);
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .badge-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+        .badge-b { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid #7c3aed; }
+        .badge-c { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="sub-header">Open Droids Consultation</div>
+            <h1>Carnivore Meat Company</h1>
+            <p style="color: var(--text-muted);">Strategic Automation Assessment & Roadmap</p>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">1.2 Yrs</span>
+                <span class="metric-label">Projected Payback</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">+22%</span>
+                <span class="metric-label">Target OEE Increase</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$210k</span>
+                <span class="metric-label">Annual Savings (Phase 1)</span>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>01. Executive Summary</h2>
+            <p>Carnivore Meat Company is positioned to dominate the ultra-premium raw pet food sector. However, relying on manual labor in sub-zero environments creates a scalability ceiling. This report outlines a pivot to <strong>Industry 4.0</strong>, integrating collaborative robotics to ensure food safety, traceability, and continuous flow in the Green Bay facilities.</p>
+        </div>
+
+        <div class="grid-2-col">
+            <!-- Robotics Pathways -->
+            <div class="glass-card">
+                <h2>02. Opportunity Pathways</h2>
+                
+                <h3><span class="badge badge-a">PATH A</span> Cobot Tray Loading</h3>
+                <p><strong>Focus:</strong> Safety & Precision. Automating the "Forming to Drying" transition. Reduces ergonomic strain and improves hygiene by minimizing human contact with raw proteins.</p>
+
+                <h3><span class="badge badge-b">PATH B</span> AMR Logistics</h3>
+                <p><strong>Focus:</strong> WIP Flow. Replacing manual forklifts with Autonomous Mobile Robots to transport heavy racks into freeze-dryers, reducing accidents and transit time.</p>
+
+                <h3><span class="badge badge-c">PATH C</span> End-of-Line</h3>
+                <p><strong>Focus:</strong> Throughput. High-speed palletizing and vision-based seal inspection to guarantee oxidation prevention for raw products.</p>
+            </div>
+
+            <!-- Financials & Charts -->
+            <div class="glass-card">
+                <h2>03. Financial Projections</h2>
+                <p><strong>CAPEX Estimate:</strong> $260,000 (Pilot Phase)<br>
+                <strong>Labor Reallocation:</strong> 3 FTEs moved to QA<br>
+                <strong>Scrap Reduction:</strong> $45,000/yr</p>
+                
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Comparison -->
+        <div class="glass-card">
+            <h2>04. Throughput Analysis</h2>
+            <p>Comparison of current manual tray loading versus projected Cobot-assisted loading output in a standard 8-hour cold-chain shift.</p>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>05. Implementation Roadmap</h2>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-blue);">YEAR 1:</strong> Pilot Deployment (End-of-Line Palletizing) & Site Digital Twin.
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-blue);">YEAR 2:</strong> Cold Chain Integration (Cobot Tray Loading).
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">YEAR 3:</strong> Logistics Automation (AMR Fleet Rollout).
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">YEAR 4-5:</strong> SCADA Integration & Lights-Out Feasibility.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [210000, 440000, 690000, 960000, 1250000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Loading', 'Cobot Assisted'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [450, 780],
+                    backgroundColor: ['rgba(148, 163, 184, 0.5)', 'rgba(59, 130, 246, 0.8)'],
+                    borderColor: ['#94a3b8', '#3b82f6'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: { 
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
