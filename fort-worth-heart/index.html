@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fort Worth Heart Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-purple);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Metric Cards */
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--accent-purple);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--accent-purple);
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            Client: Fort Worth Heart<br>
+            Report: Robotics Opportunities
+        </div>
+    </header>
+
+    <div class="glass-card">
+        <h1>Fort Worth Heart Portfolio</h1>
+        <p>This strategic analysis identifies high-impact robotics and automation levers for Fort Worth Heart. The focus is on transitioning from manual, high-radiation environments to a precision-driven, AI-enhanced cardiovascular institute.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h2 style="margin-top: 40px;">Financial Dashboard & ROI</h2>
+    <div class="dashboard-grid">
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-label">Annual Margin Uplift</div>
+            <div class="metric-value">$300k+</div>
+            <div class="metric-label">Per Robotic Lab</div>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-label">Radiation Reduction</div>
+            <div class="metric-value">95%</div>
+            <div class="metric-label">Physician Safety</div>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">1.5 Yrs</div>
+            <div class="metric-label">Pathway A (Robotic PCI)</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (USD)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Procedural Volume (Cases/Yr)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h3>Comparative ROI Analysis</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Opportunity Pathway</th>
+                    <th>Primary Value Driver</th>
+                    <th>Est. Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A: Vascular Robotics</td>
+                    <td>Clinical Precision & Safety</td>
+                    <td>$300k - $500k</td>
+                    <td><span class="badge">MODERATE</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway B: Admin RPA</td>
+                    <td>Labor Cost & Cash Flow</td>
+                    <td>$100k - $150k</td>
+                    <td><span class="badge">LOW</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway C: AI Monitoring</td>
+                    <td>Scalability & Diagnostic Speed</td>
+                    <td>$50k - $80k</td>
+                    <td><span class="badge">LOW</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Qualitative Content -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h2>Pathway A: Cath Lab Robotics</h2>
+            <p><strong>Scope:</strong> Deployment of systems like CorPath GRX for robotic-assisted PCI.</p>
+            <ul>
+                <li>Precision stent placement (1mm accuracy).</li>
+                <li>Allows physicians to operate from a radiation-shielded cockpit.</li>
+                <li>Reduces orthopedic strain, extending career longevity.</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <h2>Pathway B: Admin Automation</h2>
+            <p><strong>Scope:</strong> RPA bots for prior authorizations and revenue cycle management.</p>
+            <ul>
+                <li>Automates insurance verification and status checks.</li>
+                <li>Reduces denial rates by 15-20%.</li>
+                <li>Frees up clinical staff to focus on patient care rather than paperwork.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>Implementing this roadmap positions Fort Worth Heart not just as a care provider, but as a regional <strong>Tech-Enabled Cardiovascular Institute</strong>. This differentiation attracts top talent seeking safety from radiation and appeals to payers looking for the lowered readmission rates associated with robotic precision.</p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit',
+                data: [50000, 250000, 600000, 1100000, 1750000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Complex PCI', 'Peripheral Vascular', 'Diagnostics'],
+            datasets: [
+                {
+                    label: 'Manual Workflow',
+                    data: [120, 80, 400],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic/AI Assisted',
+                    data: [145, 100, 650], // Uplift due to efficiency & marketing
+                    backgroundColor: '#7c3aed',
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
