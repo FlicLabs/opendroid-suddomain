@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMC Engineering | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        /* Typography within cards */
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .col-4, .col-6, .col-8, .col-12 { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Senior Consultation</div>
+            <h1>DMC Engineering</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Status: Audit Complete</div>
+            <div style="color: #cbd5e1; font-size: 0.9rem;">Date: October 2023</div>
+        </div>
+    </header>
+
+    <!-- Key Metrics Row -->
+    <div class="dashboard-grid">
+        <div class="card col-4" style="text-align: center;">
+            <h2>Projected OEE Uplift</h2>
+            <div class="metric-value">28%</div>
+            <div class="metric-label">Efficiency Gain</div>
+        </div>
+        <div class="card col-4" style="text-align: center;">
+            <h2>ROI Timeline</h2>
+            <div class="metric-value">16</div>
+            <div class="metric-label">Months to Payback</div>
+        </div>
+        <div class="card col-4" style="text-align: center;">
+            <h2>Est. Scrap Reduction</h2>
+            <div class="metric-value">15%</div>
+            <div class="metric-label">Material Savings</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-grid">
+        <!-- Executive Summary -->
+        <div class="card col-8">
+            <h2>01. Executive Summary</h2>
+            <p>DMC Engineering is positioned to transition from static automation to <strong>Flexible Manufacturing Systems (FMS)</strong>. Our research indicates that integrating Industry 4.0 technologies—specifically collaborative robotics and autonomous logistics—will solve current throughput bottlenecks. The strategic goal is to augment skilled labor, reducing non-value-added tasks like material transport and manual machine tending.</p>
+        </div>
+
+        <!-- Org Profile -->
+        <div class="card col-4">
+            <h2>02. Org Profile</h2>
+            <p><strong>Process Type:</strong> Discrete Manufacturing<br>
+            <strong>Scale:</strong> Mid-to-High Volume<br>
+            <strong>Focus:</strong> Precision Assembly & Machining</p>
+            <div style="margin-top: 10px;">
+                <span class="badge">Multi-Site Capable</span>
+                <span class="badge">High-Mix/Low-Volume</span>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="card col-12">
+            <h2>03. Robotics Opportunity Pathways</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h3 style="color: #38bdf8;">Pathway A: Cobots</h3>
+                    <p><strong>Machine Tending & Assembly.</strong> Focus on safety and precision (0.03mm repeatability) to work alongside humans without caging.</p>
+                </div>
+                <div>
+                    <h3 style="color: #c084fc;">Pathway B: AMRs</h3>
+                    <p><strong>Material Transport.</strong> Autonomous Mobile Robots to handle line-side replenishment, reducing WIP stagnation and forklift risks.</p>
+                </div>
+                <div>
+                    <h3 style="color: #2dd4bf;">Pathway C: EOL Automation</h3>
+                    <p><strong>Palletizing & Inspection.</strong> Automated end-of-line systems with vision integration to ensure 100% yield and continuous throughput.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="card col-6">
+            <h2>Cumulative Cost Savings (5-Year Projection)</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card col-6">
+            <h2>Throughput Comparison (Units Per Hour)</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card col-12">
+            <h2>05. Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                    <h3 style="font-size: 1rem;">Year 1</h3>
+                    <p style="font-size: 0.8rem;">Pilot Program<br>Cobot Tending</p>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                    <h3 style="font-size: 1rem;">Year 2</h3>
+                    <p style="font-size: 0.8rem;">Logistics<br>AMR Fleet</p>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                    <h3 style="font-size: 1rem;">Year 3</h3>
+                    <p style="font-size: 0.8rem;">Connectivity<br>Cloud Dashboard</p>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                    <h3 style="font-size: 1rem;">Year 4</h3>
+                    <p style="font-size: 0.8rem;">Scaling<br>Satellite Sites</p>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.2); border: 1px solid var(--accent); padding: 15px; border-radius: 8px;">
+                    <h3 style="font-size: 1rem;">Year 5</h3>
+                    <p style="font-size: 0.8rem;">Full Autonomy<br>AI Optimization</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Open Droids Research Division. Confidential Report for DMC Engineering.
+    </footer>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [150000, 420000, 980000, 1800000, 3200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) { return '$' + value / 1000 + 'k'; }
+                    }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['CNC Loading', 'Assembly', 'Packaging'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 120, 200],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot-Assisted',
+                    data: [85, 190, 350],
+                    backgroundColor: '#38bdf8',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
