@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HexArmor Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at top right, #1e1b4b, transparent 40%),
+                              radial-gradient(circle at bottom left, #312e81, transparent 40%);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .header span {
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pathway-item {
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .pathway-item strong {
+            display: block;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .pathway-item p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .step-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 12px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media (max-width: 1024px) {
+            .col-4, .col-6, .col-8 { grid-column: span 12; }
+            body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>HexArmor <span>Research</span></h1>
+            <p style="color: var(--text-muted); margin-top: 5px;">Industrial Automation Strategy & Feasibility</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 0.9rem; color: var(--text-muted);">PREPARED BY</p>
+            <h3>OPEN DROIDS</h3>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        
+        <!-- Executive Summary -->
+        <div class="card col-12">
+            <div class="section-title">EXECUTIVE VISION</div>
+            <p style="line-height: 1.6; color: #cbd5e1;">
+                HexArmor is poised to transition from discrete manufacturing to a connected Industry 4.0 ecosystem. By leveraging <strong>Collaborative Robotics</strong> and <strong>AMRs</strong>, the facility can mitigate ergonomic risks associated with handling SuperFabric while increasing throughput elasticity by 30%. The strategy focuses on precision automation to augment, not replace, the skilled workforce needed for high-compliance safety gear.
+            </p>
+        </div>
+
+        <!-- Metrics Dashboard -->
+        <div class="card col-4 metric-card">
+            <div class="metric-label">Target OEE Increase</div>
+            <div class="metric-value">+22%</div>
+            <div style="color: var(--accent-purple); font-size: 0.9rem;">Overall Equipment Effectiveness</div>
+        </div>
+        <div class="card col-4 metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">14 Mo.</div>
+            <div style="color: var(--accent-blue); font-size: 0.9rem;">Projected Break-Even Point</div>
+        </div>
+        <div class="card col-4 metric-card">
+            <div class="metric-label">Labor Efficiency</div>
+            <div class="metric-value">-15%</div>
+            <div style="color: #34d399; font-size: 0.9rem;">Reduction in Non-Value Added Motion</div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card col-6">
+            <div class="section-title">ROBOTICS PATHWAYS</div>
+            <div class="pathway-item">
+                <strong>Pathway A: Cobots</strong>
+                <p>Deployment of 6-axis arms for sewing machine tending and coating line dipping. Focus on ergonomics.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway B: AMRs</strong>
+                <p>Autonomous mobile robots for raw SuperFabric transport and WIP movement to reduce walking time.</p>
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway C: End-of-Line</strong>
+                <p>Vision inspection systems and automated palletizing to clear shipping bottlenecks.</p>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card col-6">
+            <div class="section-title">IMPLEMENTATION ROADMAP</div>
+            <div class="roadmap-step">
+                <span class="step-year">YR 1</span>
+                <span>Digital Twin simulation & Pilot Cobot Cells (Coating Dept).</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">YR 2</span>
+                <span>Deploy AMR Fleet & Integrate Vision QA Systems.</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">YR 3</span>
+                <span>Scale to Sewing Lines & EOL Palletizing.</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">YR 4</span>
+                <span>Full IIoT Dashboard Integration.</span>
+            </div>
+            <div class="roadmap-step">
+                <span class="step-year">YR 5</span>
+                <span>AI-Driven Demand Forecasting & "Dark Factory" Logistics.</span>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="card col-6">
+            <div class="section-title">CUMULATIVE COST SAVINGS (5 YR)</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card col-6">
+            <div class="section-title">OUTPUT: MANUAL VS. COBOT</div>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ USD)',
+                    data: [45000, 180000, 420000, 750000, 1200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Coating', 'Sewing', 'Packaging'],
+                datasets: [
+                    {
+                        label: 'Manual (UPH)',
+                        data: [120, 45, 200],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Cobot Assisted (UPH)',
+                        data: [185, 65, 310],
+                        backgroundColor: '#38bdf8',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
