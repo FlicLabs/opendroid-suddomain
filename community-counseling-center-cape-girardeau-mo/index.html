@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC Robotics Research Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #0f172a; /* Deep Space Blue */
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-header {
+        background: rgba(124, 58, 237, 0.15); /* Electric Purple Tint */
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding: 20px 0;
+        margin-bottom: 40px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .logo span {
+        color: #7c3aed; /* Electric Purple */
+    }
+
+    h1, h2, h3 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+    h1 { font-size: 2.5rem; letter-spacing: -1px; }
+    h2 { font-size: 1.8rem; color: #a78bfa; margin-bottom: 20px; }
+    h3 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+
+    p { line-height: 1.6; color: #cbd5e1; }
+
+    /* Dashboard Metrics */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(124,58,237,0.1) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .chart-box {
+        position: relative;
+        height: 350px;
+        width: 100%;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        color: #cbd5e1;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+        background-color: rgba(124, 58, 237, 0.2);
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    tr:hover td {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .badge-high { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+    .badge-med { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+    .badge-risk { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+        h1 { font-size: 2rem; }
+    }
+</style>
+</head>
+<body>
+
+<header class="glass-header">
+    <div class="header-content">
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="font-size: 0.9rem; color: #cbd5e1;">Consultation Report: CCC Missouri</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h3>Client Profile</h3>
+        <h1>Community Counseling Center</h1>
+        <p style="font-size: 1.1rem; color: #a78bfa;">Cape Girardeau, MO • Behavioral Health • Rural Logistics</p>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+        <p>
+            The strongest robotics/automation levers for Community Counseling Center (CCC) are (1) AI-driven administrative RPA for intake and billing, (2) Automated Medication Dispensing for residential safety, and (3) Telepresence robotics for rural access. The dominant ROI driver is the reclamation of 20% of clinical staff time currently lost to administrative friction.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Projected Annual Benefit</div>
+                <div class="metric-value">$2.1M</div>
+                <div class="metric-label">Incremental Revenue Capacity</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Efficiency Gain</div>
+                <div class="metric-value">20%</div>
+                <div class="metric-label">Clinical Staff Time Recaptured</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Timeline</div>
+                <div class="metric-value">6 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-box">
+                <h3 style="text-align:center; margin-bottom:15px;">5-Year Cumulative Net Benefit</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3 style="text-align:center; margin-bottom:15px;">Patient Intake Throughput (Daily)</h3>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Main Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">A: Admin & Intake RPA</td>
+                    <td>All Depts / Billing</td>
+                    <td>Staff Utilization</td>
+                    <td>$1.5M - $2.0M</td>
+                    <td><span class="badge badge-high">Low Risk</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">B: Med Automation</td>
+                    <td>Residential / Day Tx</td>
+                    <td>Safety & Nursing</td>
+                    <td>$200k - $400k</td>
+                    <td><span class="badge badge-med">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">C: Telepresence</td>
+                    <td>Rural Satellites</td>
+                    <td>Access Expansion</td>
+                    <td>$100k</td>
+                    <td><span class="badge badge-high">Low Risk</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #7c3aed;">
+                <h3 style="color: #fff; margin-bottom: 5px;">Year 1: Foundation</h3>
+                <p style="margin: 0;">Pilot Admin RPA for intake and billing reconciliation. Launch automated SMS appointment reminders to reduce no-shows.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #a78bfa;">
+                <h3 style="color: #fff; margin-bottom: 5px;">Years 2-3: Clinical Hardware</h3>
+                <p style="margin: 0;">Install Automated Dispensing Cabinets (ADCs) in residential homes. Train nursing staff on digital dispensing workflow.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border-left: 4px solid #cbd5e1;">
+                <h3 style="color: #fff; margin-bottom: 5px;">Years 3-5: Advanced Reach</h3>
+                <p style="margin: 0;">Deploy telepresence robots to furthest satellite counties. Integrate AI predictive modeling for crisis intervention.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    const gradientLine = ctx1.createLinearGradient(0, 0, 0, 400);
+    gradientLine.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradientLine.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (USD)',
+                data: [1200000, 3500000, 6100000, 8900000, 11500000],
+                borderColor: '#7c3aed',
+                backgroundColor: gradientLine,
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: {
+                        callback: function(value) { return '$' + value / 1000000 + 'M'; }
+                    }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Intake Processing', 'Billing Rec.', 'Appointment Mgmt'],
+            datasets: [
+                {
+                    label: 'Manual (Current)',
+                    data: [15, 40, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 6,
+                    barPercentage: 0.6
+                },
+                {
+                    label: 'Robotic/Auto (Projected)',
+                    data: [45, 120, 150],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6,
+                    barPercentage: 0.6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    title: { display: true, text: 'Cases Per Day' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
