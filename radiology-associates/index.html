@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiology Associates - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            color: var(--accent-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.5rem; margin: 0 0 10px 0; }
+        h2 { font-size: 1.5rem; margin-top: 0; color: #e2e8f0; }
+        h3 { font-size: 1.1rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #cbd5e1;
+        }
+        
+        th {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-high { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+        .status-med { background: rgba(250, 204, 21, 0.2); color: #facc15; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Radiology Associates Strategic Report</div>
+    </div>
+
+    <div class="glass-panel">
+        <h1>Executive Summary</h1>
+        <p style="color: #cbd5e1; line-height: 1.6;">
+            Radiology Associates faces critical pressure from demand volume and technologist shortages. By pivoting to an 
+            AI-orchestrated and robotics-assisted model, the network can unlock £11.2M in annual net benefit. 
+            The strategy moves the organization from a labor-constrained service to a scalable tech-enabled diagnostic hub.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Net Benefit</div>
+            <div class="metric-value">£11.2M</div>
+            <div class="metric-label">Incremental Revenue + Savings</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Volume Uplift</div>
+            <div class="metric-value">+15%</div>
+            <div class="metric-label">75,000 Additional Exams/Year</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">9 Mo</div>
+            <div class="metric-label">Rapid ROI on Hardware</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-panel">
+            <h3>5-Year Cumulative Savings (£M)</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-panel">
+            <h3>Daily Throughput (Patients/Scanner)</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Financial Table -->
+    <div class="glass-panel">
+        <h3>Pathway ROI Comparison</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Core Technology</th>
+                    <th>Annual Benefit</th>
+                    <th>Payback</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A</td>
+                    <td>RPA & Intelligent Scheduling</td>
+                    <td>£2.5M</td>
+                    <td><span class="status-badge status-high">3-4 Months</span></td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Pathway B</td>
+                    <td>Robotic Imaging Hardware</td>
+                    <td>£8.0M</td>
+                    <td><span class="status-badge status-med">12-18 Months</span></td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td>Pathway C</td>
+                    <td>Diagnostic AI & Post-Processing</td>
+                    <td>£3.0M</td>
+                    <td><span class="status-badge status-high">6 Months</span></td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£M)',
+                data: [6.5, 14.2, 24.5, 35.8, 45.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['MRI', 'CT Scan', 'X-Ray', 'Ultrasound'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [18, 25, 40, 20],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4,
+                    borderWidth: 0
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [24, 35, 55, 28],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4,
+                    borderWidth: 0,
+                    boxShadow: '0 0 10px #7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    position: 'bottom',
+                    labels: { color: '#cbd5e1' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
