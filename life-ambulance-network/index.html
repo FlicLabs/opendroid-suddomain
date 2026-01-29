@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Ambulance Network - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-sub {
+            font-size: 14px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        h2 {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-top: 0;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            font-size: 28px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .metric-big {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .metric-sub {
+            color: var(--success);
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 14px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td {
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .highlight-text {
+            color: var(--accent);
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="brand-sub">Consultation Report</div>
+            <div class="logo">OPEN DROIDS</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: var(--text-muted);">Client</div>
+            <div style="font-weight: 600;">Life Ambulance Network</div>
+        </div>
+    </header>
+
+    <!-- Top Level Metrics -->
+    <div class="grid">
+        <div class="card">
+            <h2>Annual Revenue Impact</h2>
+            <div class="metric-big">£12.3M</div>
+            <div class="metric-sub">▲ 25% Increase via AI Dispatch</div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+                Driven by unit utilization uplift from 4.0 to 5.0 trips per shift.
+            </p>
+        </div>
+        <div class="card">
+            <h2>Projected ROI</h2>
+            <div class="metric-big">10.5x</div>
+            <div class="metric-sub">Payback Period: < 3 Months</div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+                Low hardware capex for Pathway A results in immediate margin realization.
+            </p>
+        </div>
+        <div class="card">
+            <h2>Operational Efficiency</h2>
+            <div class="metric-big">45%</div>
+            <div class="metric-sub">▼ Reduction in Idle Time</div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+                Predictive positioning reduces "chute time" and empty miles.
+            </p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid">
+        <div class="card">
+            <h2>5-Year Cumulative Net Benefit</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Daily Transport Capacity</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card" style="margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2>Pathway Comparison Matrix</h2>
+            <span class="badge">FINANCIAL DASHBOARD</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Strategy</th>
+                    <th>Core Tech</th>
+                    <th>Annual Value (Est.)</th>
+                    <th>Implementation</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 600;">Pathway A</td>
+                    <td>AI Logistics & Dispatch</td>
+                    <td class="highlight-text">£12,300,000</td>
+                    <td>1-3 Months</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Pathway B</td>
+                    <td>Robotic Lift Assist</td>
+                    <td>£1,500,000 (Savings)</td>
+                    <td>6-12 Months</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Pathway C</td>
+                    <td>Auto-Decontamination</td>
+                    <td>£500,000</td>
+                    <td>3-6 Months</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (GBP Millions)',
+                data: [11.6, 24.5, 38.0, 52.5, 68.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#7c3aed',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Dispatch', 'AI/Robotic Assisted'],
+            datasets: [{
+                label: 'Trips Per Truck/Day',
+                data: [4.0, 5.0],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#10b981'
+                ],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
