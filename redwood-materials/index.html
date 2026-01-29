@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redwood Materials: Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            border-top: 4px solid #7c3aed;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .section-title {
+            color: #7c3aed;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #7c3aed;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px #7c3aed;
+        }
+
+        .content-text {
+            line-height: 1.6;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .pathway-header {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>REDWOOD MATERIALS</h1>
+        <p>Strategic Industrial Automation Research • Open Droids</p>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Target OEE Increase</div>
+            <div class="metric-value">22%</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Projected Payback</div>
+            <div class="metric-value">14 Mo</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Initial CAPEX (Pilot)</div>
+            <div class="metric-value">$425k</div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-title">EXECUTIVE SUMMARY</div>
+        <p class="content-text">
+            Redwood Materials is positioned to dominate the domestic EV battery supply chain. To meet the <span class="highlight">100 GWh annual production goal</span>, the organization must transition from manual-heavy pilot lines to automated, data-driven manufacturing. Our strategy focuses on "Closing the Loop" with zero yield loss, utilizing Cobots for hazardous disassembly and Machine Vision for microscopic quality assurance.
+        </p>
+    </div>
+
+    <div class="charts-container">
+        <div class="glass-card">
+            <div class="section-title">Financial Projection: 5-Year Savings</div>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <div class="section-title">Throughput: Manual vs. Automated</div>
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-title">ROBOTICS OPPORTUNITY PATHWAYS</div>
+        <div class="pathway-grid">
+            <div class="pathway-card">
+                <div class="pathway-header">Pathway A: Safety Cobots</div>
+                <p class="content-text">Deploying force-limited Cobots for battery pack dismantling. Focus on removing human hands from high-voltage risks and handling diverse form factors.</p>
+            </div>
+            <div class="pathway-card">
+                <div class="pathway-header">Pathway B: Logistics AMRs</div>
+                <p class="content-text">Autonomous Mobile Robots to transport "Black Mass" and chemical drums. Replaces forklifts to improve WIP flow and reduce floor accidents.</p>
+            </div>
+            <div class="pathway-card">
+                <div class="pathway-header">Pathway C: Quality Inspection</div>
+                <p class="content-text">High-speed machine vision systems integrated with packing lines to detect defects in Copper Foil and Cathode Active Materials.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="section-title">IMPLEMENTATION ROADMAP</div>
+        <ul class="content-text" style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 10px;"><strong>Year 1:</strong> Pilot Safety Integration & Digital Twin setup.</li>
+            <li style="margin-bottom: 10px;"><strong>Year 2:</strong> Deployment of AMR Logistics Fleet.</li>
+            <li style="margin-bottom: 10px;"><strong>Year 3:</strong> Expansion to South Carolina Campus.</li>
+            <li style="margin-bottom: 10px;"><strong>Year 4:</strong> Predictive Maintenance via Sensor Data.</li>
+            <li><strong>Year 5:</strong> Full Autonomy (Lights Out Material Handling).</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Cost Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 2.1, 4.8, 8.2, 12.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { display: false } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pack Disassembly', 'Foil Packaging', 'Drum Transport'],
+            datasets: [{
+                label: 'Manual Process (Units/Hr)',
+                data: [12, 45, 8],
+                backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                borderWidth: 0
+            },
+            {
+                label: 'Automated Process (Units/Hr)',
+                data: [28, 110, 24],
+                backgroundColor: '#7c3aed',
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { display: false } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
