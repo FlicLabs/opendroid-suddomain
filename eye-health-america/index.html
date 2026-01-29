@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eye Health America - Robotics Consultation</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Card Style */
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .brand-accent {
+        color: #7c3aed;
+        font-weight: bold;
+    }
+
+    h1, h2, h3 {
+        color: #fff;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-top: 0;
+        color: #a78bfa;
+    }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Dashboard Metrics */
+    .metric-card {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+        border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #7c3aed;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #7c3aed;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover td {
+        background: rgba(124, 58, 237, 0.05);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .tag-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+    @media (max-width: 768px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS <span style="font-size:14px; color:#64748b; font-weight:400;">| Consulting</span></div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: #64748b;">CLIENT</div>
+            <div style="font-weight: 600;">Eye Health America</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Eye Health America (EHA) stands at a pivotal juncture to leverage robotics not just for clinical prestige, but for massive operational throughput in its Ambulatory Surgery Centers (ASCs). By shifting focus from manual logistical bottlenecks to <strong>AI-driven instrument processing and automated patient flow</strong>, EHA can unlock over $10M in incremental annual margin. The strategy prioritizes throughput volume in cataract surgeries, the economic engine of the network.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3">
+        <div class="card metric-card">
+            <div class="metric-label">Projected Net Benefit</div>
+            <div class="metric-value">$10.2M</div>
+            <div style="font-size: 12px; color: #34d399;">Annual Recurring</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-value">+30</div>
+            <div style="font-size: 12px; color: #34d399;">Cases Per Day (Network)</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">4.5</div>
+            <div style="font-size: 12px; color: #34d399;">Months</div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="grid-3">
+        <div class="card">
+            <h3 style="color:#7c3aed">Pathway A: ASC Logistics</h3>
+            <p><strong>Focus:</strong> Sterile processing automation & materials transport.</p>
+            <p><strong>Impact:</strong> Reduces OR turnover by 3-5 mins. Adds 1-2 cases per surgeon/day.</p>
+            <span class="tag tag-high">Highest ROI</span>
+        </div>
+        <div class="card">
+            <h3 style="color:#7c3aed">Pathway B: Diagnostic AI</h3>
+            <p><strong>Focus:</strong> Automated refraction lanes & AI pathology screening.</p>
+            <p><strong>Impact:</strong> Increases clinic capacity by 15-20%. Standardizes data.</p>
+            <span class="tag tag-med">Med ROI</span>
+        </div>
+        <div class="card">
+            <h3 style="color:#7c3aed">Pathway C: Micro-Surgery</h3>
+            <p><strong>Focus:</strong> Robotic retinal assistance & femtosecond lasers.</p>
+            <p><strong>Impact:</strong> Clinical precision, talent retention, and premium billing.</p>
+            <span class="tag tag-low">Strategic</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Daily Surgical Throughput</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h2>Comparative Pathway Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>ASC Logistics (A)</th>
+                    <th>Diagnostic AI (B)</th>
+                    <th>Surgical Robots (C)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scope</td>
+                    <td>All Network ASCs</td>
+                    <td>All Clinic Locations</td>
+                    <td>Specialized Retina Centers</td>
+                </tr>
+                <tr>
+                    <td>Main Value Driver</td>
+                    <td>Volume Throughput</td>
+                    <td>Patient Capacity</td>
+                    <td>Clinical Outcome</td>
+                </tr>
+                <tr>
+                    <td>Annual Benefit</td>
+                    <td>~$10M - $12M</td>
+                    <td>~$3M - $5M</td>
+                    <td>~$1M - $2M</td>
+                </tr>
+                <tr>
+                    <td>Risk Profile</td>
+                    <td><span class="tag tag-high" style="color:#34d399">Low</span></td>
+                    <td><span class="tag tag-med">Moderate</span></td>
+                    <td><span class="tag tag-low" style="color:#f87171">High</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap transforms Eye Health America into a <strong>Tech-Enabled Surgical Network</strong>. By automating the "boring" logistics of sterile processing and inventory, EHA maximizes the value of its most expensive assets: the surgeons and the operating rooms. This creates a highly scalable platform attractive to future investors and partners.</p>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [8.5, 19.2, 30.5, 42.1, 54.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic/AI Workflow'],
+            datasets: [{
+                label: 'Avg Cases Per Day (Network Wide)',
+                data: [150, 180],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#fff', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
