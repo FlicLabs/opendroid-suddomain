@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPW Industries Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--accent-glow) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--accent-purple);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .year {
+            font-weight: bold;
+            color: #a78bfa;
+            min-width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <span class="badge">OPEN DROIDS RESEARCH</span>
+        <h1>JPW Industries</h1>
+        <p style="font-size: 1.1rem; color: #fff;">Strategic Automation & Industry 4.0 Transition Report</p>
+    </div>
+
+    <!-- Production Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">Target OEE Uplift</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">&lt;18m</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$90k</span>
+            <span class="metric-label">Avg. Cell Cost</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">15%</span>
+            <span class="metric-label">Yield Improvement</span>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>Cumulative Cost Savings (5 Years)</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Output Comparison: Units Per Hour</h2>
+            <div class="chart-wrapper">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>JPW Industries is positioned to transition from traditional discrete manufacturing to a digitally connected Flexible Manufacturing System (FMS). By integrating Collaborative Robots (Cobots) and Autonomous Mobile Robots (AMRs), JPW will address labor volatility while enhancing the production efficiency of high-mix/low-volume heavy machinery lines.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Cobots for Machine Tending</h3>
+        <p>Deployment of high-payload collaborative robots for CNC tending. This eliminates ergonomic risks associated with heavy casting handling and ensures 15% higher precision in part placement.</p>
+
+        <h3>Pathway B: AMRs for Internal Logistics</h3>
+        <p>Utilization of Autonomous Mobile Robots to replace static conveyors and forklifts. This creates a dynamic WIP flow between machining and powder coating, reducing idle time by 40%.</p>
+
+        <h3>Pathway C: Automated Palletizing</h3>
+        <p>End-of-line integration of vision-guided palletizing systems to box heavy benchtop tools, matching throughput speed to upstream assembly improvements.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <span class="year">Year 1</span>
+            <span>Pilot Cobots in primary machining facility & Establish Digital Baseline.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year">Year 2</span>
+            <span>Integrate AMRs for logistics & Connect ROS to ERP.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year">Year 3</span>
+            <span>Scale Pathway C (Palletizing) & Standardize protocols globally.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year">Year 4</span>
+            <span>Implement AI-driven predictive maintenance.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year">Year 5</span>
+            <span>Full Autonomy: Real-time inventory-driven production.</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['CNC Tending', 'Assembly', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 25, 40],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [22, 45, 85],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
