@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bishops Bay Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 1px;
+            color: #fff;
+            text-transform: uppercase;
+            border-left: 4px solid var(--electric-purple);
+            padding-left: 15px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            background: -webkit-linear-gradient(#fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-size: 1.2rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Data Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: var(--electric-purple);
+            border-bottom: 1px solid var(--glass-border);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--electric-purple);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Client Portfolio</div>
+            <div style="font-weight: 600;">Bishops Bay Country Club</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Bishops Bay Country Club faces acute seasonal labor challenges in maintaining its championship golf course and clubhouse standards. Our analysis indicates that shifting to autonomous turf management and service robotics shifts the operational model from "manpower-heavy" to "tech-optimized."</p>
+        <p>The dominant ROI driver is <strong>Pathway A (Turf Automation)</strong>, capable of reducing seasonal grounds labor by 40% while enhancing environmental stewardship through electric fleet adoption.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Annual Net Savings (Year 2+)</div>
+            <div class="metric-value">$80,000</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Driven by Turf Automation</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">1.8 Years</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Based on Current Labor Rates</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">5-Year Cumulative Net</div>
+            <div class="metric-value">$400k+</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Including OpEx Savings</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Grounds Efficiency Comparison</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Pathways Table -->
+    <div class="glass-card">
+        <h2>Strategic Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Primary Value Driver</th>
+                    <th>Est. Annual Benefit</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge">PATHWAY A</span> Turf Mgmt</td>
+                    <td>Golf Course & Grounds</td>
+                    <td>Labor Reduction (4-6 FTEs)</td>
+                    <td>$80,000 - $95,000</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td><span class="badge">PATHWAY B</span> Hospitality</td>
+                    <td>Dining & Patio</td>
+                    <td>Staff Retention & Experience</td>
+                    <td>$20,000</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td><span class="badge">PATHWAY C</span> Facilities</td>
+                    <td>Pool & Clubhouse</td>
+                    <td>Hygiene Consistency</td>
+                    <td>$10,000</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: var(--electric-purple);">Phase 1: Pilot</h3>
+                <p><strong>Duration:</strong> Months 1-3</p>
+                <p>Deploy autonomous mowers on driving range and roughs. Install robotic pool cleaners.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px; border-left: 1px solid var(--glass-border); padding-left: 20px;">
+                <h3 style="color: var(--electric-purple);">Phase 2: Expansion</h3>
+                <p><strong>Duration:</strong> Months 4-12</p>
+                <p>Expand fleet to fairways. Introduce food runner robots in dining areas during lunch service.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px; border-left: 1px solid var(--glass-border); padding-left: 20px;">
+                <h3 style="color: var(--electric-purple);">Phase 3: Integration</h3>
+                <p><strong>Duration:</strong> Year 2+</p>
+                <p>Full autonomous fleet integration including GPS sprayers. Evening event support robotics.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 5-Year Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [-20000, 60000, 150000, 260000, 400000], // Initial investment cost reflected in Y1
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Manual vs Robotic Throughput (Acres Mowed per FTE)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Fleet Assisted'],
+            datasets: [{
+                label: 'Acres Managed per FTE',
+                data: [12, 35],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(16, 185, 129, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(16, 185, 129, 1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
