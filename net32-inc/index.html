@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net32 Robotics Portfolio | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--accent-purple);
+        }
+
+        .report-title span {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .col-12 { grid-column: span 12; }
+        .col-8 { grid-column: span 8; }
+        .col-6 { grid-column: span 6; }
+        .col-4 { grid-column: span 4; }
+
+        h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Financial Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 12px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .metric-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .big-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .badge-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border: 1px solid rgba(124, 58, 237, 0.5); }
+        .badge-med { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.5); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>NET32 INC. PORTFOLIO</h1>
+            <span>Robotics & Automation Analysis</span>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Executive Summary -->
+        <div class="card col-12">
+            <h2>Executive Summary</h2>
+            <p>Net32 Inc. is positioned to transition from a pure marketplace aggregator to a technology-led fulfillment orchestrator. The primary opportunity lies in <strong>Pathway A: Centralized Fulfillment</strong>, utilizing Autonomous Mobile Robots (AMRs) to increase pick rates by 400% and reduce order errors. This shift protects margins against inflation and solidifies delivery speed as a competitive moat.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card col-8">
+            <h2>Financial Dashboard (Pathway A)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Baseline</th>
+                        <th>Robotic Scenario</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Picking Staff (FTEs)</td>
+                        <td>50 FTEs</td>
+                        <td>20 FTEs</td>
+                        <td class="metric-value">-60% Labor</td>
+                    </tr>
+                    <tr>
+                        <td>Pick Rate (UPH)</td>
+                        <td>60 Units/Hr</td>
+                        <td>250+ Units/Hr</td>
+                        <td class="metric-value">4.1x Speed</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Labor Cost</td>
+                        <td>$2.5M</td>
+                        <td>$1.0M</td>
+                        <td class="metric-value">$1.5M Savings</td>
+                    </tr>
+                    <tr>
+                        <td>Order Accuracy</td>
+                        <td>98.5%</td>
+                        <td>99.9%</td>
+                        <td class="metric-value">Reduced Returns</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Key ROI Metric -->
+        <div class="card col-4 metric-card">
+            <h2>5-Year Net Benefit</h2>
+            <div class="big-number">$5.3M</div>
+            <div class="label">Cumulative Savings (Conservative)</div>
+            <div style="margin-top:15px;" class="badge badge-high">ROI: 14 Months</div>
+        </div>
+
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="card col-6">
+            <h2>Cumulative Savings Projection</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+
+        <!-- Chart 2: Throughput Comparison -->
+        <div class="card col-6">
+            <h2>Throughput Efficiency (Lines/Hour)</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Pathways Comparison -->
+        <div class="card col-12">
+            <h2>Opportunity Pathways Overview</h2>
+            <table style="margin-top: 0;">
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Technology</th>
+                        <th>Primary Value</th>
+                        <th>Readiness</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold; color: white;">Pathway A</td>
+                        <td>AMR Warehouse Robots</td>
+                        <td>Throughput & Labor Cost</td>
+                        <td><span class="badge badge-high">Immediate</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; color: white;">Pathway B</td>
+                        <td>Supply Chain RPA</td>
+                        <td>Pricing Intelligence</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; color: white;">Pathway C</td>
+                        <td>Autonomous Last-Mile</td>
+                        <td>Brand & Speed</td>
+                        <td><span class="badge badge-med">Future</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [0.15, 1.5, 2.85, 4.2, 5.55],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic Assist (AMR)'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [60, 250],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#10b981'],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
