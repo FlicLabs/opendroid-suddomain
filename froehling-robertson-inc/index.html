@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&R Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-purple);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--accent-glow);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-item {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="tag">CONFIDENTIAL RESEARCH</div>
+                <h1>Froehling & Robertson Inc.</h1>
+                <p style="margin: 5px 0 0 0; color: var(--accent-glow);">Automated Laboratory & Manufacturing Strategy</p>
+            </div>
+            <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+                Open Droids Intelligence<br>
+                Ref: FR-IND-4.0
+            </div>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target OEE Increase</div>
+                <div class="metric-value">30%</div>
+                <div class="metric-label">Equipment Effectiveness</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">16 Mo</div>
+                <div class="metric-label">ROI Timeline</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Est. CAPEX</div>
+                <div class="metric-value">$210k</div>
+                <div class="metric-label">Pilot Deployment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Capacity Lift</div>
+                <div class="metric-value">24/7</div>
+                <div class="metric-label">Lights-Out Testing</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="card">
+                <h3>5-Year Production Cost Savings</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Throughput: Manual vs. Cobot (Samples/Hour)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <p>Froehling & Robertson Inc. is poised to transition from a manual testing service model to an <strong>Automated Laboratory Manufacturing</strong> ecosystem. By treating sample intake, preparation, and destructive testing as a linear manufacturing process, F&R can leverage robotics to eliminate technician fatigue, ensure data integrity, and drastically increase testing throughput for concrete and soil mechanics.</p>
+        </div>
+
+        <div class="card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div>
+                    <h3 style="color: #fff;">Pathway A: Cobot Machine Tending</h3>
+                    <p><strong>Focus:</strong> Safety & Precision</p>
+                    <p>Deployment of UR10e or Fanuc CRX units for automated concrete cylinder compression. The cobot lifts 30lb cylinders, loads the machine, and removes debris, eliminating Repetitive Strain Injuries (RSI).</p>
+                </div>
+                <div>
+                    <h3 style="color: #fff;">Pathway B: AMR Logistics</h3>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                    <p>Autonomous Mobile Robots transporting samples from intake docks to curing rooms and testing labs. Digital chain-of-custody tracking via RFID during transport.</p>
+                </div>
+                <div>
+                    <h3 style="color: #fff;">Pathway C: Automated QA</h3>
+                    <p><strong>Focus:</strong> Throughput & Yield</p>
+                    <p>Computer Vision systems for aggregate analysis and automated disposal sorting. Removes human error in visual grading and accelerates post-test processing.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>03. Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <h3 style="color: #fff;">Year 1: Foundation & Pilot</h3>
+                <p>Audit Richmond HQ workflows. Deploy single Cobot cell for compression testing. Digitize sample tracking.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3 style="color: #fff;">Year 2-3: Expansion</h3>
+                <p>Introduce AMRs for logistics. Integrate machine data into LIMS. Replicate "Smart Lab" model in Raleigh and Baltimore.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3 style="color: #fff;">Year 4-5: The Autonomous Lab</h3>
+                <p>Predictive maintenance via IoT. Full "Lights-Out" third shift capability. Intake-to-disposal automation.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [45000, 150000, 320000, 580000, 900000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Output Chart
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Cylinder Prep', 'Compression Test', 'Disposal'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [12, 15, 20],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cobot Assisted',
+                        data: [28, 45, 60],
+                        backgroundColor: '#38bdf8',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Units Per Hour' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
