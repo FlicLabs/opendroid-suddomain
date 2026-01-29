@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advena Living Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --deep-space: #0f172a;
+        --electric-purple: #7c3aed;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        background-color: var(--deep-space);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--electric-purple);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--electric-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin: 0;
+        color: white;
+    }
+
+    h2 {
+        color: var(--electric-purple);
+        font-size: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 18px;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: var(--text-muted);
+        font-size: 15px;
+    }
+
+    /* Financial Dashboard Table Styling */
+    .dashboard-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+        margin-top: 10px;
+    }
+
+    .dashboard-table th {
+        text-align: left;
+        color: var(--text-muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 0 15px;
+    }
+
+    .metric-card {
+        background: rgba(124, 58, 237, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        transition: transform 0.2s;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-2px);
+        background: rgba(124, 58, 237, 0.15);
+    }
+
+    .metric-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+        display: block;
+    }
+
+    .metric-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .chart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .chart-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .tag-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Advena Living Portfolio</h1>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-panel">
+        <h2>Executive Summary</h2>
+        <p>Advena Living's commitment to the household model presents a unique opportunity for robotics to eliminate institutional drudgery. By automating logistics (dietary/laundry) and safety monitoring, Advena can reallocate thousands of staff hours back to direct resident care, enhancing the "Green House" philosophy while stabilizing operational margins.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-panel">
+        <h2>Financial Impact Dashboard (Pathway A: Logistics)</h2>
+        
+        <table style="width:100%; border-spacing: 20px 0;">
+            <tr>
+                <td>
+                    <div class="metric-card">
+                        <span class="metric-value">£45k</span>
+                        <span class="metric-label">Net Annual Savings / Facility</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="metric-card">
+                        <span class="metric-value">16 mo</span>
+                        <span class="metric-label">Estimated Payback Period</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="metric-card">
+                        <span class="metric-value">2,190</span>
+                        <span class="metric-label">Staff Hours Saved / Year</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="metric-card">
+                        <span class="metric-value">18%</span>
+                        <span class="metric-label">Reduction in Cart Injuries</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="chart-grid">
+        <div class="glass-panel">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-panel">
+            <h3>Logistics Efficiency: Manual vs. Robotic</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Comparative Pathways -->
+    <div class="glass-panel">
+        <h2>Strategic Opportunity Pathways</h2>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Core Technology</th>
+                    <th>Primary ROI Driver</th>
+                    <th>Feasibility</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway A</td>
+                    <td style="color: var(--text-muted);">AMR Logistics (Dietary/Laundry)</td>
+                    <td style="color: var(--text-muted);">Labor Reallocation</td>
+                    <td><span class="tag tag-high">High</span></td>
+                </tr>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway B</td>
+                    <td style="color: var(--text-muted);">AI Passive Fall Monitoring</td>
+                    <td style="color: var(--text-muted);">Risk & Liability Reduction</td>
+                    <td><span class="tag tag-med">Medium</span></td>
+                </tr>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway C</td>
+                    <td style="color: var(--text-muted);">Social & Telepresence Bots</td>
+                    <td style="color: var(--text-muted);">Resident Quality of Life</td>
+                    <td><span class="tag tag-low">Strategic</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [-25000, 20000, 70000, 125000, 185000], // Initial hardware cost dip, then growth
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Tray Delivery', 'Laundry Transport', 'Supply Runs'],
+            datasets: [
+                {
+                    label: 'Manual Staff (Mins/Task)',
+                    data: [45, 30, 20],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Assisted (Staff Mins/Task)',
+                    data: [10, 5, 5], // Staff only load/unload
+                    backgroundColor: '#7c3aed',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    title: { display: true, text: 'Minutes of Staff Time', color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
