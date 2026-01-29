@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermacell Strategic Research | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #fff;
+            margin-top: 25px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Layout */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .year-badge {
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.8rem;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>THERMACELL STRATEGIC INSIGHTS</h1>
+        <div class="subtitle">Prepared by Open Droids | Industrial Automation Research</div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">14 Mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+22%</div>
+            <div class="metric-label">Target OEE Increase</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$280k</div>
+            <div class="metric-label">Initial Pilot CAPEX</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Heating Element QA</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Summary</h2>
+        <p>Thermacell Repellents Inc. stands at a pivotal juncture to leverage Industry 4.0. Transitioning from traditional discrete manufacturing to a Flexible Manufacturing System (FMS) will address seasonal demand volatility. Our strategy focuses on high-mix, low-volume automation to support both fuel-powered and rechargeable product lines.</p>
+    </div>
+
+    <!-- Production Profile & Charts -->
+    <div class="grid-2-col">
+        <div class="glass-card">
+            <h2>02. Production Efficiency</h2>
+            <p>Comparing current manual assembly baselines against projected Cobot-assisted throughput for E-Series device assembly.</p>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>03. Financial Trajectory</h2>
+            <p>Cumulative operational savings over a 5-year roadmap, factoring in labor reallocation and scrap reduction.</p>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>04. Robotics Opportunity Pathways</h2>
+        <div class="grid-2-col">
+            <div>
+                <h3>Pathway A: Cobot Assembly</h3>
+                <ul>
+                    <li><strong>Application:</strong> PCB & Battery Insertion</li>
+                    <li><strong>Benefit:</strong> Precision screw driving & seal integrity</li>
+                    <li><strong>Tech:</strong> 6-axis arms with Force Torque Sensors</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Pathway B: AMR Logistics</h3>
+                <ul>
+                    <li><strong>Application:</strong> Line-side replenishment</li>
+                    <li><strong>Benefit:</strong> Continuous WIP flow & reduced congestion</li>
+                    <li><strong>Tech:</strong> Fleet-managed Autonomous Mobile Robots</li>
+                </ul>
+            </div>
+        </div>
+        <h3>Pathway C: End-of-Line Automation</h3>
+        <p>Deployment of high-speed palletizing cells combined with Thermal Vision Inspection to ensure heating element safety before packaging.</p>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>05. Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 1</div>
+            <div><strong>Pilot Phase:</strong> Install 2 Cobot cells for E-Series assembly.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 2</div>
+            <div><strong>Logistics Integration:</strong> Deploy AMRs linked to Warehouse Management System.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 3</div>
+            <div><strong>Standardization:</strong> Scale success to butane product lines.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 4</div>
+            <div><strong>Predictive Maintenance:</strong> IoT sensor deployment for zero downtime.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">Year 5</div>
+            <div><strong>Full Autonomy:</strong> "Lights-Out" capability for molding and sub-assembly.</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Manual vs Cobot Output
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Assembly', 'Cobot Assisted'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [60, 95],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#e2e8f0' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [-50000, 120000, 350000, 680000, 1100000], // Negative start due to CAPEX
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
