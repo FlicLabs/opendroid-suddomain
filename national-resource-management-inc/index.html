@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NRM Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Layout Columns */
+        .col-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+
+        li strong {
+            color: #fff;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .col-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="header-section">
+        <div class="badge">OPEN DROIDS RESEARCH</div>
+        <h1>National Resource Management Inc.</h1>
+        <p style="color: var(--text-muted);">Strategic Automation & Industry 4.0 Transformation Report</p>
+    </div>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Target OEE Increase</div>
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Efficiency Gain</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Projected ROI</div>
+            <div class="metric-value">16 mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Throughput Boost</div>
+            <div class="metric-value">2x</div>
+            <div class="metric-label">Production Capacity</div>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p style="color: var(--text-muted); line-height: 1.6;">
+            National Resource Management Inc. is positioned to transition from legacy rigid lines to high-mix, low-volume flexible cells. By integrating collaborative robotics and AMRs, we project a shift to "Dark Factory" capabilities for core components, decoupling labor costs from production scaling.
+        </p>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="col-2">
+        <div class="glass-card">
+            <h2>Financial Projection (5-Year Savings)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Productivity Analysis</h2>
+            <div class="chart-container">
+                <canvas id="productivityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROBOTICS PATHWAYS -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="col-2">
+            <div>
+                <h3 style="color: #fff;">Pathway A: Cobots</h3>
+                <ul>
+                    <li><strong>Application:</strong> Machine Tending & Assembly</li>
+                    <li><strong>Benefit:</strong> Consistent cycle times & safety</li>
+                    <li><strong>Tech:</strong> IP67 Collaborative Arms</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway B: AMRs</h3>
+                <ul>
+                    <li><strong>Application:</strong> Line-Side Replenishment</li>
+                    <li><strong>Benefit:</strong> 40% reduction in travel time</li>
+                    <li><strong>Tech:</strong> Autonomous Mobile Robots</li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <div>
+            <h3 style="color: #fff;">Pathway C: End-of-Line</h3>
+            <ul>
+                <li><strong>Application:</strong> Palletizing & QC</li>
+                <li><strong>Benefit:</strong> Zero-defect packaging & stacking</li>
+                <li><strong>Tech:</strong> Vision-Guided High Payload Arms</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 1</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-muted);">Pilot Program (Cobots)</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 2</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-muted);">Intralogistics (AMRs)</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 3</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-muted);">EOL Automation</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 5</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-muted);">AI & Smart Factory</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($M)',
+                data: [0.2, 0.8, 1.8, 3.2, 5.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('productivityChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Assembly', 'Machine Tending', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual Process (UPH)',
+                    data: [45, 60, 120],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Cobot-Assisted (UPH)',
+                    data: [85, 110, 240],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
