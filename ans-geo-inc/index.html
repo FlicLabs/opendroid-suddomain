@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANS Geo Inc. | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -0.05em;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0));
+            border: 1px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-purple);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-step {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header style="margin-bottom: 50px;">
+            <div style="font-size: 0.8rem; color: var(--accent-purple); font-weight: 600; letter-spacing: 0.2em; margin-bottom: 10px;">OPEN DROIDS CONSULTATION</div>
+            <h1>ANS Geo Inc.</h1>
+            <p style="font-size: 1.1rem;">Strategic Automation Audit & Industrial Robotics Integration Plan</p>
+        </header>
+
+        <!-- Metrics Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">35%</span>
+                <span class="metric-label">Cycle Time Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">16mo</span>
+                <span class="metric-label">Target ROI Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">85%</span>
+                <span class="metric-label">Projected OEE</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$260k</span>
+                <span class="metric-label">Est. Initial CAPEX</span>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Executive Summary -->
+            <div class="glass-card full-width">
+                <h2>01. Executive Vision</h2>
+                <p>ANS Geo Inc. is positioned to transition from legacy batch processing to a Smart Flexible Manufacturing Ecosystem. By integrating collaborative robotics and autonomous transport, we decouple labor hours from production volume. This "Autonomy with Human-in-the-Loop" strategy ensures skilled technicians focus on high-value calibration while automation handles repetitive material movement.</p>
+            </div>
+
+            <!-- Pathways -->
+            <div class="glass-card">
+                <h2>02. Robotics Pathways</h2>
+                <h3>Pathway A: Cobot Integration</h3>
+                <p>Deployment of IP67-rated Cobots for CNC machine tending. Focus on safety and precision to double operator output.</p>
+                
+                <h3 style="margin-top: 20px;">Pathway B: AMR Logistics</h3>
+                <p>Autonomous Mobile Robots for line-side replenishment, creating a "Pulled" inventory system to reduce congestion.</p>
+                
+                <h3 style="margin-top: 20px;">Pathway C: Auto-QC</h3>
+                <p>Vision-guided palletizing systems to ensure 100% outbound quality control and packaging uniformity.</p>
+            </div>
+
+            <!-- Financials & Chart 1 -->
+            <div class="glass-card">
+                <h2>03. Production Output Analysis</h2>
+                <p>Comparison of current manual throughput versus projected Cobot-assisted output.</p>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- ROI & Chart 2 -->
+            <div class="glass-card full-width">
+                <h2>04. Financial Projection (5-Year)</h2>
+                <p>Cumulative cost savings analysis factoring in reduced scrap, labor reallocation, and increased throughput efficiency.</p>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Roadmap -->
+            <div class="glass-card full-width">
+                <h2>05. Implementation Roadmap</h2>
+                <div class="roadmap-step">
+                    <div class="step-number">1</div>
+                    <div><strong>Pilot & Validate:</strong> Deploy single Cobot cell and 2 AMRs. Collect baseline data.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">2</div>
+                    <div><strong>Scale & Connect:</strong> Expand to 3 machining centers. Integrate MES data layers.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">3</div>
+                    <div><strong>Automate Logistics:</strong> Deploy End-of-Line Palletizing and Vision QC.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">4</div>
+                    <div><strong>Optimization:</strong> Predictive maintenance and Digital Twin simulation.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-number">5</div>
+                    <div><strong>Full Autonomy:</strong> Lights-out manufacturing capability for specific shifts.</div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 50px;">
+            &copy; 2023 Open Droids Research Division. Confidential Report for ANS Geo Inc.
+        </footer>
+    </div>
+
+    <script>
+        // Chart 1: Manual vs Cobot Output (Bar Chart)
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Milling Loading', 'Sensor Assembly', 'Casing Inspection', 'Boxing'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [12, 20, 45, 30],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot Assisted (Units/Hr)',
+                        data: [22, 35, 80, 55],
+                        backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                        borderColor: 'rgba(124, 58, 237, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f8fafc' } }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Cumulative Savings (Line Chart)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($ USD)',
+                    data: [45000, 180000, 390000, 650000, 980000],
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#38bdf8',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f8fafc' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
