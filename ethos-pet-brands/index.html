@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethos Pet Brands - Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 0;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: block;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .tag-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+        .tag-b { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid rgba(124, 58, 237, 0.4); }
+        .tag-c { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="sub-header">Open Droids Intelligence</div>
+            <h1>ETHOS PET BRANDS</h1>
+            <div class="sub-header">Strategic Automation Assessment</div>
+        </div>
+        <div style="text-align: right; display: none; @media(min-width:768px){display:block;}">
+            <div class="sub-header">Report ID</div>
+            <div style="font-weight:bold;">OP-ETH-2024</div>
+        </div>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-label">Projected OEE Increase</span>
+            <span class="metric-value">28%</span>
+            <span class="metric-label">Via Predictive Maintenance</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-label">ROI Timeline</span>
+            <span class="metric-value">16m</span>
+            <span class="metric-label">Target Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-label">Safety Metric</span>
+            <span class="metric-value">-40%</span>
+            <span class="metric-label">Reduction in Manual Lifting</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column: Strategy & Roadmap -->
+        <div>
+            <div class="glass-card">
+                <div class="section-title">EXECUTIVE VISION</div>
+                <p>Ethos Pet Brands is positioned to redefine the "Farm-to-Bowl" philosophy through Industry 4.0. By integrating IoT and robotics into the Brownwood facility, the organization can transition from reactive batch processing to a proactive, continuous flow model. This ensures traceability, safety, and agility in a premium market.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-title">ROBOTICS PATHWAYS</div>
+                <div style="margin-bottom: 20px;">
+                    <span class="pathway-tag tag-a">PATHWAY A: COBOTS</span>
+                    <p><strong>Variety Packing & Kitting:</strong> Implementing IP67 washdown-ready cobots to manage the high-mix complexity of variety packs. Focus on reducing repetitive strain injuries.</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="pathway-tag tag-b">PATHWAY B: AMRs</span>
+                    <p><strong>Intralogistics:</strong> Replacing forklifts with Autonomous Mobile Robots (1000kg payload) for ingredient transport from warehouse to mixers. Improves facility safety.</p>
+                </div>
+                <div>
+                    <span class="pathway-tag tag-c">PATHWAY C: PALLETIZING</span>
+                    <p><strong>End-of-Line Automation:</strong> High-speed robotic palletizing coupled with vision inspection for bag seal integrity. Critical for yield and throughput.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-title">FINANCIAL TRAJECTORY</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Stats & Charts -->
+        <div>
+            <div class="glass-card">
+                <div class="section-title">ORGANIZATIONAL PROFILE</div>
+                <ul style="padding-left: 20px; list-style-type: square;">
+                    <li><strong>Facility:</strong> Brownwood, Texas</li>
+                    <li><strong>Type:</strong> Hybrid (Process + Discrete)</li>
+                    <li><strong>Focus:</strong> Super-Premium Pet Food</li>
+                    <li><strong>Volume:</strong> High-Scale / Multi-SKU</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-title">THROUGHPUT ANALYSIS</div>
+                <p style="font-size: 0.85rem; margin-bottom: 15px;">Comparison of current manual heavy-bag palletizing vs. proposed robotic cell.</p>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="section-title">IMPLEMENTATION ROADMAP</div>
+                <div style="border-left: 2px solid var(--accent-purple); padding-left: 15px; margin-left: 5px;">
+                    <p style="margin: 0; font-weight: bold; color: white;">YEAR 1</p>
+                    <p style="margin-top: 5px; margin-bottom: 15px; font-size: 0.85rem;">Pilot Cobot Cell & Site Survey</p>
+                    
+                    <p style="margin: 0; font-weight: bold; color: white;">YEAR 2</p>
+                    <p style="margin-top: 5px; margin-bottom: 15px; font-size: 0.85rem;">AMR Fleet & Palletizer Rollout</p>
+                    
+                    <p style="margin: 0; font-weight: bold; color: white;">YEAR 3-5</p>
+                    <p style="margin-top: 5px; margin-bottom: 0; font-size: 0.85rem;">AI Integration & Secondary Sites</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Cost Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robotic Cell'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [420, 680],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(59, 130, 246, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(59, 130, 246, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#fff', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
