@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paradigm Manufacturing | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-sub {
+            font-size: 0.85rem;
+            color: #4ade80; /* Green for positive */
+        }
+
+        /* Content Sections */
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .pathway-item {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .pathway-title {
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Charts Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: span 3;
+        }
+        
+        @media (max-width: 768px) {
+            .pathway-grid, .full-width {
+                grid-template-columns: 1fr;
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research</div>
+                <h1>Paradigm Manufacturing</h1>
+            </div>
+            <div style="text-align: right; color: var(--text-muted);">
+                <small>Report ID: OM-2024-X9</small><br>
+                <small>Status: Strategic Assessment</small>
+            </div>
+        </header>
+
+        <!-- Metrics Row -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="metric-label">Target OEE Increase</div>
+                <div class="metric-value">30%</div>
+                <div class="metric-sub">▲ Projected efficiency gain</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Est. ROI Period</div>
+                <div class="metric-value">16 Mo</div>
+                <div class="metric-sub">▼ Faster than industry avg</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Scrap Reduction</div>
+                <div class="metric-value">15%</div>
+                <div class="metric-sub">▲ Yield improvement</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary & Charts -->
+        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+            
+            <div class="card">
+                <h2>Executive Vision</h2>
+                <p>Paradigm Manufacturing is positioned to pivot from static production lines to dynamic, flexible manufacturing cells. By integrating Cobots and AMRs, we decouple labor dependencies from capacity.</p>
+                <p><strong>Strategic Goal:</strong> Achieve "High-Mix, Low-Volume" flexibility while maintaining mass-production cost efficiency.</p>
+                <p><strong>Financial Impact:</strong> Shift CAPEX to modular investments ($60k-$120k/cell) to protect cash flow while aggressively targeting operational variance reduction.</p>
+            </div>
+
+            <div class="card">
+                <h2>Production Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card" style="margin-bottom: 40px;">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY A: COBOTS</span>
+                    <p><strong>Focus:</strong> Safety & Precision.</p>
+                    <p>Deployment of force-limited 6-axis arms for machine tending and assembly. Removes ergonomic risks and stabilizes cycle times.</p>
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY B: AMRs</span>
+                    <p><strong>Focus:</strong> WIP Flow Efficiency.</p>
+                    <p>Autonomous Material Transport to eliminate forklift traffic. Ensures Just-In-Time line-side delivery and reduces inventory bloat.</p>
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">PATHWAY C: EOL AUTOMATION</span>
+                    <p><strong>Focus:</strong> Throughput & Yield.</p>
+                    <p>Automated Palletizing combined with vision inspection. Targets the shipping bottleneck to increase final throughput by 25%.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Projection Chart -->
+        <div class="card">
+            <h2>5-Year Cumulative Savings Projection</h2>
+            <div class="chart-container" style="height: 350px;">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap Footer -->
+        <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+            <div style="border-top: 2px solid var(--accent-purple); padding-top: 10px;">
+                <div class="subtitle">Year 1</div>
+                <small style="color:var(--text-muted)">Pilot Phase & Digital Twin</small>
+            </div>
+            <div style="border-top: 2px solid var(--glass-border); padding-top: 10px;">
+                <div class="subtitle">Year 2</div>
+                <small style="color:var(--text-muted)">Scaling AMRs & Cobots</small>
+            </div>
+            <div style="border-top: 2px solid var(--glass-border); padding-top: 10px;">
+                <div class="subtitle">Year 3</div>
+                <small style="color:var(--text-muted)">IoT Optimization</small>
+            </div>
+            <div style="border-top: 2px solid var(--glass-border); padding-top: 10px;">
+                <div class="subtitle">Year 4-5</div>
+                <small style="color:var(--text-muted)">Full Autonomy</small>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Bar Chart: Manual vs Cobot Output
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Machine Tending', 'Assembly', 'Palletizing'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [45, 120, 200],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Hr)',
+                        data: [78, 185, 310],
+                        backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Line Chart: 5-Year Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($ Millions)',
+                    data: [0.2, 0.85, 1.9, 3.2, 5.1],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
