@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCMS Robotics Research Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --accent-color: #7c3aed;
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: var(--font-family);
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--text-main);
+        text-transform: uppercase;
+    }
+
+    .logo span {
+        color: var(--accent-color);
+    }
+
+    h1, h2, h3 {
+        font-weight: 600;
+        color: #fff;
+    }
+
+    h1 { font-size: 3rem; margin-bottom: 10px; letter-spacing: -1px; }
+    h2 { font-size: 1.8rem; margin-top: 40px; color: var(--accent-color); }
+    h3 { font-size: 1.2rem; margin-bottom: 15px; }
+
+    p, li {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 1.05rem;
+    }
+
+    /* Glass Cards */
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Financial Dashboard */
+    .dashboard-metrics {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 20px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        display: block;
+        margin-bottom: 5px;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-color);
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-muted);
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid var(--accent-color);
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Chart Container */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* Tags */
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .tag-blue { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .tag-purple { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+
+    @media (max-width: 768px) {
+        .grid-2, .grid-3, .dashboard-metrics {
+            grid-template-columns: 1fr;
+            flex-direction: column;
+        }
+        h1 { font-size: 2rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="font-size: 0.9rem; color: var(--text-muted);">ROBOTICS INTELLIGENCE UNIT</div>
+    </header>
+
+    <!-- Executive Summary Section -->
+    <div class="card">
+        <span class="tag tag-blue">CLIENT ANALYSIS</span>
+        <h1>Travis County Medical Society</h1>
+        <p>TCMS is the infrastructural backbone for 4,300+ Austin physicians. The primary robotics opportunity is the transformation of the <strong>Medical Exchange (MedExchange)</strong> via Intelligent Voice Automation and Robotic Process Automation (RPA). This shifts the organization from a labor-heavy service model to a scalable, AI-orchestrated communications platform.</p>
+    </div>
+
+    <!-- Pathways Grid -->
+    <div class="grid-3">
+        <div class="card">
+            <span class="tag tag-purple">PATHWAY A</span>
+            <h3>Intelligent Voice Automation</h3>
+            <p>Deploying Conversational AI to handle MedExchange intake. Reduces human labor on routine calls by 70%, ensuring zero hold times for urgent medical alerts.</p>
+            <div style="margin-top: 15px; font-weight: bold; color: #fff;">ROI: <6 Months</div>
+        </div>
+        <div class="card">
+            <span class="tag tag-purple">PATHWAY B</span>
+            <h3>Administrative RPA</h3>
+            <p>Software robotics for backend workflows: credentialing verification, dues processing, and directory updates. Eliminates data entry errors.</p>
+            <div style="margin-top: 15px; font-weight: bold; color: #fff;">ROI: Immediate</div>
+        </div>
+        <div class="card">
+            <span class="tag tag-purple">PATHWAY C</span>
+            <h3>Predictive Analytics</h3>
+            <p>Leveraging call metadata to forecast regional health trends and practice demand, creating new high-value data tiers for members.</p>
+            <div style="margin-top: 15px; font-weight: bold; color: #fff;">ROI: Strategic</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h2>Financial Impact Dashboard</h2>
+    
+    <div class="dashboard-metrics">
+        <div class="metric-card">
+            <span class="metric-value">$1.5M</span>
+            <span class="metric-label">Annual Net Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">70%</span>
+            <span class="metric-label">Labor Automation Rate</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">0s</span>
+            <span class="metric-label">Call Queue Time</span>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="card">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Throughput -->
+        <div class="card">
+            <h3>Call Throughput Efficiency (Per Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h3>Strategic Comparison Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Voice AI</th>
+                    <th>Pathway B: Admin RPA</th>
+                    <th>Pathway C: Data Engine</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Target Scope</strong></td>
+                    <td>MedExchange Call Center</td>
+                    <td>Back Office / Ops</td>
+                    <td>Strategy / Product</td>
+                </tr>
+                <tr>
+                    <td><strong>Primary Value</strong></td>
+                    <td>Labor Cost Reduction</td>
+                    <td>Accuracy & Speed</td>
+                    <td>Member Retention</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Impact</strong></td>
+                    <td>$1.2M - $1.8M</td>
+                    <td>~$300k</td>
+                    <td>~$150k (Indirect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Implementation Risk</strong></td>
+                    <td>Moderate (Tech adoption)</td>
+                    <td>Low</td>
+                    <td>High (Privacy/Compliance)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($ Millions)',
+                data: [1.1, 2.4, 3.8, 5.3, 6.9],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value + 'M'; } }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Peak Hour Capacity', 'Avg Response Time (Sec)', 'Concurrent Calls'],
+            datasets: [
+                {
+                    label: 'Manual Operations',
+                    data: [120, 180, 15],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Automation',
+                    data: [1000, 2, 500],
+                    backgroundColor: '#7c3aed',
+                    borderColor: '#8b5cf6',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    type: 'logarithmic',
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
