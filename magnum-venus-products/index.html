@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-purple);
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-glow);
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Layout */
+        h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item h3 {
+            color: var(--accent-glow);
+            margin-top: 0;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Steps */
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+
+        .step-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research</div>
+                <h1>Magnum Venus Products</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Status: Strategic Review</div>
+                <div style="color: var(--text-secondary); font-size: 0.9rem;">Prepared for Senior Leadership</div>
+            </div>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-value">18m</span>
+                <span class="metric-label">Target ROI Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">30%</span>
+                <span class="metric-label">OEE Increase</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$260k</span>
+                <span class="metric-label">Initial Phase CAPEX</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">Zero</span>
+                <span class="metric-label">Safety Incidents Target</span>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Magnum Venus Products is positioned to transition from traditional discrete manufacturing to a connected Industry 4.0 ecosystem. By integrating collaborative robotics and autonomous transport into the Knoxville facilities, MVP can resolve skilled labor shortages and significantly increase throughput for pumping systems and filament winders. This research outlines a roadmap to flexible, data-driven manufacturing.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathways-grid">
+                <div class="pathway-item">
+                    <h3>Pathway A: Cobots</h3>
+                    <p><strong>Focus:</strong> Machine Tending & Assembly</p>
+                    <p>Deployment of IP67-rated collaborative robots to tend CNC machines and assist in torque-critical valve assembly. Enables "lights-out" component machining.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway B: AMRs</h3>
+                    <p><strong>Focus:</strong> Material Logistics</p>
+                    <p>Autonomous Mobile Robots to transport heavy pump casings and raw stock between fabrication, coating, and assembly lines, reducing human transit time.</p>
+                </div>
+                <div class="pathway-item">
+                    <h3>Pathway C: EOL Automation</h3>
+                    <p><strong>Focus:</strong> Quality & Palletizing</p>
+                    <p>Vision systems for seal integrity inspection and vacuum-gripper arms for boxing spare parts, ensuring zero-defect shipping and reduced ergonomic strain.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial & Performance Projections</h2>
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-step">
+                <div class="step-year">Year 1</div>
+                <div><strong>Pilot Phase:</strong> Audit CNC utilization, deploy single Cobot cell, and introduce AMR safety protocols.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-year">Year 2</div>
+                <div><strong>Scale & Connect:</strong> Expand to 3 CNC cells, integrate machine data with ERP, deploy vision inspection.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-year">Year 3</div>
+                <div><strong>Optimization:</strong> Achieve partial lights-out manufacturing and full AMR fleet deployment.</div>
+            </div>
+            <div class="roadmap-step">
+                <div class="step-year">Year 5</div>
+                <div><strong>Autonomous Factory:</strong> Robotics manage 80% of material handling; AI drives predictive maintenance.</div>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2023 Open Droids Consultation. Confidential Research for Magnum Venus Products.
+        </footer>
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [45000, 180000, 420000, 750000, 1200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '5-Year Cumulative Production Savings',
+                        font: { size: 16, weight: '600' },
+                        color: '#ffffff',
+                        align: 'start'
+                    },
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Output Comparison Chart
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['CNC Loading', 'Valve Assembly', 'Palletizing', 'QC Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [12, 25, 40, 60],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4,
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Hr)',
+                        data: [28, 45, 90, 200],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4,
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Manual vs. Cobot-Assisted Output',
+                        font: { size: 16, weight: '600' },
+                        color: '#ffffff',
+                        align: 'start'
+                    },
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
