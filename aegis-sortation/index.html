@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Sortation | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-purple-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .sub-header {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px 0 rgba(124, 58, 237, 0.1);
+            border-color: var(--accent-purple-glow);
+        }
+
+        .col-span-12 { grid-column: span 12; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-4 { grid-column: span 4; }
+
+        @media (max-width: 900px) {
+            .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .indicator {
+            color: #10b981;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 12px;
+            padding-left: 16px;
+            border-left: 2px solid var(--accent-purple);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="sub-header">Open Droids Intelligence Unit</div>
+            <h1>Aegis Sortation</h1>
+            <div style="color: var(--accent-purple); margin-top: 5px;">Deep Strategic Research & Automation Profile</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="sub-header">Report Status</div>
+            <div style="font-weight: 600; color: #10b981;">FINALIZED</div>
+        </div>
+    </header>
+
+    <!-- Key Metrics Dashboard -->
+    <div class="grid">
+        <div class="card col-span-4">
+            <div class="metric-label">Target OEE Uplift</div>
+            <div class="metric-value">28.5%</div>
+            <div class="indicator">▲ Projected post-integration</div>
+        </div>
+        <div class="card col-span-4">
+            <div class="metric-label">Avg. Payback Period</div>
+            <div class="metric-value">16 Mo</div>
+            <div class="indicator">▼ Reduced via scrap savings</div>
+        </div>
+        <div class="card col-span-4">
+            <div class="metric-label">Est. CAPEX Per Cell</div>
+            <div class="metric-value">$85k</div>
+            <div class="indicator">Avg. Cobot/AMR Deployment</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Charts -->
+    <div class="grid">
+        <div class="card col-span-8">
+            <h2>Executive Vision</h2>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                Aegis Sortation is poised to transition from a traditional assembly model to a Modular Adaptive Manufacturing ecosystem. By integrating cyber-physical systems, Aegis will mitigate labor volatility and increase throughput. The strategic pivot involves three core pillars: Collaborative Robotics for assembly, Autonomous Mobile Robots (AMRs) for logistics, and Computer Vision for quality assurance.
+            </p>
+            <div style="margin-top: 30px; height: 300px;">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card col-span-4">
+            <h2>Efficiency Analysis</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Comparison of current manual assembly versus projected cobot-assisted output.</p>
+            <div style="margin-top: 20px; height: 250px;">
+                <canvas id="efficiencyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="grid">
+        <div class="card col-span-4">
+            <h3>PATHWAY A: Cobots</h3>
+            <div class="sub-header" style="margin-bottom: 15px;">Machine Tending & Assembly</div>
+            <ul>
+                <li>Automated CNC loading/unloading (Fanuc/UR)</li>
+                <li>Torque-critical screwdriving applications</li>
+                <li>Safety-rated fenceless operation</li>
+            </ul>
+        </div>
+        <div class="card col-span-4">
+            <h3>PATHWAY B: AMRs</h3>
+            <div class="sub-header" style="margin-bottom: 15px;">Intralogistics</div>
+            <ul>
+                <li>Line-side replenishment of drive motors</li>
+                <li>Transport of injection molded shoes</li>
+                <li>Reduction of forklift traffic by 60%</li>
+            </ul>
+        </div>
+        <div class="card col-span-4">
+            <h3>PATHWAY C: End-of-Line</h3>
+            <div class="sub-header" style="margin-bottom: 15px;">QC & Palletizing</div>
+            <ul>
+                <li>Vision-based tolerance inspection</li>
+                <li>Heavy payload robotic palletizing</li>
+                <li>Data logging for 100% of yield</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="grid">
+        <div class="card col-span-12">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-item">
+                <div class="year-badge">YEAR 1</div>
+                <span style="color: var(--text-secondary);">Pilot Phase: Deploy 2 Cobot cells in machining & 1 AMR for waste removal. Establish data baseline.</span>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">YEAR 2</div>
+                <span style="color: var(--text-secondary);">Integration Phase: Fleet expansion to 5 AMRs. MES Integration with robotic controllers.</span>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">YEAR 3</div>
+                <span style="color: var(--text-secondary);">Optimization Phase: Automated QC Vision Systems & 24hr "Lights-Out" fabrication capacity.</span>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">YEAR 5</div>
+                <span style="color: var(--text-secondary);">Autonomy Phase: Full AI-driven production scheduling and self-dispatching robotics.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Cost Savings
+    const ctx = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($ Millions)',
+                data: [0.5, 1.8, 4.2, 7.5, 11.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#7c3aed',
+                pointBorderWidth: 2,
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#94a3b8' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('efficiencyChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Cobot-Assisted'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [45, 78],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(124, 58, 237, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
