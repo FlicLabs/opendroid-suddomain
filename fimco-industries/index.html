@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fimco Industries | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Grid */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .badge-cobot { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .badge-amr { background: rgba(244, 114, 182, 0.2); color: #f472b6; }
+        .badge-eol { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+        .roadmap-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+        }
+        .roadmap-year {
+            font-weight: bold;
+            color: var(--accent-purple);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Research</div>
+            <h1>Fimco Industries</h1>
+        </div>
+        <div class="subtitle">Report ID: OD-2023-FIM</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Strategic transition from legacy discrete manufacturing to an Industry 4.0 Flexible Manufacturing System. The focus is on integrating high-mix automation to handle seasonal demand spikes for sprayers and spreaders, reducing manual labor dependency while increasing throughput quality.</p>
+    </div>
+
+    <!-- Production Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">$60k+</span>
+            <span class="metric-label">Entry CAPEX</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">Target OEE Lift</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">14 Mo</span>
+            <span class="metric-label">ROI Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">100%</span>
+            <span class="metric-label">Yield Quality</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput: Manual vs. Cobot</h2>
+            <div class="chart-wrapper">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="pathways-grid">
+        <div class="card">
+            <span class="badge badge-cobot">PATHWAY A</span>
+            <h3>Collaborative Welding & Assembly</h3>
+            <p>Deployment of 20kg payload Cobots for machine tending (tube bending) and precision nozzle assembly. Eliminates repetitive strain and ensures consistent torque specs.</p>
+        </div>
+        <div class="card">
+            <span class="badge badge-amr">PATHWAY B</span>
+            <h3>AMR Material Transport</h3>
+            <p>Autonomous Mobile Robots to bridge Rotational Molding and Assembly lines. Replaces forklift traffic, improving safety and enabling JIT tank delivery.</p>
+        </div>
+        <div class="card">
+            <span class="badge badge-eol">PATHWAY C</span>
+            <h3>Automated Palletizing</h3>
+            <p>End-of-Line robotic cells with integrated vision systems. Handles packing of spot sprayers and skid units while performing final visual QA checks.</p>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <ul class="roadmap-list">
+            <li><span class="roadmap-year">Year 1</span> <span>Pilot Phase: EOL Palletizing on High-Volume Spot Sprayer Line</span></li>
+            <li><span class="roadmap-year">Year 2</span> <span>Mobility: Deploy AMR Fleet for Tank Transport</span></li>
+            <li><span class="roadmap-year">Year 3</span> <span>Heavy Assembly: Frame Welding & Boom Assembly Cobots</span></li>
+            <li><span class="roadmap-year">Year 5</span> <span>Full Autonomy: Centralized Data Dashboard & Predictive Maintenance</span></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 150000, 320000, 580000, 900000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Cobot Output
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Nozzle Assembly', 'Frame Welding', 'Palletizing', 'Tank Transport'],
+            datasets: [
+                {
+                    label: 'Manual (Units/Hr)',
+                    data: [45, 12, 30, 15],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [85, 22, 55, 40],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
