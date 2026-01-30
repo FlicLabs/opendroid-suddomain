@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDRS Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        background-image: 
+            radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(15, 23, 42, 1) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    /* Header */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: #fff;
+    }
+
+    .logo span {
+        color: #7c3aed;
+    }
+
+    .client-name {
+        font-weight: 300;
+        color: #94a3b8;
+    }
+
+    /* Typography */
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 1.25rem;
+        margin-top: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+        margin-bottom: 20px;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        background: rgba(15, 23, 42, 0.6);
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #7c3aed;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Chart Section */
+    .chart-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .chart-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .chart-box {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.95rem;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        color: #7c3aed;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #cbd5e1;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Badges */
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .badge-high { background: rgba(124, 58, 237, 0.2); color: #a78bfa; border: 1px solid #7c3aed; }
+    .badge-med { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="client-name">Consultation for Hawaii Diagnostic Radiology Services LLC</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h1>Robotics & Automation Portfolio</h1>
+        <p>Hawaii Diagnostic Radiology Services LLC faces unique geographical and operational challenges. Our analysis identifies Telerobotic Ultrasound, Robotic Process Automation (RPA), and AI Diagnostic Triage as high-value pathways to decouple clinical expertise from geography and maximize network throughput.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Margin Uplift</div>
+            <div class="metric-value">$1.67M</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-value">+15%</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">9 Mo.</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">5-Year Net Value</div>
+            <div class="metric-value">$7.5M</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Daily Study Throughput</h2>
+            <div class="chart-box">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h2>Strategic Pathways Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Tech Focus</th>
+                    <th>Annual Benefit</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A</strong></td>
+                    <td>Telerobotic Ultrasound</td>
+                    <td>$500k - $800k</td>
+                    <td><span class="badge badge-med">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B</strong></td>
+                    <td>RPA (Admin Automaton)</td>
+                    <td>$600k - $900k</td>
+                    <td><span class="badge badge-high">Low Risk</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C</strong></td>
+                    <td>AI Diagnostic Triage</td>
+                    <td>$300k - $500k</td>
+                    <td><span class="badge badge-med">Low-Mod</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="glass-card">
+        <h2>Detailed Opportunity Analysis</h2>
+        <h3>Pathway A: Telerobotic Ultrasound</h3>
+        <p>Deploys remote robotic arm systems allowing specialists on Oahu to perform scans on patients in rural/outer-island clinics. Reduces travel costs and democratizes access to specialist care.</p>
+        
+        <h3>Pathway B: Robotic Process Automation (RPA)</h3>
+        <p>Software robots handle insurance verification, prior authorizations, and scheduling 24/7. This immediately reduces administrative overhead and denial rates.</p>
+        
+        <h3>Pathway C: AI Diagnostic Triage</h3>
+        <p>AI algorithms pre-read scans to prioritize urgent cases and automate measurements, increasing radiologist reading speed and accuracy.</p>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // 5-Year Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [0.8, 2.4, 4.1, 5.8, 7.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            }
+        }
+    });
+
+    // Throughput Comparison Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic/AI Enhanced'],
+            datasets: [{
+                label: 'Studies Per Day (Network Wide)',
+                data: [165, 210],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.3)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
