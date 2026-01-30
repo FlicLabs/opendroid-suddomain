@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurz Industrial Solutions | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        h3 {
+            color: #e2e8f0;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+            margin-top: 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Text */
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        .highlight {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>KURZ INDUSTRIAL SOLUTIONS</h1>
+            <h2>Automated Manufacturing Strategic Dossier</h2>
+        </header>
+
+        <!-- DASHBOARD -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">30%</div>
+                <div class="metric-label">Target OEE Increase</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">&lt;18m</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">$85k</div>
+                <div class="metric-label">Cobot Cell Entry</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">Y-3</div>
+                <div class="metric-label">Full Integration Target</div>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="glass-card">
+            <h3>Executive Summary</h3>
+            <p>Kurz Industrial Solutions is positioned to leverage Industry 4.0 by transitioning from reactive MRO services to a <span class="highlight">predictive, automated smart hub</span>. By integrating Cobots and AMRs, Kurz can decouple high-value technical labor from low-value material transport, creating a safer and more efficient production floor.</p>
+        </div>
+
+        <div class="charts-row">
+            <div class="glass-card">
+                <h3>Robotics Opportunity Pathways</h3>
+                <p><strong>A. Cobots:</strong> Hybrid workforce deployment for CNC machine tending and panel assembly.</p>
+                <p><strong>B. AMRs:</strong> Autonomous transport of heavy motors and rotors to reduce forklift dependency.</p>
+                <p><strong>C. Palletizing:</strong> End-of-line automation to stabilize throughput and reduce injury risks.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Financial Projection</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3>Efficiency Analysis: Manual vs. Automated</h3>
+            <p>Deploying Pathway A (Cobots) significantly enhances throughput while stabilizing consistency. The chart below illustrates the "Units Per Hour" (UPH) comparison for standard motor assembly tasks.</p>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated by Open Droids Research | Confidential for Kurz Industrial Solutions
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [45000, 150000, 320000, 580000, 950000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#cbd5e1' }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison Bar Chart
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        const outputChart = new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Standard Manual Process', 'Cobot-Assisted Cell'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [14, 28],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', // Muted blue for manual
+                        'rgba(124, 58, 237, 0.8)'   // Electric purple for robot
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
