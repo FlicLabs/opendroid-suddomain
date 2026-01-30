@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaspar Companies | Strategic Automation Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+        }
+
+        .accent-text {
+            background: -webkit-linear-gradient(45deg, #7c3aed, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-value {
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+    <!-- Header -->
+    <header class="mb-12 text-center max-w-4xl mx-auto">
+        <div class="inline-block px-4 py-1 mb-4 border border-purple-500/30 rounded-full bg-purple-900/20 text-xs font-semibold tracking-widest text-purple-300">
+            OPEN DROIDS INTELLIGENCE
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
+            Kaspar Companies <br />
+            <span class="accent-text">Strategic Automation Profile</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+            Deep-dive analysis into Industry 4.0 adoption, robotics integration, and financial forecasting for the Shiner, TX manufacturing conglomerate.
+        </p>
+    </header>
+
+    <!-- Executive Metrics Dashboard -->
+    <section class="max-w-6xl mx-auto mb-16">
+        <h2 class="text-xl font-bold mb-6 text-slate-300 border-l-4 border-purple-600 pl-4">PROJECTED IMPACT DASHBOARD</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center h-48">
+                <p class="text-sm text-slate-400 uppercase tracking-wider mb-2">Target OEE Increase</p>
+                <div class="text-5xl font-bold text-white metric-value">30%</div>
+                <p class="text-xs text-purple-400 mt-2">Overall Equipment Effectiveness</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center h-48">
+                <p class="text-sm text-slate-400 uppercase tracking-wider mb-2">ROI Timeline</p>
+                <div class="text-5xl font-bold text-white metric-value">16 <span class="text-2xl">mo</span></div>
+                <p class="text-xs text-purple-400 mt-2">Average Payback Period</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center h-48">
+                <p class="text-sm text-slate-400 uppercase tracking-wider mb-2">Cell CAPEX</p>
+                <div class="text-5xl font-bold text-white metric-value">$80k</div>
+                <p class="text-xs text-purple-400 mt-2">Avg. Cost Per Pilot Cell</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center h-48">
+                <p class="text-sm text-slate-400 uppercase tracking-wider mb-2">Safety</p>
+                <div class="text-5xl font-bold text-white metric-value">ISO</div>
+                <p class="text-xs text-purple-400 mt-2">TS 15066 Collaborative Stds</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="max-w-6xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Chart 1 Container -->
+        <div class="glass-panel rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4 text-purple-300">5-Year Cumulative Savings Projection</h3>
+            <div class="relative h-64 w-full">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <p class="text-xs text-slate-500 mt-4 text-center">Calculated based on labor reallocation and scrap reduction across 3 facilities.</p>
+        </div>
+
+        <!-- Chart 2 Container -->
+        <div class="glass-panel rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4 text-purple-300">Throughput Analysis: Manual vs. Cobot</h3>
+            <div class="relative h-64 w-full">
+                <canvas id="outputChart"></canvas>
+            </div>
+            <p class="text-xs text-slate-500 mt-4 text-center">Comparison based on standard Ranch Hand bumper welding cycle.</p>
+        </div>
+
+    </section>
+
+    <!-- Strategic Pathways -->
+    <section class="max-w-6xl mx-auto mb-16">
+        <h2 class="text-xl font-bold mb-6 text-slate-300 border-l-4 border-purple-600 pl-4">ROBOTICS OPPORTUNITY PATHWAYS</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Pathway A -->
+            <div class="glass-panel p-6 rounded-xl hover:bg-white/5 transition duration-300">
+                <div class="h-10 w-10 rounded-lg bg-purple-600 flex items-center justify-center mb-4 text-xl font-bold">A</div>
+                <h3 class="text-xl font-bold text-white mb-2">Cobot Welding</h3>
+                <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                    Deployment of IP66 heavy-duty Cobots for Ranch Hand bumper assemblies. Focus on arc-on time maximization and relieving welders from repetitive joint work.
+                </p>
+                <ul class="text-xs text-purple-300 space-y-2">
+                    <li>• Precision seam tracking</li>
+                    <li>• Reduced thermal distortion</li>
+                    <li>• Addresses labor shortage</li>
+                </ul>
+            </div>
+
+            <!-- Pathway B -->
+            <div class="glass-panel p-6 rounded-xl hover:bg-white/5 transition duration-300">
+                <div class="h-10 w-10 rounded-lg bg-blue-600 flex items-center justify-center mb-4 text-xl font-bold">B</div>
+                <h3 class="text-xl font-bold text-white mb-2">AMR Logistics</h3>
+                <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                    Heavy-payload Autonomous Mobile Robots to transport steel plate from laser cutting to bending and coating lines.
+                </p>
+                <ul class="text-xs text-blue-300 space-y-2">
+                    <li>• 1,000kg Payload Capacity</li>
+                    <li>• LiDAR Navigation (No tape)</li>
+                    <li>• Forklift traffic reduction</li>
+                </ul>
+            </div>
+
+            <!-- Pathway C -->
+            <div class="glass-panel p-6 rounded-xl hover:bg-white/5 transition duration-300">
+                <div class="h-10 w-10 rounded-lg bg-indigo-600 flex items-center justify-center mb-4 text-xl font-bold">C</div>
+                <h3 class="text-xl font-bold text-white mb-2">EOL Automation</h3>
+                <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                    Vision-guided palletizing for Kaspar Wire Works baskets and automated crating for accessories to clear shipping bottlenecks.
+                </p>
+                <ul class="text-xs text-indigo-300 space-y-2">
+                    <li>• Integrated Quality Vision</li>
+                    <li>• Standardized Stacking</li>
+                    <li>• ERP Inventory Sync</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Footer -->
+    <footer class="max-w-6xl mx-auto glass-panel rounded-2xl p-8 text-center">
+        <h3 class="text-2xl font-bold text-white mb-6">Implementation Roadmap</h3>
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm">
+            <div class="flex-1 px-4 border-r border-slate-700/50 last:border-0">
+                <div class="text-purple-400 font-bold mb-1">YEAR 1</div>
+                <div class="text-slate-300">Pilot Deployment & Safety Audits</div>
+            </div>
+            <div class="flex-1 px-4 border-r border-slate-700/50 last:border-0">
+                <div class="text-purple-400 font-bold mb-1">YEAR 2-3</div>
+                <div class="text-slate-300">Fleet Expansion & ERP Integration</div>
+            </div>
+            <div class="flex-1 px-4 border-r border-slate-700/50 last:border-0">
+                <div class="text-purple-400 font-bold mb-1">YEAR 4-5</div>
+                <div class="text-slate-300">AI Optimization & Full Autonomy</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart JS Configuration -->
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ USD)',
+                    data: [120000, 350000, 780000, 1400000, 2200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Welding', 'Cobot Assisted'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [12, 19],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', 
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
