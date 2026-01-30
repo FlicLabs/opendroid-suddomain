@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cascade Health Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        font-family: 'Inter', sans-serif;
+        color: #ffffff;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #7c3aed;
+        letter-spacing: 1px;
+    }
+
+    .title h1 {
+        margin: 0;
+        font-size: 32px;
+        background: linear-gradient(to right, #ffffff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .title p {
+        margin: 5px 0 0;
+        color: #94a3b8;
+        font-size: 14px;
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        color: #7c3aed;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Metric Dashboard */
+    .metric-box {
+        text-align: center;
+        padding: 20px;
+        background: rgba(124, 58, 237, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 5px;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    /* HTML Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: #e2e8f0;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+        color: #7c3aed;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .section-text {
+        color: #cbd5e1;
+        line-height: 1.6;
+        font-size: 15px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="title">
+            <h1>Cascade Health</h1>
+            <p>Robotics Opportunities Portfolio & Financial Analysis</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <div class="card-title">Executive Strategy</div>
+        <p class="section-text">
+            Cascade Health is positioned to transform its operational efficiency through a dual-pronged robotics strategy. 
+            By implementing AI-driven logistics for home health and autonomous supply chain robots for occupational health facilities, 
+            the organization can unlock significant margin expansion while addressing critical staffing shortages in the Pacific Northwest region.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3" style="margin-bottom: 30px;">
+        <div class="metric-box">
+            <div class="metric-value">£3.3M</div>
+            <div class="metric-label">Annual Net Benefit</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-value">6-9mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-value">+33%</div>
+            <div class="metric-label">Throughput Uplift</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">5-Year Cumulative Savings Projection</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Daily Patient Visits (Per Team)</div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <div class="card-title">Strategic Pathways Comparison</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Est. Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A</strong></td>
+                    <td>Mobile Logistics & Telepresence</td>
+                    <td>£3,300,000</td>
+                    <td>Low-Moderate</td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B</strong></td>
+                    <td>Intralogistics (AMRs)</td>
+                    <td>£400,000</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C</strong></td>
+                    <td>Rehab Robotics</td>
+                    <td>£200,000 (Indirect)</td>
+                    <td>Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [1.2, 3.5, 6.8, 10.5, 14.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic Optimization'],
+            datasets: [{
+                label: 'Visits Per Day (Avg)',
+                data: [4.5, 6.0],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
