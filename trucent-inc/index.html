@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trucent Inc. | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--accent-purple);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Layout */
+        .content-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-purple);
+            color: var(--text-secondary);
+        }
+
+        .highlight {
+            color: var(--success);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="subtitle">Open Droids Research Unit</div>
+        <h1>Trucent Inc. Strategic Analysis</h1>
+        <p style="color: var(--text-secondary); margin-top: 10px;">Industrial Automation & Smart Manufacturing Assessment</p>
+    </header>
+
+    <!-- Executive Metrics Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">18 Mo</span>
+            <span class="metric-label">Target Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">Projected OEE Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$335k</span>
+            <span class="metric-label">Pilot Phase Max CapEx</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">High-Mix</span>
+            <span class="metric-label">Production Classification</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="content-split">
+        <div class="card">
+            <h2>Executive Vision</h2>
+            <p style="color: var(--text-secondary);">
+                Trucent is positioned to transition from a manual-heavy assembly model to a <strong>Flexible Hybrid Manufacturing</strong> ecosystem. By integrating Cobots into equipment fabrication and AMRs into fluid logistics, Trucent can reduce lead times and enhance safety. The vision is a semi-autonomous factory floor that supports high-precision filtration equipment builds.
+            </p>
+        </div>
+        <div class="card">
+            <h2>Organizational Profile</h2>
+            <ul>
+                <li><strong>Core Focus:</strong> Fluid separation, purification chemistry, and centrifuge manufacturing.</li>
+                <li><strong>Model:</strong> Hybrid (Discrete Equipment Build + Process Chemistry).</li>
+                <li><strong>Key Opportunity:</strong> Reducing WIP bottlenecks in centrifuge stack assembly and chemical drum transport.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="content-split">
+        <div class="card">
+            <h3>Cumulative Cost Savings (5-Year Projection)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Analysis: Manual vs. Cobot</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="content-split">
+            <div>
+                <h3>Pathway A: Cobots</h3>
+                <p style="color: var(--text-secondary);">Focus on <strong>Machine Tending & Assembly</strong>. Utilizing collaborative robots for torqueing centrifuge stacks and dispensing sealants. Ensures 100% consistency and reduces repetitive strain.</p>
+            </div>
+            <div>
+                <h3>Pathway B: AMRs</h3>
+                <p style="color: var(--text-secondary);">Focus on <strong>Intralogistics</strong>. Autonomous Mobile Robots for moving heavy chemical drums and sub-assemblies. Reclaims 15% of skilled labor time currently lost to transport.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 1</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Pilot Phase: 2 Cobots</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 2</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Logistics: AMR Integration</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 3</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Expansion: Palletizing</span>
+            </div>
+            <div style="flex: 1; min-width: 150px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--accent-purple);">Year 5</strong><br>
+                <span style="font-size: 0.9rem; color: var(--text-secondary);">Full Autonomy / Dark Shift</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [120000, 350000, 780000, 1400000, 2200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Assembly (Units/Hr)', 'Packaging (Drums/Hr)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 45],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [18, 70],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
