@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibble Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-glow);
+            font-size: 1.25rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        p, li {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-purple);
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--accent-purple);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #d8b4fe;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Intelligence</div>
+            <h1>Dibble Strategic Research</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Status: <span style="color: #4ade80;">COMPLETE</span></div>
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Ref: DIB-2024-AUTO</div>
+        </div>
+    </header>
+
+    <!-- Production Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">TARGET OEE INCREASE</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">16 mo</span>
+            <span class="metric-label">ROI PAYBACK PERIOD</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$120k</span>
+            <span class="metric-label">MAX CAPEX / CELL</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">24/7</span>
+            <span class="metric-label">OPERATIONAL CAPACITY</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Executive Summary -->
+        <div class="glass-card full-width">
+            <span class="badge">VISION</span>
+            <h2>Executive Summary</h2>
+            <p>
+                To maintain competitive advantage, Dibble must transition from static batch processing to an agile, data-driven manufacturing ecosystem. By integrating Industry 4.0 technologies, specifically Collaborative Robots (Cobots) and Autonomous Mobile Robots (AMRs), Dibble will unlock 24/7 production capability. This strategy moves the organization from reactive maintenance to predictive optimization, significantly reducing WIP latency and increasing overall yield.
+            </p>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <span class="badge">STRATEGY</span>
+            <h2>Robotics Pathways</h2>
+            <h3>Pathway A: Cobots</h3>
+            <p>Integration of ISO/TS 15066 compliant Cobots for machine tending. Focus on safety and precision to stabilize cycle times.</p>
+            <h3>Pathway B: AMRs</h3>
+            <p>Deployment of Autonomous Mobile Robots for material transport, eliminating manual forklift dependency.</p>
+            <h3>Pathway C: Palletizing</h3>
+            <p>Automated end-of-line systems with vision inspection to maximize throughput and ensure 100% quality compliance.</p>
+        </div>
+
+        <!-- Financial Model -->
+        <div class="glass-card">
+            <span class="badge">FINANCE</span>
+            <h2>Financial Analysis</h2>
+            <ul>
+                <li><strong>CAPEX:</strong> $60k - $120k per fully integrated robotic cell.</li>
+                <li><strong>OPEX Savings:</strong> 15% reduction in annual overtime costs.</li>
+                <li><strong>OEE Impact:</strong> Target increase of 20-30% via downtime reduction.</li>
+                <li><strong>Breakeven:</strong> Projected at 14-16 months based on labor reallocation and scrap reduction.</li>
+            </ul>
+        </div>
+
+        <!-- Chart 1: Savings -->
+        <div class="glass-card">
+            <h2>Cumulative Cost Savings (5 Years)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Output -->
+        <div class="glass-card">
+            <h2>Hourly Output: Manual vs. Cobot</h2>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Roadmap -->
+        <div class="glass-card full-width">
+            <span class="badge">TIMELINE</span>
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #a78bfa;">Year 1</strong><br><span style="font-size: 0.85rem; color: #cbd5e1;">Pilot & Cobot Tending</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #a78bfa;">Year 2</strong><br><span style="font-size: 0.85rem; color: #cbd5e1;">AMR Logistics</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #a78bfa;">Year 3</strong><br><span style="font-size: 0.85rem; color: #cbd5e1;">Auto-Palletizing</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #a78bfa;">Year 4</strong><br><span style="font-size: 0.85rem; color: #cbd5e1;">AI Data Convergence</span>
+                </div>
+                <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #a78bfa;">Year 5</strong><br><span style="font-size: 0.85rem; color: #cbd5e1;">Lights-Out Ops</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global defaults for dark mode charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 150000, 320000, 550000, 850000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['CNC Tending', 'Assembly', 'Packaging'],
+            datasets: [
+                {
+                    label: 'Manual (UPH)',
+                    data: [45, 120, 200],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot-Assisted (UPH)',
+                    data: [85, 190, 350],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
