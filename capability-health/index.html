@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capability Health | Robotics Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        /* Typography */
+        h1 { font-weight: 800; font-size: 2.5rem; margin: 0; letter-spacing: -1px; }
+        h2 { font-weight: 600; color: #7c3aed; margin-bottom: 15px; font-size: 1.5rem; }
+        h3 { font-weight: 400; color: #94a3b8; margin-top: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        p { line-height: 1.6; color: #cbd5e1; }
+        
+        .accent-text { color: #7c3aed; font-weight: bold; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: #fff; letter-spacing: -1px; }
+        .logo span { color: #7c3aed; }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        .metric-label { font-size: 0.9rem; color: #94a3b8; }
+
+        /* Charts Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #cbd5e1;
+            margin-top: 10px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #7c3aed;
+            color: #fff;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .badge-high {
+            background: rgba(124, 58, 237, 0.2);
+            color: #a78bfa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .section-gap { margin-bottom: 60px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="glass-header">
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="font-size: 0.9rem; color: #94a3b8;">Consultation Report: Capability Health</div>
+    </div>
+
+    <div class="container">
+        
+        <!-- Header Section -->
+        <div class="section-gap">
+            <h1>Healthcare Robotics <br><span style="color: #7c3aed">Opportunities Portfolio</span></h1>
+            <p style="max-width: 700px; margin-top: 20px; font-size: 1.1rem;">
+                Strategic analysis for Capability Health focusing on Hospice logistics, staff retention via assistive robotics, and clinic workflow automation.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h3>Financial Impact Dashboard (Year 1)</h3>
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <div class="metric-label">Net Annual Benefit</div>
+                <div class="metric-value">£2.55M</div>
+                <div style="color: #4ade80; font-size: 0.9rem;">▲ Driven by Logistics AI</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label">Capacity Uplift</div>
+                <div class="metric-value">+30%</div>
+                <div style="color: #4ade80; font-size: 0.9rem;">▲ 19,500 Additional Visits</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label">Est. ROI Payback</div>
+                <div class="metric-value">5 Mo.</div>
+                <div style="color: #a78bfa; font-size: 0.9rem;">Rapid Value Realization</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="dashboard-grid section-gap">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Net Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Daily Throughput (Visits/Team)</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways Table -->
+        <div class="glass-card section-gap">
+            <h2>Strategic Pathways Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Value Driver</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A. Hospice Logistics AI</strong></td>
+                        <td>Field Operations</td>
+                        <td>Utilization & Efficiency</td>
+                        <td><span class="badge-high">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>B. Assistive Robotics</strong></td>
+                        <td>Nurse/Aide Safety</td>
+                        <td>Retention & Injury Reduction</td>
+                        <td><span class="badge-high">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>C. Clinic Automation</strong></td>
+                        <td>FQHC Facilities</td>
+                        <td>Patient Flow & Data</td>
+                        <td><span style="color: #94a3b8; font-size: 0.8rem;">MODERATE</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="dashboard-grid section-gap">
+            <div class="glass-card">
+                <h3>Phase 1: Optimization</h3>
+                <p><strong>Months 1-6</strong></p>
+                <p>Deploy AI routing for all hospice field staff. Pilot 5 telepresence robots for remote physician consults.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Phase 2: Protection</h3>
+                <p><strong>Months 7-12</strong></p>
+                <p>Equip field teams with active exoskeletons for patient lifting. Target: 40% reduction in back injuries.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Phase 3: Automation</h3>
+                <p><strong>Year 2+</strong></p>
+                <p>Deploy service droids in clinic lobbies for intake. Full integration of fleet telematics.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (£ Millions)',
+                    data: [2.5, 5.8, 9.5, 13.8, 18.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Operations', 'Robotic/AI Assisted'],
+                datasets: [{
+                    label: 'Visits Per Team / Day',
+                    data: [5.0, 7.0],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
