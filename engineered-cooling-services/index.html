@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECS Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0f172a; /* Deep Space Blue */
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+        }
+
+        /* Typography & Accents */
+        h1, h2, h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(0deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            border-left: 4px solid #7c3aed; /* Electric Purple */
+            padding-left: 15px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(124, 58, 237, 0.1) 100%);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        /* Chart Containers */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Steps */
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .step-year {
+            background: #7c3aed;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center; margin-bottom: 50px;">
+        <p style="color: #7c3aed; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; margin-bottom: 5px;">Open Droids Intelligence</p>
+        <h1>Engineered Cooling Services</h1>
+        <p style="font-size: 1.1rem; color: #94a3b8;">Strategic Automation & Robotics Feasibility Study</p>
+    </div>
+
+    <!-- Production Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value">16 Mo</div>
+            <div class="metric-label">Target Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Projected OEE Increase</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Visual QA Yield</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">$90k</div>
+            <div class="metric-label">Avg. Cell CAPEX</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            Engineered Cooling Services is positioned to transform its fabrication and retrofit capabilities through Industry 4.0 adoption. 
+            By shifting from a pure manual job-shop model to a flexible, tech-enabled ecosystem, ECS can significantly reduce lead times 
+            on custom skids and cooling tower modules. The strategy prioritizes high-mix/low-volume flexibility, utilizing collaborative 
+            robotics to support skilled labor rather than replace it.
+        </p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>Cumulative Cost Savings (5 Years)</h3>
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Output Efficiency: Manual vs Cobot</h3>
+            <div class="chart-box">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-left: 2px solid #7c3aed;">
+                <strong style="color: #fff; font-size: 1.1rem;">Pathway A: Cobot Welding</strong>
+                <p style="font-size: 0.9rem;">Deployment of IP67-rated collaborative robots for repetitive pipe spool welding and panel screw-driving, reducing welder fatigue.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-left: 2px solid #7c3aed;">
+                <strong style="color: #fff; font-size: 1.1rem;">Pathway B: Heavy AMRs</strong>
+                <p style="font-size: 0.9rem;">Autonomous Mobile Robots (500kg+) for transporting compressors and valves, eliminating forklift risks in tight fabrication aisles.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border-left: 2px solid #7c3aed;">
+                <strong style="color: #fff; font-size: 1.1rem;">Pathway C: Auto QA & Kitting</strong>
+                <p style="font-size: 0.9rem;">Vision-based inspection cells to verify retrofit kit contents before shipment, ensuring zero missing parts at field sites.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <span class="step-year">YEAR 1</span>
+            <span><strong>Pilot Program:</strong> Deploy first welding cobot at Florida Hub; IoT sensor integration.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="step-year">YEAR 2</span>
+            <span><strong>Integration:</strong> Introduce AMRs for material handling; Connect cobots to ERP.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="step-year">YEAR 3</span>
+            <span><strong>Digital Twin:</strong> Simulation of fabrication floor; Vision-based QA rollout.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="step-year">YEAR 4</span>
+            <span><strong>Expansion:</strong> Full AMR fleet across all hubs; Predictive maintenance algorithms.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="step-year" style="background: #fff; color: #7c3aed;">YEAR 5</span>
+            <span><strong>Smart Ecosystem:</strong> Fully connected fabrication environment; 35% lead time reduction.</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 150000, 320000, 580000, 950000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pipe Spooling', 'Panel Assembly', 'Kit Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual (Units/Hr)',
+                    data: [4, 2, 8],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255,255,255,0.2)'
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [7, 5, 14],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
