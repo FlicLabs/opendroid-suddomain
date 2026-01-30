@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCMC Robotics Research Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .report-title span {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            margin-right: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-sub {
+            font-size: 0.875rem;
+            color: var(--success);
+            margin-top: 0.5rem;
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-high { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .tag-med { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .tag-low { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Healthcare Robotics Opportunities</h1>
+            <span>Morehouse Community Medical Centers Inc.</span>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01 / Executive Summary</h2>
+        <h3>Operational Efficiency in Community Care</h3>
+        <p>
+            Morehouse Community Medical Centers Inc. (MCMC) stands to gain significant value through the adoption of "Software Robotics" (RPA), automated pharmacy dispensing, and telepresence solutions. 
+            Unlike tertiary care requiring heavy surgical robotics, MCMC's opportunity lies in reducing administrative overhead and extending specialist reach into rural Louisiana. 
+            The strategic implementation of these technologies can unlock over $2M in cumulative value over 5 years by optimizing workforce utilization and increasing patient throughput.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>02 / Financial Projection: Pathway A (RPA)</h2>
+        
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-label">Annual Net Benefit</span>
+                <div class="metric-value">$500k</div>
+                <div class="metric-sub">Savings + Revenue</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Admin Cost / Visit</span>
+                <div class="metric-value">-28%</div>
+                <div class="metric-sub">$25 &rarr; $18</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Addtl. Visits/Year</span>
+                <div class="metric-value">+5,000</div>
+                <div class="metric-sub">Capacity Gain</div>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Payback Period</span>
+                <div class="metric-value">0.7 Yrs</div>
+                <div class="metric-sub">< 9 Months</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative View -->
+    <div class="glass-card">
+        <h2>03 / Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Main Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>A: Admin RPA</strong></td>
+                    <td>Network-wide</td>
+                    <td>Overhead Reduction</td>
+                    <td>$400k - $500k</td>
+                    <td><span class="tag tag-low">Low</span></td>
+                </tr>
+                <tr>
+                    <td><strong>B: Pharmacy Auto</strong></td>
+                    <td>High-Volume Clinics</td>
+                    <td>Safety & Speed</td>
+                    <td>$150k</td>
+                    <td><span class="tag tag-med">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td><strong>C: Telepresence</strong></td>
+                    <td>Rural Satellites</td>
+                    <td>Specialist Access</td>
+                    <td>$100k</td>
+                    <td><span class="tag tag-med">Moderate</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation -->
+    <div class="glass-card">
+        <h2>04 / Strategic Roadmap</h2>
+        <ul>
+            <li>
+                <strong>Year 1: Pathway A (RPA Pilot)</strong> — Launch automated insurance verification and AI scheduling to reduce no-shows by 20%.
+            </li>
+            <li>
+                <strong>Year 2: Pathway B (Pharmacy)</strong> — Install robotic dispensing units in Bastrop facility to streamline workflow.
+            </li>
+            <li>
+                <strong>Year 3-5: Pathway C (Tele-Robotics)</strong> — Deploy telepresence units to remote clinics for chronic disease management.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($)',
+                data: [350000, 800000, 1350000, 1900000, 2500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: '5-Year Cumulative Savings', color: '#fff' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Admin', 'Robotic Assist'],
+            datasets: [{
+                label: 'Visits Per Year Capacity',
+                data: [45000, 50000],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#10b981'],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Patient Throughput Capacity', color: '#fff' }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
