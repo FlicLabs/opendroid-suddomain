@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APA HVAC Technologies | Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .year-badge {
+            background-color: var(--accent-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 2px solid var(--accent-purple);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 60px;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="sub-header">Open Droids Consultation Division</div>
+            <h1>APA HVAC Technologies</h1>
+            <p style="color: var(--accent-purple); font-weight: 600;">Industrial Automation & Smart Manufacturing Strategy</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>APA HVAC Technologies is positioned to lead the sector by transitioning from static, manual-heavy production to a flexible, data-driven Smart Factory. By integrating collaborative robotics and AMRs, APA will address labor shortages and increase OEE, ensuring high-mix production agility for custom air handling solutions.</p>
+        </section>
+
+        <!-- Production Dashboard -->
+        <section>
+            <h2>Projected Financial Impact (Post-Implementation)</h2>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Target OEE Increase</div>
+                    <div class="metric-value">22%</div>
+                    <div class="metric-label">Efficiency Gain</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">ROI Timeline</div>
+                    <div class="metric-value">&lt; 16</div>
+                    <div class="metric-label">Months</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Scrap Reduction</div>
+                    <div class="metric-value">15%</div>
+                    <div class="metric-label">Material Savings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Labor Value</div>
+                    <div class="metric-value">$60k</div>
+                    <div class="metric-label">Saved Per Shift/Year</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts -->
+        <section class="glass-card">
+            <h2>Financial & Production Visualization</h2>
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pathways -->
+        <section class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-card">
+                    <h3 style="color: #fff;">Pathway A: Cobots</h3>
+                    <p><strong>Machine Tending & Assembly.</strong> High-payload cobots for press brake loading and torque-controlled screwdriving on AHU casings.</p>
+                </div>
+                <div class="pathway-card">
+                    <h3 style="color: #fff;">Pathway B: AMRs</h3>
+                    <p><strong>Material Transport.</strong> Autonomous Mobile Robots for moving sheet metal kits and sub-assemblies, reducing forklift reliance.</p>
+                </div>
+                <div class="pathway-card">
+                    <h3 style="color: #fff;">Pathway C: End-of-Line</h3>
+                    <p><strong>Palletizing & QC.</strong> Automated stacking of motors and compressors with integrated vision systems for label verification.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section class="glass-card">
+            <h2>Implementation Roadmap (5-Year Outlook)</h2>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 1</div>
+                <div><strong>Pilot Phase:</strong> Deploy 2 machine-tending Cobot cells and establish vision system protocols.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 2</div>
+                <div><strong>Logistics Integration:</strong> Roll out AMR fleet for internal logistics and ERP integration.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 3</div>
+                <div><strong>Expansion:</strong> Scale screwdriving automation and automated palletizing for spare parts.</div>
+            </div>
+            <div class="roadmap-item">
+                <div class="year-badge">Year 5</div>
+                <div><strong>Smart Factory:</strong> Full Digital Twin simulation and AI-driven predictive maintenance.</div>
+            </div>
+        </section>
+
+        <div class="footer">
+            &copy; 2023 Open Droids Research. Confidential Report for APA HVAC Technologies.
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Cumulative Production Cost Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ USD)',
+                    data: [85000, 240000, 480000, 850000, 1400000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } },
+                    title: { display: true, text: '5-Year Cumulative Savings Projection', color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Cobot Output
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Sheet Bending', 'Riveting', 'Coil Handling', 'Palletizing'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Units/Hr)',
+                        data: [45, 120, 15, 20],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cobot Assisted (Units/Hr)',
+                        data: [75, 190, 28, 35],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0,
+                        borderRadius: 4,
+                        boxShadow: '0 0 10px #7c3aed'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#fff' } },
+                    title: { display: true, text: 'Throughput Comparison: Manual vs. Automated', color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
