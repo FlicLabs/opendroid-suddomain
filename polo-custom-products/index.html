@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Polo Custom Products Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-trend {
+            font-size: 0.8rem;
+            color: var(--success);
+            margin-top: 5px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+        }
+        
+        td, th {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header style="margin-bottom: 40px;">
+            <div style="font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-purple); font-weight: 700; margin-bottom: 10px;">OPEN DROIDS INTELLIGENCE</div>
+            <h1>Polo Custom Products</h1>
+            <p style="font-size: 1.2rem; max-width: 600px;">Strategic Roadmap for Industrial Automation & Smart Manufacturing Integration.</p>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Target OEE Uplift</div>
+                <div class="metric-trend">▲ Operational Efficiency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">16m</div>
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-trend">▼ ROI Velocity</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$120k</div>
+                <div class="metric-label">Est. CAPEX / Cell</div>
+                <div class="metric-trend">● Initial Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">2k</div>
+                <div class="metric-label">Hours Saved / Yr</div>
+                <div class="metric-trend">▲ Labor Reallocation</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>Polo Custom Products is positioned to transition from a high-mix manual job shop to a <strong>Flexible Hybrid Smart Factory</strong>. By integrating collaborative robotics into RF welding and thermoforming, and utilizing AMRs for material transport, the organization can mitigate labor shortages while ensuring the zero-defect quality required by medical and defense clients.</p>
+        </div>
+
+        <!-- Charts -->
+        <div class="chart-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3>Output: Manual vs. Cobot (Units/Hr)</h3>
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-card">
+                    <h3>Pathway A: Cobots</h3>
+                    <p><strong>Target:</strong> RF Welding & Thermoforming.</p>
+                    <p>Machine tending automation to remove operators from hazardous pinch points and ensure consistent cycle times.</p>
+                </div>
+                <div class="pathway-card">
+                    <h3>Pathway B: AMRs</h3>
+                    <p><strong>Target:</strong> Material Transport.</p>
+                    <p>Autonomous Mobile Robots to move fabric rolls and WIP between cutting, sewing, and sealing stations.</p>
+                </div>
+                <div class="pathway-card">
+                    <h3>Pathway C: QC Vision</h3>
+                    <p><strong>Target:</strong> End-of-Line.</p>
+                    <p>Automated visual inspection and palletizing to ensure 100% yield compliance for medical/defense contracts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial & Roadmap -->
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Timeline</th>
+                        <th>Key Milestone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: #fff;">Phase 1: Pilot</td>
+                        <td>Year 1</td>
+                        <td>Deploy 1 Cobot Cell (RF Sealing) + 1 AMR. Safety Certification.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #fff;">Phase 2: Expansion</td>
+                        <td>Year 2</td>
+                        <td>Scale to 3 stations. ERP Integration for auto-replenishment.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #fff;">Phase 3: Optimization</td>
+                        <td>Year 3</td>
+                        <td>Deploy Vision QC. Predictive Maintenance analytics.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #fff;">Phase 4: Autonomy</td>
+                        <td>Years 4-5</td>
+                        <td>Full scale connectivity and AI-driven production scheduling.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Chart Scripts -->
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [20000, 150000, 380000, 720000, 1200000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Standard Shift', 'Overtime', 'Complex Assembly'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [45, 40, 25],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cobot Assisted',
+                        data: [62, 62, 45],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Units Per Hour' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
