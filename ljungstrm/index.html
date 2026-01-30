@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ljungström Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .brand {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="header-section">
+        <div>
+            <div class="brand">OPEN DROIDS RESEARCH</div>
+            <h1>Ljungström Automation Strategy</h1>
+            <p style="margin:0;">Strategic Assessment: Industry 4.0 & Robotics Integration</p>
+        </div>
+        <div style="text-align: right;">
+            <p><strong>Date:</strong> October 2023</p>
+            <span class="tag">CONFIDENTIAL</span>
+            <span class="tag">INTERNAL REVIEW</span>
+        </div>
+    </div>
+
+    <!-- Metrics Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">22%</div>
+            <div class="metric-label">Projected OEE Uplift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">14.2</div>
+            <div class="metric-label">Months Payback</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$360k</div>
+            <div class="metric-label">Pilot CAPEX Est.</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">0</div>
+            <div class="metric-label">Safety Incidents (Target)</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Executive Summary</h2>
+        <p>Ljungström is positioned to transition from heavy legacy fabrication to a smart manufacturing ecosystem. This report outlines the deployment of flexible automation to address high-mix production of air preheaters and gas-gas heaters. By integrating Cobots for welding and AMRs for transport, the company can secure a competitive advantage in the decarbonization market.</p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-row">
+        <div class="glass-card">
+            <h3>Cumulative Cost Savings (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Output Velocity: Manual vs. Cobot</h3>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div>
+                <h3 style="color: #fff;">Pathway A: Cobots</h3>
+                <p><strong>Application:</strong> Machine Tending & Root Pass Welding.</p>
+                <p>Focuses on relieving skilled welders from repetitive tasks on structural ducts and sealing systems.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway B: AMRs</h3>
+                <p><strong>Application:</strong> Material Transport.</p>
+                <p>Heavy-duty AMRs (1000kg payload) to move heating element baskets between forming lines and enamel coating stations.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway C: Quality</h3>
+                <p><strong>Application:</strong> EOL Inspection.</p>
+                <p>Automated vision systems to inspect enamel thickness and pinholes on heating elements to prevent corrosion failures.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation -->
+    <div class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-left: 3px solid var(--accent-color); padding-left: 15px;">
+                <strong style="color: white;">Year 1: Pilot & Validation</strong><br>
+                Deploy Vision Inspection and 2 Welding Cobots at Center of Excellence (Wellsville or Germany).
+            </li>
+            <li style="margin-bottom: 15px; border-left: 3px solid rgba(124, 58, 237, 0.5); padding-left: 15px;">
+                <strong style="color: white;">Year 2: Scale</strong><br>
+                Expand weld cells to Asian facilities and introduce AMRs for line-side replenishment.
+            </li>
+            <li style="margin-bottom: 15px; border-left: 3px solid rgba(124, 58, 237, 0.2); padding-left: 15px;">
+                <strong style="color: white;">Year 3-5: Optimization</strong><br>
+                Full digital twin integration and AI-driven process parameter adjustments.
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ USD)',
+                data: [250000, 650000, 1200000, 1950000, 2900000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value/1000 + 'k'; } }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Basket Forming', 'Enamel Coating', 'Weld Inches/Hr'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 60, 200],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [78, 95, 380],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
