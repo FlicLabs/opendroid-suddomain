@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randolph Sunglasses Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 0;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            color: white;
+            font-weight: 600;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roadmap-item {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="margin-bottom: 3rem; text-align: center;">
+        <div style="font-size: 0.9rem; color: var(--accent-blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">Open Droids Intelligence</div>
+        <h1>Randolph Sunglasses</h1>
+        <p style="font-size: 1.1rem;">Strategic Automation & Industry 4.0 Research Report</p>
+    </header>
+
+    <!-- Dashboard Row -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">25%</span>
+            <span class="metric-label">Target OEE Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">14mo</span>
+            <span class="metric-label">Projected ROI</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$85k</span>
+            <span class="metric-label">Pilot CapEx</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">15%</span>
+            <span class="metric-label">Scrap Reduction</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Main Research Column -->
+        <div class="main-column">
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p>Randolph Sunglasses represents a hallmark of American manufacturing. The strategic vision must balance heritage craftsmanship with smart manufacturing efficiency. By integrating flexible automation, Randolph can alleviate bottlenecks in the 200-step production process while preserving the "Made in USA" artisan value.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Robotics Opportunity Pathways</h2>
+                
+                <h3 style="color: var(--accent-blue);">Pathway A: Collaborative Assembly</h3>
+                <span class="tag">Cobots</span><span class="tag">Machine Tending</span>
+                <p>Focus on soldering and screw insertion. Deploy UR-series cobots to handle frame holding and CNC tending, reducing operator fatigue and increasing precision.</p>
+
+                <h3 style="color: var(--accent-blue);">Pathway B: Intra-Logistics</h3>
+                <span class="tag">AMR</span><span class="tag">Material Flow</span>
+                <p>Utilize Autonomous Mobile Robots (MiR250) to transport WIP trays between plating and assembly, eliminating non-value-added walking time.</p>
+
+                <h3 style="color: var(--accent-blue);">Pathway C: Automated Inspection</h3>
+                <span class="tag">Computer Vision</span><span class="tag">Quality Control</span>
+                <p>Implement high-resolution vision systems for lens scratch detection and frame symmetry checks prior to packaging.</p>
+            </div>
+        </div>
+
+        <!-- Sidebar / Financials -->
+        <div class="sidebar">
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                <div class="roadmap-item">
+                    <h3>Year 1: Pilot</h3>
+                    <p>Deploy single Cobot for soldering. Collect cycle time data.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Year 2: Logistics</h3>
+                    <p>Deploy AMRs for shop floor transport. Integrate fleet software.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Year 3-5: Scale</h3>
+                    <p>Full IIoT integration, predictive maintenance, and AI-driven quality control.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Financial Model</h2>
+                <ul>
+                    <li><strong>Pilot CapEx:</strong> $85,000</li>
+                    <li><strong>Full Scale:</strong> $420,000</li>
+                    <li><strong>Maint. Cost:</strong> $4k/yr per unit</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts Section -->
+    <div class="glass-card">
+        <h2>Performance & Savings Projections</h2>
+        <div class="charts-container">
+            <div>
+                <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1rem;">Cumulative Savings (5 Years)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1rem;">Output: Manual vs. Cobot (Units/Hr)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 3rem; color: var(--text-muted); font-size: 0.8rem;">
+        <p>OPEN DROIDS CONSULTING | CONFIDENTIAL RESEARCH</p>
+    </footer>
+</div>
+
+<script>
+    // Global defaults for dark theme charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 160000, 320000, 580000, 950000],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Output Comparison Bar Chart
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Soldering', 'Screw Insertion', 'Packaging'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [18, 25, 40],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted',
+                    data: [32, 45, 85],
+                    backgroundColor: '#3b82f6', // Blue
+                    borderColor: '#3b82f6',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    boxShadow: '0 0 10px #3b82f6' 
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Units Per Hour' },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
