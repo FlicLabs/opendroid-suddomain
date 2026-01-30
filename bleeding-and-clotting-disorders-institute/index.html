@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCDI Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #7c3aed;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            color: #94a3b8;
+            font-weight: 500;
+            padding: 15px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .highlight {
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Bleeding & Clotting Disorders Institute</h1>
+            <p style="color: #94a3b8; margin-top: 5px;">Robotics & Automation Portfolio Analysis</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p style="line-height: 1.6; color: #cbd5e1;">
+            BCDI is uniquely positioned to leverage pharmacy and laboratory automation to mitigate the high risks associated with Factor inventory management. The proposed implementation of <span class="highlight">Automated Storage and Retrieval Systems (ASRS)</span> and <span class="highlight">RPA</span> offers an immediate path to operational excellence, ensuring financial sustainability for its high-touch care model.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <!-- Metric Table -->
+        <div class="card">
+            <h3>Financial Dashboard: Pharmacy Automation</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Baseline (Manual)</th>
+                        <th>Projected (Robotic)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inventory Shrinkage</td>
+                        <td>1.5% - 2.0%</td>
+                        <td><span class="metric-value">~0.01%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Picking Accuracy</td>
+                        <td>98.5%</td>
+                        <td><span class="metric-value">99.9%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Annual Cost Savings</td>
+                        <td>—</td>
+                        <td><span class="metric-value">$275,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td>—</td>
+                        <td><span class="metric-value">12 Months</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Throughput Chart -->
+        <div class="card">
+            <h3>Rx Picking Throughput (Scripts/Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Chart -->
+    <div class="card">
+        <h3>5-Year Cumulative Savings Projection</h3>
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // General Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($)',
+                data: [25000, 300000, 575000, 850000, 1125000], // Adjusted for Y1 CapEx
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { borderDash: [5, 5] }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput (Bar)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Pharmacist', 'Robotic ASRS'],
+            datasets: [{
+                label: 'Prescriptions Picked per Hour',
+                data: [15, 65],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { display: false }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
