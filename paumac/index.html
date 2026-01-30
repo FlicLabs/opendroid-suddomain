@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paumac Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-main);
+            margin-top: 25px;
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p>Open Droids Consultation Unit</p>
+        <h1>PAUMAC STRATEGIC RESEARCH</h1>
+        <p>Industrial Automation & Smart Manufacturing Assessment</p>
+    </header>
+
+    <!-- Executive KPI Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">30%</span>
+            <span class="metric-label">Target OEE Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">16 mo</span>
+            <span class="metric-label">Projected ROI Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$90k</span>
+            <span class="metric-label">Annual Labor Reallocation</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">24/7</span>
+            <span class="metric-label">Machine Tending Potential</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="card">
+            <h3>Cumulative Cost Savings (5 Years)</h3>
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Output Velocity: Manual vs. Cobot</h3>
+            <div class="chart-box">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Paumac stands at a pivotal threshold of Industry 4.0 adoption. Transitioning from static HMLV (High-Mix Low-Volume) production to a flexible "Smart Cell" architecture is critical. By integrating collaborative robotics and autonomous logistics, Paumac can decouple labor hours from production volume, ensuring higher throughput and consistent quality in tube fabrication and assembly.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <span class="pathway-badge">PATHWAY A</span>
+                <h3>Machine Tending Cobots</h3>
+                <p><strong>Focus:</strong> Safety & Precision</p>
+                <ul>
+                    <li>Automated loading for Tube Benders & CNC.</li>
+                    <li>Eliminates operator idle time during cycles.</li>
+                    <li>Runs through breaks for +15% uptime.</li>
+                </ul>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-badge">PATHWAY B</span>
+                <h3>AMR Intralogistics</h3>
+                <p><strong>Focus:</strong> WIP Flow Efficiency</p>
+                <ul>
+                    <li>Autonomous transport of raw tubing & finished parts.</li>
+                    <li>Reclaims 10-15% of skilled labor wasted on walking.</li>
+                    <li>Reduces shop floor congestion.</li>
+                </ul>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-badge">PATHWAY C</span>
+                <h3>Automated Palletizing</h3>
+                <p><strong>Focus:</strong> Throughput & Yield</p>
+                <ul>
+                    <li>Vision-guided end-of-line stacking.</li>
+                    <li>Integrated quality checks for bend angles.</li>
+                    <li>Reduces heavy lifting and ergonomic risks.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model -->
+    <div class="card">
+        <h2>Financial Impact Model</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>CAPEX Estimation</h3>
+                <p style="color: var(--text-muted);">
+                    <strong>Cobot Cell:</strong> ~$85,000 / unit<br>
+                    <strong>AMR Logistics:</strong> ~$60,000 / unit<br>
+                    <strong>Total Pilot Launch:</strong> ~$230,000
+                </p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Strategic ROI</h3>
+                <p style="color: var(--text-muted);">
+                    <strong>Payback:</strong> < 16 Months<br>
+                    <strong>Scrap Reduction:</strong> 15% (Variance reduction)<br>
+                    <strong>Labor Value:</strong> Shift skilled workers to programming/QA.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div style="border-left: 2px solid var(--accent); padding-left: 20px; margin-left: 10px;">
+            <p><strong style="color: var(--accent);">Year 1:</strong> Pilot Cobot Cell on Tube Bending Line + 1 AMR Deployment.</p>
+            <p><strong style="color: var(--accent);">Year 2:</strong> Expansion to CNC centers & Vision Inspection integration.</p>
+            <p><strong style="color: var(--accent);">Year 3:</strong> Fleet Management System & ERP Connectivity.</p>
+            <p><strong style="color: var(--accent);">Year 4:</strong> "Lights Out" capability for simple bending operations.</p>
+            <p><strong style="color: var(--accent);">Year 5:</strong> Full Digital Twin & AI-driven scheduling.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Open Droids Consultation. Confidential Report for Paumac.
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 180000, 350000, 580000, 850000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Tube Bending', 'CNC Machining', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual Process (Units/Hr)',
+                    data: [45, 12, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [68, 18, 95],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
