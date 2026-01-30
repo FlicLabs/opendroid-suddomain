@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring Hills Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --accent-purple: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.4);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --positive-green: #10b981;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header & Logo */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: var(--accent-purple);
+        text-shadow: 0 0 15px var(--accent-glow);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo span {
+        color: #fff;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin: 0 0 10px 0;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        color: var(--accent-purple);
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    /* Cards */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 rgba(124, 58, 237, 0.2);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-value {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .positive-change {
+        color: var(--positive-green);
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: var(--text-secondary);
+    }
+
+    th {
+        text-align: left;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--glass-border);
+        color: var(--accent-purple);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        font-size: 0.95rem;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-row td {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* Chart Containers */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+
+    p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Spring Hills Research</h1>
+            <p style="margin:0;">Robotics Integration & ROI Analysis</p>
+        </div>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="grid">
+        <div class="card">
+            <div class="metric-label">Annual Net Benefit</div>
+            <div class="metric-value">£1.2M</div>
+            <div class="positive-change">▲ Pathway A Implementation</div>
+            <p style="font-size: 0.85rem; margin-top: 15px;">Driven by labor optimization in dining and logistics across 30+ facilities.</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">Staff Retention Uplift</div>
+            <div class="metric-value">15%</div>
+            <div class="positive-change">▲ Projected Reduction in Turnover</div>
+            <p style="font-size: 0.85rem; margin-top: 15px;">Achieved by offloading 3-5 miles of walking per shift via AMRs.</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">0.7 Yrs</div>
+            <div class="positive-change">▲ High Velocity ROI</div>
+            <p style="font-size: 0.85rem; margin-top: 15px;">Rapid break-even point due to high labor cost offsets.</p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid">
+        <div class="card full-width">
+            <h2>5-Year Cumulative Net Savings (Pathway A)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Pathway Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Annual Value</th>
+                        <th>Payback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>A: Logistics</td>
+                        <td>30+ Facilities</td>
+                        <td>£1.2M</td>
+                        <td>< 9 Mo</td>
+                    </tr>
+                    <tr>
+                        <td>B: Safety AI</td>
+                        <td>Memory Care</td>
+                        <td>£0.8M</td>
+                        <td>12-18 Mo</td>
+                    </tr>
+                    <tr>
+                        <td>C: Home Care</td>
+                        <td>Remote/Home</td>
+                        <td>£0.6M</td>
+                        <td>Immediate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Daily Task Throughput</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Breakdown Table -->
+    <div class="card full-width">
+        <h2>Financial Impact Breakdown (Annual - Network Wide)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Manual State</th>
+                    <th>Robotic Automation State</th>
+                    <th>Delta / Savings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Logistics Labor Cost</td>
+                    <td>£2,964,000</td>
+                    <td>£864,000 (RaaS Cost)</td>
+                    <td style="color: var(--accent-purple);">+ £2,100,000 (Gross Labor Shift)</td>
+                </tr>
+                <tr>
+                    <td>Staff Turnover Cost</td>
+                    <td>£450,000 (Est)</td>
+                    <td>£382,500 (Est)</td>
+                    <td style="color: var(--accent-purple);">+ £67,500</td>
+                </tr>
+                <tr class="highlight-row" style="border-top: 1px solid var(--accent-purple);">
+                    <td>Total Net Impact</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td style="color: var(--positive-green);">~£1.2M Net Benefit</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 300);
+    savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£ Millions)',
+                data: [0.8, 2.1, 3.5, 5.2, 7.1],
+                borderColor: '#7c3aed',
+                backgroundColor: savingsGradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Delivery', 'Laundry Trips', 'Lab Transport'],
+            datasets: [{
+                label: 'Manual Staff Capacity',
+                data: [60, 40, 20],
+                backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                borderRadius: 4
+            },
+            {
+                label: 'Robotic Assisted Capacity',
+                data: [95, 85, 60],
+                backgroundColor: '#7c3aed',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    position: 'bottom',
+                    labels: { color: '#94a3b8' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
