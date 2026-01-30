@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgia Nephrology LLC - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            color: var(--text-secondary);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">CONFIDENTIAL RESEARCH</div>
+        </header>
+
+        <!-- Title Section -->
+        <div style="margin-bottom: 50px;">
+            <h1>Georgia Nephrology LLC</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 700px;">
+                Healthcare Robotics Opportunities Portfolio & ROI Analysis
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h2 style="margin-bottom: 30px; border-left: 4px solid var(--accent-color); padding-left: 15px;">Financial Impact Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">£400k</div>
+                <div class="metric-label">Proj. Net Annual Benefit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Admin Efficiency Lift</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">6 Mo</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">4k+</div>
+                <div class="metric-label">Clinical Hours Recaptured</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2-col" style="margin-bottom: 40px;">
+            <div class="card">
+                <h3>5-Year Cumulative Savings (GBP)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Throughput Analysis (Patients/Mo)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary & Profile -->
+        <div class="grid-2-col">
+            <div class="card">
+                <h2>Executive Summary</h2>
+                <p style="color: var(--text-secondary);">
+                    Georgia Nephrology LLC is positioned to transform from a traditional specialty practice to a tech-enabled renal care platform. The primary friction points—data processing and medication management—are ideal candidates for <strong>Robotic Process Automation (RPA)</strong>. Additionally, the deployment of <strong>Automated Remote Patient Monitoring (RPM)</strong> hardware offers immediate revenue streams and improved clinical outcomes for high-risk CKD patients.
+                </p>
+            </div>
+            <div class="card">
+                <h2>Organizational Profile</h2>
+                <ul>
+                    <li><strong>Model:</strong> Multi-site specialty practice (CKD, Hypertension, Transplant).</li>
+                    <li><strong>Challenges:</strong> High administrative burden, fragmented lab data, complex care coordination.</li>
+                    <li><strong>Economics:</strong> Consult fees, dialysis capitation, value-based care incentives.</li>
+                    <li><strong>Opportunity:</strong> Shifting administrative labor to software bots to increase clinical panel size.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pathways Table -->
+        <div class="card">
+            <h2>Comparative Opportunity Pathways</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: RPA Bots</th>
+                        <th>Pathway B: RPM Hardware</th>
+                        <th>Pathway C: Lab Automation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>Network-wide Admin</td>
+                        <td>High-risk Patients</td>
+                        <td>Central Clinic Lab</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Value</strong></td>
+                        <td>Labor Cost Reduction</td>
+                        <td>Revenue & Outcomes</td>
+                        <td>Error Reduction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Benefit</strong></td>
+                        <td>~£200k Savings</td>
+                        <td>~£250k Revenue</td>
+                        <td>~£20k Efficiency</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td>3-6 Months</td>
+                        <td>Immediate</td>
+                        <td>2-3 Years</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Profile</strong></td>
+                        <td>Low</td>
+                        <td>Moderate</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Strategy -->
+        <div class="card">
+            <h2>Strategic Positioning</h2>
+            <p style="color: var(--text-secondary);">
+                Executing this roadmap positions Georgia Nephrology LLC not just as a medical provider, but as a <strong>Digital Health Leader</strong> in the renal space. This capability is essential for securing favorable value-based contracts with major payers, as it demonstrates the ability to manage population health at scale with lower overhead costs.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (£)',
+                    data: [250000, 600000, 1100000, 1750000, 2500000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Analysis
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Standard', 'With RPA/AI'],
+                datasets: [{
+                    label: 'Patient Capacity per Provider',
+                    data: [120, 165],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderColor: ['transparent', '#7c3aed'],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
