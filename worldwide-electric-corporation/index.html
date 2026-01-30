@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldWide Electric | Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Typography */
+        h1 { font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; margin: 0 0 10px 0; }
+        h2 { font-weight: 600; font-size: 1.5rem; color: #a78bfa; margin-top: 0; }
+        h3 { font-weight: 600; font-size: 1.1rem; color: #fff; margin-bottom: 8px; }
+        p { line-height: 1.6; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px; }
+        
+        .highlight { color: var(--accent-color); font-weight: bold; }
+        .metric-value { font-size: 2.5rem; font-weight: 800; color: #fff; }
+        .metric-label { font-size: 0.85rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Grid Layout Specifics */
+        .header-section { grid-column: span 12; text-align: center; margin-bottom: 20px; }
+        .summary-section { grid-column: span 8; }
+        .profile-section { grid-column: span 4; }
+        
+        .metric-card { grid-column: span 3; text-align: center; border-top: 4px solid var(--accent-color); }
+        
+        .pathway-section { grid-column: span 12; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pathway-card { background: rgba(124, 58, 237, 0.05); }
+
+        .chart-container { grid-column: span 6; height: 350px; position: relative; }
+        
+        .roadmap-section { grid-column: span 12; margin-top: 20px; }
+        .roadmap-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; }
+        .roadmap-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border); }
+        .roadmap-year { color: var(--accent-color); font-weight: 800; display: block; margin-bottom: 5px; }
+
+        /* Button */
+        .btn-download {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.39);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container { display: flex; flex-direction: column; }
+            .pathway-section { grid-template-columns: 1fr; }
+            .roadmap-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <p style="color: var(--accent-color); font-weight: 600; letter-spacing: 2px; margin-bottom: 5px;">OPEN DROIDS RESEARCH</p>
+            <h1>WorldWide Electric Corporation</h1>
+            <p>Strategic Automation & Robotics Feasibility Report</p>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card summary-section">
+            <h2>Executive Summary</h2>
+            <p>WorldWide Electric is positioned to transition from a traditional distributor model to a high-velocity <strong>Smart Value-Add Ecosystem</strong>. By leveraging Industry 4.0 technologies, the corporation can address critical ergonomic challenges in handling heavy motors/gears while reducing lead times for modified stock by 40%.</p>
+            <p>The strategy prioritizes flexible manufacturing over rigid automation, ensuring agility for varied SKUs ranging from fractional HP to medium-voltage giants.</p>
+        </div>
+
+        <!-- Organizational Profile -->
+        <div class="card profile-section">
+            <h2>Profile Overview</h2>
+            <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+                <li style="margin-bottom: 10px;">📍 <strong>HQ:</strong> Rochester, NY</li>
+                <li style="margin-bottom: 10px;">🏭 <strong>Type:</strong> Hybrid (Discrete + Distribution)</li>
+                <li style="margin-bottom: 10px;">⚙️ <strong>Focus:</strong> Motors, Controls, Gearing</li>
+                <li>⚠️ <strong>Core Pain Point:</strong> Heavy Lifting & SKU Variance</li>
+            </ul>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="card metric-card">
+            <div class="metric-value">$60k - $120k</div>
+            <div class="metric-label">Est. CAPEX Per Cell</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-value">22%</div>
+            <div class="metric-label">Target OEE Increase</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-value">&lt; 16 Mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-value">Safety</div>
+            <div class="metric-label">Primary Driver</div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="pathway-section">
+            <div class="card pathway-card">
+                <h3>Pathway A: Cobots</h3>
+                <p><strong>Machine Tending & Assembly</strong></p>
+                <p>Deployment of heavy-payload Cobots to assist technicians with lifting motors for flange installation and modification. Reduces fatigue and ensures torque precision.</p>
+            </div>
+            <div class="card pathway-card">
+                <h3>Pathway B: AMRs</h3>
+                <p><strong>Material Transport</strong></p>
+                <p>Autonomous Mobile Robots for pallet-level transport of gear reducers. Removes forklifts from high-traffic modification zones and streamlines WIP flow.</p>
+            </div>
+            <div class="card pathway-card">
+                <h3>Pathway C: End-of-Line</h3>
+                <p><strong>Palletizing & Inspection</strong></p>
+                <p>Automated heavy-lift palletizing systems with integrated vision for paint/finish inspection and shipping label verification.</p>
+            </div>
+        </div>
+
+        <!-- Financial Charts -->
+        <div class="card chart-container">
+            <h3>5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card chart-container">
+            <h3>Output: Manual vs. Cobot</h3>
+            <canvas id="outputChart"></canvas>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card roadmap-section">
+            <h2>Implementation Roadmap</h2>
+            <div class="roadmap-grid">
+                <div class="roadmap-item">
+                    <span class="roadmap-year">YEAR 1</span>
+                    Pilot Phase<br><small>2 Cobot Cells</small>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-year">YEAR 2</span>
+                    Logistics<br><small>AMR Integration</small>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-year">YEAR 3</span>
+                    End-of-Line<br><small>Auto-Palletizing</small>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-year">YEAR 4</span>
+                    Data Mesh<br><small>IIoT Connectivity</small>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-year">YEAR 5</span>
+                    Ecosystem<br><small>Predictive AI</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Chart Configuration -->
+    <script>
+        // Chart 1: Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [80000, 250000, 500000, 850000, 1300000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#94a3b8' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Output
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Assembly', 'Modifications', 'Palletizing', 'Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Units/Hr)',
+                        data: [12, 8, 15, 20],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Hr)',
+                        data: [22, 18, 35, 45],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#94a3b8' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
