@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEVHS Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --accent-purple: #7c3aed;
+        --accent-glow: #8b5cf6;
+        --success-green: #10b981;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+        margin: 0 0 15px 0;
+        font-weight: 600;
+    }
+
+    .header-logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: var(--accent-purple);
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        border-color: var(--accent-purple);
+        transform: translateY(-2px);
+    }
+
+    /* Layout Spans */
+    .col-full { grid-column: span 12; }
+    .col-half { grid-column: span 6; }
+    .col-third { grid-column: span 4; }
+
+    /* Typography Utilities */
+    .title-large {
+        font-size: 2rem;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+        color: var(--accent-glow);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .metric-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .highlight-positive {
+        color: var(--success-green);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    
+    th {
+        text-align: left;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    td {
+        padding: 12px 0;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    ul {
+        padding-left: 20px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    li { margin-bottom: 8px; }
+
+    @media (max-width: 1024px) {
+        .col-half, .col-third { grid-column: span 12; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-logo">OPEN DROIDS</div>
+
+    <div class="grid-container">
+
+        <!-- Executive Summary -->
+        <div class="card col-full">
+            <span class="subtitle">Research Target</span>
+            <h1 class="title-large">Southeastern Virginia Health System (Hampton)</h1>
+            <p style="color: var(--text-secondary); max-width: 800px;">
+                Strategic analysis for a Robotics & Automation portfolio tailored for a high-volume FQHC environment. 
+                Focus areas shift from surgical intervention to operational throughput, pharmacy automation, and administrative AI to maximize access to care for underserved populations.
+            </p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card col-full">
+            <span class="subtitle">Financial Impact Dashboard (Pathway A)</span>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+                <div>
+                    <div class="metric-label">Annual Revenue Uplift</div>
+                    <div class="metric-value">£1.96M</div>
+                    <div class="highlight-positive">▲ 15% Increase</div>
+                </div>
+                <div>
+                    <div class="metric-label">Daily Visits / Provider</div>
+                    <div class="metric-value">21</div>
+                    <div class="highlight-positive">▲ from 18</div>
+                </div>
+                <div>
+                    <div class="metric-label">Admin Hours Saved</div>
+                    <div class="metric-value">3 hrs</div>
+                    <div class="metric-label">per provider / day</div>
+                </div>
+                <div>
+                    <div class="metric-label">Payback Period</div>
+                    <div class="metric-value">3 Mo.</div>
+                    <div class="highlight-positive">Rapid ROI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="card col-half">
+            <span class="subtitle">Projected Throughput (Daily Visits)</span>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card col-half">
+            <span class="subtitle">5-Year Cumulative Net Benefit</span>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="card col-third">
+            <span class="subtitle">Pathway A (High Value)</span>
+            <h3>Administrative RPA</h3>
+            <p style="font-size: 0.9rem; color: #fff;">"The Digital Front Door"</p>
+            <ul>
+                <li>Automated scheduling & SMS reminders</li>
+                <li>Instant insurance verification bots</li>
+                <li>Reduction in 15-20% no-show rate</li>
+            </ul>
+        </div>
+
+        <div class="card col-third">
+            <span class="subtitle">Pathway B (Strategic)</span>
+            <h3>Pharmacy Automation</h3>
+            <p style="font-size: 0.9rem; color: #fff;">"High-Speed Dispensing"</p>
+            <ul>
+                <li>Automated pill counters & packaging</li>
+                <li>Near-zero dispensing errors</li>
+                <li>Frees pharmacists for billable counseling</li>
+            </ul>
+        </div>
+
+        <div class="card col-third">
+            <span class="subtitle">Pathway C (Support)</span>
+            <h3>Lab Robotics</h3>
+            <p style="font-size: 0.9rem; color: #fff;">"Sample Integrity"</p>
+            <ul>
+                <li>Auto-labeling and centrifugation</li>
+                <li>Faster diagnostic turnaround</li>
+                <li>Reduced rejected specimens</li>
+            </ul>
+        </div>
+
+        <!-- Comparative Table -->
+        <div class="card col-full">
+            <span class="subtitle">Strategic Comparison</span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Primary Focus</th>
+                        <th>Annual Benefit (Mid)</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--accent-purple); font-weight: bold;">Pathway A: RPA</td>
+                        <td>Volume & Scheduling</td>
+                        <td>£1.5M - £2.0M</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway B: Pharmacy</td>
+                        <td>Safety & Speed</td>
+                        <td>£400k - £600k</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway C: Lab</td>
+                        <td>Diagnostic Speed</td>
+                        <td>£150k</td>
+                        <td>Moderate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+
+        // Throughput Chart
+        const ctx1 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Current Manual', 'Year 1 Automation', 'Year 2 Integrated'],
+                datasets: [{
+                    label: 'Visits Per Day (Network Wide)',
+                    data: [270, 315, 350], // Scaled for ~15 providers
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(124, 58, 237, 0.6)',
+                        'rgba(124, 58, 237, 0.9)'
+                    ],
+                    borderRadius: 6,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Savings Chart
+        const ctx2 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (£ Millions)',
+                    data: [1.9, 3.5, 5.2, 7.1, 8.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
