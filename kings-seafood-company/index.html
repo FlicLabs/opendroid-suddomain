@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | King's Seafood Company Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            color: var(--accent-purple);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Metric Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        h2 {
+            color: var(--accent-glow);
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Steps */
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .step {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .step-title {
+            color: #fff;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .metric-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Consultation Report</div>
+            <h1>King's Seafood <span>Automation Strategy</span></h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Date: October 2023</div>
+            <div class="subtitle">Confidential</div>
+        </div>
+    </header>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-label">Estimated CAPEX (Pilot)</span>
+            <span class="metric-value">$197.5k</span>
+            <span class="metric-sub">For 5 Locations</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Annual Labor Savings</span>
+            <span class="metric-value">$316k</span>
+            <span class="metric-sub">Post-Implementation</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Payback Period</span>
+            <span class="metric-value">7.9 Mo</span>
+            <span class="metric-sub">Target < 12 Months</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Efficiency Gain</span>
+            <span class="metric-value">40%</span>
+            <span class="metric-sub">Less Staff Travel</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-grid">
+        
+        <!-- Left Column: Strategy -->
+        <div class="glass-panel">
+            <h2>Executive Summary</h2>
+            <p>For King's Seafood Company, the automation strategy is not about replacing the premium service standard, but enhancing it through "Silent Service." By offloading high-strain tasks like carrying seafood towers to robotics, human servers can focus entirely on guest experience and upselling.</p>
+            
+            <h3>Organizational Fit</h3>
+            <ul>
+                <li><strong>Type:</strong> Premium Full Service & Fine Dining</li>
+                <li><strong>Key Brands:</strong> Water Grill, King's Fish House, 555 East</li>
+                <li><strong>Pain Point:</strong> Heavy tray lifting & distance from kitchen to patio.</li>
+            </ul>
+        </div>
+
+        <!-- Right Column: Pathways -->
+        <div class="glass-panel">
+            <h2>Opportunity Pathways</h2>
+            
+            <h3>Pathway A: FOH Serving Robots</h3>
+            <p><strong>Deployment:</strong> Servi Plus units for running/bussing.</p>
+            <p><strong>Impact:</strong> Reduces server fatigue and injury risk from heavy platters.</p>
+
+            <h3>Pathway B: BOH Automation</h3>
+            <p><strong>Deployment:</strong> AI-Driven Dishwashing Conveyors.</p>
+            <p><strong>Impact:</strong> Eliminates bottlenecks during Friday/Saturday peaks.</p>
+
+            <h3>Pathway C: Voice AI</h3>
+            <p><strong>Deployment:</strong> Reservation Host Agents.</p>
+            <p><strong>Impact:</strong> 100% call capture rate and improved CRM data.</p>
+        </div>
+
+        <!-- Full Width: Financial Charts -->
+        <div class="glass-panel full-width">
+            <h2>Financial Projection & Efficiency</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>Cumulative Labor Savings (5 Years)</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3>Table Turnover Improvement</h3>
+                    <div class="chart-container">
+                        <canvas id="turnoverChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Width: Roadmap -->
+        <div class="glass-panel full-width">
+            <h2>5-Year Implementation Roadmap</h2>
+            <div class="roadmap">
+                <div class="step">
+                    <span class="step-title">Year 1</span>
+                    <span class="step-desc">Pilot & Stabilize (Water Grill)</span>
+                </div>
+                <div class="step">
+                    <span class="step-title">Year 2</span>
+                    <span class="step-desc">Fleet Expansion (King's Fish House)</span>
+                </div>
+                <div class="step">
+                    <span class="step-title">Year 3</span>
+                    <span class="step-desc">POS Integration & Auto-Dispatch</span>
+                </div>
+                <div class="step">
+                    <span class="step-title">Year 4</span>
+                    <span class="step-desc">Predictive Kitchen AI</span>
+                </div>
+                <div class="step">
+                    <span class="step-title">Year 5</span>
+                    <span class="step-desc">Full Automation Innovation</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [119000, 435000, 750000, 1100000, 1500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8', callback: function(value) { return '$' + value/1000 + 'k'; } },
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Avg Table Turns (Per Night)',
+                data: [3.2, 4.1],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' } 
+                },
+                x: { 
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
