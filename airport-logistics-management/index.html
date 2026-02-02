@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.5);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 50px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="tag">OPEN DROIDS RESEARCH</div>
+        <h1>Airport Logistics Management</h1>
+        <div class="sub-header">Strategic Automation Roadmap & Financial Analysis</div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card glass-card" style="margin-bottom: 0;">
+            <div class="metric-label">Projected ROI (Year 3)</div>
+            <div class="metric-value">215%</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Break-even: Month 18</div>
+        </div>
+        <div class="metric-card glass-card" style="margin-bottom: 0;">
+            <div class="metric-label">Labor Reduction</div>
+            <div class="metric-value">35%</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Operations & Tarmac</div>
+        </div>
+        <div class="metric-card glass-card" style="margin-bottom: 0;">
+            <div class="metric-label">Throughput Velocity</div>
+            <div class="metric-value">+42%</div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">Unit Load Devices / Hour</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Executive Summary -->
+        <div class="col">
+            <div class="glass-card">
+                <h2>Executive Vision</h2>
+                <p style="color: var(--text-muted); line-height: 1.6;">
+                    The aviation sector faces a critical junction of volume and labor scarcity. Our strategy for Airport Logistics Management transitions your hubs from reactive manual handling to a <strong>Secure Autonomous Ecosystem</strong>. By deploying AMRs for tarmac transport and ASRS for MRO inventory, we target a dramatic reduction in baggage claims and a significant increase in cargo velocity.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Pathways -->
+        <div class="col">
+            <div class="glass-card">
+                <h2>Strategic Pathways</h2>
+                <ul>
+                    <li><strong>Pathway A (Transport):</strong> Heavy-payload AMRs for autonomous ULD movement, reducing tarmac incidents.</li>
+                    <li><strong>Pathway B (Storage):</strong> High-density ASRS for Duty-Free & Maintenance parts, reclaiming 40% floor space.</li>
+                    <li><strong>Pathway C (AI):</strong> Predictive WES integration to align logistics flows with real-time flight telemetry.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row">
+        <div class="col">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="glass-card">
+                <h2>Throughput: Manual vs. Robot</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+            <div style="flex: 1; min-width: 200px;">
+                <div class="tag" style="background: rgba(16, 185, 129, 0.2); color: var(--success);">YEAR 1</div>
+                <h3 style="margin: 5px 0;">The Pilot</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Deploy AMRs at single high-volume hub. Validate safety protocols.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <div class="tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">YEAR 3</div>
+                <h3 style="margin: 5px 0;">Scaling</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Roll out to passenger baggage zones. Full AI-WES integration.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <div class="tag" style="background: rgba(124, 58, 237, 0.2); color: #d8b4fe;">YEAR 5</div>
+                <h3 style="margin: 5px 0;">Ecosystem</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">"Dark Warehouse" capability for night cargo. Full autonomy.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Prepared by Open Droids Senior Consultation Team | Confidential Research</p>
+    </footer>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($ Millions)',
+                data: [-2.5, 0.5, 4.2, 8.5, 14.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Inbound Sorting', 'Tarmac Transfer', 'MRO Picking', 'Outbound Loading'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [65, 50, 40, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [95, 85, 90, 92],
+                    backgroundColor: '#10b981',
+                    borderRadius: 4,
+                    boxShadow: '0 0 10px #10b981'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Efficiency Score (0-100)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
