@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laguna Tools | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Chart Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Section Styling */
+        .section-title {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+        
+        .pathway-item h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .roadmap-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .roadmap-step {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 2px solid var(--accent-blue);
+        }
+
+        .roadmap-year {
+            font-weight: bold;
+            color: var(--accent-purple);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>LAGUNA TOOLS</h1>
+        <div class="subtitle">Strategic Automation & Robotics Research // Open Droids</div>
+    </header>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">$205k</div>
+            <div class="metric-label">Annual Savings</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">1.2 Yrs</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">OEE Increase</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$250k</div>
+            <div class="metric-label">Est. Pilot CAPEX</div>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="card">
+        <span class="section-title">01. Executive Summary</span>
+        <p>Laguna Tools is positioned to transition from semi-automated batch assembly to a fully connected Industry 4.0 ecosystem. By integrating Cobots for precision gantry assembly and AMRs for heavy casting transport, Laguna can reduce lead times, mitigate skilled labor shortages in Texas and California, and create a scalable "Smart Assembly Hub" model.</p>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="charts-container">
+        <div class="card">
+            <span class="section-title">Financial Projection</span>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <span class="section-title">Productivity Impact</span>
+            <div class="chart-wrapper">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROBOTICS PATHWAYS -->
+    <div class="card">
+        <span class="section-title">02. Robotics Opportunity Pathways</span>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Cobots</h3>
+                <p><strong>Application:</strong> Machine Tending & Gantry Assembly.</p>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Deploy IP54 Cobots to assist with heavy lifting of cast iron tables and precision screwdriving, ensuring identical torque specs on every CNC unit.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: AMRs</h3>
+                <p><strong>Application:</strong> Material Transport.</p>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Autonomous Mobile Robots to replace forklifts for moving WIP (Work In Progress) from welding to assembly lines, improving floor safety.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Quality & EOL</h3>
+                <p><strong>Application:</strong> Inspection & Palletizing.</p>
+                <p style="color: var(--text-muted); font-size: 0.9em;">Vision-systems for geometric verification of router beds and vacuum-grippers for boxing accessories.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="card">
+        <span class="section-title">03. Implementation Roadmap</span>
+        <div class="roadmap-container">
+            <div class="roadmap-step">
+                <span class="roadmap-year">Year 1</span>
+                Pilot Cobot Cells for SmartShop CNC Line.
+            </div>
+            <div class="roadmap-step">
+                <span class="roadmap-year">Year 2</span>
+                Deploy AMRs for Intra-logistics.
+            </div>
+            <div class="roadmap-step">
+                <span class="roadmap-year">Year 3</span>
+                Scale to Bandsaw Lines & Predictive Maint.
+            </div>
+            <div class="roadmap-step">
+                <span class="roadmap-year">Year 4</span>
+                Full Digital Twin & Auto-Inspection.
+            </div>
+            <div class="roadmap-step">
+                <span class="roadmap-year">Year 5</span>
+                Lights-Out Manufacturing Capability.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings Line Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [205000, 450000, 750000, 1100000, 1500000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Manual vs Cobot Bar Chart
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['CNC Assembly', 'Packaging', 'QA Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Units/Shift)',
+                        data: [12, 40, 25],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot-Assisted (Units/Shift)',
+                        data: [18, 65, 45],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
