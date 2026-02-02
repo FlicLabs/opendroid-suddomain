@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stanislaus Food Products - Automation Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area h1 {
+            font-size: 24px;
+            letter-spacing: 1px;
+            margin: 0;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .logo-area span {
+            color: var(--accent-purple);
+            font-weight: 800;
+        }
+
+        .client-name {
+            font-size: 32px;
+            font-weight: 700;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .metric-sub {
+            font-size: 14px;
+            color: #4ade80; /* Green for positive */
+            margin-top: 5px;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <h1>Open<span>Droids</span></h1>
+            <div style="font-size: 12px; margin-top: 5px;">HOSPITALITY AUTOMATION RESEARCH</div>
+        </div>
+        <div class="client-name">STANISLAUS FOOD PRODUCTS</div>
+    </header>
+
+    <!-- Hospitality ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Proj. Labor Savings (5 Yr)</div>
+            <div class="metric-value">$468k</div>
+            <div class="metric-sub">Accumulated per location</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Table Turnover Rate</div>
+            <div class="metric-value">+22%</div>
+            <div class="metric-sub">Via Automated Runners</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">12.5 Mo</div>
+            <div class="metric-sub">Target: &lt; 14 Months</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Main Research Column -->
+        <div class="left-col">
+            <div class="glass-panel">
+                <h2>Strategic Vision</h2>
+                <p><strong>Executive Summary:</strong> For Stanislaus Food Products, automation is not about replacing the "Real Italian" culture, but elevating it. By automating logistics, we allow staff to focus on the premium nature of the "Fresh Packed" product line.</p>
+                <p><strong>The Opportunity:</strong> Implementation of FOH Service Robots and BOH Smart Cooking arrays to support a flagship "Culinary Showroom" dining model.</p>
+            </div>
+
+            <div class="glass-panel">
+                <h2>Robotics Pathways</h2>
+                <ul>
+                    <li><strong>Pathway A (FOH):</strong> Deployment of shelf-based runners (e.g., Servi/Pudu) to handle heavy pasta and pizza delivery, reducing server fatigue and increasing face-time with guests.</li>
+                    <li><strong>Pathway B (BOH):</strong> Automated frying and smart-oven technology to ensure 100% consistency in showcasing Stanislaus tomato products.</li>
+                    <li><strong>Pathway C (AI):</strong> Voice-activated kiosk agents designed to upsell wine and appetizers based on the specific acidity/sweetness profile of the ordered tomato dish.</li>
+                </ul>
+            </div>
+
+            <div class="glass-panel">
+                <h2>Financial Analysis (Unit Economics)</h2>
+                <p><strong>CAPEX:</strong> Est. $89,000 per location (2 Robots, 1 Fry Station, 3 Kiosks).</p>
+                <p><strong>OPEX Impact:</strong> Reduction of 1.5 FTE per shift. Maintenance costs offset by labor savings within year one.</p>
+            </div>
+        </div>
+
+        <!-- Charts Column -->
+        <div class="right-col">
+            <div class="glass-panel">
+                <h2>Cumulative Savings (5 Years)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h2>Turnover Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel" style="text-align: center;">
+                <h2 style="border:none; padding:0;">Implementation</h2>
+                <p><strong>Year 1:</strong> Pilot Flagship (Modesto)</p>
+                <p><strong>Year 3:</strong> Expansion (SF / NY)</p>
+                <p><strong>Year 5:</strong> Licensing Model</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Chart 1: Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($)',
+                data: [85000, 175000, 270000, 370000, 468000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Bar Chart
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Avg Table Duration (Minutes)',
+                data: [65, 50],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.5)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Minutes (Lower is Better)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
