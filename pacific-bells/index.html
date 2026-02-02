@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Bells | Robotics Feasibility Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .sub {
+            color: var(--accent-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge-a { background: rgba(56, 189, 248, 0.2); color: var(--accent-blue); }
+        .badge-b { background: rgba(255, 99, 132, 0.2); color: #ff6384; }
+        .badge-c { background: rgba(75, 192, 192, 0.2); color: #4bc0c0; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        th {
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="sub">Open Droids Intelligence Unit</div>
+                <h1>Pacific Bells Strategic Audit</h1>
+            </div>
+            <div style="text-align: right;">
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Status: <strong>Confidential</strong></div>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Date: <strong>October 2023</strong></div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>Executive Vision</h2>
+            <p style="line-height: 1.6;">
+                Pacific Bells stands at a critical juncture. By leveraging a dual-brand automation strategy, the organization can transition from a labor-dependent model to a <strong>technology-enabled "Cobotic" ecosystem</strong>. This shift addresses the core friction points of the QSR and Casual Dining verticals: table turnover velocity and order accuracy. Our financial modeling predicts a break-even point in under 14 months, securing long-term margin health.
+            </p>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="grid-3">
+            <div class="metric-card">
+                <span class="metric-val">$28k</span>
+                <span class="metric-label">Annual Savings Per Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">11-13</span>
+                <span class="metric-label">Months Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">18%</span>
+                <span class="metric-label">Increase in Table Turns</span>
+            </div>
+        </div>
+
+        <!-- Pathways Grid -->
+        <div class="grid-3">
+            <div class="card">
+                <span class="pathway-badge badge-a">PATHWAY A: FOH ROBOTS</span>
+                <h3>Service Logistics</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Deployment of runner/busser robots in Buffalo Wild Wings locations.</p>
+                <ul style="font-size: 0.9rem; padding-left: 20px; line-height: 1.5;">
+                    <li>Reduces server walking distance by 40%.</li>
+                    <li>Increases hot food delivery speed.</li>
+                    <li>Supports heavier tray loads (Wing/Beer combos).</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="pathway-badge badge-b">PATHWAY B: BOH AUTO</span>
+                <h3>Automated Cooking</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Rail-system frying and auto-seasoning for Taco Bell & BWW.</p>
+                <ul style="font-size: 0.9rem; padding-left: 20px; line-height: 1.5;">
+                    <li>Consistency in fry/wing texture.</li>
+                    <li>Improved employee safety (oil distance).</li>
+                    <li>Waste reduction via auto-portioning.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="pathway-badge badge-c">PATHWAY C: AI AGENTS</span>
+                <h3>Voice & Kiosks</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Conversational AI at Drive-Thru pillars.</p>
+                <ul style="font-size: 0.9rem; padding-left: 20px; line-height: 1.5;">
+                    <li>Consistent upselling on every order.</li>
+                    <li>Reduces order entry errors.</li>
+                    <li>Frees staff for payment/handover.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-3" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Focus Area</th>
+                        <th>Key Milestone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold;">Year 1</td>
+                        <td>Pilot Cluster</td>
+                        <td>Launch 10 Taco Bell AI & 10 BWW Robot pilots.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Year 2</td>
+                        <td>Regional Rollout</td>
+                        <td>Expand to 50% of portfolio; Integrate KDS APIs.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Year 3</td>
+                        <td>Optimization</td>
+                        <td>Layout optimization based on robot traversal data.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Year 4-5</td>
+                        <td>Full Autonomy</td>
+                        <td>Predictive cooking & full fleet maturity.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings ($ Millions)',
+                    data: [0.5, 2.1, 5.4, 9.8, 15.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#38bdf8'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' } 
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' } 
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Avg Table Turns Per Shift',
+                    data: [3.2, 3.8],
+                    backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(56, 189, 248, 0.6)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(56, 189, 248, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' } 
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
