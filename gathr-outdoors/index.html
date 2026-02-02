@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gathr Outdoors | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        /* KPI Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .kpi-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .kpi-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .chart-wrapper {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Roadmap */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .roadmap-item {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .roadmap-year {
+            color: var(--accent-blue);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="subtitle">Open Droids Intelligence</div>
+        <h1>GATHR OUTDOORS</h1>
+        <h2>Strategic Automation & Robotics Report</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 20px auto;">
+            Analyzing Industry 4.0 pathways for high-mix outdoor equipment manufacturing.
+        </p>
+    </header>
+
+    <!-- KPI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Projected OEE Increase</div>
+            <div class="kpi-value">22%</div>
+            <div class="kpi-label">Target: Year 1</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Pilot CAPEX Estimate</div>
+            <div class="kpi-value">$185k</div>
+            <div class="kpi-label">Palletizing + Cobot</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Payback Period</div>
+            <div class="kpi-value">14 Mo</div>
+            <div class="kpi-label">via Labor Reallocation</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">5-Year Savings</div>
+            <div class="kpi-value">$1.2M</div>
+            <div class="kpi-label">Cumulative Efficiency</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <h3 style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">5-Year Cumulative Production Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3 style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Units Per Hour (UPH) Comparison</h3>
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-section">
+        <div class="section-title">EXECUTIVE SUMMARY</div>
+        <p>Gathr Outdoors is positioned to leverage Industry 4.0 to transition from labor-intensive assembly to a flexible, data-driven manufacturing ecosystem. By integrating collaborative automation and intelligent logistics, the company can secure a competitive advantage through increased production agility, handling the seasonality of brands like Orca, Klymit, and GCI Outdoor.</p>
+    </div>
+
+    <div class="content-section">
+        <div class="section-title">ROBOTICS PATHWAYS</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div>
+                <strong style="color: var(--accent-blue);">Pathway A: Cobots</strong>
+                <p style="font-size: 0.9rem;">Collaborative robots for riveting chair frames and trimming rotomolded coolers. Focus on safety and human augmentation.</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-blue);">Pathway B: AMRs</strong>
+                <p style="font-size: 0.9rem;">Autonomous Mobile Robots for moving raw materials and finished sub-assemblies. Focus on WIP flow efficiency.</p>
+            </div>
+            <div>
+                <strong style="color: var(--accent-blue);">Pathway C: Palletizing</strong>
+                <p style="font-size: 0.9rem;">Automated end-of-line stacking for heavy coolers and boxed furniture. Focus on throughput and injury reduction.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section-title">IMPLEMENTATION ROADMAP</div>
+        <div class="roadmap-grid">
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 1</span>
+                Pilot Automated Palletizing & Digital Baseline.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 2</span>
+                Cobot integration in Assembly & AMR Pilot.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 3</span>
+                Full AMR Fleet & WMS Integration.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 4</span>
+                Digital Twins & Predictive Maintenance.
+            </div>
+            <div class="roadmap-item">
+                <span class="roadmap-year">Year 5</span>
+                AI Demand Forecasting & Lights-Out Capabilities.
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 60px; color: var(--text-muted); font-size: 0.8rem;">
+        <p>Open Droids Confidential Research • Generated for Gathr Outdoors</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [85000, 250000, 500000, 850000, 1200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Output Bar Chart
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Box Assembly', 'Riveting', 'Palletizing', 'Loading'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 60, 30, 20],
+                    backgroundColor: '#334155',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Automated Process',
+                    data: [75, 95, 65, 45],
+                    backgroundColor: '#3b82f6',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: '#94a3b8' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
