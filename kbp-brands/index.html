@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBP Brands: Robotics Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(56, 189, 248, 0.05) 50%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -1px; }
+        h2 { font-size: 1.5rem; color: var(--accent-glow); margin-top: 30px; margin-bottom: 15px; }
+        h3 { font-size: 1.1rem; color: #e2e8f0; margin-bottom: 10px; }
+        p, li { color: var(--text-muted); line-height: 1.6; }
+        .sub-header { color: var(--accent-purple); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-purple);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathway Grid */
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(124, 58, 237, 0.05);
+            border-left: 4px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--accent-purple);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sub-header">Open Droids Intelligence Unit</div>
+        <h1>KBP Brands: Automation Strategy</h1>
+        <p style="margin-bottom: 40px; font-size: 1.1rem;">Strategic roadmap for integrating robotics into 1,000+ QSR locations to optimize throughput and labor.</p>
+
+        <!-- ROI DASHBOARD -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target Labor Savings</div>
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Reduction in FOH/BOH Hours</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 9 Mo</div>
+                <div class="metric-label">ROI Velocity</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Throughput Boost</div>
+                <div class="metric-value">+15%</div>
+                <div class="metric-label">Orders Per Hour</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Safety Impact</div>
+                <div class="metric-value">-60%</div>
+                <div class="metric-label">Burn/Strain Claims</div>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Labor Savings (Millions USD)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Table/Order Turnover Rate (Mins)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRATEGIC PATHWAYS -->
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-card">
+                    <span class="status-badge">Pathway A</span>
+                    <h3>FOH Serving Robots</h3>
+                    <p><strong>Focus:</strong> Dine-in expediting & cleanliness.</p>
+                    <p>Automated runners deliver trays to tables, keeping counter staff focused on POS and packing. Reduces staff daily steps by 30%.</p>
+                </div>
+                <div class="pathway-card">
+                    <span class="status-badge">Pathway B</span>
+                    <h3>BOH Automated Frying</h3>
+                    <p><strong>Focus:</strong> Safety & Consistency.</p>
+                    <p>Rail-mounted robotic arms manage fry baskets. Ensures perfect cook times for KFC/Arby's menus and drastically reduces burn risks.</p>
+                </div>
+                <div class="pathway-card">
+                    <span class="status-badge">Pathway C</span>
+                    <h3>Voice AI & Kiosks</h3>
+                    <p><strong>Focus:</strong> Upselling & Accuracy.</p>
+                    <p>Drive-thru voice agents that never forget to upsell. Projected 10-15% check increase and concurrent order processing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINANCIALS -->
+        <div class="glass-card">
+            <h2>Financial Model & Roadmap</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3>Estimated CAPEX</h3>
+                    <p style="font-size: 1.5rem; color: #fff; font-weight: bold;">$40k - $45k</p>
+                    <p>Per unit implementation (Hardware + Install).</p>
+                    <hr style="border-color: var(--glass-border);">
+                    <h3>Target OPEX Reduction</h3>
+                    <p style="font-size: 1.5rem; color: #fff; font-weight: bold;">1.5 FTE</p>
+                    <p>Daily labor hours redistributed per store.</p>
+                </div>
+                <div>
+                    <h3>Implementation Timeline</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 15px;"><strong>Year 1:</strong> Pilot 10 Locations (Calibration)</li>
+                        <li style="margin-bottom: 15px;"><strong>Year 2:</strong> 100 Location Regional Rollout</li>
+                        <li style="margin-bottom: 15px;"><strong>Year 3:</strong> 50% Portfolio Standardization</li>
+                        <li><strong>Year 5:</strong> Full Automation Maturity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [2.5, 12, 45, 90, 150], // Projected scaling based on 1000 stores
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Turnover Rate Comparison
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Minutes per Turn',
+                    data: [45, 32],
+                    backgroundColor: ['#334155', '#7c3aed'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
