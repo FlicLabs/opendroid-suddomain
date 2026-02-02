@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids Research: HealthStream</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            CONFIDENTIAL RESEARCH<br>Client: Robotics Expansion Division
+        </div>
+    </header>
+
+    <div class="glass-card">
+        <h1>HealthStream: Automation & Robotics Analysis</h1>
+        <p style="color: var(--text-muted); max-width: 800px;">
+            Transforming a passive Learning Management System (LMS) into an active, automated workforce orchestration engine using Robotic Process Automation (RPA) and Simulation Robotics Integration.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Savings (Projected)</div>
+            <div class="metric-value">$17.5M</div>
+            <div class="metric-label" style="color: var(--success);">Via Credentialing RPA</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">75%</div>
+            <div class="metric-label">Processing Time Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback</div>
+            <div class="metric-value">9 Mo</div>
+            <div class="metric-label">For Pathway A Implementation</div>
+        </div>
+    </div>
+
+    <!-- Main Content & Charts -->
+    <div class="glass-card">
+        <h2>Financial Projection: 5-Year Outlook</h2>
+        <div class="charts-container">
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Opportunity Pathways Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Technology Focus</th>
+                    <th>Primary Value Driver</th>
+                    <th>Est. Annual Impact</th>
+                    <th>Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: #fff; font-weight: 600;">Pathway A</td>
+                    <td>RPA / Software Robotics</td>
+                    <td>Credentialing Automation</td>
+                    <td>$15M - $20M</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td style="color: #fff; font-weight: 600;">Pathway B</td>
+                    <td>IoT / Sim-Robotics</td>
+                    <td>Data Integrity & Quality</td>
+                    <td>$3M - $5M</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td style="color: #fff; font-weight: 600;">Pathway C</td>
+                    <td>AI / Predictive Logistics</td>
+                    <td>Workforce Scheduling</td>
+                    <td>$8M - $12M</td>
+                    <td>High</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div>
+                <h3 style="color: #fff; font-size: 1rem;">Phase 1: Foundation</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Launch VerityStream RPA Center of Excellence. Automate top 5 primary source verifications.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff; font-size: 1rem;">Phase 2: Integration</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Pilot IoT integration with Laerdal/Gaumard simulators. Connect physical training to digital LMS.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff; font-size: 1rem;">Phase 3: Prediction</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Deploy ShiftWizard predictive algorithms. Launch "Workforce Command Center."</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. 5-Year Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    
+    // Gradient for the line
+    let gradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [16, 35, 58, 85, 115],
+                borderColor: '#7c3aed',
+                backgroundColor: gradient,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: { color: '#e2e8f0' }
+                },
+                title: {
+                    display: true,
+                    text: 'Cumulative Net Savings (Pathway A)',
+                    color: '#fff',
+                    font: { size: 14 }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { callback: function(value) { return '$' + value + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Manual vs. Robotic Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Files Processed / Hour', 'Verification Accuracy', 'Revenue Recog. Speed'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 85, 30], // Arbitrary units for comparison
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'RPA / Automated',
+                    data: [450, 99.9, 90],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: { color: '#e2e8f0' }
+                },
+                title: {
+                    display: true,
+                    text: 'Operational Efficiency: Manual vs. RPA',
+                    color: '#fff',
+                    font: { size: 14 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { display: false } // Hiding y-axis numbers for clean comparison look
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
