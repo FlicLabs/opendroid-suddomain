@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Equities Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Dashboard Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            color: var(--accent-purple);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN<span>DROIDS</span></div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">PREPARED FOR</div>
+            <div style="font-weight: 600;">HOTEL EQUITIES</div>
+        </div>
+    </header>
+
+    <div style="margin-bottom: 40px;">
+        <h1>Robotics Opportunities Portfolio</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin-top: 10px;">
+            Strategic analysis of automation levers for the Hotel Equities portfolio, focusing on labor optimization, housekeeping throughput, and guest satisfaction.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card">
+            <div class="metric-label">Projected Annual Savings</div>
+            <div class="metric-value">$5.2M+</div>
+            <div style="color: #10b981; font-size: 0.9rem;">▲ Portfolio Wide</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Labor Hours Saved</div>
+            <div class="metric-value">215k</div>
+            <div style="color: var(--accent-purple); font-size: 0.9rem;">Annual Estimate</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">3-6 Mo</div>
+            <div style="color: var(--accent-blue); font-size: 0.9rem;">Lease Model</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">20%</div>
+            <div style="color: #10b981; font-size: 0.9rem;">Housekeeping Speed</div>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Net Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Cleaning Throughput (Sq Ft/Hour)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="content-grid">
+        <div class="glass-card">
+            <h2>Comparative Pathways Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: Floor Care AI</th>
+                        <th>Pathway B: Delivery Bots</th>
+                        <th>Pathway C: Material Transport</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">Scope</td>
+                        <td>All Properties (250+)</td>
+                        <td>Urban/Upscale (~100)</td>
+                        <td>Resorts (~25)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Value Driver</td>
+                        <td>Housekeeping Labor</td>
+                        <td>Guest Experience</td>
+                        <td>Safety & Logistics</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Annual Benefit</td>
+                        <td>$3M - $5M</td>
+                        <td>$1M - $2M</td>
+                        <td>~$500k</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Payback</td>
+                        <td>3-6 Months</td>
+                        <td>12-18 Months</td>
+                        <td>24 Months</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Risk Profile</td>
+                        <td style="color: #10b981;">Low</td>
+                        <td style="color: #f59e0b;">Low-Moderate</td>
+                        <td style="color: #f59e0b;">Moderate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="glass-card">
+            <h2>Financial Model: Pathway A (Floor Care)</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #fff; font-size: 1rem; margin-bottom: 10px;">Network Baseline</h3>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); line-height: 1.6;">
+                        <li>• 250 Hotel Properties</li>
+                        <li>• 3.0 Hours Vacuuming / Day / Hotel</li>
+                        <li>• $18.00 Avg Hourly Labor Cost</li>
+                        <li>• <strong>$4.9M Total Manual Cost / Year</strong></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #fff; font-size: 1rem; margin-bottom: 10px;">Automation Impact</h3>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); line-height: 1.6;">
+                        <li>• 1 Robot per Property (RaaS Model)</li>
+                        <li>• 2.5 Hours Labor Saved / Day</li>
+                        <li>• <strong>$2.5M Net Incremental Benefit</strong></li>
+                        <li>• <strong>$12M+ 5-Year Cumulative Savings</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. 5-Year Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+    savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [1.8, 4.2, 6.9, 9.5, 12.8],
+                borderColor: '#7c3aed',
+                backgroundColor: savingsGradient,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Robotic Assist', 'Hybrid Model'],
+            datasets: [{
+                label: 'Sq Ft Cleaned / Shift',
+                data: [4500, 12000, 15500],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',  // Muted for Manual
+                    'rgba(59, 130, 246, 0.8)',   // Blue for Robot
+                    'rgba(124, 58, 237, 0.9)'    // Purple for Hybrid
+                ],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
