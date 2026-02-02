@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leyendecker Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .metric-sub {
+            font-size: 0.85rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+        }
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        .content-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .content-section h3 {
+            color: var(--accent-purple);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .milestone {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255,255,255,0.02);
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 2px solid var(--accent-purple);
+        }
+
+        .milestone strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .milestone span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Leyendecker Supply Chain Solutions</h1>
+            <h2>Strategic Automation Research & ROI Analysis</h2>
+        </header>
+
+        <!-- Financial Dashboard -->
+        <div class="grid-dashboard">
+            <div class="card">
+                <div class="metric-label">Estimated CAPEX (Pilot)</div>
+                <div class="metric-value">$850k</div>
+                <div class="metric-sub">Hardware & Integration</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Annual OPEX Savings</div>
+                <div class="metric-value">$450k</div>
+                <div class="metric-sub">▼ 35% Labor Cost Reduction</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">21 Mo</div>
+                <div class="metric-sub">Target: < 24 Months</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Throughput Gain</div>
+                <div class="metric-value">+35%</div>
+                <div class="metric-sub">▲ Pallet Velocity</div>
+            </div>
+        </div>
+
+        <!-- Charts Area -->
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Strategic Content -->
+        <div class="content-section">
+            <h3>Robotics Opportunity Pathways</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                <strong>Pathway A: AMRs for Transport</strong><br>
+                Deployment of Lidar-guided Autonomous Mobile Robots to handle long-haul pallet movements. This decouples skilled labor from simple transport tasks.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                <strong>Pathway B: Robotic Piece Picking</strong><br>
+                Implementation of Goods-to-Person (GTP) technology to increase picking accuracy to 99.9% and maximize vertical storage density.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                <strong>Pathway C: AI Logistics</strong><br>
+                Computer vision at dock doors for automated freight auditing and predictive route optimization.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h3>5-Year Implementation Roadmap</h3>
+            <div class="roadmap">
+                <div class="milestone">
+                    <strong>Year 1</strong>
+                    <span>Pilot Program & WMS Integration</span>
+                </div>
+                <div class="milestone">
+                    <strong>Year 2</strong>
+                    <span>Expansion to 2 Additional Hubs</span>
+                </div>
+                <div class="milestone">
+                    <strong>Year 3</strong>
+                    <span>Network Standardization</span>
+                </div>
+                <div class="milestone">
+                    <strong>Year 4</strong>
+                    <span>AI Layer & Predictive Maint.</span>
+                </div>
+                <div class="milestone">
+                    <strong>Year 5</strong>
+                    <span>Full Autonomy Ecosystem</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings Line Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($ Millions)',
+                    data: [-0.85, -0.4, 0.1, 0.6, 1.2, 1.9],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } },
+                    title: { display: true, text: '5-Year Cumulative ROI Trajectory', color: '#fff', font: {size: 16} }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison Bar Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Pallet Movement', 'Piece Picking', 'Inbound Audit'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Current)',
+                        data: [12, 60, 15], // Arbitrary units for visualization
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: 'rgba(148, 163, 184, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process (Target)',
+                        data: [18, 110, 45],
+                        backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } },
+                    title: { display: true, text: 'Efficiency Gains: Manual vs. Robotic', color: '#fff', font: {size: 16} }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }, 
+                        ticks: { color: '#94a3b8' } 
+                    },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
