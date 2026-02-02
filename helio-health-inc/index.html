@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helio Health Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        margin: 0;
+        padding: 0;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+    }
+
+    .title-main {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* Grid Layouts */
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    /* Typography Elements */
+    h2 {
+        color: #fff;
+        font-size: 1.5rem;
+        margin-top: 0;
+        border-left: 4px solid #7c3aed;
+        padding-left: 15px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #a78bfa;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+        color: #cbd5e1;
+    }
+
+    ul li::before {
+        content: "•";
+        color: #7c3aed;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+    }
+
+    /* Financial Dashboard Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #e2e8f0;
+        font-size: 0.9rem;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+        color: #a78bfa;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .metric-value {
+        font-weight: 700;
+        color: #fff;
+        font-size: 1.1rem;
+    }
+
+    .metric-positive {
+        color: #4ade80;
+    }
+
+    /* Chart Containers */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* Tags */
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .tag-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border: 1px solid #7c3aed; }
+    .tag-med { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid #3b82f6; }
+    
+    /* Footer */
+    .footer {
+        text-align: center;
+        margin-top: 60px;
+        color: #64748b;
+        font-size: 0.8rem;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: 600;">Helio Health Inc.</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h1 class="title-main">Healthcare Robotics Portfolio</h1>
+        <p class="subtitle">
+            Strategic analysis for Helio Health Inc. focusing on high-impact automation in behavioral health, substance use recovery, and facility logistics. The proposed portfolio targets a net annual benefit of ~£160k with a payback period of under 12 months.
+        </p>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="grid-3">
+        <!-- Card A -->
+        <div class="glass-card">
+            <span class="tag tag-high">PATHWAY A</span>
+            <h3>Medication Automation</h3>
+            <p>Deployment of robotic dispensing cabinets and packaging automation to secure MAT (Medication Assisted Treatment) and psychiatric pharmaceuticals.</p>
+            <ul>
+                <li><strong>Impact:</strong> 40-60% reduction in med-pass time.</li>
+                <li><strong>Safety:</strong> Biometric chain of custody.</li>
+                <li><strong>ROI:</strong> ~£200k/year in labor value reallocation.</li>
+            </ul>
+        </div>
+
+        <!-- Card B -->
+        <div class="glass-card">
+            <span class="tag tag-med">PATHWAY B</span>
+            <h3>Facility & Logistics AMRs</h3>
+            <p>Autonomous Mobile Robots for floor scrubbing, UV disinfection, and linen transport within high-density residential centers.</p>
+            <ul>
+                <li><strong>Impact:</strong> Consistent hygiene in 24/7 facilities.</li>
+                <li><strong>Efficiency:</strong> Reduces non-clinical staff movement.</li>
+                <li><strong>Status:</strong> Low risk, immediate deployment.</li>
+            </ul>
+        </div>
+
+        <!-- Card C -->
+        <div class="glass-card">
+            <span class="tag tag-med">PATHWAY C</span>
+            <h3>Telepresence Network</h3>
+            <p>Remote specialist access via robotic endpoints for safety rounds and psychiatric evaluations across distributed clinics.</p>
+            <ul>
+                <li><strong>Impact:</strong> Increases billable encounters.</li>
+                <li><strong>Access:</strong> Specialist reach to rural clinics.</li>
+                <li><strong>Integration:</strong> Seamless EHR connectivity.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h2 style="margin-bottom: 25px;">Financial Performance Dashboard</h2>
+    <div class="grid-2">
+        <!-- Data Table -->
+        <div class="glass-card" style="margin-bottom: 0;">
+            <h3 style="margin-bottom: 20px;">ROI Metrics: Pathway A</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value (Estimated)</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Capital Investment</td>
+                        <td class="metric-value">£120,000</td>
+                        <td>Amortized 5y</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Labor Savings</td>
+                        <td class="metric-value">£197,100</td>
+                        <td class="metric-positive">Reallocated</td>
+                    </tr>
+                    <tr>
+                        <td>Net Annual Benefit</td>
+                        <td class="metric-value">£160,000</td>
+                        <td class="metric-positive">Post-Maint</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td class="metric-value">< 12 Months</td>
+                        <td class="metric-positive">Rapid</td>
+                    </tr>
+                    <tr>
+                        <td>5-Year Cumulative Net</td>
+                        <td class="metric-value">> £700,000</td>
+                        <td class="metric-positive">High Growth</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts -->
+        <div class="glass-card" style="margin-bottom: 0;">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Throughput Chart -->
+    <div class="glass-card">
+        <h3 style="margin-bottom: 20px; text-align: center;">Clinical Capacity Uplift (Visits/Day)</h3>
+        <div class="chart-container" style="height: 250px;">
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="footer">
+        Research generated by OPEN DROIDS for Internal Consultation. Data based on industry averages for behavioral health facilities.
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    const gradient = ctx1.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    gradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£)',
+                data: [40000, 190000, 360000, 540000, 750000],
+                borderColor: '#7c3aed',
+                backgroundColor: gradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: '5-Year Financial Projection (Pathway A)' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Medication Pass', 'Patient Admissions', 'Safety Rounds', 'Specialist Consults'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [100, 40, 80, 20],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [150, 65, 120, 35],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
