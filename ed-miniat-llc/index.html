@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ed Miniat LLC | Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .col-span-4 { grid-column: span 4; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-12 { grid-column: span 12; }
+
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 140px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+        .metric-sub {
+            font-size: 0.875rem;
+            color: #10b981; /* Green for positive */
+        }
+
+        .section-title {
+            color: var(--text-main);
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 12px;
+        }
+
+        ul.pathways {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.pathways li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        ul.pathways strong {
+            color: var(--accent-purple);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-container { display: flex; flex-direction: column; }
+            .card { width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <div class="subtitle">Open Droids Intelligence</div>
+            <h1>Ed Miniat LLC</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="color: var(--text-muted);">Report Type</div>
+            <div style="font-weight: bold;">Robotics Feasibility & ROI</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary Card -->
+    <div class="grid-container">
+        <div class="card col-span-12">
+            <h3 class="section-title">Strategic Vision</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                Leveraging Ed Miniat's heritage in precision sous-vide processing, this strategy proposes an automated "Flagship Service Model." By integrating robotic finishing arms for consistent protein searing and autonomous runners for service, Ed Miniat can bridge the gap between industrial food safety and modern fast-casual hospitality.
+            </p>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="card col-span-4 metric-card">
+            <span class="metric-label">Projected Labor Reduction</span>
+            <span class="metric-value">22%</span>
+            <span class="metric-sub">▼ OPEX in FOH Operations</span>
+        </div>
+        <div class="card col-span-4 metric-card">
+            <span class="metric-label">Est. Payback Period</span>
+            <span class="metric-value">13.5</span>
+            <span class="metric-sub">Months per Unit</span>
+        </div>
+        <div class="card col-span-4 metric-card">
+            <span class="metric-label">Throughput Efficiency</span>
+            <span class="metric-value">+30%</span>
+            <span class="metric-sub">▲ Peak Hour Capacity</span>
+        </div>
+
+        <!-- Chart: Labor Savings -->
+        <div class="card col-span-8">
+            <h3 class="section-title">5-Year Cumulative Labor Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card col-span-4">
+            <h3 class="section-title">Automation Pathways</h3>
+            <ul class="pathways">
+                <li>
+                    <strong>Pathway A:</strong> Autonomous Serving<br>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Reduces step-fatigue, improves bussing speed.</span>
+                </li>
+                <li>
+                    <strong>Pathway B:</strong> Precision Searing<br>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Robotic arms for perfect sous-vide finishing.</span>
+                </li>
+                <li>
+                    <strong>Pathway C:</strong> AI Kiosks<br>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Upselling & data capture on protein preferences.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chart: Table Turnover -->
+        <div class="card col-span-6">
+            <h3 class="section-title">Table Turnover Rate (Avg Per Shift)</h3>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card col-span-6">
+            <h3 class="section-title">Implementation Roadmap</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                <div style="display:flex; align-items:center;">
+                    <div style="width: 60px; color: var(--accent-purple); font-weight:bold;">Y1</div>
+                    <div style="color: var(--text-muted);">Pilot "Innovation Cafe" at HQ</div>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <div style="width: 60px; color: var(--accent-purple); font-weight:bold;">Y2</div>
+                    <div style="color: var(--text-muted);">Integrate Auto-Grill for Sous Vide</div>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <div style="width: 60px; color: var(--accent-purple); font-weight:bold;">Y3</div>
+                    <div style="color: var(--text-muted);">Data Link: POS to Robotic Throughput</div>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <div style="width: 60px; color: var(--accent-purple); font-weight:bold;">Y5</div>
+                    <div style="color: var(--text-muted);">Franchise "Automated Kitchen" Model</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [67500, 145000, 230000, 320000, 450000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Bar Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Tables Served Per Hour',
+                    data: [12, 18],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#38bdf8'],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
