@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Transit Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 118, 110, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Financial Dashboard */
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap Steps */
+        .roadmap-step {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .roadmap-year {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <span class="tag">Open Droids Intelligence</span>
+        <h1>Laser Transit: Strategic Automation</h1>
+        <p>Logistics & Warehouse Modernization Assessment</p>
+    </div>
+
+    <!-- Executive & Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <p>Laser Transit is positioned to transition from a traditional 3PL to a tech-enabled fulfillment hub. By implementing a "Dark Warehouse" strategy for high-frequency zones, the organization can decouple revenue growth from labor market volatility, securing dominance in the Northeast logistics corridor.</p>
+        </div>
+        <div class="card">
+            <h2>02. Org Profile</h2>
+            <p><strong>Location:</strong> Lacona & Syracuse Metro, NY<br>
+            <strong>Capacity:</strong> 400,000+ sq ft across facilities<br>
+            <strong>Current Model:</strong> Manual Forklift, Cross-docking, Asset-based Fleet<br>
+            <strong>Advantage:</strong> I-81 Corridor Proximity</p>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <h3 style="margin-left: 5px; color: #94a3b8;">ROBOTICS PATHWAYS</h3>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Pathway A: AMRs</h3>
+            <p><strong>Internal Transport</strong></p>
+            <p>Deployment of Autonomous Mobile Robots for pallet movement. Reducing "deadhead" manual travel.</p>
+            <span class="tag">Target: 65% Travel Reduction</span>
+        </div>
+        <div class="card">
+            <h3>Pathway B: ASRS</h3>
+            <p><strong>Picking & Accuracy</strong></p>
+            <p>Goods-to-Person robots for fulfillment clients. Maximizing vertical density.</p>
+            <span class="tag">Target: 99.99% Accuracy</span>
+        </div>
+        <div class="card">
+            <h3>Pathway C: AI Ops</h3>
+            <p><strong>Predictive Logistics</strong></p>
+            <p>Integrating warehouse data with fleet GPS for predictive dock staging.</p>
+            <span class="tag">Target: -45min Turnaround</span>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>03. Financial Impact Model</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-label">Est. CAPEX Per Station</div>
+                <div class="metric-value">$75k</div>
+                <div class="metric-label">Average Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">35%</div>
+                <div class="metric-label">Labor & Energy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Timeline</div>
+                <div class="metric-value">20 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+        </div>
+        
+        <!-- Charts Area -->
+        <div class="grid-2" style="margin-top: 30px;">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>04. Implementation Roadmap</h2>
+        <div class="grid-2">
+            <div>
+                <div class="roadmap-step">
+                    <div class="roadmap-year">Year 1: Pilot</div>
+                    <p>WiFi infrastructure upgrade. Deploy 3-5 AMRs for pallet transport.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-year">Year 2: Integration</div>
+                    <p>WMS Integration. Expand fleet to 15 units. AI Dock Scheduling.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-year">Year 3: Optimization</div>
+                    <p>Deploy Goods-to-Person picking. 24-hr "Lights Out" zones.</p>
+                </div>
+            </div>
+            <div>
+                <div class="roadmap-step">
+                    <div class="roadmap-year">Year 4: Standardization</div>
+                    <p>Replicate stack to satellite facilities. Central Control Tower.</p>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-year">Year 5: Full Ecosystem</div>
+                    <p>Full fleet & warehouse synchronization. Market leader status.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (USD Millions)',
+                data: [0.2, 0.8, 1.8, 3.2, 5.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#fff' } },
+                title: { display: true, text: '5-Year Projected Savings', color: '#94a3b8' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Inbound Pallets', 'Picking (Lines/Hr)', 'Outbound Loads'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [100, 45, 80],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [160, 135, 120],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#fff' } },
+                title: { display: true, text: 'Throughput Efficiency Per Hour', color: '#94a3b8' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
