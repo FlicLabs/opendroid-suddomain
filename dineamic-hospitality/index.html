@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineAmic Hospitality | Automation Intelligence Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-glow);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Metrics */
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-marker {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 0 10px var(--accent-purple);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Research Division</div>
+            <h1>DineAmic Hospitality</h1>
+        </div>
+        <div style="text-align: right; color: var(--text-muted);">
+            <div>Status: <span style="color: #4ade80;">Strategic Analysis Complete</span></div>
+            <div>Date: Oct 2023</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Executive Vision</h2>
+            <p>Robotics should not replace the high-touch hospitality that defines DineAmic, but elevate it. By automating low-skill, repetitive tasks (bussing/running), human staff can focus entirely on guest engagement and experiential dining. The goal is a 20% increase in operational efficiency.</p>
+        </div>
+        <div class="card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Market:</strong> Chicago, IL (Full Service/Upscale)<br>
+            <strong>Challenge:</strong> High-volume turnover vs. labor fatigue.<br>
+            <strong>Strategy:</strong> Hybrid Service Model. Robots handle logistics; Humans handle hospitality.</p>
+        </div>
+    </div>
+
+    <!-- ROI Dashboard -->
+    <div class="card">
+        <h2>Hospitality ROI Dashboard</h2>
+        <div class="grid-3">
+            <div class="metric">
+                <div class="metric-value">$40k</div>
+                <div class="metric-label">Max Capex Per Unit</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">13mo</div>
+                <div class="metric-label">Target Payback Period</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">20%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Table Turnover Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="card">
+        <h2>Strategic Pathways</h2>
+        <div class="grid-3">
+            <div>
+                <h3 style="color:white;">Pathway A: FOH</h3>
+                <p><strong>Runners & Bussers:</strong> Deployment of tiered robots for heavy lifting. Increases server floor time for upsells.</p>
+            </div>
+            <div>
+                <h3 style="color:white;">Pathway B: BOH</h3>
+                <p><strong>Auto-Frying:</strong> Automated baskets for consistency in high-volume appetizers (calamari/fries).</p>
+            </div>
+            <div>
+                <h3 style="color:white;">Pathway C: AI</h3>
+                <p><strong>Voice Agents:</strong> AI-driven catering intake and phone orders to ensure 100% accuracy and algorithmic upselling.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="step-marker">Y1</div>
+            <div><strong>Pilot Program:</strong> Deploy 2 Runner units in Bar Siena.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-marker">Y2</div>
+            <div><strong>Integration:</strong> Expand to 3 major venues; introduce BOH automation.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-marker">Y3</div>
+            <div><strong>Optimization:</strong> POS integration for predictive kitchen firing.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-marker">Y5</div>
+            <div><strong>Ecosystem Maturity:</strong> Full fleet scale & AI Concierge.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($)',
+                data: [54000, 162000, 320000, 580000, 950000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Turnover Rate
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Avg Table Turns per Night',
+                data: [3.2, 4.1],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
