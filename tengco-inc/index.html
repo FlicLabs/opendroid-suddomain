@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tengco Inc. | Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-color: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            color: var(--accent-color);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+            border-color: var(--accent-color);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            display: inline-block;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .roi-highlight {
+            color: var(--success);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <p>Open Droids Confidential</p>
+        <h1>Tengco Inc. Strategic Research</h1>
+        <div style="height: 4px; width: 100px; background: var(--accent-color); margin: 20px auto; border-radius: 2px; box-shadow: 0 0 15px var(--accent-color);"></div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Estimated CapEx</div>
+            <div class="metric-value">$315k</div>
+            <p style="font-size: 0.8rem; margin:0; color: var(--success);">Pilot Phase</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Annual OpEx Savings</div>
+            <div class="metric-value">$160k</div>
+            <p style="font-size: 0.8rem; margin:0; color: var(--success);">Labor & Energy</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">&lt; 24 Mo</div>
+            <p style="font-size: 0.8rem; margin:0; color: var(--success);">Target Achieved</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Pick Rate Increase</div>
+            <div class="metric-value">5x</div>
+            <p style="font-size: 0.8rem; margin:0; color: var(--success);">Manual vs. VLM</p>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="section-card">
+        <h2>Executive Summary</h2>
+        <p>Tengco Inc. operates at the critical intersection of global sourcing and custom distribution. The high-level vision for introducing robotics focuses on <strong>Heavy-Payload Automation</strong> and <strong>High-Density Retrieval</strong>. By transitioning from manual heavy-lifting to automated logistics, Tengco can mitigate ergonomic risks associated with fasteners while increasing accuracy for complex bills of materials.</p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="section-card">
+        <h2>Projected Performance</h2>
+        <div class="charts-row">
+            <div>
+                <h3>Cumulative Savings (5 Years)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Throughput Velocity (Lines/Hour)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="section-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <span class="badge">PATHWAY A</span>
+                <h3 style="margin-top: 10px;">AMRs for Transport</h3>
+                <p>Replacing manual forklifts with heavy-duty AMRs (1000kg+). Reduces travel time by 50% and improves safety in heavy-pallet zones.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="badge">PATHWAY B</span>
+                <h3 style="margin-top: 10px;">Piece Picking & ASRS</h3>
+                <p>Vertical Lift Modules (VLMs) for high-density fastener storage. Increases pick rates from 50 to 250+ lines per hour.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="badge">PATHWAY C</span>
+                <h3 style="margin-top: 10px;">AI Logistics</h3>
+                <p>Predictive slotting based on international lead times. AI positions inventory dynamically before pick shifts begin.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="section-card">
+        <h2>Implementation Roadmap</h2>
+        <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+            <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px;">
+                <strong style="color: var(--text-main);">Year 1:</strong> Pilot Foundation. Deploy WCS, 1 VLM, and 2 Heavy-Duty AMRs.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px;">
+                <strong style="color: var(--text-main);">Year 2:</strong> Expansion. Pick-to-Light integration and fleet expansion.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px;">
+                <strong style="color: var(--text-main);">Year 3:</strong> Optimization. Full AI dynamic slotting integration.
+            </li>
+            <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px;">
+                <strong style="color: var(--text-main);">Year 4:</strong> Scaling. Replicating the model to secondary distribution centers (MO).
+            </li>
+            <li>
+                <strong style="color: var(--text-main);">Year 5:</strong> Smart Warehouse. 90% automated material handling with robotic bin picking.
+            </li>
+        </ul>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 50px;">
+        <p>&copy; 2023 Open Droids Consulting for Tengco Inc.</p>
+    </footer>
+</div>
+
+<script>
+    // Global defaults for dark theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [160000, 340000, 550000, 800000, 1100000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Robotic VLM'],
+            datasets: [{
+                label: 'Lines Per Hour',
+                data: [50, 250],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
