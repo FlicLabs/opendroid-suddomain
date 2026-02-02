@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alto-Shaam Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Headers */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+
+        .badge-autom {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 40px;">
+        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 5px; color: var(--accent-purple);">Open Droids Strategic Research</p>
+        <h1>Alto-Shaam Inc. <span style="font-weight: 300; opacity: 0.5;">| Automation Feasibility</span></h1>
+    </div>
+
+    <!-- ROI DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value">17</div>
+            <div class="metric-label">Month Payback</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">20%</div>
+            <div class="metric-label">Labor OpEx Reduction</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">$85k</div>
+            <div class="metric-label">Est. Pilot CAPEX</div>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="chart-grid">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Labor Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Efficiency: Manual vs. Robot-Assisted</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- CONTENT GRID -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The "Vector-Bot Integration Initiative" positions Alto-Shaam not merely as an equipment manufacturer, but as a holistic architect of the future kitchen. By deploying robotics within Corporate Culinary Institutes, Alto-Shaam validates the interoperability of their Vector Multi-Cook Ovens with autonomous loading systems.</p>
+        <span class="tag">Strategic Pivot</span> <span class="tag">Automation</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            
+            <h3 style="color: var(--accent-blue);">A. Front-of-House (AMRs)</h3>
+            <p>Deployment of autonomous runners in Tasting Rooms to handle sample logistics, allowing sales consultants to maintain high-touch client interaction without interruption.</p>
+            
+            <h3 style="color: var(--accent-blue);">B. Back-of-House (Cobots)</h3>
+            <p>Integration of articulated arms for "Zero-Touch" loading/unloading of Vector and Converge ovens, proving consistency for QSR enterprise clients.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+                <li style="margin-bottom: 15px; border-left: 2px solid var(--accent-purple); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 1:</strong> Smart Pilot at HQ (Menomonee Falls).
+                </li>
+                <li style="margin-bottom: 15px; border-left: 2px solid var(--accent-purple); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 2:</strong> API Data Middleware Development.
+                </li>
+                <li style="margin-bottom: 15px; border-left: 2px solid var(--accent-purple); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 3:</strong> "Turnkey Automation Bundle" for Sales.
+                </li>
+                <li style="margin-bottom: 15px; border-left: 2px solid var(--accent-blue); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 5:</strong> AI Predictive Cooking Integration.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [60000, 125000, 195000, 270000, 350000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover / Efficiency
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Demo Prep Time', 'Serving Efficiency', 'Throughput'],
+            datasets: [{
+                label: 'Manual Process',
+                data: [45, 60, 70],
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                borderWidth: 1
+            },
+            {
+                label: 'Robot-Assisted',
+                data: [20, 90, 95],
+                backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                borderColor: '#3b82f6',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
