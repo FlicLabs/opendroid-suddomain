@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Bear Diner Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at top right, rgba(124, 58, 237, 0.2), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .header h3 {
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin: 5px 0 0 0;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tag-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .tag-b { background: rgba(234, 88, 12, 0.2); color: #fdba74; }
+        .tag-c { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.8rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>Open Droids</h1>
+            <h3>Strategic Automation Report: Black Bear Diner</h3>
+        </div>
+        <div style="text-align: right;">
+            <span style="color: var(--accent-purple); font-weight: bold;">STATUS: CONFIDENTIAL</span><br>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">DATE: OCTOBER 2023</span>
+        </div>
+    </div>
+
+    <!-- Top Row: Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>A strategic shift to a hybrid service model that preserves Black Bear Diner's "homey" atmosphere while integrating robotics to handle heavy lifting and logistics. The goal is to elevate the human server role to "Guest Experience Manager" by automating the runner and busser functions.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <p><strong>Entity:</strong> Black Bear Diner<br>
+            <strong>Sector:</strong> Family Dining / Full Service<br>
+            <strong>Locations:</strong> ~157 Units<br>
+            <strong>Core Challenge:</strong> High plate weight, server fatigue, and table turnover limits during breakfast rush.</p>
+        </div>
+    </div>
+
+    <!-- ROI Dashboard -->
+    <div class="glass-card">
+        <h2>Hospitality ROI Dashboard</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-value">$40,000</div>
+                <div class="metric-label">Est. CAPEX Per Store</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt; 10 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$54,000</div>
+                <div class="metric-label">Annual Labor Savings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Cumulative Savings (5 Years)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Table Turnover Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-3">
+            <div>
+                <span class="pathway-tag tag-a">PATHWAY A</span>
+                <h3 style="margin-top:5px;">FOH Service Bots</h3>
+                <p style="font-size: 0.9rem;">Deployment of Pudu/BellaBot units to handle food running and heavy bus tub returns, reducing physical strain.</p>
+            </div>
+            <div>
+                <span class="pathway-tag tag-b">PATHWAY B</span>
+                <h3 style="margin-top:5px;">Automated Grilling</h3>
+                <p style="font-size: 0.9rem;">Integration of automated fry arms and clam-shell grills to ensure consistency for hash browns and fried sides.</p>
+            </div>
+            <div>
+                <span class="pathway-tag tag-c">PATHWAY C</span>
+                <h3 style="margin-top:5px;">Voice AI Agents</h3>
+                <p style="font-size: 0.9rem;">AI-driven telephony for takeout orders to eliminate hold times and guarantee upselling scripts.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <span class="year-badge">YEAR 1</span>
+            <span>Pilot Program: 5 High-Volume California Locations.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year-badge">YEAR 2</span>
+            <span>Regional Rollout (50% Locations) & BOH Testing.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year-badge">YEAR 3</span>
+            <span>Full FOH Integration & Voice AI Systemwide.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year-badge">YEAR 4</span>
+            <span>Smart Kitchen (KDS) & Robot Interconnectivity.</span>
+        </div>
+        <div class="roadmap-item">
+            <span class="year-badge">YEAR 5</span>
+            <span>Fully Autonomous Logistics Ecosystem.</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [54000, 108000, 162000, 216000, 270000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot Assisted'],
+            datasets: [{
+                label: 'Turnover Time (Minutes)',
+                data: [55, 42],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#3b82f6'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#3b82f6'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }, 
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#ffffff', font: { weight: 'bold' } } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
