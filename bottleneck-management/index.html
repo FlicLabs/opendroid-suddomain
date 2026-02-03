@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottleneck Management | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .sub-header {
+            color: var(--accent-purple);
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-purple);
+        }
+
+        /* Flex layout for charts and content */
+        .content-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .pathway-item {
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .content-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: var(--card-border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="sub-header">Open Droids Internal Research</div>
+            <h1>Bottleneck Management</h1>
+            <p style="color: var(--text-muted);">Automation Strategy & Implementation Roadmap</p>
+        </div>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target Labor Savings</div>
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Front of House</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Est. Payback Period</div>
+                <div class="metric-value">&lt; 11 Mo</div>
+                <div class="metric-label">Post-Implementation</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Turnover Velocity</div>
+                <div class="metric-value">+12%</div>
+                <div class="metric-label">Table Utilization</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Deployment Cost</div>
+                <div class="metric-value">$50k</div>
+                <div class="metric-label">Pilot Location</div>
+            </div>
+        </div>
+
+        <!-- Main Content & Charts -->
+        <div class="content-split">
+            
+            <!-- Left Column: Strategy -->
+            <div class="glass-card">
+                <h2>Strategic Pathways</h2>
+                
+                <div class="pathway-item">
+                    <h3>Pathway A: FOH Logistics</h3>
+                    <p>Deployment of shelf-style robots for food running. Critical for large footprint venues like City Works to reduce server travel time.</p>
+                </div>
+
+                <div class="pathway-item">
+                    <h3>Pathway B: Beverage Consistency</h3>
+                    <p>Automated monitoring for draft systems to reduce waste in high-volume beer programs.</p>
+                </div>
+
+                <div class="pathway-item">
+                    <h3>Pathway C: AI Acquisition</h3>
+                    <p>Voice agents for reservations and AI-driven upselling on handheld server terminals.</p>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3>Financial Snapshot</h3>
+                    <p><strong>CAPEX:</strong> $15k - $45k per location.<br>
+                    <strong>OPEX Impact:</strong> Replaces 1.5 - 2 FTE runners.<br>
+                    <strong>Net Year 1 Savings:</strong> ~$14,200.</p>
+                </div>
+            </div>
+
+            <!-- Right Column: Visual Data -->
+            <div>
+                <div class="glass-card">
+                    <h2>Cumulative Savings (5 Years)</h2>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Table Turnover Impact</h2>
+                    <div class="chart-container">
+                        <canvas id="turnoverChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h2>5-Year Implementation Roadmap</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; text-align: center;">
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--accent-purple)">Year 1</h3>
+                    <p style="font-size: 0.8rem">Pilot Program<br>Map Floors<br>Staff Training</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--accent-purple)">Year 2</h3>
+                    <p style="font-size: 0.8rem">Expansion<br>POS Integration<br>Top 5 Locations</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--accent-purple)">Year 3</h3>
+                    <p style="font-size: 0.8rem">Optimization<br>Bev Automation<br>30% Labor Cut</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--accent-purple)">Year 4</h3>
+                    <p style="font-size: 0.8rem">Standardization<br>New Store Packages<br>Full Fleet</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;">
+                    <h3 style="color: var(--accent-purple)">Year 5</h3>
+                    <p style="font-size: 0.8rem">Innovation<br>Humanoid Tech<br>Predictive AI</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            GENERATED BY OPEN DROIDS CONSULTING AGENT | CONFIDENTIAL
+        </div>
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings ($)',
+                    data: [14200, 95000, 210000, 350000, 520000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Rate Bar Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Standard Shift', 'Peak Friday', 'Game Day'],
+                datasets: [
+                    {
+                        label: 'Manual Service',
+                        data: [45, 55, 60], // Minutes per table
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0
+                    },
+                    {
+                        label: 'Robot-Assisted',
+                        data: [38, 45, 48], // Minutes per table
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' mins';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Avg. Table Time (Minutes)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
