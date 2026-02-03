@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureDial Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #06b6d4;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--accent-purple);
+            font-size: 1.1rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            background: rgba(124, 58, 237, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+        }
+
+        .roadmap-year {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .agent-badge {
+            background: var(--glass-bg);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="report-header">
+            <div>
+                <div class="agent-badge">OPEN DROIDS RESEARCH</div>
+                <h1>FutureDial</h1>
+                <span style="color: var(--text-muted)">Strategic Automation Assessment</span>
+            </div>
+            <div style="text-align: right;">
+                <h3 style="margin:0; color:white;">Status: READY</h3>
+                <small style="color: var(--text-muted)">Oct 2023</small>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">22mo</div>
+                <div class="metric-label">Target Payback</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Labor Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">120</div>
+                <div class="metric-label">Target UPH</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$450k</div>
+                <div class="metric-label">Pilot CAPEX</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>01. Executive Summary</h2>
+            <p>FutureDial is positioned to lead the "Dark Warehouse" revolution in the circular economy. By bridging the gap between their industry-leading SMART platform and physical robotics, the company can transition from semi-automated processing to fully autonomous operations. This shift targets the elimination of subjective grading errors and bottlenecking during high-volume device launches.</p>
+        </div>
+
+        <div class="card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            <div class="pathways-grid">
+                <div>
+                    <h3>Pathway A: AMRs</h3>
+                    <p><strong>Internal Transport.</strong> Deploying Autonomous Mobile Robots to replace manual cart conveyance between Receiving, Triage, and Shipping zones. Eliminates non-value-added walking time.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: Robotic Picking</h3>
+                    <p><strong>Precision Handling.</strong> Collaborative arms (Cobots) for "Pick-and-Plug" operations. 100% consistency in connector handling, drastically reducing port damage and ensuring 24/7 rig utilization.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: AI Grading</h3>
+                    <p><strong>Computer Vision.</strong> Automated cosmetic grading tunnels. Moves from subjective human review to objective, multi-spectrum analysis, increasing throughput by 300%.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">5-Year Cumulative Savings Projection</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">Throughput: Manual vs. Robotic</h3>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>03. Implementation Roadmap</h2>
+            <ul class="roadmap-list">
+                <li><span class="roadmap-year">Year 1</span> <strong>Pilot Phase:</strong> Single workcell deployment for "Pick-and-Plug" & Basic Conveyance.</li>
+                <li><span class="roadmap-year">Year 2</span> <strong>Vision Integration:</strong> Roll out AI-based cosmetic grading tunnels connected to SMART platform.</li>
+                <li><span class="roadmap-year">Year 3</span> <strong>Expansion:</strong> Scale robotic workcells to 50% of production floor. Introduce fleet AMRs.</li>
+                <li><span class="roadmap-year">Year 4</span> <strong>Connected Ecosystem:</strong> Full WMS integration with Predictive Maintenance algorithms.</li>
+                <li><span class="roadmap-year">Year 5</span> <strong>Autonomous Processing:</strong> Near-zero touch processing for 80% of Grade A/B stock.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (USD Millions)',
+                    data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#06b6d4',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Process', 'Robotic Assist', 'Fully Autonomous'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [45, 85, 120],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(6, 182, 212, 0.7)',
+                        '#7c3aed'
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
