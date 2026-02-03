@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTI Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-purple);
+            color: var(--text-muted);
+        }
+
+        strong {
+            color: white;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .year-badge {
+            background-color: var(--accent-purple);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Intelligence Unit</div>
+                <h1>Strategic Research Report</h1>
+                <div style="color: var(--accent-blue); margin-top: 5px;">Client: Conversion Technologies International Inc.</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Date</div>
+                <div style="color: white; font-weight: 600;">October 2023</div>
+            </div>
+        </header>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">35%</div>
+                <div class="metric-label">Projected Labor Reduction</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">&lt;22</div>
+                <div class="metric-label">Months Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">25%</div>
+                <div class="metric-label">Throughput Increase</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Left Column: Research Text -->
+            <div class="main-content">
+                
+                <div class="glass-card">
+                    <h3>01. Executive Vision</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6;">
+                        Transitioning CTI to an <strong>Autonomous Converting Facility</strong>. By decoupling labor availability from production capacity, CTI can orchestrate a fluid, automated material transport system connecting slitting, laminating, and die-cutting stations. This shift addresses labor shortages and enhances safety in handling heavy adhesive rolls.
+                    </p>
+                </div>
+
+                <div class="glass-card">
+                    <h3>02. Robotics Opportunities</h3>
+                    <p style="color:white; margin-bottom:10px;"><strong>Pathway A: AMRs for Internal Transport</strong></p>
+                    <ul>
+                        <li>Automated transport of "master rolls" and pallets.</li>
+                        <li>Elimination of forklift waiting times.</li>
+                    </ul>
+                    
+                    <p style="color:white; margin-bottom:10px; margin-top:20px;"><strong>Pathway B: Robotic Piece Picking & ASRS</strong></p>
+                    <ul>
+                        <li>Vacuum gripper arms for stacking die-cut parts.</li>
+                        <li>Vision systems for real-time defect detection.</li>
+                        <li>Vertical Lift Modules (VLM) for tooling storage.</li>
+                    </ul>
+
+                    <p style="color:white; margin-bottom:10px; margin-top:20px;"><strong>Pathway C: AI-Driven Logistics</strong></p>
+                    <ul>
+                        <li>Predictive material staging based on job schedules.</li>
+                        <li>Reduction of "search and retrieve" downtime.</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3>03. Implementation Roadmap</h3>
+                    <div class="roadmap-step">
+                        <span class="year-badge">YEAR 1</span>
+                        <span style="color: var(--text-muted);">Foundation & Pilot: Network upgrades and 2 Heavy Payload AMRs.</span>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="year-badge">YEAR 2</span>
+                        <span style="color: var(--text-muted);">Expansion: Rollout to Slitting/Die-Cutting & First Picking Arm.</span>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="year-badge">YEAR 3</span>
+                        <span style="color: var(--text-muted);">Data Integration: AI-driven predictive logistics software.</span>
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="year-badge">YEAR 5</span>
+                        <span style="color: var(--text-muted);">Full Ecosystem: Dock-to-dock automated material flow.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Charts & Financials -->
+            <div class="sidebar">
+                <div class="glass-card">
+                    <h3>Cumulative Savings (5 Years)</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                        *Based on reallocation of labor and efficiency gains.
+                    </p>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Throughput Comparison</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; text-align: center;">
+                        Units processed per hour (Die-Cutting/Packing).
+                    </p>
+                </div>
+
+                <div class="glass-card">
+                    <h3>Financial Snapshot</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                        <span style="color: var(--text-muted);">CAPEX / Station</span>
+                        <span style="color: var(--accent-blue);">$50k - $100k</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                        <span style="color: var(--text-muted);">Energy Savings</span>
+                        <span style="color: var(--accent-blue);">15%</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">Annual Benefit</span>
+                        <span style="color: var(--accent-blue);">~$230k</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 280000, 550000, 890000, 1300000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic Assist'],
+                datasets: [{
+                    label: 'Units / Hour',
+                    data: [120, 280],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        '#38bdf8'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        '#38bdf8'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
