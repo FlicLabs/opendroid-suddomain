@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Pearce | Automation Strategy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-trend {
+            color: var(--success);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+            color: #fff;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .pathway-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .pathway-item:last-child {
+            border-bottom: none;
+        }
+
+        .pathway-title {
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research</div>
+                <h1>Simon Pearce Automation Strategy</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Report ID</div>
+                <div style="color: #fff; font-weight: bold;">SP-2024-ROBO</div>
+            </div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Est. Annual Savings</div>
+                <div class="metric-value">$86k</div>
+                <div class="metric-trend">▲ 20% Labor Efficiency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">7.1 Mo</div>
+                <div class="metric-trend">⚡ Rapid ROI</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Turnover Increase</div>
+                <div class="metric-value">15%</div>
+                <div class="metric-trend">▲ Addl. Revenue</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Breakage Reduction</div>
+                <div class="metric-value">30%</div>
+                <div class="metric-trend">🛡 Glassware Safety</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Main Research Column -->
+            <div class="main-col">
+                <div class="glass-panel">
+                    <h2>Executive Summary</h2>
+                    <p>The strategic vision for Simon Pearce is "Invisible Automation." By utilizing robotics for heavy lifting (bussing stoneware/glass) and back-of-house precision, we reduce physical strain on staff and extend longevity, allowing servers to remain guest-focused. This is a hybrid service model where technology supports artisanal excellence.</p>
+                </div>
+
+                <div class="glass-panel">
+                    <h2>Robotics Opportunity Pathways</h2>
+                    
+                    <div class="pathway-item">
+                        <span class="pathway-title">PATHWAY A: FOH Serving & Bussing (Priority)</span>
+                        <p><strong>Rationale:</strong> Simon Pearce's signature heavy stoneware creates ergonomic risks. <br>
+                        <strong>Application:</strong> Deployment of autonomous shelf runners to transport dishes from kitchen to station.<br>
+                        <strong>Outcome:</strong> Servers stay at tables; robots do the heavy hauling.</p>
+                    </div>
+
+                    <div class="pathway-item">
+                        <span class="pathway-title">PATHWAY B: BOH Automated Prep</span>
+                        <p><strong>Rationale:</strong> Consistency in high-volume items like Vermont Cheddar Soup.<br>
+                        <strong>Application:</strong> Precision automated sous-vide and slicing systems.</p>
+                    </div>
+
+                    <div class="pathway-item">
+                        <span class="pathway-title">PATHWAY C: AI Voice Agents</span>
+                        <p><strong>Rationale:</strong> High volume of tourist/reservation calls.<br>
+                        <strong>Application:</strong> AI agents handling FAQs to free up host staff.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel">
+                    <h2>Financial Forecast</h2>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Column -->
+            <div class="side-col">
+                <div class="glass-panel">
+                    <h2>Client Profile</h2>
+                    <p><strong>Entity:</strong> Simon Pearce<br>
+                    <strong>Focus:</strong> Fine Dining & Glassblowing<br>
+                    <strong>Model:</strong> Full Service / Experiential<br>
+                    <strong>Location:</strong> Quechee, VT (Flagship)</p>
+                </div>
+
+                <div class="glass-panel">
+                    <h2>Implementation</h2>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted);">
+                        <li style="margin-bottom: 15px;"><span class="badge">Year 1</span> Pilot Runners at The Mill</li>
+                        <li style="margin-bottom: 15px;"><span class="badge">Year 2</span> AI Reservation Integration</li>
+                        <li style="margin-bottom: 15px;"><span class="badge">Year 3</span> Expansion to Retail Ops</li>
+                        <li style="margin-bottom: 15px;"><span class="badge">Year 5</span> Full Autonomous Ecosystem</li>
+                    </ul>
+                </div>
+
+                <div class="glass-panel">
+                    <h2>Turnover Analysis</h2>
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="turnoverChart"></canvas>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">Comparison of daily table turns per section.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Savings ($)',
+                    data: [86000, 178000, 275000, 380000, 495000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Rate
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic Assist'],
+                datasets: [{
+                    label: 'Table Turns (Avg Shift)',
+                    data: [3.2, 3.8],
+                    backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                    borderRadius: 6,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
