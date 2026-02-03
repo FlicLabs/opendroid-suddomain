@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wylie Implement | Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-item {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .pathway-title {
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .roadmap-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            padding: 10px;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            font-weight: bold;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .step-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header-section">
+            <div class="subtitle">Open Droids Consulting</div>
+            <h1>Strategic Research Report</h1>
+            <p style="color: var(--text-muted);">Client: Wylie Implement & Spray Centers</p>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">30%</div>
+                <div class="metric-label">Target OEE Increase</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">&lt;18m</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$120k</div>
+                <div class="metric-label">Max Cell CAPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">IP66</div>
+                <div class="metric-label">Cobot Standard</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>1. Executive Summary</h2>
+            <p>Wylie Implement & Spray Centers stands at a pivotal juncture in the agricultural manufacturing sector. The vision is to transition from a traditional fabrication model to a Smart Manufacturing ecosystem. By integrating Industry 4.0 principles—specifically collaborative robotics and autonomous transport—Wylie can address rural labor shortages, enhance fabrication safety, and increase production consistency while maintaining its legacy of durability.</p>
+        </div>
+
+        <div class="two-column">
+            <!-- Organizational Profile -->
+            <div class="card">
+                <h2>2. Organizational Profile</h2>
+                <p><strong>Sector:</strong> Discrete Manufacturing (High-Mix / Low-Volume)</p>
+                <p><strong>Locations:</strong> Texas HQ & Branches</p>
+                <p><strong>Core Processes:</strong> Heavy metal fabrication, welding, powder coating, assembly.</p>
+                <p><strong>Current Bottleneck:</strong> Manual material handling of WIP (Work-In-Process) and reliance on manual welding for simple structural seams.</p>
+            </div>
+
+            <!-- Robotics Pathways -->
+            <div class="card">
+                <h2>3. Opportunity Pathways</h2>
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway A: Collaborative Welding</span>
+                    Cobots for structural trailer frames. Reduces fatigue and ensures 100% bead consistency.
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway B: AMR Logistics</span>
+                    Autonomous mobile robots to move steel from plasma tables to bending stations.
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway C: EOL Inspection</span>
+                    Vision systems to inspect spray bars for paint coverage and weld integrity before shipping.
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="two-column">
+            <div class="card">
+                <h2>Cumulative Savings (5-Year)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="outputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Model -->
+        <div class="card">
+            <h2>4. Financial Model</h2>
+            <div class="two-column">
+                <div>
+                    <h3 style="font-size: 1.1rem; color: var(--accent);">CAPEX & OPEX</h3>
+                    <p style="color: var(--text-muted);">
+                        <strong>Initial Inv:</strong> $60k - $120k per cell.<br>
+                        <strong>Maintenance:</strong> ~$8k annually.<br>
+                        <strong>Scrap Reduction:</strong> 15% target.
+                    </p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; color: var(--accent);">ROI Drivers</h3>
+                    <p style="color: var(--text-muted);">
+                        <strong>Labor Reallocation:</strong> Moving staff to high-value tasks.<br>
+                        <strong>Capacity:</strong> 20% daily output increase.<br>
+                        <strong>Payback:</strong> < 18 months.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>5. Implementation Roadmap</h2>
+            <div class="roadmap-container">
+                <div class="roadmap-step">
+                    <div class="step-circle">Y1</div>
+                    <div class="step-text"><strong>Pilot</strong><br>1 Welding Cell<br>1 Transport AMR</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-circle">Y2</div>
+                    <div class="step-text"><strong>Expand</strong><br>3 New Cells<br>Fleet Software</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-circle">Y3</div>
+                    <div class="step-text"><strong>Integrate</strong><br>ERP Connection<br>Real-time Inv.</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-circle">Y4</div>
+                    <div class="step-text"><strong>Optimize</strong><br>Predictive Maint.<br>AI Analytics</div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="step-circle">Y5</div>
+                    <div class="step-text"><strong>Autonomy</strong><br>Lights Out Ops<br>Full Scaling</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Prepared by Open Droids | Confidential Research
+        </footer>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [45000, 150000, 320000, 550000, 850000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Output Comparison
+        const ctx2 = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Frame Welding', 'Parts Palletizing', 'Material Transport'],
+                datasets: [
+                    {
+                        label: 'Manual (Units/Hr)',
+                        data: [12, 45, 8],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cobot Assisted (Units/Hr)',
+                        data: [20, 90, 22],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
