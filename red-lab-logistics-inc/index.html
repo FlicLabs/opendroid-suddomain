@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Lab Logistics | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, #1e1b4b, transparent 40%),
+                              radial-gradient(circle at bottom left, #312e81, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(var(--accent-glow), transparent 60%);
+            opacity: 0.2;
+            transform: rotate(45deg);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Text Content */
+        .content-text p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+        }
+
+        .roadmap-year {
+            font-weight: bold;
+            color: var(--accent);
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research Division</div>
+                <h1>Red Lab Logistics Inc.</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Strategy Report</div>
+                <div style="font-weight: bold; color: var(--accent);">CONFIDENTIAL</div>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <div class="content-text">
+                <p>Red Lab Logistics is poised to transition from a manual 3PL provider to a high-velocity Smart Fulfillment Hub. By integrating AMRs and ASRS technology, the company can decouple revenue growth from labor shortages, targeting 99.9% inventory accuracy and a 3x increase in fulfillment velocity.</p>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target Labor Reduction</div>
+                <div class="metric-value">40%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Projected ROI Period</div>
+                <div class="metric-value">18 Mo</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Throughput Increase</div>
+                <div class="metric-value">3.5x</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Est. Pilot CAPEX</div>
+                <div class="metric-value">$1.6M</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="card">
+                <h2>5-Year Cumulative Savings ($M)</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Throughput Comparison (UPH)</h2>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Opportunity Pathways -->
+        <div class="card">
+            <h2>03. Strategic Pathways</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div>
+                    <strong style="color: #fff;">Pathway A: AMRs</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Goods-to-Person robotics to eliminate travel time. Enables 24/7 internal movement without shift premiums.</p>
+                </div>
+                <div>
+                    <strong style="color: #fff;">Pathway B: ASRS</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">High-density storage with robotic picking arms. Maximizes vertical space and ensures 99.9% pick accuracy.</p>
+                </div>
+                <div>
+                    <strong style="color: #fff;">Pathway C: AI Logistics</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Predictive algorithms for dynamic slotting and loading dock optimization to reduce detention fees.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>04. Implementation Roadmap</h2>
+            <ul class="roadmap-list">
+                <li>
+                    <span class="roadmap-year">YEAR 1</span>
+                    <span style="color: var(--text-muted);">Pilot Launch & Validation. Deploy AMRs in flagship facility. Establish baseline metrics.</span>
+                </li>
+                <li>
+                    <span class="roadmap-year">YEAR 2</span>
+                    <span style="color: var(--text-muted);">Integration & Optimization. Install ASRS for high-velocity SKUs. Full WMS/AI integration.</span>
+                </li>
+                <li>
+                    <span class="roadmap-year">YEAR 3</span>
+                    <span style="color: var(--text-muted);">Regional Expansion. Roll out architecture to all hubs. Reduce temp staffing by 80%.</span>
+                </li>
+                <li>
+                    <span class="roadmap-year">YEAR 4-5</span>
+                    <span style="color: var(--text-muted);">The Autonomous Ecosystem. Achieve "Dark Warehouse" capability for night shifts.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Chart Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0, 0.8, 2.1, 4.5, 7.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Throughput Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Picking', 'Robotic Assist', 'Full Automation'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [80, 250, 450],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        'rgba(124, 58, 237, 0.6)',
+                        '#7c3aed'
+                    ],
+                    borderRadius: 6,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
