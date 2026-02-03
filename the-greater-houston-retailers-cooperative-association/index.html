@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHRA Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e1b4b;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-accent) 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+            border: 1px solid var(--primary-glow);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-shadow: 0 0 20px var(--primary-glow);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Layout for Charts */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .content-text {
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+        
+        .roadmap-year {
+            font-weight: 800;
+            color: var(--primary);
+            min-width: 80px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div style="font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Open Droids Intelligence</div>
+            <h1>GHRA Strategic Automation</h1>
+        </div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            <div>Client: Greater Houston Retailers</div>
+            <div>Ref: 2023-A7X</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">21 mo</span>
+            <span class="metric-label">Target Payback</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Picking Speed Increase</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">$850k</span>
+            <span class="metric-label">Annual OPEX Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Target Accuracy</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-row">
+        <div class="glass-card">
+            <h3 style="margin-top:0">5-Year Cumulative Savings Projection</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3 style="margin-top:0">Throughput Analysis (Units Per Hour)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2>01. Executive Vision</h2>
+        <p class="content-text">
+            For the Greater Houston Retailers Cooperative Association (GHRA), the transition to a Hybrid Automated Fulfillment Center is not merely an operational upgrade—it is a strategic necessity. By integrating robotics into the existing warehouse infrastructure, GHRA can stabilize throughput against labor volatility and ensure high-velocity distribution to its 2,000+ member stores.
+        </p>
+    </section>
+
+    <!-- Opportunity Pathways -->
+    <section>
+        <h2 style="border:none; padding:0; margin-bottom: 20px;">02. Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="glass-card">
+                <span class="tag">PATHWAY A</span>
+                <h3>AMR Internal Transport</h3>
+                <p class="content-text">Deploying Autonomous Mobile Robots to handle long-haul pallet movement. This eliminates non-value-added travel time for human pickers.</p>
+                <div style="color: var(--success); font-size: 0.9rem; font-weight: 600; margin-top: 10px;">Impact: 50% Travel Reduction</div>
+            </div>
+            <div class="glass-card">
+                <span class="tag">PATHWAY B</span>
+                <h3>Piece Picking & ASRS</h3>
+                <p class="content-text">High-density storage for high-value items like tobacco and health products. Secure, accurate, and space-efficient.</p>
+                <div style="color: var(--success); font-size: 0.9rem; font-weight: 600; margin-top: 10px;">Impact: 99.9% Accuracy</div>
+            </div>
+            <div class="glass-card">
+                <span class="tag">PATHWAY C</span>
+                <h3>AI Logistics</h3>
+                <p class="content-text">Predictive modeling for inventory staging based on Houston weather, events, and seasonal demand spikes.</p>
+                <div style="color: var(--success); font-size: 0.9rem; font-weight: 600; margin-top: 10px;">Impact: Predictive Efficiency</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 1</div>
+            <div class="content-text">Foundation Pilot: WMS Integration & Deployment of 10 Transport AMRs.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 2</div>
+            <div class="content-text">Expansion: Goods-to-Person stations for Tobacco Cage & Fleet Expansion.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 3</div>
+            <div class="content-text">Optimization: Full AI Staging Integration & ROI Realization.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 4-5</div>
+            <div class="content-text">Ecosystem: Automated Truck Loading & Dark Warehouse capabilities.</div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.9, 2.1, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current Manual', 'Year 1 Hybrid', 'Year 3 Optimized'],
+            datasets: [{
+                label: 'Cases Per Hour',
+                data: [150, 210, 280],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed',
+                    '#10b981'
+                ],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
