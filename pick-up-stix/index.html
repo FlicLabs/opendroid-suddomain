@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Up Stix | Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Section Styling */
+        h2 {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Research</div>
+                <h1>Pick Up Stix</h1>
+                <div style="color: var(--text-secondary); margin-top: 5px;">Automated Hospitality Strategy</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">STATUS</div>
+                <div style="color: #4ade80; font-weight: bold;">High Potential</div>
+            </div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <div class="metric-label">Target Payback Period</div>
+                <div class="metric-value">11.6 <span style="font-size: 1rem; color: var(--text-secondary);">Months</span></div>
+                <div style="font-size: 0.8rem; color: #4ade80;">▼ Faster than industry avg</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label">CAPEX Per Unit</div>
+                <div class="metric-value">$35k <span style="font-size: 1rem; color: var(--text-secondary);">Est.</span></div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Includes training & install</div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label">Labor Reduction</div>
+                <div class="metric-value">25%</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Front-of-House OPEX</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="dashboard-grid">
+            <div class="glass-card">
+                <div class="metric-label" style="margin-bottom: 15px;">5-Year Cumulative Savings (USD)</div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <div class="metric-label" style="margin-bottom: 15px;">Table Turnover Rate (Mins)</div>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Content -->
+        <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr;">
+            
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p style="color: var(--text-secondary);">
+                    The integration of robotics at Pick Up Stix offers a strategic bridge between QSR speed and fast-casual quality. By offloading low-value tasks (running/bussing) to autonomous units, the brand can stabilize labor costs while enhancing the customer experience. The proposed Hybrid Service Model targets a <span class="highlight">25% reduction in FOH labor</span> costs while increasing throughput.
+                </p>
+                
+                <h2 style="margin-top: 30px;">Robotics Pathways</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <strong class="highlight">PATHWAY A: FOH ROBOTS</strong>
+                        <ul>
+                            <li>Shelf-based delivery units (Pudu/Servi).</li>
+                            <li>Reduces staff physical strain.</li>
+                            <li>Ensures immediate food delivery.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong class="highlight">PATHWAY B: BOH AUTOMATION</strong>
+                        <ul>
+                            <li>Automated Wok Systems.</li>
+                            <li>Guarantees "Wok Hei" consistency.</li>
+                            <li>Reduces kitchen injury risks.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Implementation Roadmap</h2>
+                
+                <div class="roadmap-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Pilot & Validation</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">5 Locations, Data collection.</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Regional Rollout</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">50% Coverage, Kiosk Beta.</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>BOH Automation</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">Auto-Woks in central kitchens.</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>AI Ecosystem</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">Predictive cooking integration.</span>
+                    </div>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Full Autonomy</strong><br>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">Next-gen humanoid evaluation.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart Global Settings
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [36000, 150000, 320000, 540000, 800000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { callback: function(value) { return '$' + value/1000 + 'k'; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Turnover Chart
+        const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctxTurnover, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Turnover Time',
+                    data: [55, 42],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        '#7c3aed'
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw + ' Minutes';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Average Table Time (Minutes)' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
