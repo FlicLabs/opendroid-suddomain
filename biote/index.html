@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biote Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Content Sections */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: white;
+            margin-top: 25px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--accent-purple);
+            border-bottom: 1px solid var(--glass-border);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover td {
+            background: rgba(124, 58, 237, 0.05);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="color: var(--text-secondary);">Client: Biote Medical</div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Projected NPV (5-Year)</div>
+            <div class="metric-value">$60M</div>
+            <div class="metric-sub">▲ Driven by Mfg Automation</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Margin Expansion</div>
+            <div class="metric-value">22%</div>
+            <div class="metric-sub">▲ Reduced COGS</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Production Throughput</div>
+            <div class="metric-value">3.5x</div>
+            <div class="metric-sub">▲ vs. Manual Compounding</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">12 Mo</div>
+            <div class="metric-sub">▼ High Velocity ROI</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-panel">
+            <div class="metric-label">Cumulative Net Savings (5 Years)</div>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-panel">
+            <div class="metric-label">Production Throughput (Units/Hr)</div>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Analysis -->
+    <div class="glass-panel">
+        <h2>Executive Summary</h2>
+        <p>Biote's primary opportunity for robotic automation lies in the transition from manual 503B sterile compounding to fully automated robotic manufacturing cells. By automating the pellet pressing and blistering process, Biote can achieve a 300% increase in throughput while reducing contamination risks to near zero. This strategic pivot transforms Biote from a training-centric organization into a technology-enabled high-volume manufacturer.</p>
+    </div>
+
+    <div class="glass-panel">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Automated Sterile Manufacturing (Priority)</h3>
+        <p>Implementation of ISO-5 robotic arms for powder weighing, mixing, and pellet pressing. This eliminates human contamination vectors and enables 24/7 production cycles.</p>
+        
+        <h3>Pathway B: Intelligent Logistics</h3>
+        <p>Deployment of Autonomous Mobile Robots (AMRs) in distribution centers to automate picking, packing, and shipping to the clinic network, ensuring just-in-time inventory.</p>
+
+        <h3>Pathway C: Clinical Assistive Devices</h3>
+        <p>Future development of handheld, ultrasound-guided insertion devices to standardize the provider experience and improve patient outcomes.</p>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-panel">
+        <h2>Comparative Investment Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Pathway A: Manufacturing</th>
+                    <th>Pathway B: Logistics</th>
+                    <th>Pathway C: Clinical</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Primary Goal</td>
+                    <td>COGS Reduction</td>
+                    <td>Speed & Accuracy</td>
+                    <td>Differentiation</td>
+                </tr>
+                <tr>
+                    <td>Annual Benefit</td>
+                    <td>$15M - $25M</td>
+                    <td>$3M - $6M</td>
+                    <td>Brand Equity</td>
+                </tr>
+                <tr>
+                    <td>Payback Period</td>
+                    <td>10 - 14 Months</td>
+                    <td>18 - 24 Months</td>
+                    <td>3 - 5 Years</td>
+                </tr>
+                <tr>
+                    <td>Implementation Risk</td>
+                    <td>Low (Proven Tech)</td>
+                    <td>Low</td>
+                    <td>High (Adoption)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [5, 18, 35, 52, 75],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Cell 1', 'Robotic Cell 2', 'Full Auto Fleet'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [450, 1200, 2400, 5000],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed',
+                    '#7c3aed',
+                    '#10b981'
+                ],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
