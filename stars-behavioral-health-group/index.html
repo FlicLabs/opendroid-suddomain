@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBHG Robotics Research Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a; /* Deep Space Blue */
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header Styling */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        color: #7c3aed; /* Electric Purple */
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin: 0;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 20px;
+        margin-top: 0;
+        border-left: 4px solid #7c3aed;
+        padding-left: 12px;
+    }
+
+    h3 {
+        color: #cbd5e1;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 25px;
+    }
+
+    p, li {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #94a3b8;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 1px;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        background-color: rgba(124, 58, 237, 0.2);
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #cbd5e1;
+    }
+
+    tr:hover td {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Status Tags */
+    .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .tag-high { background-color: rgba(52, 211, 153, 0.2); color: #34d399; }
+    .tag-med { background-color: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+    .tag-low { background-color: rgba(248, 113, 113, 0.2); color: #f87171; }
+
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+        header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <div style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">Strategic Intelligence Unit</div>
+            <div style="font-size: 16px; color: #fff;">Stars Behavioral Health Group</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h1>Robotics Analysis & ROI Model</h1>
+        <p style="margin-top: 15px;">
+            Stars Behavioral Health Group (SBHG) is positioned to transform community behavioral health through "Software Robotics" and Socially Assistive Robotics (SAR). By shifting the automation focus from physical logistics to <strong>clinical process automation</strong>, SBHG can reclaim approximately 18-20% of clinician time currently lost to administrative burdens.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Net Benefit</div>
+            <div class="metric-value">£8.1M</div>
+            <div style="color: #34d399; font-size: 12px;">▲ 12% Margin Lift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Hours Reclaimed/Year</div>
+            <div class="metric-value">144k+</div>
+            <div style="color: #cbd5e1; font-size: 12px;">Across 600 Clinicians</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">4 Mo</div>
+            <div style="color: #34d399; font-size: 12px;">Software Robotics Pathway</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">5-Yr Cumulative Value</div>
+            <div class="metric-value">£35M+</div>
+            <div style="color: #7c3aed; font-size: 12px;">Conservative Case</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Weekly Throughput (Hours)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways Table -->
+    <div class="glass-card">
+        <h2>Comparative Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Benefit (Mid)</th>
+                    <th>Payback Speed</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">Pathway A: Admin RPA</td>
+                    <td>Operational Efficiency</td>
+                    <td>£8M - £10M</td>
+                    <td><span class="tag tag-high">Rapid (< 6mo)</span></td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">Pathway B: Social Robots</td>
+                    <td>ASD & Child Therapy</td>
+                    <td>£1M - £2M</td>
+                    <td><span class="tag tag-med">Medium (12-18mo)</span></td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">Pathway C: VR/Telepresence</td>
+                    <td>Crisis & Trauma</td>
+                    <td>£0.5M - £1M</td>
+                    <td><span class="tag tag-med">Medium (12mo)</span></td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-left: 2px solid #7c3aed; padding-left: 20px;">
+                <h3 style="margin-top: 0; color: #fff;">Phase 1: Stabilization (Year 1)</h3>
+                <p>Deploy "Invisible Robots" (RPA) to automate eligibility checks and session note transcription. Target: Reclaim 5 hours/clinician/week.</p>
+            </div>
+            <div style="border-left: 2px solid #475569; padding-left: 20px;">
+                <h3 style="margin-top: 0; color: #fff;">Phase 2: Differentiation (Year 2)</h3>
+                <p>Pilot Social Robots (e.g., Moxie) in school-based programs. Use data to secure premium county contracts.</p>
+            </div>
+            <div style="border-left: 2px solid #475569; padding-left: 20px;">
+                <h3 style="margin-top: 0; color: #fff;">Phase 3: Scale (Years 3-5)</h3>
+                <p>Full network integration of VR therapeutics and AI-driven predictive staffing models.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Default Font
+    Chart.defaults.font.family = 'Inter';
+    Chart.defaults.color = '#94a3b8';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [6.5, 13.8, 21.5, 29.8, 38.2],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '£' + value + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Standard Clinician', 'Robotic-Augmented'],
+            datasets: [
+                {
+                    label: 'Billable Clinical Hours',
+                    data: [25, 30], // 20% increase
+                    backgroundColor: '#34d399', // Green
+                    borderRadius: 6
+                },
+                {
+                    label: 'Admin/Documentation Hours',
+                    data: [15, 10], // Reduction
+                    backgroundColor: '#f43f5e', // Red
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    stacked: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    title: { display: true, text: 'Hours per Week' }
+                },
+                x: {
+                    stacked: true,
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
