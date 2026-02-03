@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritas Logistics | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Styling */
+        h2 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 25px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: '▹';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+
+        .step-year {
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-right: 20px;
+            min-width: 80px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids Intelligence Unit</div>
+            <h1>VERITAS LOGISTICS</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">Research Report</div>
+            <div style="color: var(--accent); font-weight: 600;">2024-2029 Strategy</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">Projected Labor Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">22mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">2x</span>
+            <span class="metric-label">Storage Density</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">99.9%</span>
+            <span class="metric-label">Target Pick Accuracy</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>01. Executive Vision</h2>
+        <p>Veritas Logistics is positioned to transition from a legacy 3PL model to a Tech-Enabled Fulfillment Powerhouse. By integrating Autonomous Mobile Robots (AMRs) and AI-driven analytics, the organization can shift from reactive capacity management to predictive throughput optimization. This strategy aims to secure a defensible competitive moat in the North American supply chain sector through aggressive automation.</p>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="card">
+            <h2>02. Throughput Velocity</h2>
+            <canvas id="throughputChart"></canvas>
+            <p style="margin-top:15px; font-size: 0.8rem;">*Comparison of Unit Per Hour (UPH) capabilities.</p>
+        </div>
+        <div class="card">
+            <h2>03. 5-Year Savings Projection</h2>
+            <canvas id="savingsChart"></canvas>
+            <p style="margin-top:15px; font-size: 0.8rem;">*Cumulative operational savings post-CAPEX amortization.</p>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="card">
+        <h2>04. Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div>
+                <h3 style="color: #fff;">Pathway A: AMRs</h3>
+                <ul>
+                    <li><strong>Focus:</strong> Internal Transport & Tuggers</li>
+                    <li><strong>Impact:</strong> Eliminates long-walk picking</li>
+                    <li><strong>Throughput:</strong> +30% Items/Hour</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway B: ASRS & Picking</h3>
+                <ul>
+                    <li><strong>Focus:</strong> Goods-to-Person (GTP)</li>
+                    <li><strong>Impact:</strong> Vertical density utilization</li>
+                    <li><strong>Accuracy:</strong> 99.9% error reduction</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway C: AI Logistics</h3>
+                <ul>
+                    <li><strong>Focus:</strong> Predictive Dock Scheduling</li>
+                    <li><strong>Impact:</strong> Reduced carrier dwell time</li>
+                    <li><strong>Tech:</strong> Computer Vision & WMS integration</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>05. Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="step-year">YEAR 1</div>
+            <div><strong>Pilot Phase:</strong> Deploy 10 AMRs in Chicago flagship. Integrate WMS.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-year">YEAR 2</div>
+            <div><strong>Expansion:</strong> Roll out to Atlanta & Dallas. Introduce Pilot ASRS.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-year">YEAR 3</div>
+            <div><strong>Optimization:</strong> Full AI integration. 50% automation of transport.</div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-year">YEAR 4-5</div>
+            <div><strong>Ecosystem:</strong> "Dark Warehouse" capability for night shifts.</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Throughput Chart
+    const ctx1 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Assisted AMR', 'Full ASRS'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [65, 140, 350],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    'rgba(124, 58, 237, 0.5)',
+                    '#7c3aed'
+                ],
+                borderColor: '#7c3aed',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Savings Chart
+    const ctx2 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [-1.2, 0.5, 2.8, 5.5, 9.2], // Initial dip for CAPEX, then growth
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#10b981',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
