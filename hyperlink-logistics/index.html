@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperlink Logistics | Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--accent);
+            margin-right: 12px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        /* Chart Layout */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+        
+        .roadmap-year {
+            font-weight: 800;
+            color: var(--accent);
+            width: 80px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Research Div</div>
+            <h1>Hyperlink Logistics</h1>
+        </div>
+        <div style="text-align: right; color: var(--text-secondary); font-size: 0.9rem;">
+            CONFIDENTIAL REPORT<br>
+            2023-2028 STRATEGY
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-val">19 Mo</span>
+            <span class="metric-label">Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-val">$600k</span>
+            <span class="metric-label">Annual Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-val">2.3x</span>
+            <span class="metric-label">Throughput Gain</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-val">99.9%</span>
+            <span class="metric-label">Accuracy Target</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Vision</h2>
+        <p>Hyperlink Logistics is positioned to transition from a manual 3PL model to a high-density, automated ecosystem. By leveraging a "Goods-to-Person" logic, we project a stabilization of labor costs and a dramatic increase in order velocity across the Chicago, Atlanta, and Dallas hubs.</p>
+    </div>
+
+    <!-- Visualizations -->
+    <div class="chart-container">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Velocity (UPH)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Pathways -->
+    <div class="card">
+        <h2>Robotics Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 10px;">Pathway A: AMRs</strong>
+                <p>Deployment of Autonomous Mobile Robots to handle internal transport, reducing walker travel time by 60%.</p>
+            </div>
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 10px;">Pathway B: Picking Arms</strong>
+                <p>AI-driven robotic arms for high-speed induction and sorting. 99.9% accuracy with zero fatigue.</p>
+            </div>
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 10px;">Pathway C: AI Logistics</strong>
+                <p>Predictive "Digital Twin" modeling to optimize slotting and inbound/outbound dock scheduling.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 1</div>
+            <div><strong>Foundation & Pilot:</strong> WMS Integration and Dallas Hub Pilot (15 AMRs).</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 2</div>
+            <div><strong>Standardization:</strong> Expansion to Atlanta/Phoenix. AI Slotting deployment.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 3</div>
+            <div><strong>High Density:</strong> ASRS Retrofit in Chicago/Newark for vertical optimization.</div>
+        </div>
+        <div class="roadmap-item">
+            <div class="roadmap-year">YEAR 5</div>
+            <div><strong>Network Opt:</strong> Full "Dark Warehouse" capability and <$0.65 cost per pick.</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [0, 600000, 1300000, 2100000, 3000000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { callback: function(value) { return '$' + value/1000000 + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Current Manual', 'Year 1 Pilot', 'Year 3 Scale', 'Year 5 Opt'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [85, 140, 200, 250],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.2)', // Gray for Manual
+                    '#7c3aed', // Purple for Automated
+                    '#7c3aed',
+                    '#10b981'  // Green for Optimized
+                ],
+                borderWidth: 0,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
