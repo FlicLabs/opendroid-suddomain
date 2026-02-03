@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids Report: American Wood Fibers Inc.</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-blue: #3b82f6;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-delta {
+            font-size: 0.9rem;
+            color: #10b981; /* Green */
+            margin-top: 5px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            grid-column: span 3; /* Full width on mobile, split on desktop usually but let's do 2 rows */
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card h3 {
+            color: var(--accent-blue);
+            margin-top: 0;
+        }
+
+        .roadmap {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: -1;
+        }
+
+        .roadmap-step {
+            background: var(--bg-dark);
+            border: 1px solid var(--accent-purple);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            width: 15%;
+            font-size: 0.85rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid, .chart-container {
+                grid-template-columns: 1fr;
+            }
+            .roadmap {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .roadmap-step {
+                width: 100%;
+            }
+            .roadmap::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="subtitle">Open Droids | Senior Consultation Report</div>
+            <h1>American Wood Fibers Inc.</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-weight: bold; color: var(--text-main);">Project: Automation '24</div>
+            <div style="color: var(--text-muted);">ID: AWF-STRAT-01</div>
+        </div>
+    </header>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="card metric-card">
+            <span class="metric-label">Projected OEE Increase</span>
+            <div class="metric-value">28.5%</div>
+            <div class="metric-delta">▲ Efficiency via Automation</div>
+        </div>
+        <div class="card metric-card">
+            <span class="metric-label">Pilot CAPEX Estimate</span>
+            <div class="metric-value">$270k</div>
+            <div class="metric-delta">Target: 3 Robotic Cells</div>
+        </div>
+        <div class="card metric-card">
+            <span class="metric-label">ROI Payback Period</span>
+            <div class="metric-value">16 Mo</div>
+            <div class="metric-delta">▼ Reduced Labor/Scrap</div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-container">
+        <div class="chart-card">
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- STRATEGIC PATHWAYS -->
+    <div class="section-title">Robotics Opportunity Pathways</div>
+    <div class="content-grid">
+        <div class="card pathway-card">
+            <span class="tag">PATHWAY A</span>
+            <h3>Collaborative Machine Tending</h3>
+            <p style="color: #cbd5e1; font-size: 0.95rem;">
+                Deployment of IP-rated Cobots for wood flour and bedding bag filling. Focus on removing operators from dust-heavy zones and ensuring precise vacuum-grip placement.
+            </p>
+            <p style="margin-top: 15px; font-weight: 600; color: var(--accent-purple);">Hardware: Fanuc CRX / UR10e</p>
+        </div>
+
+        <div class="card pathway-card">
+            <span class="tag">PATHWAY B</span>
+            <h3>AMR Material Transport</h3>
+            <p style="color: #cbd5e1; font-size: 0.95rem;">
+                Heavy-payload Autonomous Mobile Robots to replace forklifts for transporting finished pallets of pellets to stretch wrappers. Improves facility safety score.
+            </p>
+            <p style="margin-top: 15px; font-weight: 600; color: var(--accent-purple);">Hardware: MiR1350 / Otto 1500</p>
+        </div>
+
+        <div class="card pathway-card">
+            <span class="tag">PATHWAY C</span>
+            <h3>End-of-Line Palletizing</h3>
+            <p style="color: #cbd5e1; font-size: 0.95rem;">
+                High-speed industrial arms with vision systems. Addresses the ergonomic strain of stacking 40lb bags. Ensures consistent stack quality for shipping.
+            </p>
+            <p style="margin-top: 15px; font-weight: 600; color: var(--accent-purple);">Hardware: Yaskawa PL Series</p>
+        </div>
+    </div>
+
+    <!-- FINANCIAL SUMMARY -->
+    <div class="section-title">Financial & Operational Model</div>
+    <div class="card" style="margin-bottom: 40px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div>
+                <h4 style="color: var(--text-muted); margin-top: 0;">CAPEX Breakdown (Pilot)</h4>
+                <ul style="list-style: none; padding: 0; color: var(--text-main);">
+                    <li style="padding: 10px 0; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between;">
+                        <span>Robotic Palletizing Cell</span> <span>$120,000</span>
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between;">
+                        <span>Machine Tending Cobot</span> <span>$60,000</span>
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between;">
+                        <span>AMR Fleet (2 Units)</span> <span>$90,000</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--text-muted); margin-top: 0;">Operational Gains</h4>
+                <p style="font-size: 0.95rem;">Targeting a <strong>20-30% increase in OEE</strong> through elimination of shift-change downtime and micro-stoppages. Labor reallocation allows for higher focus on Quality Assurance rather than manual lifting.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="section-title">5-Year Implementation Roadmap</div>
+    <div class="roadmap">
+        <div class="roadmap-step">
+            <strong style="color: var(--accent-blue);">Year 1</strong><br>Pilot Phase<br>(Lebanon, KY)
+        </div>
+        <div class="roadmap-step">
+            <strong style="color: var(--accent-blue);">Year 2</strong><br>Evaluation &<br>Multi-site Scale
+        </div>
+        <div class="roadmap-step">
+            <strong style="color: var(--accent-blue);">Year 3</strong><br>Cobot Integration<br>& Dashboarding
+        </div>
+        <div class="roadmap-step">
+            <strong style="color: var(--accent-blue);">Year 4</strong><br>AI Predictive<br>Maintenance
+        </div>
+        <div class="roadmap-step">
+            <strong style="color: var(--accent-blue);">Year 5</strong><br>Full Autonomy<br>& ERP Link
+        </div>
+    </div>
+
+    <footer>
+        <p>Generated by Open Droids Research Division | Confidential Client Report</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Production Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Cost Savings ($)',
+                data: [150000, 480000, 950000, 1600000, 2400000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } },
+                title: { display: true, text: '5-Year Cumulative Savings Projection', color: '#f8fafc' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Cobot Assist'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [450, 680],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#3b82f6'],
+                borderColor: ['transparent', '#3b82f6'],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Output: Manual vs. Automated', color: '#f8fafc' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
