@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radford Trans Inc. | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-cyan: #22d3ee;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .sub-header {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Metrics Dashboard */
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+        }
+
+        /* Pathways */
+        .pathway-icon {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Charts Area */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-cyan);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>RADFORD TRANS INC.</h1>
+        <div class="sub-header">Automated Logistics Strategic Assessment // Prepared by Open Droids</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <span class="tag">EXECUTIVE SUMMARY</span>
+        <h2>The Automation Imperative</h2>
+        <p>Radford Trans Inc. stands at a pivotal juncture. The strategic transition from manual-heavy cross-docking to a hybrid automated ecosystem will secure a competitive moat against larger 3PLs. Our analysis indicates that integrating AMRs and AI-driven slotting will bridge the gap between legacy infrastructure and modern demands without requiring a total facility rebuild.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3">
+        <div class="glass-card metric-card">
+            <div class="metric-value">&lt;24</div>
+            <div class="metric-label">Month Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">OPEX Reduction Target</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">400%</div>
+            <div class="metric-label">Storage Density Gain</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Throughput Velocity (Units/Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <h3 style="margin-top: 40px; color: var(--accent-cyan);">ROBOTICS OPPORTUNITY PATHWAYS</h3>
+    <div class="grid-3">
+        <div class="glass-card">
+            <span class="pathway-icon">◉</span>
+            <div class="pathway-title">Pathway A: AMRs</div>
+            <p><strong>Internal Transport:</strong> Deployment of heavy-payload Autonomous Mobile Robots for dock-to-stock movement. ROI is driven by the elimination of non-value-added travel time.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-icon">▣</span>
+            <div class="pathway-title">Pathway B: ASRS</div>
+            <p><strong>Vertical Density:</strong> Utilization of Vertical Lift Modules to maximize metro-area real estate. Increases picking accuracy to 99.9%.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-icon">◈</span>
+            <div class="pathway-title">Pathway C: AI Logistics</div>
+            <p><strong>Predictive Efficiency:</strong> Computer vision for yard management and AI-driven predictive slotting to reduce dock turnaround by 25%.</p>
+        </div>
+    </div>
+
+    <!-- Roadmap Footer -->
+    <div class="glass-card" style="margin-top: 20px;">
+        <h3>Implementation Roadmap</h3>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+            <div>
+                <strong style="color: var(--accent-purple)">Year 1:</strong> Pilot Program (AMRs)
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 2:</strong> ASRS Rollout
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 3:</strong> AI Integration
+            </div>
+            <div>
+                <strong style="color: var(--accent-purple)">Year 5:</strong> Full Autonomy
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderColor: '#7c3aed',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#22d3ee'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // Throughput Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current (Manual)', 'Year 1 (Hybrid)', 'Year 3 (Integrated)'],
+            datasets: [{
+                label: 'Units Per Hour',
+                data: [120, 165, 250],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    'rgba(34, 211, 238, 0.6)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderColor: 'transparent',
+                borderWidth: 0,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
