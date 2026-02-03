@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSF Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .sub-header {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: var(--accent);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Pathways */
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard */
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: 0;
+        }
+
+        .milestone {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-color);
+            padding: 10px;
+            width: 18%;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        .milestone-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .milestone h4 {
+            margin: 5px 0;
+            color: var(--text-primary);
+        }
+
+        .milestone p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .timeline { flex-direction: column; }
+            .timeline::before { display: none; }
+            .milestone { width: 100%; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="sub-header">Open Droids | Senior Consultation Unit</div>
+            <h1>Strategic Research Report</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="sub-header">Client</div>
+            <div style="font-weight: 700; font-size: 1.2rem;">SSF Imported Auto Parts LLC</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>01. Executive Summary</h2>
+        <p>SSF Imported Auto Parts LLC is positioned to revolutionize its wholesale distribution network by pivoting from manual logistics to an automated, high-density fulfillment model. By integrating Autonomous Mobile Robots (AMRs) and Goods-to-Person (GTP) technologies, SSF can reduce order cycle times by <strong>40%</strong> and secure its position as the premier European parts supplier in the Western US.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="grid-3">
+        <div class="card">
+            <span class="pathway-badge">PATHWAY A</span>
+            <h3>AMR Transport</h3>
+            <p>Deploying robots to handle internal movement of totes between receiving, shelving, and packing.</p>
+            <div style="margin-top: 15px; color: var(--success); font-weight: 600;">↑ 35% Throughput</div>
+        </div>
+        <div class="card">
+            <span class="pathway-badge">PATHWAY B</span>
+            <h3>Automated Picking</h3>
+            <p>High-density ASRS for small parts (filters, sensors) to maximize vertical space utilization.</p>
+            <div style="margin-top: 15px; color: var(--success); font-weight: 600;">99.9% Accuracy</div>
+        </div>
+        <div class="card">
+            <span class="pathway-badge">PATHWAY C</span>
+            <h3>AI Logistics</h3>
+            <p>Predictive analytics to position high-velocity SKUs closer to shipping docks dynamically.</p>
+            <div style="margin-top: 15px; color: var(--success); font-weight: 600;">↓ 20% Retrieval Time</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>02. Financial Projections</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-label">Target CAPEX Per Station</div>
+                <div class="metric-value" style="color: #c4b5fd;">$75k</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Avg. Hardware & Software</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">35%</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Labor & Energy Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Period</div>
+                <div class="metric-value">22 Mo</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Break-even Timeline</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Analysis (Items/Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>03. Implementation Roadmap</h2>
+        <div class="timeline">
+            <div class="milestone">
+                <div class="milestone-dot"></div>
+                <h4>Year 1</h4>
+                <p>Pilot Program<br>5 AMRs & WMS Integration</p>
+            </div>
+            <div class="milestone">
+                <div class="milestone-dot"></div>
+                <h4>Year 2</h4>
+                <p>Density Phase<br>Vertical ASRS Install</p>
+            </div>
+            <div class="milestone">
+                <div class="milestone-dot"></div>
+                <h4>Year 3</h4>
+                <p>AI Intelligence<br>Predictive Slotting</p>
+            </div>
+            <div class="milestone">
+                <div class="milestone-dot"></div>
+                <h4>Year 4</h4>
+                <p>Standardization<br>Network-wide Rollout</p>
+            </div>
+            <div class="milestone">
+                <div class="milestone-dot"></div>
+                <h4>Year 5</h4>
+                <p>Autonomous Hub<br>80% Automation</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Picking', 'Hybrid (AMR)', 'Full Automation'],
+            datasets: [{
+                label: 'Picks Per Hour',
+                data: [65, 130, 250],
+                backgroundColor: ['#334155', '#7c3aed', '#10b981'],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
