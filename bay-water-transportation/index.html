@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bay Water Transportation | Strategic Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-glow);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Content Styles */
+        h2 {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 20px;
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="subtitle">Open Droids Research</div>
+        <h1>Bay Water Transportation</h1>
+        <p style="color: var(--text-muted);">Automated Logistics Modernization Strategy</p>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Vision</h2>
+        <p>Transitioning Bay Water Transportation from a traditional drayage model to a digitally synchronized <strong>Automated Intermodal Hub</strong>. By decoupling throughput from labor availability via AMRs and AI, we ensure 24/7 operational capability and position the company as a high-velocity coastal logistics leader.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">&lt; 24</span>
+            <span class="metric-label">Month Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">40%</span>
+            <span class="metric-label">OPEX Reduction</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$800k</span>
+            <span class="metric-label">Phase 1 Est. CAPEX</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3 style="margin-bottom: 20px; text-align: center;">5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3 style="margin-bottom: 20px; text-align: center;">Throughput: Manual vs. Robotic</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div>
+                <h3 style="color: #fff;">Pathway A: AMRs</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Deployment of Autonomous Mobile Robots for internal transport. <br><strong>Impact:</strong> 35% throughput increase.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway B: ASRS</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">High-density shuttle storage systems. <br><strong>Impact:</strong> 400% storage density gain.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway C: AI Logistics</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Computer Vision at gates and predictive scheduling. <br><strong>Impact:</strong> 50% faster truck turnaround.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="margin-top: 20px;">
+            <div class="roadmap-item">
+                <span class="year-badge">Year 1</span>
+                <div><strong>Foundation & Pilot:</strong> WMS Upgrade and Pathway A (AMR) Pilot.</div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 2</span>
+                <div><strong>Expansion:</strong> Roll out AMRs to secondary sites; begin ASRS construction.</div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 3</span>
+                <div><strong>Intelligence:</strong> AI Gate Systems and Port Authority API integration.</div>
+            </div>
+            <div class="roadmap-item">
+                <span class="year-badge">Year 5</span>
+                <div><strong>Ecosystem:</strong> Full "Warehousing as a Service" automation model.</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [0, 480000, 1100000, 1800000, 2600000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pallet Movement', 'Order Picking', 'Truck Turnaround'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [60, 45, 40], // Arbitrary efficiency units
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [95, 88, 85],
+                    backgroundColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
