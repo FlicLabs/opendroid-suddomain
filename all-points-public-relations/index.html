@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Points PR | Hospitality Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-glow);
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Glassmorphism Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Typography improvements */
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-purple);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-glow);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>All Points Public Relations</h1>
+        <div class="subtitle">Strategic Automation Intelligence & Franchise Research</div>
+    </header>
+
+    <!-- ROI Dashboard -->
+    <h2>Hospitality ROI Dashboard</h2>
+    <div class="grid">
+        <div class="card metric-card">
+            <div class="metric-label">Target Labor Savings</div>
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Reduction in FOH Costs</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Estimated ROI Speed</div>
+            <div class="metric-value">&lt; 14</div>
+            <div class="metric-label">Months to Payback</div>
+        </div>
+        <div class="card metric-card">
+            <div class="metric-label">Upsell Efficiency</div>
+            <div class="metric-value">100%</div>
+            <div class="metric-label">AI Consistency Rate</div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Chart 1 -->
+        <div class="card">
+            <span class="badge">Financial Projection</span>
+            <h3>Cumulative Labor Cost Savings (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="laborSavingsChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Chart 2 -->
+        <div class="card">
+            <span class="badge">Operational Efficiency</span>
+            <h3>Table Turnover Rate: Manual vs. Robot</h3>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Robotics Pathways</h2>
+            <ul>
+                <li><strong>Pathway A (FOH):</strong> Autonomous food runners to reduce server fatigue and increase face-time with guests.</li>
+                <li><strong>Pathway B (BOH):</strong> Automated fry stations to ensure safety and consistent food quality.</li>
+                <li><strong>Pathway C (AI):</strong> Voice-activated drive-thru agents for accurate order taking and upselling.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h2>Strategic Roadmap</h2>
+            <p><strong>Year 1:</strong> Pilot Program & Case Study Creation</p>
+            <p><strong>Year 2:</strong> Standardization & Vendor Lists</p>
+            <p><strong>Year 3:</strong> New Build Integration (BOH Focus)</p>
+            <p><strong>Year 4-5:</strong> Full Autonomy Ecosystem Optimization</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [36000, 78000, 125000, 180000, 245000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Comparison
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Traditional Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Tables Turned Per Shift',
+                data: [12, 16],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Gray for manual
+                    'rgba(124, 58, 237, 0.8)'   // Purple for robot
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
