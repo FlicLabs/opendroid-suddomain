@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Hospitality | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Grid Layouts */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathway Styling */
+        .pathway-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .tag-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .tag-b { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+        .tag-c { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>RESIDENT HOSPITALITY</h1>
+        <div class="subtitle">Automated Service Architecture & ROI Analysis</div>
+    </header>
+
+    <!-- Dashboard Metrics -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">22%</span>
+            <span class="metric-label">Proj. Labor Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">13 Mo</span>
+            <span class="metric-label">ROI Break-Even</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">1.4x</span>
+            <span class="metric-label">Table Turnover Rate</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        
+        <!-- Left Column: Executive Summary & Roadmap -->
+        <div class="glass-card">
+            <h2>Executive Vision</h2>
+            <p>Automation at Resident Hospitality represents a shift to a "High-Touch, High-Tech" model. By offloading low-value logistical tasks (running, bussing, frying) to robotics, we liberate human staff to focus purely on guest experience and revenue-generating upsells.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                <div style="border-left: 2px solid var(--accent-blue); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 1: Pilot</strong>
+                    <p style="margin:0; font-size: 0.85rem;">Deploy FOH Runners at 2 Flagship Locations.</p>
+                </div>
+                <div style="border-left: 2px solid var(--accent-purple); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 2: Expansion</strong>
+                    <p style="margin:0; font-size: 0.85rem;">Rollout to all units; BOH Fryer Pilot.</p>
+                </div>
+                <div style="border-left: 2px solid var(--text-muted); padding-left: 15px;">
+                    <strong style="color: #fff;">Year 3: Maturity</strong>
+                    <p style="margin:0; font-size: 0.85rem;">Full AI Voice Integration & Data Optimization.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Width: Opportunity Pathways -->
+        <div class="glass-card full-width">
+            <h2>Strategic Pathways</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                
+                <div>
+                    <span class="pathway-tag tag-a">Pathway A</span>
+                    <h3>FOH Serving Robots</h3>
+                    <p>Focus on reducing server steps. Robots handle food running and bussing, keeping servers in their sections.</p>
+                </div>
+
+                <div>
+                    <span class="pathway-tag tag-b">Pathway B</span>
+                    <h3>Automated BOH</h3>
+                    <p>Robotic fry arms ensure perfect consistency, reduce waste by 12%, and improve kitchen safety.</p>
+                </div>
+
+                <div>
+                    <span class="pathway-tag tag-c">Pathway C</span>
+                    <h3>Voice AI</h3>
+                    <p>Drive-thru and phone AI agents to guarantee 100% call capture and consistent upselling scripts.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="glass-card">
+            <h2>5-Year Labor Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h2>Table Turnover Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+        <p>Prepared by Open Droids Consultation Unit</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [54000, 168000, 340000, 580000, 890000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Turnover Rate Comparison
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    const turnoverChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Daily Table Turns (Avg)',
+                data: [4.2, 5.8],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#3b82f6'
+                ],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#fff', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
