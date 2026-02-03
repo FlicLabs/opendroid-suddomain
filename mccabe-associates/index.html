@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McCabe Associates | Automation Intelligence Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.05em; margin-bottom: 0.5rem; }
+        h2 { font-size: 1.5rem; font-weight: 600; color: var(--accent-blue); margin-bottom: 1.5rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom: 1rem; }
+        p { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; font-weight: 300; }
+        .subtitle { color: var(--accent-purple); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard */
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+        }
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Roadmap timeline */
+        .roadmap-step {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .roadmap-year {
+            color: var(--accent-purple);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center; margin-bottom: 60px;">
+        <p class="subtitle">Open Droids Research Division</p>
+        <h1>McCabe Associates</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Strategic Automation & Robotics Assessment</p>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Vision: Zero-Trust Logistics</h2>
+        <p>
+            The future of McCabe Associates lies in the transition from traditional secure warehousing to a <strong>Zero-Trust Automated Logistics</strong> model. By deploying autonomous systems, we minimize human contact with sensitive assets, reducing shrinkage risks and maintaining an unbroken digital chain of custody. This represents a shift from static shelving to dynamic, intelligent retrieval systems.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3" style="margin-bottom: 30px;">
+        <div class="metric-card">
+            <span class="metric-label">Target Labor Savings</span>
+            <span class="metric-value">40%</span>
+            <span class="metric-label">OPEX Reduction</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Payback Period</span>
+            <span class="metric-value">&lt; 24</span>
+            <span class="metric-label">Months</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Est. Station CAPEX</span>
+            <span class="metric-value">$75k</span>
+            <span class="metric-label">Average Investment</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h3>Cumulative Savings Projection (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Velocity: Manual vs. Robotic</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="grid-3">
+        <div class="card">
+            <h3>Pathway A: AMRs</h3>
+            <p><strong>Internal Transport.</strong> Autonomous Mobile Robots utilize biometric locking modules to ensure chain of custody during transit between intake and vaults.</p>
+        </div>
+        <div class="card">
+            <h3>Pathway B: ASRS</h3>
+            <p><strong>High Density Storage.</strong> "Dark Warehouse" technology where robotic arms retrieve bins, increasing storage density by 300% and eliminating theft risk.</p>
+        </div>
+        <div class="card">
+            <h3>Pathway C: AI Logistics</h3>
+            <p><strong>Predictive Security.</strong> AI models analyze weight, scan times, and movement patterns to flag potential security anomalies in real-time.</p>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div class="grid-2">
+            <div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">Year 1: Pilot</span>
+                    Deploy 3 AMRs in flagship secure facility. Integrate WMS with fleet manager.
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">Year 2: ASRS Deployment</span>
+                    Install high-density grid storage. Eliminate human foot traffic in storage zones.
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">Year 3: AI Integration</span>
+                    Launch predictive analytics and achieve 24/7 dark warehouse capability.
+                </div>
+            </div>
+            <div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">Year 4: Expansion</span>
+                    Replicate model across two additional global metro hubs.
+                </div>
+                <div class="roadmap-step">
+                    <span class="roadmap-year">Year 5: Ecosystem</span>
+                    Full integration of drone surveillance and certification as global standard for Automated Secure Logistics.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Intake', 'Sorting', 'Retrieval', 'Dispatch'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 60, 30, 50],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [85, 95, 90, 88],
+                    backgroundColor: '#38bdf8',
+                    borderRadius: 4,
+                    boxShadow: '0 0 10px #38bdf8'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true,
+                    title: { display: true, text: 'Units Per Hour' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
