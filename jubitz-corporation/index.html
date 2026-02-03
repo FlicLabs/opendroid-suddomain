@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jubitz Corp | Automation Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent-purple);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .pathway-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Intelligence Report</div>
+                <h1>Jubitz Corporation</h1>
+            </div>
+            <div style="text-align: right;">
+                <span class="subtitle">Status: Strategic Analysis</span><br>
+                <span style="color: var(--text-secondary); font-size: 0.9rem;">Date: October 2023</span>
+            </div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">12.1</span>
+                <span class="metric-label">Months Payback</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">20%</span>
+                <span class="metric-label">Labor OpEx Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$115k</span>
+                <span class="metric-label">Initial CapEx</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">60%</span>
+                <span class="metric-label">Staff Steps Reduced</span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <!-- Chart 1 -->
+            <div class="card">
+                <h2>Cumulative Labor Savings (5 Years)</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <!-- Chart 2 -->
+            <div class="card">
+                <h2>Table Turnover Efficiency</h2>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>Jubitz Corporation, the "World's Classiest Truck Stop," operates a complex ecosystem of full-service dining, entertainment, and 24-hour convenience. The integration of robotics is positioned not as a replacement for the brand's renowned hospitality, but as a critical infrastructure upgrade to support 24-hour operations. By automating logistics (food running) and high-volume tasks (frying), Jubitz can stabilize labor costs and improve service velocity in the Cascade Grill and Ponderosa Lounge.</p>
+        </div>
+
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway A: FOH Service</span>
+                    <p>Deployment of autonomous shelf-robots to manage the long travel distances in the Cascade Grill. Primary goal: Support staff by handling heavy trays and dirty dish return.</p>
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway B: BOH Automation</span>
+                    <p>Installation of automated frying assistants. Primary goal: Ensure consistent quality of high-volume items (wings/fries) and improve safety during late-night shifts.</p>
+                </div>
+                <div class="pathway-item">
+                    <span class="pathway-title">Pathway C: AI Interfaces</span>
+                    <p>Smart Kiosks and Voice Agents for the Deli and Fleet Services. Primary goal: Speed up transactions for professional drivers on tight schedules.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">Year 1:</strong> Pilot Program in Cascade Grill (2 Robots).
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">Year 2:</strong> Expansion to Ponderosa Lounge for event support.
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">Year 3:</strong> Back-of-House Automated Frying integration.
+                </li>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <strong style="color: var(--accent-purple);">Year 4:</strong> Voice AI for Deli and Fleet ordering.
+                </li>
+                <li>
+                    <strong style="color: var(--accent-purple);">Year 5:</strong> Full "Smart Campus" integration.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 120000, 210000, 320000, 450000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) { return '$' + value / 1000 + 'k'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Turnover Time (Min)', 'Tables per Shift'],
+                datasets: [
+                    {
+                        label: 'Manual Service',
+                        data: [55, 18],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robot Assisted',
+                        data: [42, 24],
+                        backgroundColor: '#7c3aed',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
