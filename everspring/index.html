@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everspring Robotics Analysis | Open Droids</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        background-color: #0f172a; /* Deep Space Blue */
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+        background-image: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+    }
+
+    h1, h2, h3 {
+        margin: 0 0 15px 0;
+        letter-spacing: -0.02em;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .logo span {
+        color: #7c3aed; /* Electric Purple */
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .glass-panel:hover {
+        border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    .highlight-purple {
+        color: #a78bfa;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(15, 23, 42, 0.4) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .columns-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .columns-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        color: #a78bfa;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        text-transform: uppercase;
+        font-size: 0.75rem;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .tag-strategic { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #7c3aed;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: background 0.3s;
+    }
+    .btn:hover { background: #6d28d9; }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">OPEN <span>DROIDS</span></div>
+    <div style="text-align: right; font-size: 0.9rem; color: #94a3b8;">
+        Client: Everspring<br>
+        Research Vertical: Healthcare Robotics
+    </div>
+</div>
+
+<!-- Executive Dashboard -->
+<div class="dashboard-grid">
+    <div class="metric-card">
+        <div class="metric-label">Projected Net Benefit</div>
+        <div class="metric-value">£1.75M</div>
+        <div class="metric-label">Annualized (Year 2)</div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-label">Payback Period</div>
+        <div class="metric-value">1.4 Yrs</div>
+        <div class="metric-label">Pharmacy Automation</div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-label">Error Reduction</div>
+        <div class="metric-value">99.9%</div>
+        <div class="metric-label">Dispensing Accuracy</div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-label">Cost Reduction</div>
+        <div class="metric-value">40%</div>
+        <div class="metric-label">Cost-Per-Script Fill</div>
+    </div>
+</div>
+
+<div class="columns-2">
+    <!-- Main Analysis -->
+    <div>
+        <div class="glass-panel">
+            <h2 class="highlight-purple">Executive Summary</h2>
+            <p style="color: #cbd5e1; line-height: 1.6;">
+                Everspring operates as a hybrid technology-enabled healthcare provider. The primary friction points are manual medication dispensing and administrative overhead. The highest ROI opportunity is <strong>Pathway A: Centralized Robotic Pharmacy Fulfillment</strong>, which shifts the cost curve of distribution, followed by Pathway B (RPA) for administrative scalability.
+            </p>
+        </div>
+
+        <div class="glass-panel">
+            <h3 class="highlight-purple">Opportunity Pathways</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <h4 style="margin-bottom:5px; color: #fff;">Pathway A: Pharmacy Robotics</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-top:0;">High-throughput pill counting and verification. <span class="tag tag-high">Highest ROI</span></p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h4 style="margin-bottom:5px; color: #fff;">Pathway B: Admin RPA</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-top:0;">Software robotics for billing and scheduling. <span class="tag tag-strategic">Quick Win</span></p>
+            </div>
+
+            <div>
+                <h4 style="margin-bottom:5px; color: #fff;">Pathway C: Lab Automation</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-top:0;">Pre-analytic processing speed. <span class="tag tag-med">Quality Focus</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div>
+        <div class="glass-panel">
+            <h3 class="highlight-purple">5-Year Cumulative Net Savings</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-panel">
+            <h3 class="highlight-purple">Throughput Analysis</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 10px;">
+                Comparison of daily prescription fills per FTE (Manual vs. Robotic)
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-panel">
+    <h3 class="highlight-purple">Financial ROI Model (Pathway A)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Manual Baseline</th>
+                <th>Robotic Automation</th>
+                <th>Delta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Throughput Capacity</td>
+                <td>500k Scripts/Yr</td>
+                <td>850k Scripts/Yr</td>
+                <td style="color: #34d399;">+70% Capacity</td>
+            </tr>
+            <tr>
+                <td>Cost Per Fill</td>
+                <td>£10.00</td>
+                <td>£6.00</td>
+                <td style="color: #34d399;">-£4.00 / Script</td>
+            </tr>
+            <tr>
+                <td>OpEx (Annual)</td>
+                <td>£5.0M</td>
+                <td>£3.0M</td>
+                <td style="color: #34d399;">£2.0M Savings</td>
+            </tr>
+            <tr>
+                <td>Error Rate</td>
+                <td>1.5%</td>
+                <td>0.01%</td>
+                <td style="color: #34d399;">Risk Elimination</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1 (Install)', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [-0.5, 1.25, 3.5, 6.0, 9.0], // Initial spend then rapid growth
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Fulfillment'],
+            datasets: [{
+                label: 'Scripts Per Hour (Avg)',
+                data: [45, 280],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', '#34d399'],
+                borderRadius: 8,
+                barThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
