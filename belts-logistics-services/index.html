@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belts Logistics Services - Automation Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: #8b5cf6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-title {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-sub {
+            font-size: 0.85rem;
+            color: var(--success);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Content Sections */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .report-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-purple);
+            color: #cbd5e1;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .metric-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <div class="subtitle">OPEN DROIDS CONSULTATION</div>
+            <h1>Belts Logistics Services</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="subtitle">REPORT DATE</div>
+            <div style="font-weight: 600;">OCTOBER 2023</div>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-title">Projected CAPEX</div>
+            <div class="metric-value">$580k</div>
+            <div class="metric-sub">▼ Phase 1 Deployment</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-title">Labor OPEX Reduction</div>
+            <div class="metric-value">35%</div>
+            <div class="metric-sub">▲ Annual Savings</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-title">Throughput Gain</div>
+            <div class="metric-value">2.5x</div>
+            <div class="metric-sub">▲ Units Per Hour</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-title">ROI Horizon</div>
+            <div class="metric-value">18 Mo</div>
+            <div class="metric-sub">● Break-even Point</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Main Content -->
+        <div class="main-column">
+            <div class="report-card">
+                <h2>Executive Vision</h2>
+                <p>Belts Logistics Services is positioned to pivot from a legacy warehousing model to a Hybrid Autonomous Fulfillment Hub. By integrating AMRs and AI-driven logic, the organization can mitigate labor volatility while increasing operational density in the critical Baltimore-Washington corridor.</p>
+                <br>
+                <span class="tag">Strategic Pivot</span>
+                <span class="tag">Automation</span>
+                <span class="tag">Efficiency</span>
+            </div>
+
+            <div class="report-card">
+                <h2>Opportunity Pathways</h2>
+                <p><strong>Pathway A: Internal Transport AMRs</strong><br>Replacing manual forklifts for long-distance travel. Reduces wasted motion by 40%.</p>
+                <p><strong>Pathway B: High-Density Picking</strong><br>Vertical storage utilization to reclaim 20,000+ sq ft of floor space.</p>
+                <p><strong>Pathway C: AI Logistics</strong><br>Predictive dock scheduling to reduce inbound/outbound turnaround times.</p>
+            </div>
+
+            <div class="report-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Side Column -->
+        <div class="side-column">
+            <div class="report-card">
+                <h2>Operational Stats</h2>
+                <ul>
+                    <li><strong>Location:</strong> Baltimore, MD Region</li>
+                    <li><strong>Footprint:</strong> ~700k Sq Ft</li>
+                    <li><strong>Focus:</strong> Retail & Food Grade</li>
+                </ul>
+            </div>
+
+            <div class="report-card">
+                <h2>Throughput Analysis</h2>
+                <div class="chart-container" style="height: 200px;">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px;">Comparison of Units Per Hour (UPH) between current manual processes and Year 1 Robotics implementation.</p>
+            </div>
+
+            <div class="report-card">
+                <h2>Roadmap</h2>
+                <ul>
+                    <li><strong>Year 1:</strong> Pilot AMR Fleet (8 Units)</li>
+                    <li><strong>Year 2:</strong> ASRS & Expansion</li>
+                    <li><strong>Year 3:</strong> Full Control Tower</li>
+                    <li><strong>Year 5:</strong> Predictive Autonomy</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.2, 0.8, 1.9, 3.2, 4.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual', 'Robotic'],
+                datasets: [{
+                    label: 'Units Per Hour (UPH)',
+                    data: [120, 310],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
