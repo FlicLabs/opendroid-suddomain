@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSI Robotics Research - OPEN DROIDS</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --accent-purple: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.4);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 0.5) 0%, transparent 40%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header & Logo */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: white;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo span {
+        color: var(--accent-purple);
+        text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    .report-title p {
+        margin: 5px 0 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    h2 {
+        color: white;
+        border-left: 4px solid var(--accent-purple);
+        padding-left: 15px;
+        margin-top: 0;
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        margin-top: 25px;
+    }
+
+    p, li {
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid var(--accent-purple);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent-purple);
+        box-shadow: 0 0 10px var(--accent-purple);
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-main);
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        background: rgba(124, 58, 237, 0.2);
+        color: white;
+        font-weight: 600;
+        border-bottom: 2px solid var(--accent-purple);
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Charts Section */
+    .charts-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .highlight-text {
+        color: var(--accent-purple);
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">
+            OPEN <span>DROIDS</span>
+        </div>
+        <div class="report-title">
+            <h1>COSI Robotics Portfolio</h1>
+            <p>Facility Optimization & ROI Analysis</p>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>
+            COSI (Center of Science and Industry) manages a 320,000 sq. ft. facility with high visitor throughput. The primary robotic opportunity is the transition from manual facility management to <span class="highlight-text">Autonomous Service Robotics</span>. By deploying autonomous floor scrubbers, AI concierges, and security patrols, COSI can achieve significant margin improvements while reinforcing its brand as a leader in science and technology.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Net Savings (Projected)</div>
+            <div class="metric-value">$180k+</div>
+            <div class="metric-label">Post-Implementation</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Cleaning Efficiency Lift</div>
+            <div class="metric-value">300%</div>
+            <div class="metric-label">Coverage per FTE</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">0.7 Yrs</div>
+            <div class="metric-label">For Fleet Deployment</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-row">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (USD)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Cleaning Throughput (Sq Ft / Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h2>Pathway Comparison Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Hygiene Bots</th>
+                    <th>Pathway B: Visitor AI</th>
+                    <th>Pathway C: Security</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary Scope</strong></td>
+                    <td>Entire Facility Floor Plan</td>
+                    <td>Entry & Transit Hubs</td>
+                    <td>After-Hours Patrol</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>Labor Reduction (60-70%)</td>
+                    <td>Guest Experience & Data</td>
+                    <td>Asset Protection</td>
+                </tr>
+                <tr>
+                    <td><strong>Est. Annual Benefit</strong></td>
+                    <td>$180,000 - $250,000</td>
+                    <td>Intangible (Brand/Marketing)</td>
+                    <td>$40,000 - $60,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Implementation Risk</strong></td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Moderate (Adoption)</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Strategy -->
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>
+            Adopting this portfolio allows COSI to solve operational bottlenecks while serving its mission. The facility itself becomes an exhibit. Visitors will witness <strong>STEM in action</strong> through the autonomous maintenance fleet, creating a unique narrative of operational excellence and educational immersion.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Global defaults for dark mode charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [-50000, 130000, 350000, 600000, 900000], // Initial investment cost then growth
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Robotic Assist'],
+            datasets: [{
+                label: 'Sq. Ft. per Hour',
+                data: [4500, 14000],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Muted for manual
+                    'rgba(124, 58, 237, 0.8)'   // Purple for robot
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
