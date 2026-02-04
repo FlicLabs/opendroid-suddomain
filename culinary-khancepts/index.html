@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culinary Khancepts | Automation Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: start;
+        }
+
+        li::before {
+            content: "▹";
+            color: var(--accent);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <div class="subtitle">Open Droids Intelligence</div>
+                <h1>Culinary Khancepts</h1>
+            </div>
+            <div style="text-align: right;">
+                <div class="subtitle">Strategic Automation</div>
+                <div style="color: var(--text-muted);">Confidential Report</div>
+            </div>
+        </header>
+
+        <!-- ROI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="card metric-card">
+                <div class="metric-label">Proj. Labor Savings (Year 1)</div>
+                <div class="metric-value">$90,000+</div>
+                <div class="metric-label">Per Location</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">Table Turnover Increase</div>
+                <div class="metric-value">18%</div>
+                <div class="metric-label">Via Automated Bussing</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">ROI Payback Period</div>
+                <div class="metric-value">13 Mo</div>
+                <div class="metric-label">Hardware Breakeven</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="card">
+                <h2>5-Year Cumulative Savings</h2>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="card">
+                <h2>Table Turnover Velocity</h2>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Strategy Content -->
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>Culinary Khancepts is positioned to redefine "Eat-ertainment" by integrating robotics into their Star Cinema Grill and State Fare brands. This strategy focuses on <span class="highlight">Invisible Efficiency</span>—using automation to handle logistics (food running, bussing) so human staff can focus entirely on guest experience and upsells.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Pathway A: FOH Logistics</h2>
+                <ul>
+                    <li><strong>Application:</strong> Cinema aisle delivery & Dining room food runners.</li>
+                    <li><strong>Benefit:</strong> Servers stay in zones, reducing fatigue and increasing face-time with guests.</li>
+                    <li><strong>Tech:</strong> Lidar-enabled shelving units.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>Pathway B: BOH Consistency</h2>
+                <ul>
+                    <li><strong>Application:</strong> Automated frying arms for State Fare kitchens.</li>
+                    <li><strong>Benefit:</strong> Standardized cooking of high-volume fried items.</li>
+                    <li><strong>Safety:</strong> Drastic reduction in grease-burn incidents.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>Pathway C: AI Ordering</h2>
+                <ul>
+                    <li><strong>Application:</strong> Seat-side voice agents in cinemas.</li>
+                    <li><strong>Benefit:</strong> Frictionless mid-movie ordering.</li>
+                    <li><strong>Revenue:</strong> 12% projected increase in check average.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Labor Cost Savings ($)',
+                    data: [90000, 185000, 290000, 410000, 550000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Turnover Rate
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot Assisted'],
+                datasets: [{
+                    label: 'Avg Table Turn Time (Minutes)',
+                    data: [65, 53],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderColor: ['rgba(255, 255, 255, 0.5)', '#7c3aed'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#f8fafc', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
