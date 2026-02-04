@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piccadilly Restaurants: Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+
+        .sub-header {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: var(--glass-border);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .metric-label {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Content Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-purple);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .badge {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--accent-purple);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="sub-header">Open Droids Strategic Report</div>
+        <h1>Piccadilly Restaurants</h1>
+        <div style="color: var(--accent-purple); font-weight: 600;">Automation & Robotics Feasibility Study</div>
+    </header>
+
+    <!-- Hospitality ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">22%</div>
+            <div class="metric-label">Proj. Labor Reduction</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">13 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$145k</div>
+            <div class="metric-label">5-Yr Savings / Store</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">1.4x</div>
+            <div class="metric-label">Table Turn Velocity</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left Column: Research Content -->
+        <div class="main-content">
+            <div class="card">
+                <h2>Executive Summary</h2>
+                <p>Piccadilly Restaurants stands at a pivotal juncture. By adopting a <strong>Hybrid Service Model</strong>, the brand can automate heavy lifting and thermal consistency tasks without sacrificing its "homestyle" identity. The strategy leverages collaborative robotics (Cobbots) to handle tray bussing, allowing human staff to focus on high-value guest interactions.</p>
+            </div>
+
+            <div class="card">
+                <h2>Strategic Pathways</h2>
+                
+                <h3>Pathway A: FOH Support</h3>
+                <p>Deployment of bussing robots to manage the "Cafeteria Cycle." Robots handle heavy dishware transport to the dish pit, reducing worker injury claims.</p>
+                
+                <h3>Pathway B: BOH Consistency</h3>
+                <p>Automated frying solutions for core menu items (Chicken/Fish) to ensure consistent safety and quality control.</p>
+                
+                <h3>Pathway C: AI Agents</h3>
+                <p>Voice AI implementation for curbside and phone orders to capture lost revenue during peak dining hours.</p>
+            </div>
+
+            <div class="card">
+                <h2>Implementation Roadmap</h2>
+                <ul>
+                    <li><span class="badge">Year 1</span> Pilot Program: 3 High-Volume Locations</li>
+                    <li><span class="badge">Year 2</span> Regional Rollout: 50% Fleet Integration</li>
+                    <li><span class="badge">Year 3</span> AI Integration: Voice Agents for To-Go</li>
+                    <li><span class="badge">Year 5</span> The Autonomous Kitchen: Full BOH Automation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: Visual Data -->
+        <div class="visual-content">
+            <div class="card">
+                <h2>Cumulative Labor Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top:15px; text-align:center; color:var(--text-sub)">Projected aggregate savings over 5 years per single unit deployment.</p>
+            </div>
+
+            <div class="card">
+                <h2>Table Turnover Efficiency</h2>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top:15px; text-align:center; color:var(--text-sub)">Comparison of average turn time in minutes.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [15000, 42000, 75000, 110000, 145000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#38bdf8'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Bar Chart
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Robot Assisted'],
+            datasets: [{
+                label: 'Minutes per Turn',
+                data: [65, 48],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#38bdf8'],
+                borderColor: ['transparent', '#38bdf8'],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
