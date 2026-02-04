@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Restaurant Group - Automation Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-big {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        ul.pathways {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.pathways li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        ul.pathways li:last-child {
+            border-bottom: none;
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .status-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h2>Open Droids Intelligence</h2>
+            <h1>Apex Restaurant Group Lp.</h1>
+            <div class="subtitle">Strategic Automation Research & ROI Projections</div>
+        </div>
+        <div>
+            <span class="status-badge">REPORT READY</span>
+        </div>
+    </header>
+
+    <!-- ROI DASHBOARD -->
+    <div class="section-title">Hospitality ROI Dashboard</div>
+    <div class="grid">
+        <div class="card">
+            <div class="metric-label">Target Labor Savings</div>
+            <div class="metric-big">25%</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Projected reduction in Front-of-House OPEX via automated runners.</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">Break-Even Velocity</div>
+            <div class="metric-big">14 <span style="font-size: 1.5rem;">Mos</span></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Payback period per unit based on $15/hr labor reallocation.</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">Upsell Lift (AI Voice)</div>
+            <div class="metric-big">+12%</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Average check size increase using AI Voice Agents at Drive-Thru.</p>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="grid">
+        <div class="card">
+            <h3 style="margin-top:0;">Cumulative Labor Savings (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="margin-top:0;">Table Turnover Velocity</h3>
+            <div class="chart-container">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- STRATEGIC TEXT CONTENT -->
+    <div class="grid">
+        <div class="card">
+            <div class="section-title">Robotics Opportunities</div>
+            <ul class="pathways">
+                <li>
+                    <span class="highlight">Pathway A: FOH Service</span><br>
+                    Deployment of shelf-based runners to handle food delivery and bussing. Reduces server walking distance by 30%.
+                </li>
+                <li>
+                    <span class="highlight">Pathway B: BOH Automation</span><br>
+                    Automated fry-stations to ensure consistency and reduce burn liability. Crucial for high-volume fried menu items.
+                </li>
+                <li>
+                    <span class="highlight">Pathway C: Voice AI</span><br>
+                    Conversational AI for drive-thrus to eliminate order errors and guarantee consistent upselling scripts.
+                </li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <div class="section-title">Financial & Roadmap</div>
+            <p><span class="highlight">CAPEX:</span> Est. $15k - $40k per unit.</p>
+            <p><span class="highlight">OPEX:</span> Monthly maintenance ~$250/unit.</p>
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+            <div class="metric-label">Implementation Timeline</div>
+            <div style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
+                <strong>Y1:</strong> Pilot 3 Locations<br>
+                <strong>Y2:</strong> Regional Rollout (Top 20%)<br>
+                <strong>Y3:</strong> BOH Frying Integration<br>
+                <strong>Y4:</strong> Predictive AI Data Layer<br>
+                <strong>Y5:</strong> Full Ecosystem Maturity
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 1.8, 4.2, 8.5, 14.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Tables Turned Per Peak Hour',
+                data: [3.5, 4.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
