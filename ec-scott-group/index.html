@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC Scott Group | Automation Strategy Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: var(--text-sub);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>EC Scott Group</h1>
+        <p style="color: var(--accent-purple); font-weight: 600;">INDUSTRIAL AUTOMATION & STRATEGIC FULFILLMENT RESEARCH</p>
+    </header>
+
+    <!-- METRICS DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="metric-card glass-card">
+            <div class="metric-value">25%</div>
+            <div class="metric-label">Target OEE Increase</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-value">1.5</div>
+            <div class="metric-label">Years Payback (ROI)</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-value">$90k</div>
+            <div class="metric-label">Avg. Cell Cost</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">Overtime Reduction</div>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="glass-card">
+        <h2>01. Executive Vision</h2>
+        <p>The vision for EC Scott Group is to pivot from manual-heavy logistics to a flexible, automated fulfillment ecosystem. By integrating robotics into kitting and distribution, the organization will reduce lead times, improve compliance accuracy for retail partners (Sephora, Ulta), and scale operations without proportional labor cost increases.</p>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>Cumulative Cost Savings (5-Year Projection)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Manual vs. Cobot-Assisted Throughput</h3>
+            <canvas id="outputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- ROBOTICS PATHWAYS -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div>
+                <h3 style="color: #fff;">Pathway A: Cobot Kitting</h3>
+                <p>Deploying collaborative robots for value-added services. <br><span style="color: var(--accent-purple);">Goal:</span> Precision in gift-set assembly & safety.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway B: AMRs</h3>
+                <p>Autonomous Mobile Robots for material transport. <br><span style="color: var(--accent-purple);">Goal:</span> WIP flow efficiency & walking reduction.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Pathway C: Auto-Palletizing</h3>
+                <p>End-of-line robotics with vision systems. <br><span style="color: var(--accent-purple);">Goal:</span> Throughput speed & shipping yield.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPLEMENTATION ROADMAP -->
+    <div class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        
+        <div class="roadmap-step">
+            <div class="step-number">1</div>
+            <div>
+                <h3>Pilot & Proof of Concept</h3>
+                <p>Select one high-volume kitting line for Cobot integration. Deploy 2 AMRs for waste/dunnage removal.</p>
+            </div>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="step-number">2</div>
+            <div>
+                <h3>Integration & Expansion</h3>
+                <p>Expand Cobots to 3 lines. Install Palletizing cell for main shipping lane. Integrate with WMS.</p>
+            </div>
+        </div>
+
+        <div class="roadmap-step">
+            <div class="step-number">3</div>
+            <div>
+                <h3>AI & Predictive Logistics</h3>
+                <p>Full AMR fleet. Machine Learning for predictive bottleneck analysis and seasonal scaling.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ USD)',
+                data: [50000, 250000, 600000, 1100000, 1800000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison
+    const ctx2 = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Kitting', 'Labeling', 'Palletizing'],
+            datasets: [
+                {
+                    label: 'Manual Process (Units/Hr)',
+                    data: [120, 300, 40],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Cobot Assisted (Units/Hr)',
+                    data: [210, 550, 90],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
