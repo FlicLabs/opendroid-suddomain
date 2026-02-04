@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbrant Aviation Services - Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--deep-space);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--sky-blue);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, white, var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--sky-blue);
+            margin-top: 40px;
+            border-left: 4px solid var(--aviation-orange);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--aviation-orange);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Table */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .financial-table th, .financial-table td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .financial-table th {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .financial-table td {
+            font-size: 1.1rem;
+        }
+
+        .metric-highlight {
+            color: var(--electric-purple);
+            font-weight: 700;
+        }
+
+        .metric-positive {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        /* Dashboard Metrics */
+        .kpi-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .kpi-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap List */
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .roadmap-year {
+            background: var(--electric-purple);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 20px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">RESEARCH DIVISION</div>
+        </header>
+
+        <section style="text-align: center; margin-bottom: 60px;">
+            <h1>Symbrant Aviation Services</h1>
+            <p style="font-size: 1.2rem; color: var(--sky-blue);">Strategic Automation & Robotics Integration Report</p>
+        </section>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h3>Executive Vision</h3>
+            <p style="font-size: 1.1rem; color: var(--text-main);">
+                Symbrant Aviation Services stands at the precipice of a technological revolution. By transitioning from manual-heavy workflows to a human-robot collaborative model, Symbrant can increase fleet turnaround speed by 40% while ensuring standardized hygiene levels that exceed international health safety protocols.
+            </p>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>Pathway A: Interior Autonomy</h3>
+                <p><strong>Cabin Cleaning Robots:</strong> LIDAR-guided vacuums and debris removal systems.</p>
+                <p><strong>UV-C Disinfection:</strong> High-intensity sterilization bots for surfaces and lavatories, eliminating chemical residue.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway B: Exterior & Inspection</h3>
+                <p><strong>Washing Systems:</strong> Semi-autonomous gantry systems recovering 90% of water used.</p>
+                <p><strong>AI Inspection Bots:</strong> Computer vision drones detecting fuselage anomalies with 99.9% accuracy.</p>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h2>Financial Impact Dashboard</h2>
+        
+        <div class="grid-3" style="margin-bottom: 30px;">
+            <div class="kpi-card">
+                <div class="kpi-label">Target OPEX Reduction</div>
+                <div class="kpi-value" style="color: var(--aviation-orange);">45%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">ROI Timeline</div>
+                <div class="kpi-value" style="color: var(--sky-blue);">< 24 Mo</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Throughput Increase</div>
+                <div class="kpi-value" style="color: #10b981;">1.8x</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3>Capital Expenditure & Savings Model</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Range / Value</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unit CAPEX (Interior)</td>
+                        <td class="metric-highlight">$75k - $90k</td>
+                        <td>Per AGV Unit</td>
+                    </tr>
+                    <tr>
+                        <td>Unit CAPEX (Exterior)</td>
+                        <td class="metric-highlight">$120k - $150k</td>
+                        <td>Per Gantry/Drone System</td>
+                    </tr>
+                    <tr>
+                        <td>Labor Savings</td>
+                        <td class="metric-positive">35% - 45%</td>
+                        <td>Direct Labor Reallocation</td>
+                    </tr>
+                    <tr>
+                        <td>Consumables Reduction</td>
+                        <td class="metric-positive">20%</td>
+                        <td>Water & Chemical Waste</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <h2>Data Visualization</h2>
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Labor Redistribution Post-Automation</h3>
+            <div class="chart-container" style="max-width: 400px; margin: 0 auto;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <h2>Implementation Roadmap</h2>
+        <div class="glass-card">
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 1</div>
+                <div>
+                    <strong style="color: var(--text-main);">Pilot Deployment</strong>
+                    <p>Launch pilot at one major hub with 5 interior units. Establish remote command center.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 2-3</div>
+                <div>
+                    <strong style="color: var(--text-main);">Expansion Phase</strong>
+                    <p>Roll out to secondary hubs. Deploy heavy exterior washing systems. Begin AI inspection integration.</p>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-year">Year 4-5</div>
+                <div>
+                    <strong style="color: var(--text-main);">Full Scale Autonomy</strong>
+                    <p>Fleet-wide saturation. Transition to "Management by Exception" model. Full data integration.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (USD Millions)',
+                    data: [0.5, 2.1, 4.8, 8.5, 12.2],
+                    borderColor: '#7c3aed', // Electric Purple
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0ea5e9',
+                    pointBorderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Clean', 'Disinfect', 'Inspect'],
+                datasets: [
+                    {
+                        label: 'Manual (Mins)',
+                        data: [45, 25, 60],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)', // Muted Grey
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic (Mins)',
+                        data: [15, 8, 10],
+                        backgroundColor: '#0ea5e9', // Sky Blue
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Time per Aircraft (Minutes)' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Labor Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tech Supervision', 'Manual Cleaning', 'Maintenance Ops', 'Admin/Logistics'],
+                datasets: [{
+                    data: [35, 15, 30, 20],
+                    backgroundColor: [
+                        '#7c3aed', // Purple
+                        '#94a3b8', // Grey
+                        '#0ea5e9', // Blue
+                        '#f97316'  // Orange
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
