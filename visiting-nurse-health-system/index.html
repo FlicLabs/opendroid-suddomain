@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Visiting Nurse Health System - Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --accent-purple: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.5);
+        --success-green: #10b981;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: var(--bg-color);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%);
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 58, 237, 0.3);
+        box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* Layout */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .report-title {
+        text-align: right;
+    }
+    .report-title h1 { margin: 0; font-size: 1.5rem; }
+    .report-title p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Dashboard Metrics */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    .metric-delta {
+        font-size: 0.9rem;
+        color: var(--success-green);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* Main Content Grid */
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        color: var(--accent-purple);
+        font-size: 1.2rem;
+        margin-top: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 10px;
+    }
+
+    h3 { margin-top: 0; color: #fff; }
+    p, li { line-height: 1.6; color: #cbd5e1; }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-main);
+    }
+    
+    th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid var(--accent-purple);
+        color: var(--accent-purple);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+    
+    td {
+        padding: 12px;
+        border-bottom: 1px solid var(--glass-border);
+        font-size: 0.9rem;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Visiting Nurse Health System</h1>
+            <p>Robotics & Automation Portfolio • 2024 Analysis</p>
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card">
+            <div class="metric-label">Annual Efficiency Gain</div>
+            <div class="metric-value">$6.0M</div>
+            <div class="metric-delta">▲ Pathway A Implementation</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Throughput Increase</div>
+            <div class="metric-value">+30%</div>
+            <div class="metric-delta">▲ Visits Per Clinician</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">Admin Cost Reduction</div>
+            <div class="metric-value">-15%</div>
+            <div class="metric-delta">▼ Via RPA Automation</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">4.5 Mo</div>
+            <div class="metric-delta">▲ Logistics Optimization</div>
+        </div>
+    </div>
+
+    <!-- Main Content & Charts -->
+    <div class="content-grid">
+        <!-- Left Column: Strategy & Analysis -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Visiting Nurse Health System faces a critical juncture where demand outpaces clinical supply. Our analysis confirms that an "AI-First" logistics strategy combined with social robotics for hospice care is the optimal path forward. The primary value driver is the conversion of "windshield time" (travel) into "clinical time" via algorithmic routing.</p>
+            
+            <br>
+            
+            <h2>Strategic Pathways</h2>
+            
+            <h3>Pathway A: Intelligent Logistics</h3>
+            <p>Implementation of AI-driven scheduling and routing software. This shifts the operational model from static territories to dynamic, optimized routing.</p>
+            
+            <h3>Pathway B: Social Robotics</h3>
+            <p>Deployment of therapeutic robotic pets (e.g., PARO, Joy for All) in dementia and hospice settings to reduce agitation and pharmacological dependence.</p>
+
+            <br>
+            <h2>Comparative Financial Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Pathway A (Logistics)</th>
+                        <th>Pathway B (Social)</th>
+                        <th>Pathway C (Telepresence)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Primary Benefit</strong></td>
+                        <td>Staff Utilization</td>
+                        <td>Patient Experience</td>
+                        <td>Specialist Reach</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Value</strong></td>
+                        <td>$5M - $6M</td>
+                        <td>$1M (Value Based)</td>
+                        <td>$2.5M</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td>3-6 Months</td>
+                        <td>12 Months</td>
+                        <td>9 Months</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Profile</strong></td>
+                        <td>Low (Software)</td>
+                        <td>Low/Moderate</td>
+                        <td>Moderate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Right Column: Visualizations -->
+        <div>
+            <div class="glass-card" style="margin-bottom: 30px;">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px; text-align: center; color: var(--text-muted);">
+                    Projected cumulative net savings factoring in software costs and operational efficiency gains.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Daily Throughput Comparison</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 15px; text-align: center; color: var(--text-muted);">
+                    Comparison of average daily visits per nurse before and after AI Logistics integration.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [4.5, 10.2, 16.8, 24.5, 33.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8', callback: function(value){return '$' + value + 'M'} }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Routing', 'AI/Robotic Routing'],
+            datasets: [{
+                label: 'Visits Per Clinician/Day',
+                data: [5.0, 6.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#10b981'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#10b981'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#e2e8f0', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
