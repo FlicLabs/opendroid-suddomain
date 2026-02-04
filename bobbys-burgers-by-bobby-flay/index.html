@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobby's Burgers Strategic Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .metric-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: #34d399; /* Green for positive */
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-card h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+
+        .content-card p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="badge">OPEN DROIDS RESEARCH</div>
+        <h1>Bobby's Burgers</h1>
+        <div class="subtitle">Strategic Automation & Robotics Integration Report</div>
+    </header>
+
+    <!-- Hospitality ROI Dashboard -->
+    <h2>Hospitality ROI Dashboard</h2>
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Proj. Labor Reduction</div>
+            <div class="metric-value">20%</div>
+            <div class="metric-sub">▼ FOH & BOH Costs</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">11.3</div>
+            <div class="metric-sub">Months to Break-even</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Table Turn Velocity</div>
+            <div class="metric-value">+15%</div>
+            <div class="metric-sub">▲ Peak Hour Capacity</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">CapEx per Unit</div>
+            <div class="metric-value">$65k</div>
+            <div class="metric-sub">Est. Hardware Suite</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="content-card">
+        <h3>01. Executive Summary</h3>
+        <p>This strategic research outlines the integration of robotics for Bobby’s Burgers. The objective is to scale the "Ultimate Burger Experience" by automating high-repetition tasks (frying, grilling, running). This protects brand consistency across franchise expansion while significantly widening profit margins through labor optimization.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <h2>Robotics Opportunity Pathways</h2>
+    <div class="pathway-grid">
+        <div class="content-card pathway-item">
+            <div class="badge">PATHWAY A</div>
+            <h3>FOH: Serving Robots</h3>
+            <p><strong>Focus:</strong> Table Turnover & Staff Support.<br>
+            Deployment of shelf-based delivery bots to handle food running and clearing. Allows human servers to focus on guest interaction and hospitality "vibe".</p>
+        </div>
+        <div class="content-card pathway-item">
+            <div class="badge">PATHWAY B</div>
+            <h3>BOH: Automated Kitchen</h3>
+            <p><strong>Focus:</strong> Consistency & Safety.<br>
+            Utilization of robotic fry arms (e.g., Flippy) and smart clamshell grills. Ensures the signature "Crunchified" texture is identical in every location.</p>
+        </div>
+        <div class="content-card pathway-item">
+            <div class="badge">PATHWAY C</div>
+            <h3>AI: Voice & Kiosks</h3>
+            <p><strong>Focus:</strong> Upselling & Accuracy.<br>
+            "Chef’s Voice" AI at kiosks to suggest pairings (e.g., specific shakes with burgers), driving an estimated 8% increase in ticket size.</p>
+        </div>
+    </div>
+
+    <!-- Interactive Charts -->
+    <h2>Financial Projection Visualization</h2>
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <canvas id="laborSavingsChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <h2>5-Year Implementation Roadmap</h2>
+    <div class="content-card">
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <strong style="color: var(--accent-color);">Year 1:</strong> Pilot Program at flagship location (Las Vegas).
+            </div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <strong style="color: var(--accent-color);">Year 2:</strong> Franchise Integration Package standardization.
+            </div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <strong style="color: var(--accent-color);">Year 3:</strong> AI Ecosystem Maturity (Predictive Prep).
+            </div>
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <strong style="color: var(--accent-color);">Year 4:</strong> Autonomous Kitchen testing in non-traditional venues.
+            </div>
+            <div>
+                <strong style="color: var(--accent-color);">Year 5:</strong> Full Network Optimization & Centralized Command.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Open Droids Consultation Division &copy; 2023 | Confidential Strategic Report</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Cost Savings (Line Chart)
+    const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($)',
+                data: [90000, 195000, 310000, 450000, 600000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } },
+                title: { display: true, text: '5-Year Cumulative Labor Cost Savings', color: '#f8fafc' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Rate (Bar Chart)
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Lunch Rush', 'Dinner Peak', 'Weekend'],
+            datasets: [
+                {
+                    label: 'Manual Service',
+                    data: [3.2, 2.8, 3.5],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robot-Assisted',
+                    data: [4.1, 3.6, 4.4],
+                    backgroundColor: 'rgba(52, 211, 153, 0.8)',
+                    borderColor: '#34d399',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#f8fafc' } },
+                title: { display: true, text: 'Table Turns Per Hour (Comparison)', color: '#f8fafc' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
