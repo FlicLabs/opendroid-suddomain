@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMC Robotics Analysis | OPEN DROIDS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .report-title p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Executive Summary */
+        .summary-text {
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .pathway-card h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(124, 58, 237, 0.2);
+            color: #a78bfa;
+            margin-bottom: 10px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-sub {
+            font-size: 0.75rem;
+            color: var(--success-green);
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid var(--accent-purple);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div class="report-title">
+                <h1>Psychiatric Medical Care</h1>
+                <p>Robotics Consultation & ROI Analysis</p>
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <div class="card-header">Executive Summary</div>
+            <p class="summary-text">
+                Psychiatric Medical Care (PMC) is poised to transform rural behavioral health through strategic automation. By pivoting from a pure staffing model to a tech-enabled platform, PMC can address its three critical bottlenecks: specialist scarcity, high variable labor costs for patient safety, and geographic dispersion. The analysis identifies <strong>Pathway B (Non-Invasive Safety Monitoring)</strong> as the immediate financial driver, capable of delivering ~£6.6M ($8.4M) in annual net benefit with a rapid payback period.
+            </p>
+        </div>
+
+        <!-- Pathways Grid -->
+        <div class="pathways-grid">
+            <!-- Pathway A -->
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY A: HIGH STRATEGIC VALUE</span>
+                <h3>Autonomous Telepresence</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Decoupling psychiatrist location from service delivery via autonomous roaming units.</p>
+                <ul style="font-size: 0.85rem; color: #94a3b8; padding-left: 20px;">
+                    <li>Reduces Locum Tenens costs by 20-30%</li>
+                    <li>Increases daily patient encounters by 15%</li>
+                    <li>Eliminates travel downtime</li>
+                </ul>
+            </div>
+
+            <!-- Pathway B -->
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY B: IMMEDIATE ROI</span>
+                <h3>Safety Monitoring (Lidar/AI)</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Replacing 1:1 human "sitters" with privacy-compliant automated detection systems.</p>
+                <ul style="font-size: 0.85rem; color: #94a3b8; padding-left: 20px;">
+                    <li>Reduces observation hours by 40-60%</li>
+                    <li>Annual Net Benefit: ~$8.4M</li>
+                    <li>Payback: 3-6 Months</li>
+                </ul>
+            </div>
+
+            <!-- Pathway C -->
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY C: QUALITY ENHANCER</span>
+                <h3>Therapeutic Robotics</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Bio-responsive companions for geriatric dementia care in Senior Life Solutions.</p>
+                <ul style="font-size: 0.85rem; color: #94a3b8; padding-left: 20px;">
+                    <li>Reduces PRN medication usage by 10-15%</li>
+                    <li>Improves patient satisfaction scores</li>
+                    <li>Differentiates market position</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <div class="card-header">Financial Dashboard (Pathway B Focus)</div>
+            
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Annual Labor Savings</div>
+                    <div class="metric-value">$10.9M</div>
+                    <div class="metric-sub">Via Reduced Sitter Hours</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">System Cost</div>
+                    <div class="metric-value">$2.5M</div>
+                    <div class="metric-sub">Hardware + SaaS</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Net Annual Benefit</div>
+                    <div class="metric-value">$8.4M</div>
+                    <div class="metric-sub">Post-Implementation</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">5-Year Cumulative</div>
+                    <div class="metric-value">$35M+</div>
+                    <div class="metric-sub">Network Wide</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Table -->
+        <div class="card">
+            <div class="card-header">Comparative Analysis</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Telepresence (A)</th>
+                        <th>Safety AI (B)</th>
+                        <th>Therapeutic (C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>All Inpatient Units</td>
+                        <td>High Acuity / Risk</td>
+                        <td>Geriatric Outpatient</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Main Driver</strong></td>
+                        <td>Provider Efficiency</td>
+                        <td>Labor Cost (Sitters)</td>
+                        <td>Medication Reduction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Benefit</strong></td>
+                        <td>$3M - $5M</td>
+                        <td>$8M - $10M</td>
+                        <td>$1M - $2M (Indirect)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payback</strong></td>
+                        <td>6-9 Months</td>
+                        <td>3-6 Months</td>
+                        <td>12 Months</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk</strong></td>
+                        <td>Moderate (Connectivity)</td>
+                        <td>Low (Proven Tech)</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. 5-Year Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($ Millions)',
+                    data: [5.5, 13.9, 22.3, 30.7, 39.1], // Projected growth
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    title: { display: true, text: '5-Year Cumulative Net Benefit (Pathway B)', font: { size: 14, family: 'Inter' }, color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Manual vs. Automated Sitter Hours Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Baseline', 'Robotic/AI Assisted'],
+                datasets: [{
+                    label: 'Annual Sitter Hours Required (Thousands)',
+                    data: [876, 438], // 50% reduction
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)', // Red for high cost manual
+                        'rgba(16, 185, 129, 0.6)'  // Green for optimized
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(16, 185, 129, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Operational Efficiency: 1:1 Sitter Hours', font: { size: 14, family: 'Inter' }, color: '#e2e8f0' }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
