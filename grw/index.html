@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRW Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 0 25px var(--accent-glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .client-tag {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Grid Layouts */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Pathways List */
+        .pathway-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .pathway-item:last-child {
+            border-bottom: none;
+        }
+        .pathway-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <div>
+            <div class="client-tag">Open Droids Consulting</div>
+            <h1>Strategic Research: GRW</h1>
+            <p style="color: var(--accent-purple); font-weight: 600;">High Precision Bearings & Automation</p>
+        </div>
+        <div style="text-align: right;">
+            <p>Report ID: OD-GRW-2024</p>
+            <p>Status: <span style="color: var(--success)">Finalized</span></p>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01 / Executive Vision</h2>
+        <p>GRW stands at the precipice of a major Industry 4.0 evolution. The strategic objective is to transition from static, isolated manufacturing cells to a fluid, data-driven ecosystem. By integrating Cleanroom Cobots, AMRs, and Automated Inspection, GRW can reduce micro-contamination risks while increasing throughput flexibility for aerospace and medical clients.</p>
+    </div>
+
+    <!-- Metrics Dashboard -->
+    <div class="metrics-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">16 mo</span>
+            <span class="metric-label">Target Payback</span>
+            <span class="trend-up">▼ Fast ROI</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">85%</span>
+            <span class="metric-label">Target OEE</span>
+            <span class="trend-up">▲ From 65% Baseline</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">$440k</span>
+            <span class="metric-label">Est. Pilot CAPEX</span>
+            <span class="trend-up">● Strategic Investment</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">ISO 4</span>
+            <span class="metric-label">Cleanroom Std</span>
+            <span class="trend-up">● Compliance Maintained</span>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>02 / Robotics Pathways</h2>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway A: Cobot Assembly</span>
+                <p>Deployment of force-sensitive Cobots for micro-assembly of bearing cages, reducing human-induced contamination.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway B: AMR Logistics</span>
+                <p>Autonomous mobile units handling tray transport between Heat Treat and Grinding to eliminate WIP stagnation.</p>
+            </div>
+            <div class="pathway-item">
+                <span class="pathway-title">Pathway C: Auto-Inspection</span>
+                <p>High-speed vision systems for 100% surface scanning and automated palletizing of finished goods.</p>
+            </div>
+        </div>
+
+        <!-- Output Chart -->
+        <div class="glass-card">
+            <h2>03 / Productivity Gains</h2>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+            <p style="margin-top:15px; font-size: 0.8rem;">*Projected increase in Units Per Hour (UPH) for standard bearing assembly.</p>
+        </div>
+    </div>
+
+    <!-- Financial Projection -->
+    <div class="glass-card full-width">
+        <h2>04 / 5-Year Financial Forecast</h2>
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; color: var(--text-muted); margin-top: 40px; padding-bottom: 20px;">
+        <p>&copy; 2024 Open Droids Research Division. Confidential Analysis for GRW.</p>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Production Savings ($ USD)',
+                data: [50000, 320000, 780000, 1350000, 2100000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    padding: 10,
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Output Comparison Bar Chart
+    const ctxOutput = document.getElementById('outputChart').getContext('2d');
+    new Chart(ctxOutput, {
+        type: 'bar',
+        data: {
+            labels: ['Micro Assembly', 'Packaging', 'Inspection'],
+            datasets: [{
+                label: 'Manual Process (UPH)',
+                data: [45, 120, 60],
+                backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                borderRadius: 4
+            },
+            {
+                label: 'Cobot Assisted (UPH)',
+                data: [85, 210, 180],
+                backgroundColor: '#7c3aed',
+                borderRadius: 4,
+                boxShadow: '0 0 10px #7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
