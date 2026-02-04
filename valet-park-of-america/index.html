@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valet Park of America | Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a; /* Deep Space Blue */
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: #fff;
+        }
+
+        .logo span {
+            color: #7c3aed; /* Electric Purple */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #7c3aed;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-top: 25px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .tag-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <h1>Valet Park of America</h1>
+                <p style="margin:0; color:#94a3b8;">Robotics Analysis & ROI Model</p>
+            </div>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Valet Park of America (VPA) is transitioning from a traditional labor-heavy service model to a tech-enabled mobility logistics provider. By integrating robotics and automation, VPA can resolve critical bottlenecks in labor shortages, liability claims, and peak-hour throughput. The strongest levers identified are <strong>Automated Vehicle Inspection</strong>, <strong>Autonomous Shuttles</strong>, and <strong>Robotic Valet Systems</strong>.</p>
+            
+            <!-- Financial Dashboard Metrics -->
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Liability Reduction</div>
+                    <div class="metric-value">75%</div>
+                    <div class="metric-label">With Automated Inspection</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Annual Margin Uplift</div>
+                    <div class="metric-value">$800k</div>
+                    <div class="metric-label">Per Major Campus</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Throughput Speed</div>
+                    <div class="metric-value">4x</div>
+                    <div class="metric-label">Faster Check-In</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">ROI Payback</div>
+                    <div class="metric-value">9-14</div>
+                    <div class="metric-label">Months (Avg)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="glass-card">
+            <h2>Opportunity Pathways</h2>
+            
+            <h3>Pathway A: Automated Inspection (High Value)</h3>
+            <p><strong>Scope:</strong> Deploy AI gantries at garage entries to scan for pre-existing damage.</p>
+            <ul>
+                <li>Eliminates fraudulent damage claims (approx. $150k/year savings per site).</li>
+                <li>Reduces vehicle check-in time from 45s to 10s via LPR integration.</li>
+            </ul>
+
+            <h3>Pathway B: Autonomous Shuttles (Strategic)</h3>
+            <p><strong>Scope:</strong> Level 4 electric shuttles for fixed hospital/campus loops.</p>
+            <ul>
+                <li>Reduces dependency on CDL drivers and overtime costs.</li>
+                <li>Enables 24/7 operations for hospital staff transport.</li>
+            </ul>
+
+            <h3>Pathway C: Robotic Valet (Long Term)</h3>
+            <p><strong>Scope:</strong> Low-profile skid robots for high-density parking.</p>
+            <ul>
+                <li>Increases garage capacity by 30-50%.</li>
+                <li>Zero door dings or in-garage accidents.</li>
+            </ul>
+        </div>
+
+        <!-- Visual Data Section -->
+        <div class="glass-card">
+            <h2>Financial Forecast</h2>
+            
+            <!-- Charts -->
+            <div class="charts-container">
+                <div>
+                    <h3 style="margin-top:0; font-size:1rem; color:#94a3b8; text-align:center;">5-Year Cumulative Savings (USD Millions)</h3>
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div>
+                    <h3 style="margin-top:0; font-size:1rem; color:#94a3b8; text-align:center;">Daily Vehicle Throughput Capacity</h3>
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Table -->
+        <div class="glass-card">
+            <h2>Pathway Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Est. Annual Benefit</th>
+                        <th>Payback</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A: Inspection AI</strong></td>
+                        <td>All Garages</td>
+                        <td>$200k - $500k</td>
+                        <td><span class="tag tag-high">Immediate</span></td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B: AV Shuttles</strong></td>
+                        <td>Large Campuses</td>
+                        <td>$150k - $300k</td>
+                        <td><span class="tag tag-med">2-3 Years</span></td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C: Robotic Valet</strong></td>
+                        <td>Urban Core</td>
+                        <td>$1M+ (Asset Value)</td>
+                        <td><span class="tag tag-low">5+ Years</span></td>
+                        <td>High</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Chart Scripts -->
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Cumulative Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings',
+                    data: [0.4, 1.2, 2.5, 4.1, 6.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Comparison Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Standard Crew', 'Tech-Augmented Crew', 'Fully Autonomous'],
+                datasets: [{
+                    label: 'Vehicles Per Hour',
+                    data: [45, 85, 120],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)',
+                        'rgba(124, 58, 237, 0.6)',
+                        'rgba(124, 58, 237, 0.9)'
+                    ],
+                    borderColor: [
+                        'rgba(148, 163, 184, 1)',
+                        'rgba(124, 58, 237, 1)',
+                        '#fff'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
