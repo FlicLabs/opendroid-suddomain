@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FWF Strategic Robotics Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #06b6d4;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .col-half {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--accent-purple);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        li::before {
+            content: "•";
+            color: var(--accent-cyan);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <p style="color: var(--accent-purple); font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">Open Droids Intelligence</p>
+            <h1>Strategic Automation Report</h1>
+            <p>Prepared for: <strong>Fifth Wheel Freight</strong></p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">22mo</span>
+                <span class="metric-label">Target ROI Payback</span>
+            </div>
+            <div class="metric-card" style="border-color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1);">
+                <span class="metric-value">40%</span>
+                <span class="metric-label">Labor Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$650k</span>
+                <span class="metric-label">Annual Projected Savings</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col-half">
+                <div class="card">
+                    <h3>5-Year Cumulative Savings</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-half">
+                <div class="card">
+                    <h3>Throughput: Manual vs. Robotic</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>01. Executive Vision</h2>
+            <p>FWF is positioned to bridge the gap between high-touch brokerage and high-tech physical logistics. By implementing the "Smart Hub" initiative, FWF transforms from a freight manager to a precision fulfillment operator. This vertical integration allows for faster cross-docking, reduced dwell times, and higher margins per consolidated load.</p>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card">
+            <h2>02. Robotics Opportunity Pathways</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <span class="badge">PATHWAY A</span> <strong style="color:white;">AMR Internal Transport</strong>
+                <p>Deploying Autonomous Mobile Robots to replace forklifts for long-haul transport within the warehouse. Reduces accidents and enables continuous pallet movement during break times.</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <span class="badge">PATHWAY B</span> <strong style="color:white;">Robotic Sortation</strong>
+                <p>Utilization of vision-enabled robotic arms for mixed-SKU LTL consolidation. Increases accuracy to 99.9% and enables value-added breakdown services for shippers.</p>
+            </div>
+
+            <div>
+                <span class="badge">PATHWAY C</span> <strong style="color:white;">AI Predictive Logistics</strong>
+                <p>Integration of FWF brokerage data with warehouse execution systems to pre-allocate robotic resources before trucks arrive at the dock.</p>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card">
+            <h2>03. Implementation Roadmap</h2>
+            <div class="row">
+                <div class="col-half">
+                    <h3>Year 1: Pilot</h3>
+                    <ul>
+                        <li>Select one regional hub.</li>
+                        <li>Deploy 5 AMRs for transport.</li>
+                        <li>WES Software Integration.</li>
+                    </ul>
+                </div>
+                <div class="col-half">
+                    <h3>Year 3: Scale</h3>
+                    <ul>
+                        <li>Expand to 3 Metro Hubs.</li>
+                        <li>Standardize robotics stack.</li>
+                        <li>Achieve 24/7 autonomous ops.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.8rem;">
+            OPEN DROIDS CONSULTING &copy; 2023 | CONFIDENTIAL RESEARCH
+        </div>
+    </div>
+
+    <script>
+        // Chart Config Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+        // 1. Savings Chart (Line)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [50000, 700000, 1450000, 2200000, 3100000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) { return '$' + value/1000000 + 'M'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart (Bar)
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Inbound Unload', 'Sortation', 'Outbound Stage'],
+                datasets: [
+                    {
+                        label: 'Manual Process (Pallets/Hr)',
+                        data: [40, 25, 45],
+                        backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process (Pallets/Hr)',
+                        data: [65, 80, 95],
+                        backgroundColor: '#06b6d4',
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
