@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empire Delivery Inc | Strategic Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a; /* Deep Space Blue */
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed; /* Electric Purple */
+            --accent-blue: #0ea5e9; /* Sky Blue */
+            --accent-orange: #f97316; /* Aviation Orange */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard */
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        table.financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-muted);
+        }
+
+        table.financial-table th, table.financial-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table.financial-table th {
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        /* Charts Area */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-positive {
+            color: #4ade80;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div style="font-size: 0.9rem; color: var(--text-muted);">CLIENT: EMPIRE DELIVERY INC</div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Header Section -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h1>Strategic Automation Research</h1>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                A comprehensive analysis of robotic cleaning and maintenance integration for high-volume air cargo operations.
+            </p>
+        </div>
+
+        <!-- Executive Summary & Org Profile -->
+        <div class="grid-2">
+            <div class="card">
+                <h3>Executive Summary</h3>
+                <p>Empire Delivery Inc faces increasing pressure to optimize turnaround times. By adopting Open Droids' robotics-first approach, the airline can enhance asset utilization and ensure sterilization. We project a <span class="status-positive">40% efficiency gain</span> within three years through the transition from manual scrubbing to autonomous systems.</p>
+            </div>
+            <div class="card">
+                <h3>Organizational Profile</h3>
+                <p><strong>Fleet:</strong> Wide-body freighters (B767-300F, B747-8F).</p>
+                <p><strong>Hubs:</strong> Centralized North American hubs with secondary EU/APAC facilities.</p>
+                <p><strong>Current Model:</strong> Reliance on 3rd party manual labor causing variable quality and scheduling bottlenecks.</p>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-4">
+            <div class="card">
+                <div class="pathway-badge">PATHWAY A</div>
+                <h4 style="margin: 0 0 10px 0;">Cabin Automation</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">AMRs for cockpit and courier seating sanitization. Rapid turnover capabilities.</p>
+            </div>
+            <div class="card">
+                <div class="pathway-badge">PATHWAY B</div>
+                <h4 style="margin: 0 0 10px 0;">UV-C Disinfection</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">254nm light sterilization for sensitive cargo holds (pharma/livestock).</p>
+            </div>
+            <div class="card">
+                <div class="pathway-badge">PATHWAY C</div>
+                <h4 style="margin: 0 0 10px 0;">Exterior Washing</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Automated gantries reducing drag. 1.5% potential fuel efficiency gain.</p>
+            </div>
+            <div class="card">
+                <div class="pathway-badge">PATHWAY D</div>
+                <h4 style="margin: 0 0 10px 0;">AI Inspection</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Computer vision drones for heavy check visual inspections.</p>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h2>Financial Impact Dashboard</h2>
+        <div class="card">
+            <div class="grid-4" style="margin-bottom: 30px;">
+                <div class="metric-card">
+                    <div class="metric-label">Unit CAPEX Est.</div>
+                    <div class="metric-value">$150k</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Max per unit</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">OPEX Reduction</div>
+                    <div class="metric-value">45%</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Target Savings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Payback Period</div>
+                    <div class="metric-value">22mo</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Maximum Timeframe</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Consumables</div>
+                    <div class="metric-value">-20%</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Chemical Usage</div>
+                </div>
+            </div>
+
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Baseline</th>
+                        <th>Robotic Projection</th>
+                        <th>Delta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inspection Time (Heavy Check)</td>
+                        <td>48 Hours</td>
+                        <td>33 Hours</td>
+                        <td class="status-positive">-31%</td>
+                    </tr>
+                    <tr>
+                        <td>Annual Washing Cost (Per Hull)</td>
+                        <td>$12,500</td>
+                        <td>$6,200</td>
+                        <td class="status-positive">-50%</td>
+                    </tr>
+                    <tr>
+                        <td>Fuel Savings (Drag Reduction)</td>
+                        <td>0%</td>
+                        <td>1.2%</td>
+                        <td class="status-positive">+$2.4M/yr</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <h2>Data Visualization</h2>
+        <div class="grid-2">
+            <!-- Line Chart: 5-Year Savings -->
+            <div class="card">
+                <h4 style="text-align: center; margin-bottom: 20px;">5-Year Cumulative Savings (Millions USD)</h4>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Bar Chart: Throughput -->
+            <div class="card">
+                <h4 style="text-align: center; margin-bottom: 20px;">Throughput: Manual vs Robotic (Aircraft/Month)</h4>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4 style="text-align: center; margin-bottom: 20px;">Post-Automation Labor Redistribution</h4>
+             <div class="chart-container" style="max-width: 500px; margin: 0 auto;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <h2>Implementation Roadmap</h2>
+        <div class="card">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="border-left: 3px solid var(--accent-blue); padding-left: 20px;">
+                    <h4 style="color: var(--accent-blue); margin: 0;">YEAR 1: PILOT PROGRAM</h4>
+                    <p style="margin: 5px 0; font-size: 0.9rem; color: var(--text-muted);">Deploy 5 Autonomous Cabin Robots & 2 Washing Drones at N.A. Hub.</p>
+                </div>
+                <div style="border-left: 3px solid var(--accent-purple); padding-left: 20px;">
+                    <h4 style="color: var(--accent-purple); margin: 0;">YEAR 2-3: EXPANSION & INTEGRATION</h4>
+                    <p style="margin: 5px 0; font-size: 0.9rem; color: var(--text-muted);">Roll out UV-C units. Standardize robotics across EU/APAC hubs.</p>
+                </div>
+                <div style="border-left: 3px solid var(--accent-orange); padding-left: 20px;">
+                    <h4 style="color: var(--accent-orange); margin: 0;">YEAR 4-5: FULL AUTONOMY</h4>
+                    <p style="margin: 5px 0; font-size: 0.9rem; color: var(--text-muted);">Centralized cloud dashboard. 90% automation of cleaning tasks.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart Global Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. 5-Year Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings',
+                    data: [1.2, 3.5, 7.8, 14.2, 22.5],
+                    borderColor: '#7c3aed', // Electric Purple
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0ea5e9',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        title: { display: true, text: 'USD (Millions)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart: Manual vs Robotic Throughput
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Clean', 'Ext. Wash', 'Heavy Check', 'UV-C Prep'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [40, 12, 4, 20],
+                        backgroundColor: '#0f172a', // Dark
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [110, 35, 8, 85],
+                        backgroundColor: '#0ea5e9', // Sky Blue
+                        borderColor: '#0ea5e9',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 3. Pie Chart: Labor Hour Redistribution
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Manual Cleaning', 'Robotic Supervision', 'Complex Repairs', 'Logistics/Admin'],
+                datasets: [{
+                    data: [10, 25, 45, 20],
+                    backgroundColor: [
+                        '#94a3b8', // Grey for Manual (reduced)
+                        '#7c3aed', // Purple for Supervision
+                        '#0ea5e9', // Blue for Repairs
+                        '#f97316'  // Orange for Admin
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 15 }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+    </script>
+</body>
+</html>
