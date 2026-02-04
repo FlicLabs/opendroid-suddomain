@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kona Brewing Hawaii - Robotics Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        /* Glassmorphism Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .metric {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .sub-metric {
+            font-size: 0.9rem;
+            color: #4ade80; /* Green for positive stats */
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        /* Strategic Pathways Section */
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-item {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .pathway-title {
+            font-weight: 600;
+            color: #fff;
+            display: block;
+        }
+
+        .pathway-desc {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Kona Brewing Hawaii</h1>
+            <h2>Automated Hospitality & Strategic ROI Dashboard</h2>
+        </header>
+
+        <!-- Top Metrics Row -->
+        <div class="grid">
+            <div class="glass-card">
+                <span class="card-header">Projected ROI (Year 1)</span>
+                <div class="metric">138%</div>
+                <div class="sub-metric">Payback Period: 9.2 Months</div>
+            </div>
+            <div class="glass-card">
+                <span class="card-header">Target CAPEX</span>
+                <div class="metric">$120k</div>
+                <div class="sub-metric">Deployment: 4 Units + 1 Station</div>
+            </div>
+            <div class="glass-card">
+                <span class="card-header">Labor Efficiency</span>
+                <div class="metric">+22%</div>
+                <div class="sub-metric">Reduction in Server Travel Time</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="chart-grid">
+            <div class="glass-card">
+                <span class="card-header">5-Year Cumulative Labor Savings</span>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <span class="card-header">Table Turnover Rate Comparison</span>
+                <div class="chart-container">
+                    <canvas id="turnoverChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Details -->
+        <div class="grid" style="margin-top: 25px;">
+            <div class="glass-card">
+                <span class="card-header">Strategic Pathways</span>
+                <ul class="pathway-list">
+                    <li class="pathway-item">
+                        <span class="pathway-title">Pathway A: FOH Runners</span>
+                        <span class="pathway-desc">Deploy shelf-robots for food running to distant patio zones, keeping servers at the table.</span>
+                    </li>
+                    <li class="pathway-item">
+                        <span class="pathway-title">Pathway B: BOH Automation</span>
+                        <span class="pathway-desc">Automated frying systems for wings/fries to ensure consistency and safety.</span>
+                    </li>
+                    <li class="pathway-item">
+                        <span class="pathway-title">Pathway C: AI Voice</span>
+                        <span class="pathway-desc">Capture missed revenue via AI phone answering and waitlist pre-ordering.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <span class="card-header">Operational Impact</span>
+                <p style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1;">
+                    By integrating robotics, Kona Brewing protects the "Aloha" spirit by removing the physical burden of long-distance food running from human staff. This shift transforms servers into true "Hosts," focusing entirely on guest experience and beverage upselling rather than logistics.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Labor Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [108000, 225000, 360000, 510000, 680000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover Comparison
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Lunch Rush', 'Dinner Peak', 'Weekend Events'],
+                datasets: [
+                    {
+                        label: 'Manual Service (Turns/Hr)',
+                        data: [1.2, 1.0, 0.9],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robot-Assisted (Turns/Hr)',
+                        data: [1.5, 1.35, 1.25],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
