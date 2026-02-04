@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Restaurant Group | Automation Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-header {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section Titles */
+        h2 {
+            color: var(--text-main);
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        /* Pathways */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-step {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+        
+        .year-badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <div class="sub-header">Open Droids Research Division</div>
+            <h1>Modern Restaurant Group</h1>
+        </div>
+        <div style="text-align: right;">
+            <div class="sub-header">Status</div>
+            <div style="color: #fff; font-weight: bold;">Strategic Analysis</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p style="color: var(--text-muted); line-height: 1.6;">
+            Modern Restaurant Group is positioned to transition from a traditional labor model to a hybrid-automated ecosystem. 
+            By integrating Autonomous Mobile Robots (AMRs) and kitchen automation, the group can expect to alleviate expo bottlenecks, 
+            ensure culinary consistency, and repurpose human capital towards high-touch guest hospitality. The strategic goal is 
+            operational resilience against labor volatility while increasing throughput capacity.
+        </p>
+    </div>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Labor Cost Reduction</div>
+            <div class="metric-value">22%</div>
+            <div class="metric-label">Target Metric</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Table Turnover</div>
+            <div class="metric-value">+15%</div>
+            <div class="metric-label">Capacity Increase</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">13.5</div>
+            <div class="metric-label">Months to Payback</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">CAPEX / Unit</div>
+            <div class="metric-value">$18k</div>
+            <div class="metric-label">Avg. Robot Cost</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="glass-card">
+        <h2>Financial Projection & Efficiency Models</h2>
+        <div class="charts-container">
+            <div>
+                <canvas id="laborSavingsChart"></canvas>
+            </div>
+            <div>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="pathways-grid">
+        <div class="glass-card">
+            <span class="pathway-icon">Pathway A</span>
+            <h3 style="margin-top:0">FOH Serving Robots</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Deployment of runners/bussers to handle logistics. Servers stay in their sections to focus on refills and upselling.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-icon">Pathway B</span>
+            <h3 style="margin-top:0">BOH Auto-Frying</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Robotic arms for basket management. Ensures precise cooking times, safety, and consistent food quality.</p>
+        </div>
+        <div class="glass-card">
+            <span class="pathway-icon">Pathway C</span>
+            <h3 style="margin-top:0">AI Order Kiosks</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Voice agents and smart kiosks focused on algorithmic upselling to increase average check size.</p>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap (5-Year Horizon)</h2>
+        <div class="roadmap-step">
+            <span class="year-badge">Year 1</span>
+            <span style="color: var(--text-muted);">Pilot Program: 2 high-volume locations, install Serving Robots (Pathway A).</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="year-badge">Year 2</span>
+            <span style="color: var(--text-muted);">Standardization: Rollout A to all units. Begin Kitchen Automation pilot.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="year-badge">Year 3</span>
+            <span style="color: var(--text-muted);">Full Integration: Data synchronization between POS and Robot fleet.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="year-badge">Year 4</span>
+            <span style="color: var(--text-muted);">Optimization: Permanent reduction of FOH staffing baselines.</span>
+        </div>
+        <div class="roadmap-step">
+            <span class="year-badge">Year 5</span>
+            <span style="color: var(--text-muted);">Innovation: Next-gen fleet upgrades and fully autonomous satellite kitchens.</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Labor Cost Savings
+    const ctx1 = document.getElementById('laborSavingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Labor Savings ($ Thousands)',
+                data: [45, 120, 280, 490, 750],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: { color: '#94a3b8' }
+                },
+                title: {
+                    display: true,
+                    text: '5-Year Cumulative Savings',
+                    color: '#fff',
+                    padding: 20
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover Comparison
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Service', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Table Turns per Shift',
+                data: [3.2, 4.1],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.5)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Table Turnover Efficiency',
+                    color: '#fff',
+                    padding: 20
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
