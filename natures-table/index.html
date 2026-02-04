@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature's Table Automation Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            color: white;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-glass {
+            background: linear-gradient(90deg, rgba(124, 58, 237, 0.2), rgba(15, 23, 42, 0.2));
+            border-bottom: 1px solid rgba(124, 58, 237, 0.5);
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: #a78bfa;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+        }
+
+        .metric-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a78bfa;
+            text-transform: uppercase;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid #7c3aed;
+        }
+
+        .roadmap-step {
+            border-left: 2px solid #7c3aed;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header-glass">
+        <div>
+            <div style="font-size: 0.8rem; color: #a78bfa; margin-bottom: 5px;">OPEN DROIDS INTELLIGENCE</div>
+            <h1>Nature's Table</h1>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: #94a3b8;">REPORT STATUS</div>
+            <div style="font-weight: 600; color: #34d399;">READY FOR DEPLOYMENT</div>
+        </div>
+    </div>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card glass-card">
+            <div class="metric-label">Projected Labor Reduction</div>
+            <div class="metric-val">18%</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Front-of-House Costs</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-val">12.5</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Months (Average)</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-label">Check Size Increase</div>
+            <div class="metric-val">15%</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Via AI Kiosk Upselling</div>
+        </div>
+        <div class="metric-card glass-card">
+            <div class="metric-label">CAPEX Per Unit</div>
+            <div class="metric-val">$32k</div>
+            <div style="font-size: 0.8rem; color: #94a3b8;">Est. Hardware Cost</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>01. Strategic Vision</h2>
+        <p>
+            Nature's Table stands at the intersection of freshness and velocity. By deploying a Hybrid Automation Model, we protect the "fresh ingredients" brand promise while eliminating logistical friction. The strategy shifts human capital from low-value tasks (bussing, manual order entry) to high-value hospitality, ensuring competitiveness in high-traffic airport and corporate venues.
+        </p>
+    </div>
+
+    <!-- Charts Area -->
+    <div class="chart-container">
+        <div class="glass-card">
+            <h3>Cumulative Labor Savings (5 Years)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Table Turnover Rate (Tables/Hour)</h3>
+            <canvas id="turnoverChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>02. Robotics Opportunity Pathways</h2>
+        
+        <div style="margin-bottom: 30px;">
+            <span class="tag">PATHWAY A</span>
+            <span style="font-weight: 600; color: white;">Automated Bussing & Runners</span>
+            <p>Deployment of AMRs for tray collection and lobby management. Critical for maintaining hygiene standards in high-volume food court settings without overburdening staff.</p>
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <span class="tag">PATHWAY B</span>
+            <span style="font-weight: 600; color: white;">Automated Smoothie Prep</span>
+            <p>Integration of automated beverage dispensing systems to handle smoothie production. Reduces ticket times and eliminates liquid waste/shrinkage.</p>
+        </div>
+
+        <div>
+            <span class="tag">PATHWAY C</span>
+            <span style="font-weight: 600; color: white;">AI-Driven Kiosks</span>
+            <p>Voice-enabled or touch kiosks acting as "Line Busters." Algorithms suggest add-ons (protein shots, sides) more consistently than human cashiers.</p>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>03. Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <h3 style="color: #c4b5fd;">Year 1: Pilot Phase</h3>
+            <p style="margin:0;">Deploy 1 Bussing Robot + 2 Smart Kiosks in 3 high-volume airport hubs.</p>
+        </div>
+        <div class="roadmap-step">
+            <h3 style="color: #c4b5fd;">Year 2-3: Standardization</h3>
+            <p style="margin:0;">Roll out Kiosks to 50% of fleet. Integrate Smoothie Automation in top 20 units.</p>
+        </div>
+        <div class="roadmap-step">
+            <h3 style="color: #c4b5fd;">Year 4-5: Scale & Ecosystem</h3>
+            <p style="margin:0;">Full fleet deployment. Target 1:3 robot-to-human ratio for maximum efficiency.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [45000, 95000, 150000, 210000, 280000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }
+            }
+        }
+    });
+
+    // Chart 2: Table Turnover
+    const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Robot Assisted'],
+            datasets: [{
+                label: 'Tables Turned Per Hour',
+                data: [4.2, 6.8],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                x: { grid: { display: false }, ticks: { color: 'white' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
