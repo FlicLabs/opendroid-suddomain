@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalesFlex Strategic Automation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.05);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--glow);
+            transition: transform 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            color: var(--accent-purple);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Chart Section */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>SalesFlex</h1>
+            <p style="margin:0; color: var(--accent-purple); font-weight: 600;">Automated Logistics Strategy</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 0.8rem; margin:0;">PREPARED BY</p>
+            <p style="font-weight: bold; margin:0; color: #fff;">OPEN DROIDS</p>
+        </div>
+    </header>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback</div>
+            <div class="metric-value">19 Mo</div>
+            <div class="metric-label">Target: &lt; 24 Mo</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Labor Reduction</div>
+            <div class="metric-value">40%</div>
+            <div class="metric-label">OPEX Savings</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Peak Throughput</div>
+            <div class="metric-value">350</div>
+            <div class="metric-label">Units Per Hour</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Pilot CAPEX</div>
+            <div class="metric-value">$850k</div>
+            <div class="metric-label">10 Stations + 20 AMRs</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT GRID -->
+    <div class="grid-2-col">
+        
+        <!-- COLUMN 1: STRATEGY -->
+        <div>
+            <div class="glass-card">
+                <h2>01. Executive Vision</h2>
+                <p>The transition from manual pick-and-pack to a Hybrid Automated Fulfillment ecosystem is critical. SalesFlex must leverage robotics not just for cost reduction, but to enable late-cutoff same-day shipping and 99.9% inventory accuracy.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>02. Opportunity Pathways</h2>
+                
+                <h3>Pathway A: AMRs <span class="badge">HIGH PRIORITY</span></h3>
+                <p>Autonomous Mobile Robots for internal transport. Eliminates 60% of associate walking time.</p>
+                
+                <h3>Pathway B: Robotic Piece Picking</h3>
+                <p>ASRS and robotic arms for high-density storage and sorting. Reduces human error to near zero.</p>
+                
+                <h3>Pathway C: AI Logistics</h3>
+                <p>Predictive engines for smart inventory placement based on real-time SKU velocity.</p>
+            </div>
+        </div>
+
+        <!-- COLUMN 2: CHARTS & ROADMAP -->
+        <div>
+            <div class="glass-card">
+                <h2>Financial Projection (5 Years)</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Throughput Analysis</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; border-top: 1px solid var(--card-border); padding-top: 1rem;">
+            <div>
+                <h3 style="color: var(--accent-purple);">Year 1</h3>
+                <p style="font-size: 0.85rem;">Pilot AMRs & WMS Integration</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-purple);">Year 2</h3>
+                <p style="font-size: 0.85rem;">Expansion to secondary hubs</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-purple);">Year 3</h3>
+                <p style="font-size: 0.85rem;">ASRS Retrofit & Density</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent-purple);">Year 5</h3>
+                <p style="font-size: 0.85rem;">Full "Dark Warehouse" Ops</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($ Millions)',
+                data: [-0.85, 0.2, 1.5, 3.2, 5.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison (Bar)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Cart', 'AMR Assisted', 'Fully Automated'],
+            datasets: [{
+                label: 'Units Per Hour (UPH)',
+                data: [90, 350, 600],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    'rgba(124, 58, 237, 0.6)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
