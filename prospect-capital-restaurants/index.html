@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospect Capital Restaurants - Automation Strategy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand span { color: var(--accent-primary); }
+
+        .report-meta {
+            text-align: right;
+        }
+
+        .report-meta h1 {
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .report-meta p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 5px 0 0 0;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-primary);
+        }
+
+        .metric-title {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 15px;
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .pathways-grid { grid-template-columns: 1fr; }
+        }
+
+        .pathway-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--accent-primary);
+        }
+
+        .pathway-h { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+        .pathway-p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+
+        /* Chart Section */
+        .chart-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .chart-container { grid-template-columns: 1fr; }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 60px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="brand">OPEN <span>DROIDS</span></div>
+        <div class="report-meta">
+            <h1>Strategic Automation Report</h1>
+            <p>Prepared for Prospect Capital Restaurants</p>
+        </div>
+    </header>
+
+    <!-- ROI Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <div class="metric-title">Proj. Payback Period</div>
+            <div class="metric-value">12.4 Mo</div>
+            <div class="metric-sub">▼ Accelerated by 15%</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-title">Labor Cost Reduction</div>
+            <div class="metric-value">22%</div>
+            <div class="metric-sub">▲ FOH Optimization</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-title">Table Turns / Shift</div>
+            <div class="metric-value">+1.5x</div>
+            <div class="metric-sub">▲ Revenue Velocity</div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-title">Avg. Ticket Lift</div>
+            <div class="metric-value">12%</div>
+            <div class="metric-sub">▲ AI Upselling</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <h2 class="section-title">Financial & Operational Projection</h2>
+    <div class="chart-container">
+        <div class="glass-card">
+            <div class="metric-title">5-Year Cumulative Labor Savings (Millions USD)</div>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <div class="metric-title">Table Turnover Rate (Minutes)</div>
+            <div class="chart-wrapper">
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <h2 class="section-title">Robotics Opportunity Pathways</h2>
+    <div class="pathways-grid">
+        <div class="glass-card">
+            <div class="pathway-icon">❖</div>
+            <div class="pathway-h">Pathway A: FOH Serving</div>
+            <p class="pathway-p">Deployment of LiDAR-enabled AMRs for food running and busing. Reduces server fatigue and increases guest face-time.</p>
+        </div>
+        <div class="glass-card">
+            <div class="pathway-icon">⚡</div>
+            <div class="pathway-h">Pathway B: BOH Automated</div>
+            <p class="pathway-p">Robotic fry and grill stations ensuring 100% consistency and eliminating hazardous manual tasks in the kitchen.</p>
+        </div>
+        <div class="glass-card">
+            <div class="pathway-icon">◉</div>
+            <div class="pathway-h">Pathway C: AI Concierge</div>
+            <p class="pathway-p">Voice-agent integration for drive-thru and kiosks to drive upsells and ensure order accuracy during peak throughput.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Open Droids Consultation. Confidential Research for Prospect Capital Restaurants.
+    </footer>
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Labor Savings
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    const laborGradient = ctxLabor.createLinearGradient(0, 0, 0, 400);
+    laborGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+    laborGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+    new Chart(ctxLabor, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings',
+                data: [0.2, 0.8, 1.9, 3.4, 5.2],
+                borderColor: '#7c3aed',
+                backgroundColor: laborGradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Turnover Rate
+    const ctxTurnover = document.getElementById('turnoverChart').getContext('2d');
+    
+    new Chart(ctxTurnover, {
+        type: 'bar',
+        data: {
+            labels: ['Manual', 'Robot-Assisted'],
+            datasets: [{
+                label: 'Avg Table Cycle (Mins)',
+                data: [65, 48],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.2)',
+                    '#10b981'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 0.5)',
+                    '#10b981'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
