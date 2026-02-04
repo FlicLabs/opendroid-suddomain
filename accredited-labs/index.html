@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accredited Labs | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        .sub-header {
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+            border-color: var(--accent-purple);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: white;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: #4ade80; /* Green for positive */
+        }
+
+        /* Content Sections */
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        p, li {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 3px solid var(--accent-purple);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Charts */
+        .chart-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .year-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 15px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="sub-header">OPEN DROIDS CONSULTING</div>
+            <h1>ACCREDITED LABS</h1>
+            <div class="sub-header">Strategic Automation & Robotics Research</div>
+        </header>
+
+        <!-- KPI Dashboard -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Target OEE Increase</div>
+                <div class="metric-value">30%</div>
+                <div class="metric-sub">▲ Efficiency Gain</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Timeline</div>
+                <div class="metric-value">14 Mo</div>
+                <div class="metric-sub">▼ Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Unit Cost Reduction</div>
+                <div class="metric-value">18%</div>
+                <div class="metric-sub">▲ Margin Impact</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Safety Incident Rate</div>
+                <div class="metric-value">0</div>
+                <div class="metric-sub">Target via Cobots</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="content-card">
+            <h2>Executive Summary</h2>
+            <p>Accredited Labs is positioned to revolutionize its sector by pivoting from legacy batch processing to a flexible, Industry 4.0-enabled manufacturing model. This report identifies high-impact opportunities in collaborative robotics and autonomous transport to solve labor volatility and traceability challenges.</p>
+            
+            <div class="highlight-box">
+                <strong>Strategic Goal:</strong> Transition to a high-mix, low-volume agile production environment with full digital traceability.
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="content-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <h3>Pathway A: Collaborative Robots (Cobots)</h3>
+            <p><strong>Focus:</strong> Machine Tending & Assembly.<br>
+            Deployment of 6-axis cobots (e.g., UR10e) for bottle feeding and capping. This eliminates repetitive strain injuries and stabilizes cycle times without requiring safety fencing.</p>
+
+            <h3>Pathway B: Autonomous Mobile Robots (AMRs)</h3>
+            <p><strong>Focus:</strong> WIP Flow Efficiency.<br>
+            Utilization of AMRs (e.g., MiR250) to transport bulk ingredients and finished goods. This decouples human operators from low-value transit tasks.</p>
+
+            <h3>Pathway C: Automated Palletizing</h3>
+            <p><strong>Focus:</strong> Throughput & Yield.<br>
+            End-of-line robotic cells to handle heavy payloads, ensuring consistent stack quality and reducing physical fatigue.</p>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="outputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Financial Model & Roadmap -->
+        <div class="content-card" style="margin-top: 30px;">
+            <h2>Financial & Implementation Outlook</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                
+                <div>
+                    <h3>Financial Model</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">
+                            <strong>CAPEX:</strong> $60k - $120k per robotic cell
+                        </li>
+                        <li style="margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px;">
+                            <strong>OPEX Impact:</strong> 20-30% OEE Increase
+                        </li>
+                        <li>
+                            <strong>Payback:</strong> < 18 Months (Labor & Scrap savings)
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3>Implementation Roadmap</h3>
+                    <div class="roadmap-item">
+                        <span class="year-badge">Year 1</span>
+                        <span>Pilot Phase: 1 Cobot + 2 AMRs</span>
+                    </div>
+                    <div class="roadmap-item">
+                        <span class="year-badge">Year 3</span>
+                        <span>Full Rollout & Palletizing Scale</span>
+                    </div>
+                    <div class="roadmap-item">
+                        <span class="year-badge">Year 5</span>
+                        <span>AI Integration & Lights-out Ops</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart Configuration
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Cost Savings ($)',
+                    data: [120000, 350000, 680000, 1100000, 1600000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: '5-Year Cumulative Production Savings', font: { size: 16, weight: '600' }, color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // 2. Output Comparison Bar Chart
+        const ctxOutput = document.getElementById('outputChart').getContext('2d');
+        new Chart(ctxOutput, {
+            type: 'bar',
+            data: {
+                labels: ['Mixing', 'Bottling', 'Capping', 'Palletizing'],
+                datasets: [
+                    {
+                        label: 'Manual Process (UPH)',
+                        data: [120, 800, 800, 450],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cobot-Assisted (UPH)',
+                        data: [180, 1200, 1250, 900],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Manual vs. Cobot-Assisted Output (Units Per Hour)', font: { size: 16, weight: '600' }, color: '#fff' }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
