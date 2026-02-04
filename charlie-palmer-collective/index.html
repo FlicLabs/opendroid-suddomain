@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlie Palmer Collective | Automation ROI Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .client-badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #a78bfa;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 3px solid #7c3aed;
+            padding-left: 20px;
+        }
+
+        .pathway-title {
+            color: #a78bfa;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <div class="client-badge">CONFIDENTIAL RESEARCH</div>
+                <h1>Charlie Palmer Collective</h1>
+                <p style="color: #94a3b8; margin: 0;">Automated Hospitality Feasibility Study</p>
+            </div>
+            <div style="text-align: right;">
+                <p style="font-size: 0.9rem; color: #64748b;">Prepared by</p>
+                <h3 style="margin:0;">Open Droids</h3>
+            </div>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Projected Labor Savings</div>
+                <div class="metric-value">22%</div>
+                <div class="metric-label">Reduction in FOH OPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Payback Period</div>
+                <div class="metric-value">10.5</div>
+                <div class="metric-label">Months (Avg)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Table Turnover</div>
+                <div class="metric-value">+15%</div>
+                <div class="metric-label">Volume Increase</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Vision: Invisible Service</h2>
+            <p style="line-height: 1.6; color: #cbd5e1;">
+                For Charlie Palmer Collective, automation is not about replacing the artistry of fine dining, but enhancing it. By deploying "Invisible Service" technology—automated runners and AI concierge agents—we remove logistical friction. This allows your human talent to focus entirely on sommelier services, guest narratives, and the hospitality experience that defines your brand.
+            </p>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Labor Savings</h3>
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3>Table Turnover Rate (Avg Night)</h3>
+                <canvas id="turnoverChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="glass-card">
+            <h2 style="margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Strategic Pathways</h2>
+            <div class="pathway-grid">
+                <div class="pathway-item">
+                    <div class="pathway-title">PATHWAY A: FOH LOGISTICS</div>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Deployment of "Servi" style autonomous food runners. Reduces server fatigue and keeps staff on the floor selling wine rather than running to the kitchen.</p>
+                </div>
+                <div class="pathway-item">
+                    <div class="pathway-title">PATHWAY B: BOH PRECISION</div>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Implementation of smart-sensing grills and automated fryers for Steakhouse concepts to ensure perfect consistency regardless of line-cook turnover.</p>
+                </div>
+                <div class="pathway-item">
+                    <div class="pathway-title">PATHWAY C: AI CONCIERGE</div>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Voice-AI integration for reservation management. Eliminates missed calls and streamlines private dining booking without increasing host staff.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.15, 0.45, 0.95, 1.6, 2.4],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Table Turnover
+        const ctx2 = document.getElementById('turnoverChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Service', 'Robot-Assisted'],
+                datasets: [{
+                    label: 'Turns Per Table (Peak Night)',
+                    data: [2.8, 3.4],
+                    backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                    borderWidth: 0,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8', beginAtZero: true }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#cbd5e1', font: { size: 14 } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
