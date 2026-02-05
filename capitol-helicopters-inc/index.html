@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capitol Helicopters Strategic Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #0ea5e9, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .client-name {
+            font-size: 14px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0ea5e9;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #f97316;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard Table */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 0 20px;
+        }
+
+        td {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            color: #0ea5e9;
+        }
+
+        td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: right;
+            color: #f97316;
+        }
+
+        /* Grid for Pathways */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .pathway-item:hover {
+            transform: translateY(-5px);
+            border-color: #0ea5e9;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .metric-big {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        
+        .metric-label {
+            color: #7c3aed;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            background: #7c3aed;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="client-name">Prepared for: Capitol Helicopters Inc.</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>The aviation industry is undergoing a paradigm shift toward ground operations automation. For Capitol Helicopters Inc., integrating robotic cleaning and maintenance solutions presents an opportunity to elevate operational efficiency. This report outlines a strategic transition to a hybrid automated workflow, reducing aircraft downtime and reallocating skilled labor toward critical mechanical maintenance.</p>
+    </div>
+
+    <!-- Robotics Opportunities -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <h3>Pathway A</h3>
+                <p style="font-size: 0.9em; color: #94a3b8;">Autonomous Cabin Cleaning</p>
+                <p>LIDAR-mapped vacuum units for consistent debris removal.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B</h3>
+                <p style="font-size: 0.9em; color: #94a3b8;">UV-C Disinfection</p>
+                <p>99.9% pathogen eradication for medical/VIP transport.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C</h3>
+                <p style="font-size: 0.9em; color: #94a3b8;">Exterior Washing</p>
+                <p>Automated gantries for rotor blade and fuselage cleaning.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D</h3>
+                <p style="font-size: 0.9em; color: #94a3b8;">AI Inspection</p>
+                <p>Thermal imaging bots for micro-fracture detection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Impact Model</h2>
+        <div style="display: flex; justify-content: space-around; text-align: center; margin-bottom: 40px;">
+            <div>
+                <p class="metric-big">45%</p>
+                <p class="metric-label">Max OPEX Reduction</p>
+            </div>
+            <div>
+                <p class="metric-big">24M</p>
+                <p class="metric-label">ROI Timeline</p>
+            </div>
+            <div>
+                <p class="metric-big">$150k</p>
+                <p class="metric-label">Max CAPEX / Unit</p>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Manual Model</th>
+                    <th>Automated Model Target</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Turnaround Time</td>
+                    <td>45 Minutes</td>
+                    <td>15 Minutes</td>
+                </tr>
+                <tr>
+                    <td>Annual Labor Cost (Cleaning)</td>
+                    <td>High Variable</td>
+                    <td>Fixed Low</td>
+                </tr>
+                <tr>
+                    <td>Safety Incidents (Annual)</td>
+                    <td>~3 Minor</td>
+                    <td>0 Projected</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts -->
+    <div class="glass-card">
+        <h2>Data Visualization</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="step-number">1</div>
+            <div>
+                <h3>Pilot Program</h3>
+                <p style="margin:0;">Deploy Pathway B UV-C robots & Gather Baseline Data.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">2</div>
+            <div>
+                <h3>Exterior Expansion</h3>
+                <p style="margin:0;">Introduce rotor blade washing systems for fuel efficiency.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">3</div>
+            <div>
+                <h3>Fleet Integration</h3>
+                <p style="margin:0;">Roll out cabin robots to satellite hubs.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">4</div>
+            <div>
+                <h3>AI Inspection</h3>
+                <p style="margin:0;">Beta test thermal imaging bots on aging airframes.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">5</div>
+            <div>
+                <h3>Full Autonomy</h3>
+                <p style="margin:0;">Centralized Command Center & 80% Manual Labor Reduction.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 180000, 450000, 850000, 1500000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                title: { display: true, text: '5-Year Cumulative Savings', color: '#fff' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Clean', 'Ext. Wash', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual (Mins)',
+                    data: [45, 120, 60],
+                    backgroundColor: '#f97316'
+                },
+                {
+                    label: 'Robotic (Mins)',
+                    data: [15, 30, 20],
+                    backgroundColor: '#7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                title: { display: true, text: 'Throughput: Manual vs Robotic (Time in Mins)', color: '#fff' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Cleaning/Janitorial', 'Mechanical Maintenance', 'System Oversight'],
+            datasets: [{
+                data: [15, 60, 25],
+                backgroundColor: ['#f97316', '#0ea5e9', '#7c3aed'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#cbd5e1' } },
+                title: { display: true, text: 'Post-Automation Labor Redistribution', color: '#fff' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
