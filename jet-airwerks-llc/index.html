@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jet AirWerks Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--sky-blue);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--electric-purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--electric-purple);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--aviation-orange);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Financial Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--glass-border);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            color: #fff;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--electric-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">CLIENT</div>
+            <div style="font-weight: 600;">JET AIRWERKS LLC</div>
+        </div>
+    </header>
+
+    <div>
+        <h1>STRATEGIC AUTOMATION</h1>
+        <div class="subtitle">Research & Implementation Report</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h3 style="color: var(--sky-blue); margin-top: 0;">EXECUTIVE SUMMARY</h3>
+        <p style="line-height: 1.6; color: var(--text-secondary);">
+            Jet AirWerks LLC is positioned to revolutionize its MRO and ground handling operations through strategic robotics integration. By adopting a mixed fleet of autonomous cleaning and inspection units, the organization can decouple operational growth from labor volatility, reduce turnaround times by 30%, and achieve a complete ROI within 24 months.
+        </p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <h3 style="margin-left: 10px;">OPPORTUNITY PATHWAYS</h3>
+    <div class="grid-4">
+        <div class="glass-card stat-card">
+            <div class="pathway-icon">A</div>
+            <h4>Cabin Cleaning</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Autonomous vacuuming and surface debris removal to reduce crew requirements.</p>
+        </div>
+        <div class="glass-card stat-card">
+            <div class="pathway-icon">B</div>
+            <h4>UV-C Disinfection</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Hospital-grade pathogen elimination without chemical consumables.</p>
+        </div>
+        <div class="glass-card stat-card">
+            <div class="pathway-icon">C</div>
+            <h4>Exterior Wash</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Gantry and drone systems for drag reduction and corrosion prevention.</p>
+        </div>
+        <div class="glass-card stat-card">
+            <div class="pathway-icon">D</div>
+            <h4>AI Inspection</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Computer vision scanning for lightning strikes and structural defects.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <h3 style="margin-left: 10px; margin-top: 40px;">FINANCIAL DASHBOARD</h3>
+    <div class="glass-card">
+        <div class="grid-4" style="margin-bottom: 30px;">
+            <div class="stat-card" style="box-shadow: none; border: none; background: transparent;">
+                <div class="stat-value">45%</div>
+                <div class="stat-label">OPEX Reduction</div>
+            </div>
+            <div class="stat-card" style="box-shadow: none; border: none; background: transparent;">
+                <div class="stat-value">&lt;24m</div>
+                <div class="stat-label">Payback Period</div>
+            </div>
+            <div class="stat-card" style="box-shadow: none; border: none; background: transparent;">
+                <div class="stat-value">$150k</div>
+                <div class="stat-label">Max Unit CAPEX</div>
+            </div>
+            <div class="stat-card" style="box-shadow: none; border: none; background: transparent;">
+                <div class="stat-value">15%</div>
+                <div class="stat-label">Utilization Boost</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Manual Model</th>
+                    <th>Robotic Model</th>
+                    <th>Delta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Avg. Turnaround Time</td>
+                    <td>45 Minutes</td>
+                    <td>28 Minutes</td>
+                    <td style="color: var(--aviation-orange);">-38%</td>
+                </tr>
+                <tr>
+                    <td>Cost Per Clean</td>
+                    <td>$120.00</td>
+                    <td>$45.00</td>
+                    <td style="color: var(--aviation-orange);">-62%</td>
+                </tr>
+                <tr>
+                    <td>Hygiene Consistency</td>
+                    <td>82% (Variable)</td>
+                    <td>99.9% (Standard)</td>
+                    <td style="color: var(--sky-blue);">+17.9%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="grid-2">
+        <!-- Chart 1 -->
+        <div class="glass-card">
+            <h4 style="margin-top: 0; color: var(--text-secondary);">5-Year Cumulative Savings</h4>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Chart 2 -->
+        <div class="glass-card">
+            <h4 style="margin-top: 0; color: var(--text-secondary);">Throughput: Manual vs. Robot</h4>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div class="glass-card">
+        <h4 style="margin-top: 0; color: var(--text-secondary);">Labor Hour Redistribution</h4>
+        <div class="chart-container" style="height: 250px;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#0ea5e9',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Cargo'],
+            datasets: [
+                {
+                    label: 'Manual (Daily Turns)',
+                    data: [12, 4, 3],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Daily Turns)',
+                    data: [18, 7, 5],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Repetitive Cleaning', 'System Supervision', 'High-Value Maintenance'],
+            datasets: [{
+                data: [15, 30, 55],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)', // Repetitive (reduced)
+                    '#f97316',                  // Supervision (new role)
+                    '#0ea5e9'                   // High Value (increased focus)
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: { boxWidth: 12 }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
