@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescott Support - Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--deep-space);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--aviation-orange);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        p {
+            color: #cbd5e1;
+        }
+
+        /* Financial Dashboard Table */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 20px;
+        }
+
+        .dashboard-table th {
+            text-align: left;
+            padding: 15px;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-table td {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .dashboard-table tr td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            border-left: 3px solid var(--electric-purple);
+        }
+
+        .dashboard-table tr td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .highlight-orange {
+            color: var(--aviation-orange);
+            font-size: 1.2rem;
+        }
+
+        .highlight-blue {
+            color: var(--sky-blue);
+            font-size: 1.2rem;
+        }
+
+        /* Pathways Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sky-blue);
+        }
+
+        .pathway-icon {
+            font-size: 1.5rem;
+            color: var(--aviation-orange);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Charts Layout */
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--sky-blue);">CLIENT PROFILE</div>
+            <div style="font-weight: bold;">PRESCOTT SUPPORT</div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h1>Strategic Automation Intelligence</h1>
+        <p>This interactive report outlines the transition of Prescott Support's maintenance operations from manual labor to advanced robotic systems. By leveraging autonomous cleaning and inspection, Prescott Support will reduce OPEX while maximizing fleet readiness in high-tempo environments.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Key Performance Indicator</th>
+                    <th>Current Manual Model</th>
+                    <th>Projected Robotic Model</th>
+                    <th>Net Variance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CAPEX per Unit (Avg)</td>
+                    <td>$0 (Labor Based)</td>
+                    <td>$112,500</td>
+                    <td class="highlight-orange">Investment Phase</td>
+                </tr>
+                <tr>
+                    <td>Operational Cost (OPEX)</td>
+                    <td>100% Baseline</td>
+                    <td>55% of Baseline</td>
+                    <td class="highlight-blue">▼ 45% Reduction</td>
+                </tr>
+                <tr>
+                    <td>Turnaround Time (Cabin)</td>
+                    <td>2.5 Hours</td>
+                    <td>1.2 Hours</td>
+                    <td class="highlight-blue">▼ 52% Faster</td>
+                </tr>
+                <tr>
+                    <td>Payback Period</td>
+                    <td>N/A</td>
+                    <td>18 Months</td>
+                    <td class="highlight-orange">< 2 Years</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-container">
+            <div class="pathway-card">
+                <span class="pathway-icon">A</span>
+                <h3>Cabin Automation</h3>
+                <p>Autonomous mobile robots with HEPA filtration for cargo hold and cockpit debris removal.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-icon">B</span>
+                <h3>UV-C Disinfection</h3>
+                <p>Hospital-grade sterilization for personnel transport, neutralizing 99.9% of pathogens.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-icon">C</span>
+                <h3>Exterior Wash</h3>
+                <p>Crawler robots for fuselage cleaning, reducing water usage by 60% and improving aerodynamics.</p>
+            </div>
+            <div class="pathway-card">
+                <span class="pathway-icon">D</span>
+                <h3>AI Inspection</h3>
+                <p>Computer vision drones for detecting micro-cracks and damage in austere environments.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Projected Performance Metrics</h2>
+        <div class="charts-wrapper">
+            <!-- Line Chart: 5-Year Cumulative Savings -->
+            <div>
+                <h3 style="text-align: center; font-size: 0.9rem; color: var(--sky-blue);">5-Year Cumulative Savings (USD Millions)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Bar Chart: Manual vs Robotic Throughput -->
+            <div>
+                <h3 style="text-align: center; font-size: 0.9rem; color: var(--sky-blue);">Monthly Aircraft Turnarounds</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Pie Chart: Labor Redistribution -->
+            <div>
+                <h3 style="text-align: center; font-size: 0.9rem; color: var(--sky-blue);">Labor Hour Redistribution</h3>
+                <div class="chart-container">
+                    <canvas id="laborChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global defaults for dark mode aesthetic
+    Chart.defaults.color = '#cbd5e1';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. 5-Year Cumulative Savings Line Chart
+    new Chart(document.getElementById('savingsChart'), {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings',
+                data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Bar Chart Comparing Throughput
+    new Chart(document.getElementById('throughputChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Exterior Wash', 'Cabin Prep', 'Safety Insp.'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 45, 20],
+                    backgroundColor: 'rgba(249, 115, 22, 0.5)',
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [35, 90, 60],
+                    backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Pie Chart: Labor Redistribution
+    new Chart(document.getElementById('laborChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Menial Cleaning', 'Tech Monitoring', 'Strategic Maint.'],
+            datasets: [{
+                data: [15, 35, 50],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#0ea5e9',
+                    '#7c3aed'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
