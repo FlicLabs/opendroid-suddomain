@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARSA Automation Research Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-meta {
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Table */
+        .financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .financial-dashboard th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-weight: 400;
+            padding: 10px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .financial-dashboard td {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .financial-dashboard td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            color: var(--accent-blue);
+        }
+
+        .financial-dashboard td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: right;
+            color: #fff;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .metric-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .timeline-step {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-year {
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-meta">
+            CLIENT: Aeronautical Repair Station Association<br>
+            STATUS: Strategic Assessment<br>
+            CONFIDENTIALITY: High
+        </div>
+    </header>
+
+    <div class="glass-card">
+        <h1>Strategic Automation Research</h1>
+        <p style="font-size: 1.2rem; color: var(--text-secondary);">
+            A high-level vision for integrating robotic cleaning and maintenance automation into MRO operations.
+        </p>
+    </div>
+
+    <!-- Executive Summary & Org Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>Executive Summary</h3>
+            <p>Open Droids presents a strategic vision for integrating robotic automation into ARSA member facilities. By adopting autonomous systems, members can standardize quality, reduce aircraft turnaround time, and mitigate labor shortages, ensuring regulatory compliance while maximizing operational efficiency.</p>
+        </div>
+        <div class="glass-card">
+            <h3>Organizational Profile</h3>
+            <p><strong>Fleet Scope:</strong> Mixed narrow/wide-body commercial maintenance.</p>
+            <p><strong>Hub Presence:</strong> 24/7 High-traffic logistics hubs.</p>
+            <p><strong>Current Model:</strong> High reliance on manual labor, resulting in variable consistency and excessive overtime costs.</p>
+        </div>
+    </div>
+
+    <h2>Robotics Opportunity Pathways</h2>
+    <div class="grid-4">
+        <div class="glass-card">
+            <h3>A. Cabin Bots</h3>
+            <p>Autonomous vacuuming and debris removal using LiDAR mapping to free up human staff for deep cleaning.</p>
+        </div>
+        <div class="glass-card">
+            <h3>B. UV-C Robots</h3>
+            <p>Hospital-grade disinfection traversing aisles to neutralize pathogens without chemical erosion.</p>
+        </div>
+        <div class="glass-card">
+            <h3>C. Ext. Washing</h3>
+            <p>Automated gantries and climbing robots using reclaimed water to reduce time and technician risk.</p>
+        </div>
+        <div class="glass-card">
+            <h3>D. AI Inspection</h3>
+            <p>Drones and crawlers utilizing computer vision to detect micro-fractures and corrosion.</p>
+        </div>
+    </div>
+
+    <h2>Financial Dashboard</h2>
+    <div class="glass-card">
+        <div class="grid-4" style="margin-bottom: 30px;">
+            <div class="metric-card">
+                <span class="metric-val">$75k - 150k</span>
+                <span class="metric-label">CAPEX Per Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">35% - 45%</span>
+                <span class="metric-label">OPEX Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">&lt; 24 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-val">20%</span>
+                <span class="metric-label">Consumable Savings</span>
+            </div>
+        </div>
+
+        <table class="financial-dashboard">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th style="text-align: right;">Projected Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fleet Size (Robotic Units)</td>
+                    <td>10 Units</td>
+                </tr>
+                <tr>
+                    <td>Annual Labor Savings</td>
+                    <td>$450,000 (Est.)</td>
+                </tr>
+                <tr>
+                    <td>Chemical Reduction</td>
+                    <td>-20% Volume</td>
+                </tr>
+                <tr>
+                    <td>ROI Year 1</td>
+                    <td>Positive Cashflow</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings ($M)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Manual vs. Robotic Throughput (Aircraft/Mo)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="grid-2">
+            <div>
+                <h3>Labor Hour Redistribution</h3>
+                <div class="chart-container">
+                    <canvas id="laborChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Implementation Roadmap</h3>
+                <div class="timeline-step">
+                    <div class="timeline-year">YEAR 1</div>
+                    <p>Pilot Program: Pathway B UV-C Robots & Safety Training.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-year">YEAR 2</div>
+                    <p>Cabin Automation: Pathway A Integration & Software Sync.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-year">YEAR 3</div>
+                    <p>Exterior Systems: Pathway C Deployment & Water Reclamation.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-year">YEAR 4-5</div>
+                    <p>AI Inspection & Full Fleet Autonomy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 1.2, 2.8, 4.5, 6.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Heavy Check', 'Line Maint', 'Ext Wash', 'Cabin San'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 45, 30, 60],
+                    backgroundColor: '#0ea5e9'
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [18, 65, 55, 120],
+                    backgroundColor: '#f97316'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Repetitive Cleaning', 'Skilled Maintenance', 'Robot Supervision', 'Strategic Planning'],
+            datasets: [{
+                data: [15, 50, 25, 10],
+                backgroundColor: ['#0f172a', '#7c3aed', '#0ea5e9', '#f97316'],
+                borderColor: '#0f172a',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
