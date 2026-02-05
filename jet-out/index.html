@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jet OUT Automation Strategy | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            font-size: 16px;
+            margin: 0;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .report-title h2 {
+            font-size: 24px;
+            margin: 5px 0 0 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Metrics */
+        .metric-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-secondary);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .canvas-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div class="report-title">
+                <h1>Strategic Research</h1>
+                <h2>JET OUT AUTOMATION</h2>
+            </div>
+        </header>
+
+        <!-- Executive Summary & Org Profile -->
+        <div class="grid-2">
+            <div class="card">
+                <h3>Executive Summary</h3>
+                <p>Jet OUT is positioned to redefine regional private aviation. By deploying autonomous systems, the company can achieve hospital-grade sterilization, reduce turnaround times, and extend airframe longevity, effectively decoupling labor constraints from fleet scalability.</p>
+            </div>
+            <div class="card">
+                <h3>Organizational Profile</h3>
+                <p><strong>Fleet:</strong> Pilatus PC-12 & Cessna Citation CJ4<br>
+                <strong>Focus:</strong> High-frequency regional utilization.<br>
+                <strong>Challenge:</strong> Maintaining consistent hygiene and turnaround speed across dispersed hubs (Waukesha, FL) amidst labor volatility.</p>
+            </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="card">
+            <h3>Robotics Opportunity Pathways</h3>
+            <div class="grid-2">
+                <div>
+                    <h4 style="color:white; margin-bottom:5px;">Pathway A: Cabin Cleaning</h4>
+                    <p style="font-size: 13px;">Compact, articulating robots using LIDAR for PC-12/CJ4 interiors.</p>
+                </div>
+                <div>
+                    <h4 style="color:white; margin-bottom:5px;">Pathway B: UV-C Disinfection</h4>
+                    <p style="font-size: 13px;">Portable emitters neutralizing 99.9% of pathogens without chemicals.</p>
+                </div>
+                <div>
+                    <h4 style="color:white; margin-bottom:5px;">Pathway C: Exterior Washing</h4>
+                    <p style="font-size: 13px;">Semi-autonomous gantries calibrated for small airframes to reduce water usage.</p>
+                </div>
+                <div>
+                    <h4 style="color:white; margin-bottom:5px;">Pathway D: AI Inspection</h4>
+                    <p style="font-size: 13px;">Computer vision bots for detecting micro-cracks and rivet failures.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h3>Financial Projection Dashboard</h3>
+            <div class="grid-3" style="margin-bottom: 30px;">
+                <div>
+                    <div class="metric-value" style="color: var(--accent-purple);">$75k - $150k</div>
+                    <div class="metric-label">CAPEX Per Unit</div>
+                </div>
+                <div>
+                    <div class="metric-value" style="color: var(--success);">45%</div>
+                    <div class="metric-label">Max OPEX Reduction</div>
+                </div>
+                <div>
+                    <div class="metric-value">< 24 Mo</div>
+                    <div class="metric-label">Payback Period</div>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Process</th>
+                        <th>Robotic Process</th>
+                        <th>Delta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Avg Turnaround Time</td>
+                        <td>90 Minutes</td>
+                        <td>45 Minutes</td>
+                        <td class="highlight">-50% Time</td>
+                    </tr>
+                    <tr>
+                        <td>Cost Per Clean (Labor)</td>
+                        <td>$180.00</td>
+                        <td>$45.00</td>
+                        <td class="highlight">-75% Cost</td>
+                    </tr>
+                    <tr>
+                        <td>Fleet Availability</td>
+                        <td>88%</td>
+                        <td>94%</td>
+                        <td class="highlight">+6% Uptime</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2">
+            <div class="card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="canvas-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Throughput Comparison</h3>
+                <div class="canvas-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>Labor Redistribution</h3>
+                <div class="canvas-container">
+                    <canvas id="laborChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Implementation Timeline</h3>
+                <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 2.2;">
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">Year 1:</span> Pilot Phase (UV-C Units)</li>
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">Year 2:</span> Hybrid Integration (Cabin Bots)</li>
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">Year 3:</span> Exterior Expansion</li>
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">Year 4:</span> Intelligent Inspection</li>
+                    <li><span style="color: var(--accent-purple); font-weight: bold;">Year 5:</span> Full Autonomy</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [150000, 420000, 850000, 1400000, 2100000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['PC-12 Turn', 'CJ4 Turn', 'Daily Capacity'],
+                datasets: [
+                    {
+                        label: 'Manual',
+                        data: [12, 10, 8], // Mock data representing daily turns
+                        backgroundColor: '#1e293b'
+                    },
+                    {
+                        label: 'Robotic',
+                        data: [20, 18, 15],
+                        backgroundColor: '#0ea5e9'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // 3. Labor Redistribution Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Robot Oversight', 'High-Value Maintenance', 'Manual Cleaning', 'Logistics'],
+                datasets: [{
+                    data: [20, 45, 10, 25],
+                    backgroundColor: [
+                        '#7c3aed', // Purple
+                        '#0ea5e9', // Blue
+                        '#1e293b', // Dark
+                        '#64748b'  // Grey
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
