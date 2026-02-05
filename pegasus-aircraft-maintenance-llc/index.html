@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegasus Aircraft Maintenance - Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Financial Dashboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding: 0 15px;
+        }
+
+        td {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: right;
+        }
+
+        .metric-label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: rgba(14, 165, 233, 0.2);
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            RESEARCH REPORT<br>PEGASUS AIRCRAFT MAINTENANCE
+        </div>
+    </header>
+
+    <section>
+        <h1>Strategic Automation Intelligence</h1>
+        <p class="subtitle">Deep research into robotic integration for aviation maintenance efficiency and cost reduction.</p>
+        
+        <div class="card">
+            <h2 style="color: var(--accent-purple); margin-bottom: 20px;">EXECUTIVE SUMMARY</h2>
+            <p style="line-height: 1.6; color: var(--text-muted);">
+                The aviation maintenance, repair, and overhaul (MRO) sector is undergoing a pivotal shift toward automation. 
+                For <strong>Pegasus Aircraft Maintenance LLC</strong>, integrating robotic cleaning and inspection systems represents a strategic leap. 
+                Our research indicates that by adopting autonomous cabin cleaning, UV-C disinfection, and automated exterior washing, 
+                Pegasus can achieve a 35-45% reduction in OPEX while reallocating human talent to complex maintenance tasks.
+            </p>
+        </div>
+    </section>
+
+    <section class="grid-2">
+        <div class="card">
+            <h3>Robotics Opportunity Pathways</h3>
+            <div style="margin-top: 20px;">
+                <span class="pathway-badge">PATHWAY A</span>
+                <h4 style="margin: 5px 0 10px 0;">Autonomous Cabin Cleaning</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">LIDAR-equipped vacuums for overnight aisle and carpet maintenance.</p>
+                
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+
+                <span class="pathway-badge">PATHWAY B</span>
+                <h4 style="margin: 5px 0 10px 0;">UV-C Disinfection</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Hospital-grade sanitization using germicidal light towers.</p>
+                
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+
+                <span class="pathway-badge">PATHWAY C</span>
+                <h4 style="margin: 5px 0 10px 0;">Exterior Washing Systems</h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Semi-autonomous brush rigs reducing water usage and wash time.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Labor Hour Redistribution</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Projected shift in workforce allocation post-automation (Year 5).</p>
+            <div style="height: 250px; display: flex; justify-content: center;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <h2 style="margin-top: 40px; margin-bottom: 20px; color: var(--text-main);">Financial Intelligence Dashboard</h2>
+    
+    <div class="grid-3" style="margin-bottom: 30px;">
+        <div class="card" style="text-align: center;">
+            <span class="metric-label">OPEX REDUCTION TARGET</span>
+            <span class="metric-value">45%</span>
+        </div>
+        <div class="card" style="text-align: center;">
+            <span class="metric-label">ROI PAYBACK PERIOD</span>
+            <span class="metric-value">&lt; 24 MO</span>
+        </div>
+        <div class="card" style="text-align: center;">
+            <span class="metric-label">CAPEX PER UNIT (AVG)</span>
+            <span class="metric-value">$112.5k</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Capital Expenditure Model</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>System Type</th>
+                    <th>Application</th>
+                    <th>Estimated Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Interior Cleaning Bots</td>
+                    <td>Cabin Carpets & Aisles</td>
+                    <td>$75k - $90k</td>
+                </tr>
+                <tr>
+                    <td>Exterior Wash Rigs</td>
+                    <td>Fuselage & Wings</td>
+                    <td>$120k - $150k</td>
+                </tr>
+                <tr>
+                    <td>Inspection Drones</td>
+                    <td>Structural Analysis</td>
+                    <td>$85k</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <section class="grid-2">
+        <div class="card">
+            <h3>5-Year Cumulative Savings</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>Throughput Velocity (Planes/Night)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </section>
+
+    <div class="card" style="border-left: 4px solid var(--accent-purple);">
+        <h3 style="color: var(--accent-purple);">Implementation Roadmap</h3>
+        <p style="color: var(--text-muted);">
+            <strong>Year 1:</strong> Pilot Phase (2 Interior Bots, 1 UV-C).<br>
+            <strong>Year 2:</strong> Exterior Expansion (Wide-body wash rigs).<br>
+            <strong>Year 3:</strong> Fleet Scaling to secondary hubs.<br>
+            <strong>Year 4:</strong> AI Inspection Integration.<br>
+            <strong>Year 5:</strong> Full Integration (60% Automation Target).
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Complex Maintenance', 'Robot Oversight', 'Data Analysis'],
+            datasets: [{
+                data: [15, 55, 20, 10],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed', // Electric Purple
+                    '#0ea5e9', // Sky Blue
+                    '#f97316'  // Aviation Orange
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+
+    // 2. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Assist', 'Full Auto'],
+            datasets: [{
+                label: 'Aircraft Turned Per Shift',
+                data: [4, 7, 12],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#f97316',
+                    '#7c3aed'
+                ],
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
