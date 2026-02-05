@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroRepair Corp Strategic Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a; /* Deep Space Blue */
+            --primary-accent: #7c3aed; /* Electric Purple */
+            --secondary-accent: #0ea5e9; /* Sky Blue */
+            --highlight: #f97316; /* Aviation Orange */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-accent);
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--secondary-accent), var(--primary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .report-title span {
+            color: var(--highlight);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Typography */
+        h2 {
+            color: var(--secondary-accent);
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-left: 4px solid var(--highlight);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            margin-top: 25px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .highlight-text {
+            color: var(--primary-accent);
+            font-weight: 600;
+        }
+
+        /* Financial Dashboard Table */
+        .dashboard-grid {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-cell {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--primary-accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 33%;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: var(--highlight);
+        }
+
+        /* Charts Section */
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 2px solid var(--primary-accent);
+        }
+
+        .pathway-item strong {
+            color: var(--secondary-accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <span>Client: AeroRepair Corp</span>
+            <h1>Strategic Automation Research</h1>
+        </div>
+    </header>
+
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>AeroRepair Corp is positioned to revolutionize its MRO operations by pivoting from manual maintenance to a robotics-first workflow. This strategy aims to drastically reduce Aircraft on Ground (AOG) time, enhance safety compliance, and secure long-term financial health through automation.</p>
+    </div>
+
+    <div class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <strong>Pathway A: Cabin Cleaning</strong>
+                Autonomous ground vehicles for vacuuming and trash collection in narrow aisles.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway B: UV-C Disinfection</strong>
+                Robotic arms utilizing UV-C arrays for 99.9% pathogen elimination.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway C: Exterior Washing</strong>
+                Automated gantry systems reducing water usage by 60% and eliminating height risks.
+            </div>
+            <div class="pathway-item">
+                <strong>Pathway D: AI Inspection</strong>
+                Drone and crawler bots for automated fuselage and wing structural analysis.
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Financial Dashboard</h2>
+        <table class="dashboard-grid">
+            <tr>
+                <td class="dashboard-cell">
+                    <span class="metric-label">CAPEX per Unit</span>
+                    <span class="metric-value">$75k - $150k</span>
+                    <span class="metric-sub">Dependent on Robot Type</span>
+                </td>
+                <td class="dashboard-cell">
+                    <span class="metric-label">OPEX Reduction</span>
+                    <span class="metric-value">45%</span>
+                    <span class="metric-sub">Target Efficiency Gain</span>
+                </td>
+                <td class="dashboard-cell">
+                    <span class="metric-label">Payback Period</span>
+                    <span class="metric-value">&lt; 24 Months</span>
+                    <span class="metric-sub">Based on Labor Savings</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Data Visualization</h2>
+        <div class="charts-wrapper">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-container full-width">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <ul>
+            <li><span class="highlight-text">Year 1 (Pilot):</span> Deploy UV-C and Cabin Cleaning bots at primary Hub.</li>
+            <li><span class="highlight-text">Years 2-3 (Expansion):</span> Roll out exterior washing to international hubs; Integrate AI inspection.</li>
+            <li><span class="highlight-text">Years 4-5 (Full Integration):</span> Centralized command center establishment and full fleet deployment.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Global defaults for charts to match theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [1.2, 3.5, 7.8, 14.2, 22.5],
+                borderColor: '#7c3aed', // Electric Purple
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0ea5e9',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings Projection', color: '#fff' }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Exterior Wash', 'Cabin Prep', 'Inspection'],
+            datasets: [
+                {
+                    label: 'Manual Process (Min)',
+                    data: [240, 90, 180],
+                    backgroundColor: '#f97316' // Aviation Orange
+                },
+                {
+                    label: 'Robotic Process (Min)',
+                    data: [80, 25, 45],
+                    backgroundColor: '#0ea5e9' // Sky Blue
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Process Time: Manual vs. Robotic (Minutes)', color: '#fff' }
+            }
+        }
+    });
+
+    // 3. Labor Distribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'pie',
+        data: {
+            labels: ['Repetitive Cleaning (Manual)', 'Robot Supervision', 'High-Value Tech Repair', 'Data Analysis'],
+            datasets: [{
+                data: [15, 25, 40, 20],
+                backgroundColor: [
+                    '#1e293b', // Dark Slate (representing reduced manual)
+                    '#f97316', // Orange
+                    '#7c3aed', // Purple
+                    '#0ea5e9'  // Blue
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Projected Labor Hour Redistribution (Post-Automation)', color: '#fff' },
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
