@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacific Coast Jet Charter Inc. - Strategic Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed; /* Electric Purple */
+            --secondary: #0ea5e9; /* Sky Blue */
+            --accent: #f97316; /* Aviation Orange */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .client-name {
+            font-weight: 300;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Financial Dashboard Table Styling */
+        .financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            margin-bottom: 40px;
+        }
+
+        .financial-dashboard th {
+            text-align: left;
+            color: var(--text-muted);
+            font-weight: 400;
+            padding: 0 20px;
+        }
+
+        .financial-dashboard td {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 25px;
+            vertical-align: middle;
+        }
+
+        .financial-dashboard tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            color: var(--text-main);
+            font-weight: 600;
+            width: 30%;
+        }
+
+        .financial-dashboard tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            text-align: right;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 5px;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+        .roadmap-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        .roadmap-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .roadmap-year {
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">
+            OPEN<span>DROIDS</span>
+        </div>
+        <div class="client-name">
+            Pacific Coast Jet Charter Inc.
+        </div>
+    </header>
+
+    <div class="glass-card">
+        <h2>Strategic Vision</h2>
+        <h1>Automating Excellence</h1>
+        <p>Pacific Coast Jet Charter Inc. operates at the pinnacle of private aviation. To maintain this trajectory, the integration of autonomous cleaning systems is not merely an operational upgrade but a strategic necessity. This transition ensures hospital-grade sanitation, rapid fleet turnaround, and verifiable operational excellence.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-item">
+                <h3>Pathway A</h3>
+                <p><strong>Autonomous Cabin Cleaning</strong><br>LiDAR-guided HEPA vacuuming and surface treatment for light to heavy jets.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B</h3>
+                <p><strong>UV-C Disinfection</strong><br>Pathogen neutralization on high-touch surfaces using concentrated UV-C light arrays.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C</h3>
+                <p><strong>Exterior Washing</strong><br>Drone and gantry-based systems capable of reducing water usage by 60%.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D</h3>
+                <p><strong>AI Inspection Bots</strong><br>Micro-drone fuselage scanning for lightning strikes and rivet integrity.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <table class="financial-dashboard">
+            <tr>
+                <td>
+                    CAPEX Estimate
+                    <span class="metric-label">Per Autonomous Unit</span>
+                </td>
+                <td>$75k - $150k</td>
+            </tr>
+            <tr>
+                <td>
+                    OPEX Reduction
+                    <span class="metric-label">Labor & Consumables</span>
+                </td>
+                <td style="color: var(--primary);">45%</td>
+            </tr>
+            <tr>
+                <td>
+                    ROI Horizon
+                    <span class="metric-label">Break-even Period</span>
+                </td>
+                <td style="color: var(--accent);">&lt; 24 Months</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Performance Analytics</h2>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <ul class="roadmap-list">
+            <li><span class="roadmap-year">Year 1: Pilot</span> Deployment of Pathway A & B at Van Nuys Hub.</li>
+            <li><span class="roadmap-year">Year 2: Expansion</span> Rollout to secondary hubs (Oakland, San Jose).</li>
+            <li><span class="roadmap-year">Year 3: Integration</span> Full fleet adoption and Pathway C exterior systems.</li>
+            <li><span class="roadmap-year">Year 4: Optimization</span> AI-driven predictive maintenance scheduling.</li>
+            <li><span class="roadmap-year">Year 5: Maturity</span> Full autonomy for ground turning operations.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Cumulative Savings Line Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($ Millions)',
+                data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#0ea5e9',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: '5-Year Cumulative Savings', font: { size: 14, weight: '600' } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Light Jet', 'Mid-Size', 'Heavy Jet'],
+            datasets: [{
+                label: 'Manual (Mins)',
+                data: [45, 60, 120],
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: 4
+            },
+            {
+                label: 'Robotic (Mins)',
+                data: [20, 30, 55],
+                backgroundColor: '#7c3aed',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Turnaround Time Comparison', font: { size: 14, weight: '600' } }
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: 'Minutes' } }
+            }
+        }
+    });
+
+    // 3. Labor Distribution Pie Chart
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Supervision/Tech', 'Maintenance Ops'],
+            datasets: [{
+                data: [15, 55, 30],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)', // Muted for Manual
+                    '#0ea5e9',                  // Sky Blue for Tech
+                    '#f97316'                   // Orange for Maint
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Post-Automation Labor Allocation', font: { size: 14, weight: '600' } }
+            },
+            cutout: '60%'
+        }
+    });
+</script>
+
+</body>
+</html>
