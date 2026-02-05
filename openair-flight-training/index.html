@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAir Flight Training | Automation Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #1e1b4b, var(--deep-space));
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        h2 {
+            color: var(--aviation-orange);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--sky-blue);
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--electric-purple);
+        }
+
+        /* Financial Dashboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 20px 15px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .metric-val {
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .positive {
+            color: #10b981;
+        }
+
+        .negative {
+            color: var(--aviation-orange);
+        }
+
+        .highlight {
+            color: var(--electric-purple);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--electric-purple);
+            color: var(--text-muted);
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--electric-purple);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <div style="color: var(--text-muted); font-size: 0.9rem;">PREPARED FOR</div>
+            <div style="font-weight: 600;">OPENAIR FLIGHT TRAINING</div>
+        </div>
+    </header>
+
+    <div style="margin-bottom: 50px; text-align: center;">
+        <h1>AVIATION AUTOMATION STRATEGY</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 20px auto;">
+            Strategic analysis for the integration of robotic cleaning, UV-C disinfection, and AI-powered inspection systems to optimize fleet availability and safety.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card" style="margin-bottom: 40px;">
+        <h2>Financial Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Key Performance Indicator</th>
+                    <th>Current Manual Model</th>
+                    <th>Projected Robotic Model</th>
+                    <th>Impact Delta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CAPEX per Unit</td>
+                    <td class="metric-val">$0</td>
+                    <td class="metric-val">$75k - $150k</td>
+                    <td class="negative">Investment Phase</td>
+                </tr>
+                <tr>
+                    <td>OPEX (Annual Maint/Cleaning)</td>
+                    <td class="metric-val">100% Baseline</td>
+                    <td class="metric-val">55% Baseline</td>
+                    <td class="positive">▼ 45% Cost Reduction</td>
+                </tr>
+                <tr>
+                    <td>Turnaround Time (Avg)</td>
+                    <td class="metric-val">45 Minutes</td>
+                    <td class="metric-val">12 Minutes</td>
+                    <td class="positive">▼ 73% Faster</td>
+                </tr>
+                <tr>
+                    <td>ROI Payback Period</td>
+                    <td class="metric-val">N/A</td>
+                    <td class="metric-val">&lt; 24 Months</td>
+                    <td class="highlight">High Velocity</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid">
+        <div class="card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Velocity</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+             <h3>Labor Redistribution</h3>
+             <div class="chart-container">
+                 <canvas id="laborChart"></canvas>
+             </div>
+        </div>
+        <div class="card">
+            <h3>Implementation Roadmap</h3>
+            <ul>
+                <li><strong>Year 1:</strong> Pilot Phase (UV-C Bots)</li>
+                <li><strong>Year 2:</strong> Hybrid Integration (Cabin Cleaning)</li>
+                <li><strong>Year 3:</strong> Expansion to Regional Hubs</li>
+                <li><strong>Year 4:</strong> Full Fleet Deployment</li>
+                <li><strong>Year 5:</strong> AI Optimization & Predictive Scaling</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pathways Section -->
+    <div class="grid">
+        <div class="card">
+            <span class="pathway-tag">PATHWAY A</span>
+            <h3>Cabin Cleaning</h3>
+            <p style="color: var(--text-muted);">Autonomous vacuuming and debris removal for cockpits. Eliminates FOD risks in seat tracks and rudder wells.</p>
+        </div>
+        <div class="card">
+            <span class="pathway-tag">PATHWAY B</span>
+            <h3>UV-C Disinfection</h3>
+            <p style="color: var(--text-muted);">Sterilization of yokes, throttles, and avionics. Ensures pilot health safety without liquid damage.</p>
+        </div>
+        <div class="card">
+            <span class="pathway-tag">PATHWAY C</span>
+            <h3>Exterior Wash</h3>
+            <p style="color: var(--text-muted);">Gantry-based washing for wings and fuselage. Improves aerodynamics and prevents corrosion.</p>
+        </div>
+        <div class="card">
+            <span class="pathway-tag">PATHWAY D</span>
+            <h3>AI Inspection</h3>
+            <p style="color: var(--text-muted);">Visual AI bots for detecting rivet stress and tire wear. Logs data directly to maintenance servers.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($)',
+                data: [50000, 180000, 450000, 850000, 1500000],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Pre-Flight', 'Turnaround', 'Post-Flight'],
+            datasets: [
+                {
+                    label: 'Manual (Mins)',
+                    data: [30, 45, 60],
+                    backgroundColor: '#1e293b'
+                },
+                {
+                    label: 'Robotic (Mins)',
+                    data: [8, 12, 15],
+                    backgroundColor: '#f97316'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Cleaning (Manual)', 'Skilled Maintenance', 'Safety Inspection'],
+            datasets: [{
+                data: [15, 60, 25],
+                backgroundColor: [
+                    '#1e293b', // Reduced cleaning
+                    '#7c3aed', // Increased Skilled
+                    '#0ea5e9'  // Inspection
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+</script>
+
+</body>
+</html>
