@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JetSet Group Inc. - Strategic Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --purple: #7c3aed;
+            --sky: #0ea5e9;
+            --orange: #f97316;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--sky), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .report-title span {
+            font-size: 0.9rem;
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--sky);
+            border-left: 4px solid var(--purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 25px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard Table Styling */
+        table.financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px;
+            margin-top: 20px;
+        }
+
+        td.metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            vertical-align: middle;
+            width: 33%;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-sub {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--orange);
+            margin-top: 5px;
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .roadmap-list li::before {
+            content: "•";
+            color: var(--purple);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(14, 165, 233, 0.2);
+            color: var(--sky);
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Strategic Research Report</h1>
+            <span>Client: JetSet Group Inc.</span>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>JetSet Group Inc. stands at a critical juncture where operational efficiency must intersect with next-generation hygiene standards. This report outlines a transformative vision for integrating robotic cleaning automation into current aviation maintenance protocols.</p>
+        <p>By adopting autonomous systems, JetSet Group Inc. can transition from a labor-intensive manual cleaning model to a precision-driven, AI-enhanced ecosystem. The primary objective is to elevate fleet turnaround times, ensure consistent sanitization standards, and reduce long-term operational expenditures.</p>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3><span class="badge">A</span> Cabin Cleaning Robots</h3>
+                <p>Autonomous ground robots utilizing LiDAR for high-suction vacuuming and trash collection, addressing the most time-consuming aspects of turnarounds.</p>
+            </div>
+            <div>
+                <h3><span class="badge">B</span> UV-C Disinfection</h3>
+                <p>Robots emitting ultraviolet light to neutralize pathogens, providing verifiable sanitization compliance with international health standards.</p>
+            </div>
+            <div>
+                <h3><span class="badge">C</span> Exterior Washing</h3>
+                <p>Automated gantries and drone swarms using eco-friendly dry wash techniques to reduce water consumption and eliminate safety risks.</p>
+            </div>
+            <div>
+                <h3><span class="badge">D</span> AI Inspection Bots</h3>
+                <p>Crawler robots equipped with thermal imaging to detect fuselage micro-fractures and rivet failures in real-time.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Model & Projections</h2>
+        
+        <table class="financial-dashboard">
+            <tr>
+                <td class="metric-card">
+                    <span class="metric-label">CAPEX Per Unit</span>
+                    <span class="metric-value">$75k - $150k</span>
+                    <span class="metric-sub">Dependent on sensor suite</span>
+                </td>
+                <td class="metric-card">
+                    <span class="metric-label">OPEX Reduction</span>
+                    <span class="metric-value">45%</span>
+                    <span class="metric-sub">Target savings achieved</span>
+                </td>
+                <td class="metric-card">
+                    <span class="metric-label">ROI Timeline</span>
+                    <span class="metric-value">&lt; 24 Mo</span>
+                    <span class="metric-sub">Payback period</span>
+                </td>
+            </tr>
+        </table>
+
+        <div class="charts-grid">
+            <!-- Line Chart -->
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <!-- Bar Chart -->
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+            <!-- Pie Chart -->
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>5-Year Implementation Roadmap</h2>
+        <ul class="roadmap-list">
+            <li><strong>Year 1:</strong> Pilot Program - Deploy Pathway A & B units at a single primary hub.</li>
+            <li><strong>Year 2:</strong> Hub Expansion - Expand cabin automation to secondary hubs and pilot exterior washing.</li>
+            <li><strong>Year 3:</strong> Fleet Integration - 60% fleet coverage for interior cleaning robots.</li>
+            <li><strong>Year 4:</strong> System Optimization - Centralized cloud dashboard for predictive maintenance.</li>
+            <li><strong>Year 5:</strong> Full Autonomy - 90% automation in routine cleaning; workforce shifts to supervisory roles.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Global Default Settings
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Line Chart
+    new Chart(document.getElementById('savingsChart'), {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 2.1, 5.4, 9.8, 15.2],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: '5-Year Cumulative Savings Projection' },
+                legend: { display: false }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    new Chart(document.getElementById('throughputChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Cargo'],
+            datasets: [
+                {
+                    label: 'Manual (Mins)',
+                    data: [45, 90, 60],
+                    backgroundColor: 'rgba(249, 115, 22, 0.5)',
+                    borderColor: '#f97316',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic (Mins)',
+                    data: [20, 45, 30],
+                    backgroundColor: 'rgba(124, 58, 237, 0.5)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Turnaround Time: Manual vs. Robotic' }
+            }
+        }
+    });
+
+    // 3. Labor Hour Redistribution Pie Chart
+    new Chart(document.getElementById('laborChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Supervisory/Tech', 'Complex Repairs', 'Manual Cleaning'],
+            datasets: [{
+                data: [40, 45, 15],
+                backgroundColor: [
+                    '#0ea5e9', // Sky Blue
+                    '#7c3aed', // Purple
+                    'rgba(255, 255, 255, 0.1)' // Muted
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Post-Automation Labor Redistribution' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
