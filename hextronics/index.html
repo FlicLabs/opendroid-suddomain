@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hextronics Strategic Research | Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .report-title h2 {
+            margin: 0;
+            font-size: 2rem;
+            color: var(--accent-blue);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        h3 {
+            margin-top: 0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-purple);
+            margin-bottom: 16px;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Financial Dashboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--accent-blue);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding: 10px;
+        }
+
+        td {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+        }
+
+        td:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            color: var(--accent-purple);
+        }
+
+        td:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            text-align: right;
+        }
+
+        .metric-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            font-size: 0.75rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>STRATEGIC RESEARCH</h1>
+            <h2>HEXTRONICS AVIATION</h2>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Executive Summary -->
+        <div class="card col-8">
+            <h3>Executive Summary</h3>
+            <p>This report outlines the strategic transition for Hextronics from manual cleaning processes to a fully automated robotic ecosystem. By integrating autonomous systems, Hextronics can expect reduced ground time, elevated hygiene consistency, and substantial OPEX reduction.</p>
+        </div>
+
+        <!-- Organizational Profile -->
+        <div class="card col-4">
+            <h3>Client Profile</h3>
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 80%;">
+                <div>
+                    <span class="metric-label">FLEET SIZE</span>
+                    <div class="metric-big">180</div>
+                </div>
+                <div>
+                    <span class="metric-label">PRIMARY HUBS</span>
+                    <div class="metric-big">03</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Robotics Pathways -->
+        <div class="card col-12">
+            <h3>Robotics Opportunity Pathways</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                <span class="pathway-tag">Pathway A: Cabin Cleaning</span>
+                <span class="pathway-tag">Pathway B: UV-C Disinfection</span>
+                <span class="pathway-tag">Pathway C: Exterior Washing</span>
+                <span class="pathway-tag">Pathway D: AI Inspection</span>
+            </div>
+            <p>Deployment focuses on swarming autonomous vacuums, UV-C sterilization units for post-COVID hygiene standards, automated exterior gantry systems, and computer-vision enabled drones for micro-fracture detection.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card col-6">
+            <h3>Financial Dashboard</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CAPEX Per Unit</td>
+                        <td>$75k - $150k</td>
+                        <td>Fixed</td>
+                    </tr>
+                    <tr>
+                        <td>OPEX Reduction</td>
+                        <td>35% - 45%</td>
+                        <td>▼ Decreasing</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td>&lt; 24 Months</td>
+                        <td>Target</td>
+                    </tr>
+                    <tr>
+                        <td>Chem. Waste</td>
+                        <td>-20%</td>
+                        <td>▼ Decreasing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Chart: 5 Year Savings -->
+        <div class="card col-6">
+            <h3>5-Year Cumulative Savings (USD Millions)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart: Throughput -->
+        <div class="card col-6">
+            <h3>Throughput Comparison (Planes/Hour)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart: Labor Redistribution -->
+        <div class="card col-6">
+            <h3>Labor Hour Redistribution</h3>
+            <div class="chart-container" style="display:flex; justify-content:center;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card col-12">
+            <h3>Implementation Roadmap</h3>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px; border-top: 1px solid var(--card-border); padding-top: 20px;">
+                <div style="flex: 1; padding-right: 10px;">
+                    <strong style="color:white;">Phase 1</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--accent-blue);">Pilot Deployment</span>
+                </div>
+                <div style="flex: 1; padding-right: 10px;">
+                    <strong style="color:white;">Phase 2</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--accent-blue);">Hub Expansion</span>
+                </div>
+                <div style="flex: 1; padding-right: 10px;">
+                    <strong style="color:white;">Phase 3</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--accent-blue);">Full Integration</span>
+                </div>
+                <div style="flex: 1;">
+                    <strong style="color:white;">Phase 4</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--accent-blue);">AI Optimization</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [2.5, 8.0, 18.5, 32.0, 55.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Swarm'],
+            datasets: [{
+                label: 'Turnaround Speed',
+                data: [4, 12],
+                backgroundColor: ['#0f172a', '#0ea5e9'],
+                borderColor: ['#334155', '#0ea5e9'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // 3. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Menial Cleaning', 'Tech Supervision', 'Strategic Ops'],
+            datasets: [{
+                data: [20, 50, 30],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#7c3aed',
+                    '#0ea5e9'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { 
+                    position: 'right',
+                    labels: { boxWidth: 10 }
+                } 
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
