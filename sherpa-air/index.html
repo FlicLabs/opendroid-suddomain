@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherpa Air | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-shadow: 0 0 15px var(--accent-purple);
+        }
+
+        .client-name {
+            font-size: 1rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 20px 0;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 25px;
+            border-top: 3px solid var(--accent-purple);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--card-border);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Charts Layout */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            border-left: 2px solid var(--accent-orange);
+            padding-left: 20px;
+        }
+        
+        .pathway-item h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .pathway-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="client-name">Prepared for: Sherpa Air</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="glass-card">
+        <h2 style="color: var(--accent-purple);">Executive Strategic Vision</h2>
+        <p style="color: var(--text-secondary); line-height: 1.6;">
+            Sherpa Air is positioned to lead the aviation industry by transitioning from manual ground handling to a robotic ecosystem. Our analysis confirms that automating cabin cleaning, disinfection, and inspection will reduce Turnaround Time (TAT) by 30%, directly improving fleet utilization and passenger safety standards.
+        </p>
+    </section>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Projected OPEX Savings</div>
+            <div class="metric-value">45%</div>
+            <div class="metric-label">Annual Labor Reduction</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">18 Mo</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Unit CAPEX Start</div>
+            <div class="metric-value">$75k</div>
+            <div class="metric-label">Per Cabin Robot</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Fleet Coverage</div>
+            <div class="metric-value">120</div>
+            <div class="metric-label">Total Aircraft</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-row">
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (Millions USD)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Throughput -->
+        <div class="glass-card">
+            <h3>Throughput Comparison (Minutes)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-row">
+        <!-- Chart 3: Labor Redistribution -->
+        <div class="glass-card full-width">
+            <h3>Labor Hour Redistribution (Post-Automation)</h3>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunities -->
+    <section class="glass-card">
+        <h2 style="color: var(--accent-blue); margin-bottom: 30px;">Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>Autonomous HEPA vacuuming and seat wiping. Deploys in 10 minutes per narrow-body aisle.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>99.9% pathogen elimination using high-intensity UV emitters. Chemical-free sanitation.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Gantry-based washing systems reducing water usage by 60% and improving aerodynamics.</p>
+            </div>
+            <div class="pathway-item">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Computer vision drones for detecting micro-fractures and fuselage integrity issues.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Table -->
+    <section class="glass-card">
+        <h3>Capital Expenditure Model</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>System Type</th>
+                    <th>Unit Cost (USD)</th>
+                    <th>Primary Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cabin Cleaning Robot</td>
+                    <td>$75,000</td>
+                    <td>Speed & Consistency</td>
+                </tr>
+                <tr>
+                    <td>Inspection Drone</td>
+                    <td>$90,000</td>
+                    <td>AOG Reduction</td>
+                </tr>
+                <tr>
+                    <td>Heavy Wash Robot</td>
+                    <td>$150,000</td>
+                    <td>Fuel Efficiency</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings (Line Chart)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings ($M)',
+                data: [0.5, 2.2, 5.8, 10.5, 16.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison (Bar Chart)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Narrow Body', 'Wide Body', 'Deep Clean'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 90, 180],
+                    backgroundColor: '#0ea5e9',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [15, 35, 60],
+                    backgroundColor: '#f97316',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { 
+                    ticks: { color: '#94a3b8' }, 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    title: { display: true, text: 'Time in Minutes', color: '#94a3b8'}
+                },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution (Pie Chart)
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Tedious Cleaning (Automated)', 'High-Value Maintenance', 'Customer Service', 'System Supervision'],
+            datasets: [{
+                data: [10, 40, 30, 20],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)', // Reduced
+                    '#7c3aed', // Purple
+                    '#0ea5e9', // Blue
+                    '#f97316'  // Orange
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
