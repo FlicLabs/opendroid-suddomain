@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAF International | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary-accent: #7c3aed; /* Electric Purple */
+            --secondary-accent: #0ea5e9; /* Sky Blue */
+            --highlight: #f97316; /* Aviation Orange */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--secondary-accent);
+        }
+
+        .client-tag {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--highlight);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        h1 {
+            font-size: 48px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: var(--secondary-accent);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--highlight);
+            padding-left: 15px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-accent);
+        }
+
+        /* Financial Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--highlight);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Chart Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .full-width-chart {
+            grid-column: span 2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--glass-border);
+            color: var(--secondary-accent);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card h3 {
+            color: var(--primary-accent);
+            margin-top: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div class="client-tag">CLIENT: MAF INTERNATIONAL</div>
+        </header>
+
+        <section>
+            <h1>Strategic Automation Research</h1>
+            <p style="color: var(--text-muted); font-size: 18px;">Enhancing humanitarian aviation through robotic cleaning and maintenance integration.</p>
+        </section>
+
+        <!-- Financial Dashboard -->
+        <h2>Financial Impact Dashboard</h2>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">CAPEX / Unit</div>
+                <div class="metric-value">$75k - $150k</div>
+                <div class="metric-label">Per Asset Class</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">45%</div>
+                <div class="metric-label">Chemical & Labor Savings</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">&lt; 24 Mo</div>
+                <div class="metric-label">Return on Investment</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Throughput</div>
+                <div class="metric-value">+60%</div>
+                <div class="metric-label">Efficiency Gain</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="color: white; margin-bottom: 20px;">Detailed Cost Analysis</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hardware Asset</th>
+                        <th>Target Application</th>
+                        <th>Est. CAPEX</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Autonomous Cabin Bot</td>
+                        <td>Caravan/Kodiak Interior</td>
+                        <td>$75,000</td>
+                        <td>Dust Removal & Sanitation</td>
+                    </tr>
+                    <tr>
+                        <td>UV-C Disinfection Unit</td>
+                        <td>MedEvac Sterilization</td>
+                        <td>$85,000</td>
+                        <td>99.9% Pathogen Neutralization</td>
+                    </tr>
+                    <tr>
+                        <td>Exterior Wash Gantry</td>
+                        <td>Fuselage Mud/Clay</td>
+                        <td>$150,000</td>
+                        <td>Corrosion Prevention</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Interactive Charts -->
+        <div class="charts-container">
+            <div class="glass-card full-width-chart">
+                <h3 style="text-align: center; color: var(--text-muted);">5-Year Cumulative Savings Projection</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3 style="text-align: center; color: var(--text-muted);">Manual vs. Robotic Throughput (Aircraft/Day)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3 style="text-align: center; color: var(--text-muted);">Labor Hour Redistribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="laborChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Robotics Opportunities -->
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="pathway-grid">
+            <div class="glass-card pathway-card">
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>Compact, autonomous vacuums designed for the narrow aisles of Cessna Caravans. Essential for removing bush strip dust.</p>
+            </div>
+            <div class="glass-card pathway-card">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Medical-grade sterilization robots for post-MedEvac flights. Ensures pilot safety without harsh liquid chemicals.</p>
+            </div>
+            <div class="glass-card pathway-card">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated washing systems to remove red clay and mud. Critical for preventing corrosion in tropical environments.</p>
+            </div>
+            <div class="glass-card pathway-card">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Computer vision drones to detect stress fractures on landing gear and propellers caused by rough runway operations.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($)',
+                    data: [120000, 350000, 780000, 1400000, 2200000],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Exterior Wash', 'Interior Clean', 'Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [4, 6, 3],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [12, 14, 10],
+                        backgroundColor: 'rgba(124, 58, 237, 0.6)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 3: Labor Hours Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Cleaning (Manual)', 'Maintenance & Repair', 'Logistics'],
+                datasets: [{
+                    data: [15, 65, 20], // Post-automation distribution
+                    backgroundColor: [
+                        'rgba(249, 115, 22, 0.8)', // Aviation Orange
+                        'rgba(14, 165, 233, 0.8)', // Sky Blue
+                        'rgba(124, 58, 237, 0.8)'  // Purple
+                    ],
+                    borderColor: '#0f172a',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { position: 'bottom', labels: { color: '#fff' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
