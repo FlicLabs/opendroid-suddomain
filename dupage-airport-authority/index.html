@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuPage Airport Authority | Automated Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            top: -200px;
+            left: -200px;
+            z-index: -1;
+        }
+
+        .glow-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+        }
+
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .client-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Financial Dashboard Specifics */
+        .metric-card {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--card-border);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0.5rem 0;
+            text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .badge-blue { background: rgba(14, 165, 233, 0.2); color: var(--accent-blue); }
+        .badge-purple { background: rgba(124, 58, 237, 0.2); color: var(--accent-purple); }
+
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+    <div class="glow-2"></div>
+
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="client-name">DuPage Airport Authority</div>
+    </header>
+
+    <div class="container">
+        <!-- Executive Summary -->
+        <section class="glass-card">
+            <span class="badge badge-purple">Strategic Vision</span>
+            <h1>Aviation Automation Strategy</h1>
+            <p>DuPage Airport Authority stands at the precipice of a technological evolution. By integrating autonomous maintenance and cleaning systems, the Authority can solidify its status as a premier General Aviation hub, offering unparalleled service speed and sanitation standards to corporate tenants and charter operators.</p>
+        </section>
+
+        <!-- Robotics Pathways -->
+        <h2>Robotics Opportunity Pathways</h2>
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>Pathway A: Cabin Cleaning</h3>
+                <p>LiDAR-guided vacuum and debris removal systems designed for business jet interiors. Drastically reduces turnaround time between flight legs.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway B: UV-C Disinfection</h3>
+                <p>Hospital-grade sterilization using concentrated UV light. Neutralizes pathogens on high-touch surfaces in cockpits and cabins.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway C: Exterior Washing</h3>
+                <p>Automated dry-wash robots that ensure consistent pressure application while conserving water and preventing environmental runoff.</p>
+            </div>
+            <div class="glass-card">
+                <h3>Pathway D: AI Inspection</h3>
+                <p>Computer vision drones and crawlers for detecting surface anomalies, rivets issues, and composite delamination.</p>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h2>Financial Dashboard</h2>
+        <div class="grid-4" style="margin-bottom: 2rem;">
+            <div class="metric-card">
+                <div class="metric-label">Target OPEX Reduction</div>
+                <div class="metric-value">45%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Period</div>
+                <div class="metric-value">&lt; 24 Mo</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Unit CAPEX (Low)</div>
+                <div class="metric-value">$75k</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Unit CAPEX (High)</div>
+                <div class="metric-value">$150k</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3>Detailed Financial Projections</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Operation</th>
+                        <th>Robotic Operation</th>
+                        <th>Variance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Avg. Turnaround Cost</td>
+                        <td>$1,200</td>
+                        <td>$720</td>
+                        <td style="color: #4ade80;">-40%</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Throughput (Jets)</td>
+                        <td>12</td>
+                        <td>22</td>
+                        <td style="color: #4ade80;">+83%</td>
+                    </tr>
+                    <tr>
+                        <td>Chemical Usage (L/Month)</td>
+                        <td>450</td>
+                        <td>180</td>
+                        <td style="color: #4ade80;">-60%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="grid-2">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <h3>Labor Hour Redistribution</h3>
+            <div class="chart-container" style="display: flex; justify-content: center;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <h2>Implementation Roadmap</h2>
+        <div class="glass-card">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="border-left: 3px solid var(--accent-blue); padding-left: 1.5rem;">
+                    <h3 style="color: #fff;">Year 1: Pilot Program</h3>
+                    <p style="margin-bottom: 0;">Deploy 2 UV-C units and 1 Wash Bot in main hangar.</p>
+                </div>
+                <div style="border-left: 3px solid var(--accent-purple); padding-left: 1.5rem;">
+                    <h3 style="color: #fff;">Year 2-3: Integration & Expansion</h3>
+                    <p style="margin-bottom: 0;">Connect to FBO scheduling software. Expand fleet to all tenant hangars.</p>
+                </div>
+                <div style="border-left: 3px solid var(--accent-orange); padding-left: 1.5rem;">
+                    <h3 style="color: #fff;">Year 4-5: Full Autonomy</h3>
+                    <p style="margin-bottom: 0;">Unsupervised overnight shifts and establishment of Training Center of Excellence.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($M)',
+                    data: [0.2, 0.8, 1.9, 3.5, 5.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Throughput Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Grooming', 'Ext. Wash', 'Inspection'],
+                datasets: [
+                    {
+                        label: 'Manual',
+                        data: [15, 4, 8],
+                        backgroundColor: '#0f172a',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic',
+                        data: [45, 12, 30],
+                        backgroundColor: '#0ea5e9'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Labor Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Robot Oversight', 'High-Value Maintenance', 'Customer Service', 'Admin'],
+                datasets: [{
+                    data: [15, 50, 25, 10],
+                    backgroundColor: [
+                        '#7c3aed', // Purple
+                        '#0ea5e9', // Blue
+                        '#f97316', // Orange
+                        '#334155'  // Slate
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
