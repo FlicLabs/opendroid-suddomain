@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgin America - Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(15, 165, 233, 0.15) 0%, transparent 40%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+        }
+
+        .client-name {
+            font-weight: 300;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Financial Dashboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-secondary);
+            font-weight: 400;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        td {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            color: var(--accent-blue);
+        }
+
+        td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: right;
+            color: #fff;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        .metric-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+        
+        li::before {
+            content: "•";
+            color: var(--accent-orange);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div class="client-name">Project: Virgin America</div>
+        </header>
+
+        <section class="glass-card">
+            <h1>Strategic Automation Research</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                A comprehensive analysis for integrating robotics into the Airbus A320 fleet ecosystem. 
+                Focusing on high-fidelity cleaning, UV-C sanitation, and automated inspection to redefine the guest experience.
+            </p>
+        </section>
+
+        <!-- Financial Dashboard -->
+        <section>
+            <h2>Financial Dashboard</h2>
+            <div class="grid-3">
+                <div class="metric-card">
+                    <span class="metric-val">45%</span>
+                    <span class="metric-label">Max OPEX Reduction</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-val">&lt;24mo</span>
+                    <span class="metric-label">Payback Period</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-val">$150k</span>
+                    <span class="metric-label">Max Unit CAPEX</span>
+                </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 20px;">
+                <h3>Investment Breakdown</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Cost / Savings Projection</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Unit CAPEX (Cabin Bot)</td>
+                            <td>$75,000</td>
+                        </tr>
+                        <tr>
+                            <td>Unit CAPEX (Exterior System)</td>
+                            <td>$150,000</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Labor Savings (Per Hub)</td>
+                            <td>$1.2M+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid-2">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card">
+            <h3>Labor Redistribution</h3>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="laborChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Text Content -->
+        <section class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>Pathway A: Cabin Cleaning</h3>
+                    <p style="color: var(--text-secondary)">LiDAR-mapped autonomous vacuums designed for single-aisle Airbus configurations. Ensures consistent debris removal during 45-minute turnarounds.</p>
+                </div>
+                <div>
+                    <h3>Pathway B: UV-C Disinfection</h3>
+                    <p style="color: var(--text-secondary)">Clinical-grade UV-C robots aligning with "Mood Lighting" aesthetics to eliminate 99.9% of pathogens on tray tables and lavatories.</p>
+                </div>
+                <div>
+                    <h3>Pathway C: Exterior Wash</h3>
+                    <p style="color: var(--text-secondary)">Gantry and drone-based washing systems that recycle water, ensuring compliance with California environmental regulations.</p>
+                </div>
+                <div>
+                    <h3>Pathway D: AI Inspection</h3>
+                    <p style="color: var(--text-secondary)">Computer vision crawlers for fuselage inspection, detecting lightning strikes and rivet stress ahead of AOG delays.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card">
+            <h2>Implementation Roadmap</h2>
+            <ul>
+                <li><strong>Year 1:</strong> Pilot Program at SFO (5 Cabin Units, 2 UV-C Units).</li>
+                <li><strong>Year 2:</strong> Expansion to LAX and introduction of Exterior Washing.</li>
+                <li><strong>Year 3:</strong> Fleet standardization across all major hubs.</li>
+                <li><strong>Year 4:</strong> Deep AI integration with maintenance tracking software.</li>
+                <li><strong>Year 5:</strong> Full Autonomy (80% automated cleaning workforce).</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script>
+        // Common Chart Options for Glassmorphism Look
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings (USD Millions)',
+                    data: [1.2, 3.5, 7.8, 12.5, 18.2],
+                    borderColor: '#7c3aed', // Electric Purple
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Cabin Clean', 'Exterior Wash', 'Safety Check'],
+                datasets: [
+                    {
+                        label: 'Manual (Minutes)',
+                        data: [45, 240, 60],
+                        backgroundColor: '#0f172a', // Deep Space Blue
+                        borderWidth: 1,
+                        borderColor: '#0ea5e9'
+                    },
+                    {
+                        label: 'Robotic (Minutes)',
+                        data: [20, 90, 15],
+                        backgroundColor: '#0ea5e9', // Sky Blue
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // 3. Labor Redistribution Pie Chart
+        const ctxLabor = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctxLabor, {
+            type: 'doughnut',
+            data: {
+                labels: ['Repetitive Cleaning (Automated)', 'High-Level Maintenance (Human)', 'Supervisory/Tech Ops (Human)'],
+                datasets: [{
+                    data: [65, 25, 10],
+                    backgroundColor: [
+                        '#7c3aed', // Purple
+                        '#f97316', // Orange
+                        '#0ea5e9'  // Blue
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
