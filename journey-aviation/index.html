@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Aviation - Strategic Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #0ea5e9, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #f8fafc;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0ea5e9;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pathway-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #e2e8f0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Strategic Automation Report</h1>
+            <div style="color: #0ea5e9; font-weight: 600;">Client: Journey Aviation</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Executive Vision</h2>
+            <p>Journey Aviation is poised to lead the heavy-jet charter market by transitioning from manual legacy maintenance to a hybrid robotic ecosystem. This shift targets hospital-grade sanitation, rapid turnaround times, and reduced aircraft downtime.</p>
+        </div>
+        <div class="card">
+            <h2>Operational Profile</h2>
+            <p><strong>Fleet:</strong> Gulfstream G550, GV, GIVSP, Hawker.</p>
+            <p><strong>Hubs:</strong> Teterboro, Boca Raton, Van Nuys.</p>
+            <p><strong>Focus:</strong> Ultra-long-range luxury charter.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h2>Financial Impact Dashboard</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-label">OPEX Reduction</div>
+                <div class="metric-value">45%</div>
+                <div class="metric-label">Annual Projection</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(249, 115, 22, 0.3); background: rgba(249, 115, 22, 0.1);">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-label">ROI Velocity</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.1);">
+                <div class="metric-label">Unit CAPEX</div>
+                <div class="metric-value">$75k</div>
+                <div class="metric-label">Starting Entry</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Investment Category</th>
+                    <th>Unit Cost Range</th>
+                    <th>Est. Monthly Savings</th>
+                    <th>Efficiency Gain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Autonomous Cabin Cleaners</td>
+                    <td>$75,000 - $95,000</td>
+                    <td>$4,200 per aircraft</td>
+                    <td>60% Faster Turnaround</td>
+                </tr>
+                <tr>
+                    <td>UV-C Disinfection Units</td>
+                    <td>$45,000 - $60,000</td>
+                    <td>$1,500 (Chemicals)</td>
+                    <td>99.9% Pathogen Kill</td>
+                </tr>
+                <tr>
+                    <td>Exterior Wash Systems</td>
+                    <td>$120,000 - $150,000</td>
+                    <td>$8,000 per wash cycle</td>
+                    <td>85% Water Reduction</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Data Visualization -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Comparison</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Labor Hour Redistribution</h2>
+        <div style="display: flex; align-items: center; justify-content: space-around;">
+            <div class="chart-container" style="max-width: 400px;">
+                <canvas id="laborChart"></canvas>
+            </div>
+            <div style="width: 50%;">
+                <div class="pathway-badge">Strategic Shift</div>
+                <p>Automation allows Journey Aviation technicians to shift focus from mundane cleaning tasks to high-value mechanical inspections and passenger experience customization.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <div style="width: 23%; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                <h3 style="color: #0ea5e9; font-size: 1rem;">Year 1</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Pilot Deployment at Teterboro Hub. Interior & UV-C Focus.</p>
+            </div>
+            <div style="width: 23%; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                <h3 style="color: #7c3aed; font-size: 1rem;">Year 2-3</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Fleet-wide expansion to Boca Raton & Van Nuys. Exterior Wash rollout.</p>
+            </div>
+            <div style="width: 23%; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                <h3 style="color: #f97316; font-size: 1rem;">Year 4</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">AI Data Integration with maintenance software for predictive scheduling.</p>
+            </div>
+            <div style="width: 23%; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                <h3 style="color: #10b981; font-size: 1rem;">Year 5</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Full Autonomy Ecosystem. 80% Automated Ground Ops.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 1.8, 3.5, 5.2, 7.8],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#cbd5e1' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#cbd5e1' } }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Interior Clean', 'Deep Disinfection', 'Exterior Wash'],
+            datasets: [
+                {
+                    label: 'Manual (Hours)',
+                    data: [2.5, 1.5, 6.0],
+                    backgroundColor: '#f97316'
+                },
+                {
+                    label: 'Robotic (Hours)',
+                    data: [0.8, 0.3, 1.2],
+                    backgroundColor: '#7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#cbd5e1' } },
+                x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#cbd5e1' } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Hour Redistribution
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Repetitive Cleaning', 'Specialized Maintenance', 'Quality Assurance', 'Training'],
+            datasets: [{
+                data: [15, 45, 30, 10],
+                backgroundColor: [
+                    '#1e293b',
+                    '#0ea5e9',
+                    '#7c3aed',
+                    '#f97316'
+                ],
+                borderColor: '#0f172a',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'right', labels: { color: '#cbd5e1' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
