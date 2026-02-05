@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAA Strategic Research - Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--sky-blue);
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: var(--aviation-orange);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--electric-purple);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Charts Layout */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .full-width-chart {
+            grid-column: 1 / -1;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--electric-purple);
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: baseline;
+        }
+
+        .year-badge {
+            background: linear-gradient(135deg, var(--electric-purple), var(--sky-blue));
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>STRATEGIC RESEARCH</h1>
+            <h2>Corporate Aircraft Association</h2>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <span class="section-title">Executive Summary</span>
+        <p>
+            For the Corporate Aircraft Association (CAA), the integration of robotic automation represents a pivotal shift in Part 91 operations. By adopting autonomous cabin cleaning, UV-C disinfection, and exterior washing systems, CAA can elevate the service standards across its preferred FBO network. This strategy promises hospital-grade sanitation, significantly reduced ground times, and enhanced asset preservation for member aircraft.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <span class="section-title">Financial Dashboard</span>
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">$150k</span>
+                <span class="metric-label">Max Capex Per Unit</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">Projected Opex Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt;24 Mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Investment Category</th>
+                    <th>Cost Range (USD)</th>
+                    <th>Efficiency Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Autonomous Cabin Cleaners</td>
+                    <td>$75,000 - $90,000</td>
+                    <td>High (Interior Turnaround)</td>
+                </tr>
+                <tr>
+                    <td>UV-C Disinfection Units</td>
+                    <td>$85,000 - $110,000</td>
+                    <td>Critical (Health Safety)</td>
+                </tr>
+                <tr>
+                    <td>Exterior Wash Systems</td>
+                    <td>$120,000 - $150,000</td>
+                    <td>Moderate (Fuel/Aesthetics)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <!-- Cumulative Savings Chart -->
+        <div class="glass-card full-width-chart">
+            <span class="section-title">5-Year Cumulative Savings Projection</span>
+            <canvas id="savingsChart"></canvas>
+        </div>
+
+        <!-- Throughput Comparison -->
+        <div class="glass-card">
+            <span class="section-title">Turnaround Throughput (Aircraft/Day)</span>
+            <canvas id="throughputChart"></canvas>
+        </div>
+
+        <!-- Labor Distribution -->
+        <div class="glass-card">
+            <span class="section-title">Post-Automation Labor Redistribution</span>
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <span class="section-title">Implementation Roadmap</span>
+        <ul class="roadmap-list">
+            <li class="roadmap-item">
+                <span class="year-badge">YEAR 1</span>
+                <span><strong>Pilot Program:</strong> Deployment at 3 major preferred FBOs. Data gathering on pathway A & B robots.</span>
+            </li>
+            <li class="roadmap-item">
+                <span class="year-badge">YEAR 2</span>
+                <span><strong>Expansion Phase:</strong> Scale to top 20 FBOs. Introduction of exterior washing systems.</span>
+            </li>
+            <li class="roadmap-item">
+                <span class="year-badge">YEAR 3</span>
+                <span><strong>Digital Integration:</strong> Robotic scheduling integrated into CAA member mobile application.</span>
+            </li>
+            <li class="roadmap-item">
+                <span class="year-badge">YEAR 4</span>
+                <span><strong>Advanced Inspection:</strong> Rollout of AI-powered inspection bots for maintenance checks.</span>
+            </li>
+            <li class="roadmap-item">
+                <span class="year-badge">YEAR 5</span>
+                <span><strong>Standardization:</strong> Establishment of "CAA Certified Robotic Clean" standard globally.</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 1.8, 4.2, 7.5, 12.0],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#0ea5e9',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Process'],
+            datasets: [{
+                label: 'Aircraft per Shift',
+                data: [8, 18],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.5)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 3. Labor Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['High-Value Maintenance', 'Supervision', 'Repetitive Cleaning'],
+            datasets: [{
+                data: [60, 25, 15],
+                backgroundColor: [
+                    '#0ea5e9',
+                    '#7c3aed',
+                    '#f97316'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
