@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fireside Partners Inc. - Strategic Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f97316;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 14px;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .report-title h2 {
+            margin: 5px 0 0 0;
+            font-size: 20px;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* Financial Dashboard Table */
+        .dashboard-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table.financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 15px;
+            margin-bottom: 0;
+        }
+
+        td.metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 33%;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-sub {
+            display: block;
+            font-size: 12px;
+            color: var(--accent-blue);
+            margin-top: 5px;
+        }
+
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-full {
+            grid-column: 1 / -1;
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-blue);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pathway-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .year-badge {
+            background: var(--accent-orange);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="report-title">
+            <h1>Strategic Research</h1>
+            <h2>Fireside Partners Inc.</h2>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h3>01 // Executive Summary</h3>
+        <p>The integration of robotic cleaning automation represents a critical pivot for Fireside Partners Inc. regarding operational resilience and fleet readiness. Transitioning to an automated ecosystem ensures that fleet assets meet hospital-grade hygiene standards immediately upon deployment.</p>
+        <p>This report outlines a strategy to deploy autonomous systems that reduce turnaround times, eliminate human error in disinfection, and optimize long-term operational expenditures. The vision is to establish a self-sustaining maintenance loop where cleanliness aligns with the highest safety protocols.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h3>02 // Financial Impact Dashboard</h3>
+        <div class="dashboard-container">
+            <table class="financial-dashboard">
+                <tr>
+                    <td class="metric-card">
+                        <span class="metric-label">OPEX Reduction</span>
+                        <span class="metric-value">45%</span>
+                        <span class="metric-sub">Target per fiscal year</span>
+                    </td>
+                    <td class="metric-card">
+                        <span class="metric-label">ROI Payback</span>
+                        <span class="metric-value">18 Mths</span>
+                        <span class="metric-sub">Based on utilization</span>
+                    </td>
+                    <td class="metric-card">
+                        <span class="metric-label">Efficiency Gain</span>
+                        <span class="metric-value">30%</span>
+                        <span class="metric-sub">Faster turnaround time</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-grid">
+        <div class="card chart-full">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>Manual vs. Robotic Throughput</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+        <div class="card">
+            <h3>Labor Hour Redistribution</h3>
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <div class="card">
+        <h3>03 // Robotics Opportunity Pathways</h3>
+        <div class="pathway-grid">
+            <div class="pathway-item">
+                <h4>Pathway A: Cabin Cleaning</h4>
+                <p>LiDAR-guided vacuum systems.</p>
+                <ul>
+                    <li>15 min turnaround (Narrow body)</li>
+                    <li>Debris manipulation arms</li>
+                </ul>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway B: UV-C Disinfection</h4>
+                <p>Pathogen denaturation units.</p>
+                <ul>
+                    <li>99.9% pathogen reduction</li>
+                    <li>Automated compliance logging</li>
+                </ul>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway C: Exterior Wash</h4>
+                <p>Automated gantry & drones.</p>
+                <ul>
+                    <li>60% water reduction</li>
+                    <li>Fuel efficiency gains</li>
+                </ul>
+            </div>
+            <div class="pathway-item">
+                <h4>Pathway D: AI Inspection</h4>
+                <p>Micro-fracture detection.</p>
+                <ul>
+                    <li>Visual damage flagging</li>
+                    <li>Proactive safety alerts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h3>04 // Implementation Roadmap</h3>
+        <div class="roadmap-step">
+            <div class="year-badge">YEAR 1</div>
+            <div>
+                <strong>Pilot Deployment</strong><br>
+                Deploy two UV-C units and one Cabin Cleaning unit at primary hub. Establish data baselines.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">YEAR 2-3</div>
+            <div>
+                <strong>Expansion</strong><br>
+                Roll out to secondary hubs. Integrate Exterior Washing drones. API integration with flight scheduling.
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="year-badge">YEAR 4-5</div>
+            <div>
+                <strong>Full Integration</strong><br>
+                Complete fleet-wide coverage. Activate AI Inspection Bots. Transition manual labor to oversight roles.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (USD Millions)',
+                data: [0.5, 1.8, 3.5, 5.8, 8.2],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cabin Cleaning', 'Exterior Wash', 'Disinfection'],
+            datasets: [
+                {
+                    label: 'Manual (Mins)',
+                    data: [45, 240, 60],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic (Mins)',
+                    data: [15, 90, 10],
+                    backgroundColor: '#0ea5e9',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 3. Labor Distribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Robot Oversight', 'High-Touch Detailing', 'Maintenance'],
+            datasets: [{
+                data: [10, 30, 40, 20],
+                backgroundColor: [
+                    '#1e293b',
+                    '#f97316',
+                    '#7c3aed',
+                    '#0ea5e9'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
