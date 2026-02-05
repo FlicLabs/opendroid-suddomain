@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids | CLE Strategic Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --primary: #7c3aed; /* Electric Purple */
+            --secondary: #0ea5e9; /* Sky Blue */
+            --accent: #f97316; /* Aviation Orange */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            border: 2px solid var(--secondary);
+            padding: 10px 20px;
+            border-radius: 4px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Financial Dashboard Table */
+        table.financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-main);
+        }
+
+        table.financial-table th {
+            text-align: left;
+            padding: 15px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--card-border);
+            font-weight: 600;
+        }
+
+        table.financial-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            font-weight: 300;
+        }
+
+        .metric-big {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .pathway-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Implementation Timeline */
+        .timeline-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">OPEN DROIDS</div>
+            <div style="text-align: right;">
+                <div style="font-weight: 600;">CONFIDENTIAL RESEARCH</div>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Cleveland Hopkins Intl. Airport</div>
+            </div>
+        </header>
+
+        <h1>Strategic Research Report</h1>
+        <p class="subtitle">Aviation Cleaning & Maintenance Automation Assessment</p>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>Executive Vision</h2>
+            <p>Cleveland Hopkins International Airport stands at a critical juncture of modernization. The vision is to deploy a centralized, airport-managed fleet of autonomous units to service partner airlines. This strategy aims to drastically reduce aircraft turnaround times (TAT), enhance passenger health safety standards, and optimize labor allocation toward high-value maintenance tasks. Open Droids proposes a transition from manual labor to a tech-forward operational hub.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h2>Financial Dashboard</h2>
+            <div class="grid-3" style="margin-bottom: 30px;">
+                <div>
+                    <div class="metric-big" style="color: var(--secondary);">$75k - 150k</div>
+                    <div class="metric-label">Unit CAPEX Estimate</div>
+                </div>
+                <div>
+                    <div class="metric-big" style="color: var(--accent);">45%</div>
+                    <div class="metric-label">Projected OPEX Reduction</div>
+                </div>
+                <div>
+                    <div class="metric-big" style="color: var(--primary);">&lt; 24 Months</div>
+                    <div class="metric-label">ROI Payback Period</div>
+                </div>
+            </div>
+
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Asset Class</th>
+                        <th>Unit Cost</th>
+                        <th>Function</th>
+                        <th>Efficiency Gain</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--secondary);">Autonomous Cabin Unit</td>
+                        <td>$90,000</td>
+                        <td>Interior Cleaning</td>
+                        <td>-15 min Turn Time</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--secondary);">UV-C Array</td>
+                        <td>$85,000</td>
+                        <td>Disinfection</td>
+                        <td>99.9% Pathogen Kill</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--secondary);">Exterior Wash System</td>
+                        <td>$150,000</td>
+                        <td>De-icing / Wash</td>
+                        <td>Fuel Efficiency</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2">
+            <div class="card">
+                <h3>5-Year Cumulative Savings ($M)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Throughput: Manual vs. Robotic</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+             <h3>Labor Hour Redistribution</h3>
+             <div class="chart-container" style="height: 250px;">
+                 <canvas id="laborChart"></canvas>
+             </div>
+        </div>
+
+        <!-- Pathways -->
+        <div class="grid-2">
+            <div class="card">
+                <span class="pathway-tag">Pathway A</span>
+                <h3>Cabin Cleaning Automation</h3>
+                <p>LiDAR navigation units for debris removal and vacuuming. Deployed during rapid turns at Concourse C and D.</p>
+            </div>
+            <div class="card">
+                <span class="pathway-tag">Pathway B</span>
+                <h3>UV-C Disinfection</h3>
+                <p>Hospital-grade UV light neutralization. Requires only 5-7 minutes per aisle. Restores passenger confidence.</p>
+            </div>
+            <div class="card">
+                <span class="pathway-tag">Pathway C</span>
+                <h3>Exterior Systems</h3>
+                <p>Large-scale gantries for washing and de-icing. Critical for Cleveland winter operations and fuel efficiency.</p>
+            </div>
+            <div class="card">
+                <span class="pathway-tag">Pathway D</span>
+                <h3>AI Inspection Bots</h3>
+                <p>Drone and crawler-based systems. Reduces manual inspection hours by 60% through computer vision analysis.</p>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <div class="timeline-item">
+                <h3>Year 1: Pilot Program</h3>
+                <p>Deployment of 5 Cabin Robots at United Airlines gates.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 2: Expansion</h3>
+                <p>Rollout of exterior washing robots for de-icing support.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 3: Full Scale</h3>
+                <p>Integration of AI Inspection Bots and Command Center.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Year 5: Regional Hub</h3>
+                <p>Establishment as Center of Excellence for Aviation Automation.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Savings ($ Millions)',
+                    data: [0.5, 2.1, 4.8, 8.5, 14.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#cbd5e1' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 2: Throughput
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Narrow Body Turn', 'Deep Clean', 'De-icing Prep'],
+                datasets: [
+                    {
+                        label: 'Manual (Mins)',
+                        data: [45, 120, 30],
+                        backgroundColor: '#f97316'
+                    },
+                    {
+                        label: 'Robotic (Mins)',
+                        data: [25, 60, 10],
+                        backgroundColor: '#0ea5e9'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#cbd5e1' } } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // Chart 3: Labor Distribution
+        const ctx3 = document.getElementById('laborChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: ['Repetitive Cleaning', 'System Oversight', 'High-Value Maintenance'],
+                datasets: [{
+                    data: [15, 35, 50],
+                    backgroundColor: ['#f97316', '#7c3aed', '#0ea5e9'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'right', labels: { color: '#cbd5e1' } } }
+            }
+        });
+    </script>
+</body>
+</html>
