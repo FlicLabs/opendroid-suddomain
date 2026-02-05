@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Bowl Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent-purple: #7c3aed;
+            --accent-blue: #0ea5e9;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(14, 165, 233, 0.15) 60%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-span-12 { grid-column: span 12; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-4 { grid-column: span 4; }
+
+        /* Dashboard Table Styling */
+        table.financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        table.financial-dashboard th {
+            text-align: left;
+            color: var(--text-muted);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        table.financial-dashboard td {
+            padding: 20px 15px;
+            font-size: 1.1rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Text Styles */
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .pathway-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pathway-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        @media (max-width: 768px) {
+            .grid { display: block; }
+            .card { margin-bottom: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">CLIENT</div>
+            <div style="font-weight: 600;">FUN BOWL</div>
+        </div>
+    </header>
+
+    <div class="grid">
+        <div class="card col-span-12">
+            <h1>Strategic Automation Audit</h1>
+            <p>High-level vision of robotic cleaning automation and operational efficiency for Fun Bowl airlines.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card col-span-12">
+            <h2>Financial Dashboard</h2>
+            <table class="financial-dashboard">
+                <tr>
+                    <td width="33%">
+                        <span class="metric-label">Unit CAPEX</span>
+                        <span class="metric-value">$75k - $150k</span>
+                        <span class="metric-sub">Per Robotic Unit</span>
+                    </td>
+                    <td width="33%">
+                        <span class="metric-label">OPEX Reduction</span>
+                        <span class="metric-value">35% - 45%</span>
+                        <span class="metric-sub">Target Operational Savings</span>
+                    </td>
+                    <td width="33%">
+                        <span class="metric-label">ROI Velocity</span>
+                        <span class="metric-value">&lt; 24 Months</span>
+                        <span class="metric-sub">Projected Payback Period</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="card col-span-8">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card col-span-4">
+            <h2>Labor Redistribution</h2>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 15px; text-align: center;">Shift from Manual Labor to Supervisory Roles</p>
+        </div>
+
+        <div class="card col-span-6">
+            <h2>Throughput Analysis</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card col-span-6">
+            <h2>Robotics Opportunity Pathways</h2>
+            <ul class="pathway-list">
+                <li>
+                    <strong>Pathway A:</strong> Autonomous Cabin Cleaning Robots<br>
+                    <small>Vacuum and debris removal systems.</small>
+                </li>
+                <li>
+                    <strong>Pathway B:</strong> UV-C Disinfection Robots<br>
+                    <small>Pathogen eradication via germicidal light.</small>
+                </li>
+                <li>
+                    <strong>Pathway C:</strong> Exterior Aircraft Washing<br>
+                    <small>Drones and gantries for fuselage maintenance.</small>
+                </li>
+                <li>
+                    <strong>Pathway D:</strong> AI-Powered Inspection<br>
+                    <small>Computer vision for structural anomaly detection.</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    
+    // 1. Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (Millions USD)',
+                data: [0.5, 2.1, 4.8, 8.2, 12.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Labor Redistribution Pie Chart
+    const ctxLabor = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctxLabor, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Cleaning', 'Robot Supervision', 'Maintenance', 'Data Analysis'],
+            datasets: [{
+                data: [15, 45, 25, 15],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)', // Manual (fading out)
+                    '#7c3aed', // Supervision
+                    '#0ea5e9', // Maintenance
+                    '#f97316'  // Analysis
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 3. Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Crew', 'Robotic Fleet'],
+            datasets: [{
+                label: 'Aircraft Turned Per Hour',
+                data: [4, 7],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#0ea5e9'],
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
