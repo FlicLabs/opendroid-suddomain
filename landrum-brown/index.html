@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landrum & Brown | Strategic Automation Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --sky-blue: #0ea5e9;
+            --aviation-orange: #f97316;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--sky-blue), var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .client-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1, h2, h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--electric-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--sky-blue);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-main);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--electric-purple);
+            color: var(--sky-blue);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .tag-blue { background: rgba(14, 165, 233, 0.2); color: var(--sky-blue); }
+        .tag-orange { background: rgba(249, 115, 22, 0.2); color: var(--aviation-orange); }
+
+        .pathway-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--aviation-orange);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="client-name">Prepared for: Landrum & Brown</div>
+    </header>
+
+    <div class="card">
+        <span class="tag tag-blue">Strategic Overview</span>
+        <h1>Aviation Maintenance Automation</h1>
+        <p style="font-size: 1.1rem; color: var(--text-muted);">
+            A comprehensive robotic integration strategy to enhance turnaround efficiency, ensure consistent hygiene standards, and reduce long-term operational costs for global fleet operations.
+        </p>
+    </div>
+
+    <!-- Organizational Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h3>Organizational Profile</h3>
+            <p>Landrum & Brown leverages influence over massive global hubs (ATL, ORD, DXB). The current opportunity lies in transitioning managed fleets from manual labor dependency to supervised autonomous systems.</p>
+            <ul>
+                <li><strong>Fleet Influence:</strong> ~1,650 Daily Active Aircraft</li>
+                <li><strong>Operational Model:</strong> High-Frequency Hub Turnarounds</li>
+                <li><strong>Key Friction:</strong> Labor Shortages & Cleaning Variance</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Robotics Pathways</h3>
+            <div class="grid-2">
+                <div>
+                    <div class="pathway-icon">A</div>
+                    <strong>Cabin Cleaning</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">LiDAR Navigation, Debris Removal</span>
+                </div>
+                <div>
+                    <div class="pathway-icon">B</div>
+                    <strong>UVC Disinfection</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Viral Load Reduction</span>
+                </div>
+                <div>
+                    <div class="pathway-icon">C</div>
+                    <strong>Exterior Wash</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">90% Water Savings</span>
+                </div>
+                <div>
+                    <div class="pathway-icon">D</div>
+                    <strong>AI Inspection</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Computer Vision Analysis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h3><span style="color: var(--electric-purple)">|||</span> Financial Dashboard</h3>
+        
+        <div class="grid-4" style="margin-bottom: 30px;">
+            <div class="metric-card">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">Max Opex Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">&lt;24 Mo</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">$150k</span>
+                <span class="metric-label">Max Unit Capex</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">60%</span>
+                <span class="metric-label">Inspection Time Saved</span>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Manual Model</th>
+                    <th>Robotic Model</th>
+                    <th>Delta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Avg. Cabin Clean Time</td>
+                    <td>25 Minutes</td>
+                    <td>12 Minutes</td>
+                    <td style="color: var(--sky-blue);">-52% Time</td>
+                </tr>
+                <tr>
+                    <td>Exterior Wash Duration</td>
+                    <td>10 Hours</td>
+                    <td>2 Hours</td>
+                    <td style="color: var(--sky-blue);">-80% Time</td>
+                </tr>
+                <tr>
+                    <td>Consumable Waste</td>
+                    <td>High Variance</td>
+                    <td>Precise Dosing</td>
+                    <td style="color: var(--aviation-orange);">-20% Cost</td>
+                </tr>
+                <tr>
+                    <td>Labor Allocation</td>
+                    <td>Manual Labor</td>
+                    <td>Supervisory</td>
+                    <td style="color: var(--electric-purple);">Upskilling</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Throughput Analysis (Aircraft/Day)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Labor Hour Redistribution</h3>
+        <div class="chart-container" style="height: 250px; width: 50%; margin: 0 auto;">
+            <canvas id="laborChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h3><span style="color: var(--aviation-orange)">>>></span> Implementation Roadmap</h3>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 150px; border-top: 2px solid var(--sky-blue); padding-top: 10px; margin-right: 10px;">
+                <strong style="color: var(--sky-blue);">Year 1</strong>
+                <p style="font-size: 0.9rem;">Pilot Program<br>10 Units @ Single Hub</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; border-top: 2px solid var(--electric-purple); padding-top: 10px; margin-right: 10px;">
+                <strong style="color: var(--electric-purple);">Year 2</strong>
+                <p style="font-size: 0.9rem;">Hybrid Integration<br>UVC & Supervision Training</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; border-top: 2px solid var(--aviation-orange); padding-top: 10px; margin-right: 10px;">
+                <strong style="color: var(--aviation-orange);">Year 3</strong>
+                <p style="font-size: 0.9rem;">Exterior Automation<br>Washers & Drone Inspection</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; border-top: 2px solid #ffffff; padding-top: 10px;">
+                <strong style="color: #ffffff;">Year 5</strong>
+                <p style="font-size: 0.9rem;">Full Ecosystem<br>Autonomous Dispatch</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (Millions USD)',
+                data: [1.2, 3.5, 7.8, 14.2, 22.5],
+                borderColor: '#0ea5e9',
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Cleaning', 'Inspection', 'Washing'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [24, 12, 2],
+                    backgroundColor: '#f97316',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Robotic Process',
+                    data: [50, 30, 10],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+
+    // Chart 3: Labor Redistribution
+    const ctx3 = document.getElementById('laborChart').getContext('2d');
+    new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+            labels: ['Manual Scrubbing', 'Robot Supervision', 'Maintenance', 'Data Analysis'],
+            datasets: [{
+                data: [10, 40, 30, 20],
+                backgroundColor: [
+                    '#f97316', // Manual
+                    '#0ea5e9', // Supervision
+                    '#7c3aed', // Maintenance
+                    '#ffffff'  // Analysis
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { color: 'white' } } }
+        }
+    });
+</script>
+
+</body>
+</html>
