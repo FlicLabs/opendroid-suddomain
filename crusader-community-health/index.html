@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crusader Community Health - Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #7c3aed;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #7c3aed;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #e2e8f0;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Metric Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #e2e8f0;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #ffffff;
+            font-weight: 600;
+            border-bottom: 2px solid #7c3aed;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="color: #94a3b8; font-size: 12px;">CLIENT</div>
+            <div style="font-weight: 600;">CRUSADER COMMUNITY HEALTH</div>
+        </div>
+    </div>
+
+    <h1>Healthcare Robotics Portfolio</h1>
+    <p style="margin-bottom: 40px; color: #64748b;">Strategic Analysis & ROI Modeling • 2024-2025</p>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">$3.4M</div>
+            <div class="metric-label">Net Annual Benefit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">&lt; 9 Mo</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+22k</div>
+            <div class="metric-label">Annual Visit Capacity</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">Rx Throughput Lift</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p>Crusader Community Health, serving the Rock River Valley, faces high volume and scheduling optimization challenges typical of FQHCs. By leveraging robotics—specifically Robotic Process Automation (RPA) for admin tasks and Automated Pharmacy Dispensing—Crusader can shift focus from administrative overhead to patient care. The dominant ROI driver is capacity expansion, enabling millions in incremental margin.</p>
+    </div>
+
+    <div class="grid-2-col">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Daily Throughput Impact</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Comparative Pathways Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: RPA (Admin)</th>
+                    <th>Pathway B: Pharmacy Automation</th>
+                    <th>Pathway C: Facility AMRs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Network-wide Admin</td>
+                    <td>Central Pharmacies</td>
+                    <td>Dental & Logistics</td>
+                </tr>
+                <tr>
+                    <td><strong>Main Value Driver</strong></td>
+                    <td>Revenue Cycle & Access</td>
+                    <td>Volume & Safety</td>
+                    <td>Staff Efficiency</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>$1.5M - $2.0M</td>
+                    <td>$0.8M - $1.0M</td>
+                    <td>$0.2M - $0.4M</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback</strong></td>
+                    <td>3-6 Months</td>
+                    <td>12-18 Months</td>
+                    <td>24 Months</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td><span style="color: #4ade80;">Low</span></td>
+                    <td><span style="color: #facc15;">Low-Mod</span></td>
+                    <td><span style="color: #fbbf24;">Moderate</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Implementation Roadmap</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <strong style="color: #ffffff;">Phase 1: Administrative Automation (Year 1)</strong><br>
+                Deploy RPA for eligibility verification and appointment reminders to reduce no-show rates.
+            </li>
+            <li style="margin-bottom: 15px; border-left: 3px solid #4f46e5; padding-left: 15px;">
+                <strong style="color: #ffffff;">Phase 2: Pharmacy Modernization (Year 2)</strong><br>
+                Install robotic dispensing units in high-volume clinics. Integrate with EHR.
+            </li>
+            <li style="border-left: 3px solid #2563eb; padding-left: 15px;">
+                <strong style="color: #ffffff;">Phase 3: Facility Robotics (Year 3)</strong><br>
+                Pilot UV-C disinfection robots in dental wings to improve turnover time.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [3.4, 7.2, 11.5, 16.1, 21.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Rx Fills/Hr', 'Patient Check-in/Hr', 'Room Turnover (min)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [45, 12, 20],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 6,
+                    borderWidth: 0
+                },
+                {
+                    label: 'Robotic Augmented',
+                    data: [75, 22, 12], // Note: Lower turnover time is better, represented inversely or contextually
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6,
+                    borderWidth: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
