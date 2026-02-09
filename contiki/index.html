@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contiki Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        p, li {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #94a3b8;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border-left: 4px solid #7c3aed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #cbd5e1;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        ul li::before {
+            content: "•";
+            color: #7c3aed;
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="font-size: 12px; color: #94a3b8;">RESEARCH DIVISION</div>
+    </header>
+
+    <div class="glass-card">
+        <h2>Client Profile</h2>
+        <h1>Contiki: Robotics & Automation Portfolio</h1>
+        <p>Contiki is the global leader in youth social travel (18-35 demographic). This portfolio explores the transition from traditional logistics to an AI-orchestrated mobility platform, leveraging fleet automation, hospitality robotics, and algorithmic yield management.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Net Benefit (Pathway A)</div>
+            <div class="metric-value">£2.3M</div>
+            <div class="metric-label">From Fleet Telematics & Efficiency</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">5-Year Cumulative Savings</div>
+            <div class="metric-value">> £7.5M</div>
+            <div class="metric-label">Projected Network-Wide Impact</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">8-12 Mos</div>
+            <div class="metric-label">Rapid ROI on Hardware Retrofit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Fleet Efficiency Gain</div>
+            <div class="metric-value">12%</div>
+            <div class="metric-label">Reduction in Fuel & Maint. Costs</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Operational Throughput (Load Factor Efficiency)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Automated Fleet Logistics</h3>
+        <p><strong>Scope:</strong> Deployment of AI-driven predictive maintenance and ADAS across the global coach fleet.</p>
+        <ul>
+            <li>Predictive maintenance to prevent breakdowns.</li>
+            <li>Fuel optimization software robotics.</li>
+            <li>Reduction in insurance premiums via safety tech.</li>
+        </ul>
+
+        <div style="margin-top: 30px;"></div>
+
+        <h3>Pathway B: Hospitality Robotics</h3>
+        <p><strong>Scope:</strong> Service robots at exclusive properties (Chateau de Cruix, Gasthof Schoneck).</p>
+        <ul>
+            <li>Automated luggage handling systems.</li>
+            <li>Robotic bartending for high-volume social events.</li>
+            <li>Supports brand positioning as an innovator for Gen Z.</li>
+        </ul>
+    </div>
+
+    <div class="glass-card">
+        <h2>Comparative Financial View</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Fleet Tech</th>
+                    <th>Pathway B: Hospitality</th>
+                    <th>Pathway C: Logistics AI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Main Value Driver</strong></td>
+                    <td>Fuel & Maintenance</td>
+                    <td>Labor & Branding</td>
+                    <td>Yield Optimization</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>£2.3 Million</td>
+                    <td>£400,000</td>
+                    <td>£3.5 Million</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback Period</strong></td>
+                    <td>1 Year</td>
+                    <td>2 Years</td>
+                    <td>6 Months</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td>Low</td>
+                    <td>Moderate</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap positions Contiki not just as a tour operator, but as a <strong>Tech-Enabled Mobility Platform</strong>. Automation creates a defensive moat against rising fuel costs while hospitality robotics enhance the "Instagram-ability" of the product, directly appealing to the core demographic.</p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Savings (GBP Millions)',
+                data: [1.8, 3.2, 4.9, 6.4, 7.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Fleet Utilization', 'Pax Satisfaction', 'On-Time Perf.'],
+            datasets: [
+                {
+                    label: 'Current Operations',
+                    data: [75, 82, 85],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotics/AI Enhanced',
+                    data: [88, 94, 98],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
