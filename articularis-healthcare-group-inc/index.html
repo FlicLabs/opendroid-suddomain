@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articularis Healthcare Group - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .report-title span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-purple);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 10px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Dashboard Metrics */
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--accent-purple);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-green {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <span>Client</span>
+            <h1>Articularis Healthcare Group</h1>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <h3>Rheumatology Scale & Optimization</h3>
+            <p>Articularis Healthcare Group is the largest independent rheumatology practice in the US. The primary opportunity lies in shifting from manual clinic operations to an automated platform model. By deploying infusion workflow automation and RPA for administrative tasks, Articularis can unlock significant capacity in high-margin biologic therapy lines.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Operational Profile</h2>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <div>
+                    <div class="metric-label">Locations</div>
+                    <div class="metric-value" style="font-size: 1.8rem;">70+</div>
+                </div>
+                <div>
+                    <div class="metric-label">Key Revenue</div>
+                    <div class="metric-value" style="font-size: 1.8rem;">Biologics</div>
+                </div>
+            </div>
+            <p><strong>Bottlenecks:</strong> Prior authorizations, infusion chair scheduling efficiency, and drug compounding waste.</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card" style="background: linear-gradient(to right, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.5));">
+        <h2>Financial Impact Dashboard (Pathway A)</h2>
+        <div class="grid-3">
+            <div>
+                <div class="metric-label">Annual Net Benefit</div>
+                <div class="metric-value">$15M</div>
+                <p style="font-size: 0.8rem;">Incremental margin from reduced waste & increased throughput.</p>
+            </div>
+            <div>
+                <div class="metric-label">ROI Payback Period</div>
+                <div class="metric-value">0.9 Yrs</div>
+                <p style="font-size: 0.8rem;">Rapid recovery via high-value infusion reimbursements.</p>
+            </div>
+            <div>
+                <div class="metric-label">Utilization Lift</div>
+                <div class="metric-value">+15%</div>
+                <p style="font-size: 0.8rem;">Optimization of 600+ infusion chairs network-wide.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Net Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Infusion Throughput (Pts/Day/Center)</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Comparison -->
+    <div class="glass-card">
+        <h2>Comparative Opportunity Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway A: Infusion Auto</td>
+                    <td>All Clinics</td>
+                    <td>Drug Waste & Volume</td>
+                    <td class="highlight-green">$15M - $20M</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway B: Admin RPA</td>
+                    <td>Billing Office</td>
+                    <td>Labor & Denials</td>
+                    <td class="highlight-green">$2M - $4M</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td style="color: white; font-weight: 600;">Pathway C: Lab Robotics</td>
+                    <td>Central Labs</td>
+                    <td>Quality & Safety</td>
+                    <td class="highlight-green">$0.5M - $1M</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($M)',
+                    data: [8, 25, 45, 68, 95],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Operations', 'Robotic Optimization'],
+                datasets: [{
+                    label: 'Patients Per Chair/Day',
+                    data: [2.5, 3.4],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                    borderRadius: 8,
+                    barThickness: 60
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#e2e8f0', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
