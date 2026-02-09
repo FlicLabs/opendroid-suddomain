@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peerstar LLC Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --glass-blur: 16px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Glass Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .card h3 {
+            color: var(--accent-purple);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 0;
+            letter-spacing: 1px;
+        }
+
+        .metric {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .sub-metric {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(var(--glass-blur));
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        .tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">Research Division</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="hero-title">
+            <h1>Peerstar LLC Robotics Portfolio</h1>
+            <p>Mobile Workforce Optimization & Automated Care Delivery</p>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <div class="grid">
+            <div class="card">
+                <h3>Annual Net Benefit</h3>
+                <div class="metric">£6.0M</div>
+                <div class="sub-metric">Projected incremental revenue via Pathway A</div>
+            </div>
+            <div class="card">
+                <h3>Efficiency Gain</h3>
+                <div class="metric">+20%</div>
+                <div class="sub-metric">Billable capacity increase per staff member</div>
+            </div>
+            <div class="card">
+                <h3>ROI Timeline</h3>
+                <div class="metric">4 MO</div>
+                <div class="sub-metric">Payback period for Logistics AI & RPA</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid" style="grid-template-columns: 1.5fr 1fr;">
+            <div class="dashboard-section">
+                <h3>5-Year Cumulative Net Savings (GBP Millions)</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="dashboard-section">
+                <h3>Daily Throughput (Visits/Staff)</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard Table -->
+        <div class="dashboard-section">
+            <h3>Comparative Opportunity Matrix</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Technology Scope</th>
+                        <th>Annual Benefit (Mid)</th>
+                        <th>Payback Period</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag">PATHWAY A</span></td>
+                        <td>Logistics AI & RPA Automation</td>
+                        <td class="highlight">£5.0M - £7.0M</td>
+                        <td>3-4 Months</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">PATHWAY B</span></td>
+                        <td>Social Robotics (IDD)</td>
+                        <td class="highlight">£0.5M - £1.0M</td>
+                        <td>12-18 Months</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">PATHWAY C</span></td>
+                        <td>Telepresence Fleet</td>
+                        <td class="highlight">£1.0M - £2.0M</td>
+                        <td>6-9 Months</td>
+                        <td>Low-Mod</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit',
+                    data: [4.5, 11.2, 18.5, 26.8, 36.0],
+                    borderColor: '#7c3aed',
+                    backgroundColor: savingsGradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointBorderWidth: 2,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        padding: 10
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { borderDash: [5, 5] },
+                        title: { display: true, text: 'GBP (Millions)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Baseline', 'Robotic/AI Enhanced'],
+                datasets: [{
+                    label: 'Billable Hours/Day',
+                    data: [5.0, 6.5],
+                    backgroundColor: [
+                        'rgba(148, 163, 184, 0.5)', // Gray for manual
+                        '#7c3aed'                   // Purple for robotic
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Hours per Staff Member' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
