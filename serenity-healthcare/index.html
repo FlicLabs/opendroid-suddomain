@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Healthcare Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 28px;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+        .client-name {
+            font-weight: 300;
+            color: #94a3b8;
+            font-size: 18px;
+        }
+        
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 24px;
+            margin: 0 0 10px 0;
+        }
+
+        p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Financial Dashboard */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        th {
+            text-align: left;
+            padding: 12px;
+            color: #7c3aed;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* Implementation Steps */
+        .step {
+            border-left: 2px solid #7c3aed;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .step-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="client-name">Project: Serenity Healthcare</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Strategy</h2>
+        <p>The operational shift from manual logistics to an <strong>AI-orchestrated robotic ecosystem</strong> addresses Serenity Healthcare's critical staffing bottlenecks. By deploying Autonomous Mobile Robots (AMRs) and automated dispensing, the network can recapture over <strong>18,000 clinical hours</strong> annually, shifting focus from transport to patient outcomes.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metric-grid">
+        <div class="metric-card">
+            <span class="metric-value">£12.1M</span>
+            <span class="metric-label">5-Year Net Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">14 Mo</span>
+            <span class="metric-label">Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">18%</span>
+            <span class="metric-label">Throughput Lift</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">60%</span>
+            <span class="metric-label">Logistics Automated</span>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- Cumulative Savings Chart -->
+        <div class="glass-card">
+            <h2>Financial Projection (Cumulative)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Throughput Chart -->
+        <div class="glass-card">
+            <h2>Operational Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Pathways Table -->
+    <div class="glass-card">
+        <h2>Opportunity Pathways Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Logistics (AMR)</th>
+                    <th>Pathway B: Meds (ADC)</th>
+                    <th>Pathway C: Monitoring AI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Network-wide (45 sites)</td>
+                    <td>Pharmacy & Nursing Stations</td>
+                    <td>High-Acuity Wings</td>
+                </tr>
+                <tr>
+                    <td><strong>Driver</strong></td>
+                    <td>Labor Reallocation</td>
+                    <td>Error Reduction</td>
+                    <td>Fall Prevention</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>£2.5M (High)</td>
+                    <td>£1.5M (Med)</td>
+                    <td>£3.0M (High)</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Low-Moderate</td>
+                    <td>Moderate (Privacy)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="step">
+            <span class="step-title">Phase 1: Logistics Pilot (Year 1)</span>
+            <p>Deploy AMRs in 3 flagship facilities. Establish baseline for "Clinical Hours Returned."</p>
+        </div>
+        <div class="step">
+            <span class="step-title">Phase 2: Scale & Safety (Year 2)</span>
+            <p>Rollout AMRs to 45 sites. Pilot Passive Monitoring AI in memory care wings to reduce fall risks.</p>
+        </div>
+        <div class="step">
+            <span class="step-title">Phase 3: Integration (Years 3-5)</span>
+            <p>Central Command Center integration. Full pharmacy automation. Data utilization for payer negotiations.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£ Millions)',
+                data: [0.5, 2.8, 5.5, 8.7, 12.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Delivery', 'Linen Transport', 'Waste Removal', 'Med Verification'],
+            datasets: [
+                {
+                    label: 'Manual Process (Tasks/Hr)',
+                    data: [12, 8, 10, 20],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI Process (Tasks/Hr)',
+                    data: [45, 30, 35, 120],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
