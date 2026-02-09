@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paséa Hotel & Spa Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --deep-space: #0f172a;
+        --electric-purple: #7c3aed;
+        --purple-glow: rgba(124, 58, 237, 0.4);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        background-color: var(--deep-space);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header & Logo */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--electric-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .report-title {
+        font-size: 14px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px var(--purple-glow);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 10px var(--purple-glow);
+    }
+
+    .metric-label {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Typography */
+    h1 { font-size: 32px; margin-bottom: 10px; color: #fff; }
+    h2 { font-size: 22px; margin-bottom: 20px; color: var(--electric-purple); border-left: 4px solid var(--electric-purple); padding-left: 15px; }
+    h3 { font-size: 18px; margin-bottom: 15px; color: #fff; }
+    p { line-height: 1.6; color: var(--text-muted); margin-bottom: 15px; }
+    
+    /* Lists */
+    ul { padding-left: 20px; color: var(--text-muted); }
+    li { margin-bottom: 8px; }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        color: var(--electric-purple);
+        border-bottom: 1px solid var(--glass-border);
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+        color: var(--text-main);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(124, 58, 237, 0.05); }
+
+    /* Chart Containers */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+    
+    .charts-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-grid, .charts-row { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client Research: Paséa Hotel & Spa</div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Proj. 5-Year Net Savings</div>
+            <div class="metric-value">$400k+</div>
+            <div class="metric-label">From Labor Reallocation</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Delivery Efficiency</div>
+            <div class="metric-value">65%</div>
+            <div class="metric-label">Reduction in Manual Trips</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">ROI Timeline</div>
+            <div class="metric-value">4 Mo</div>
+            <div class="metric-label">For F&B Robotics</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-row">
+        <div class="glass-card">
+            <h3>Cumulative Savings Projection (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Manual vs. Robotic Throughput (Room Service)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>1. Executive Summary & Profile</h2>
+        <p>Paséa Hotel & Spa is a luxury oceanfront resort in Huntington Beach, CA. The property faces challenges common to coastal hospitality: high labor costs and logistical friction in vertical transport. The operational strategy must shift from manual labor intensity to automated logistics.</p>
+        <p>The strongest robotics levers are <strong>(1) Autonomous Guest Delivery</strong> for room service, <strong>(2) Commercial Floor Care Robotics</strong>, and <strong>(3) Robotic Food Runners</strong> for the pool deck. The dominant ROI driver is the reduction of non-value-added walking time.</p>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>2. Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Autonomous Guest Delivery (Highest Value)</h3>
+        <ul>
+            <li><strong>Scope:</strong> Deployment of 3-4 Relay-style robots for room service and amenities.</li>
+            <li><strong>Key Levers:</strong> Integration with elevator controls and PMS; secure compartment delivery.</li>
+            <li><strong>Impact:</strong> Reduces manual delivery trips by ~70%, improving delivery times to under 10 minutes.</li>
+        </ul>
+
+        <h3>Pathway B: Commercial Floor Care (Efficiency)</h3>
+        <ul>
+            <li><strong>Scope:</strong> Autonomous vacuum sweepers for 8 floors of corridors and scrubbers for the lobby.</li>
+            <li><strong>Benefits:</strong> Consistent cleanliness; housekeeping staff reallocated to room detailing.</li>
+        </ul>
+
+        <h3>Pathway C: Robotic Food Runners (Revenue)</h3>
+        <ul>
+            <li><strong>Scope:</strong> Heavy payload shelving robots for Tanners Restaurant and the pool deck.</li>
+            <li><strong>Benefits:</strong> Servers remain in sections; 20% increase in table turnover during peak hours.</li>
+        </ul>
+    </div>
+
+    <!-- Financial Model -->
+    <div class="glass-card">
+        <h2>3. Financial Model (Pathway A - Delivery)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Automation Scenario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Labor Hours</td>
+                    <td>5,475 Hours</td>
+                    <td>1,095 Hours (Loading Only)</td>
+                </tr>
+                <tr>
+                    <td>Operational Cost</td>
+                    <td>~$136,000 / year</td>
+                    <td>~$54,000 / year (Lease)</td>
+                </tr>
+                <tr>
+                    <td>Net Benefit (Year 1)</td>
+                    <td>-</td>
+                    <td><strong>+$60,000 - $70,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Guest Experience</td>
+                    <td>25 min wait</td>
+                    <td>< 10 min wait</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Comparative View -->
+    <div class="glass-card">
+        <h2>4. Comparative View of Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Delivery</th>
+                    <th>Pathway B: Floor Care</th>
+                    <th>Pathway C: F&B Runners</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Guest Towers / Lobby</td>
+                    <td>Corridors / Ballrooms</td>
+                    <td>Pool Deck / Tanners</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>Labor & Novelty</td>
+                    <td>Consistency</td>
+                    <td>Turnover & Upsell</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>~$70k (Savings)</td>
+                    <td>~$45k (Savings)</td>
+                    <td>~$90k (Revenue Lift)</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback</strong></td>
+                    <td>Immediate</td>
+                    <td>10-14 Months</td>
+                    <td>3-6 Months</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Global Defaults for Charts to match Theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [65000, 140000, 225000, 320000, 420000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Deliveries/Hour', 'Table Turns (Peak)', 'Corridor Cleaning (SqFt/Hr)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [4, 3, 2500],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [12, 4.5, 6000],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
