@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinicare Corp | Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        /* Financial Dashboard Table */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .dashboard-table th {
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 0 20px;
+        }
+
+        .dashboard-table td {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 20px;
+            font-size: 14px;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .dashboard-table tr td:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-left: 1px solid rgba(124, 58, 237, 0.2);
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .dashboard-table tr td:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-right: 1px solid rgba(124, 58, 237, 0.2);
+            text-align: right;
+        }
+
+        .metric-large {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Chart Layout */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pathways Grid */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pathway-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .pathway-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="tagline">Research & Strategy Unit</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Client Profile: Clinicare Corporation</h2>
+        <p style="color: var(--text-muted); line-height: 1.6;">
+            Clinicare operates 150 outpatient clinics and a regional home health network. The primary robotics opportunity lies in hybrid automation: optimizing field logistics for home health while deploying physical supply-chain robotics within clinics. This strategy unlocks ~$18M in annual operational savings and addresses critical staffing bottlenecks.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+            <div>
+                <span class="metric-large">£14M</span>
+                <span class="metric-label">Net Annual Benefit</span>
+            </div>
+            <div>
+                <span class="metric-large">9 Mos</span>
+                <span class="metric-label">Payback Period</span>
+            </div>
+            <div>
+                <span class="metric-large">£60M+</span>
+                <span class="metric-label">5-Year Cumulative Value</span>
+            </div>
+        </div>
+
+        <table class="dashboard-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Current)</th>
+                    <th>Robotics Enabled</th>
+                    <th>Variance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Patient Visits</td>
+                    <td>1,500,000</td>
+                    <td>1,650,000</td>
+                    <td style="color: var(--accent-blue);">+10%</td>
+                </tr>
+                <tr>
+                    <td>Visits Per Clinician/Day</td>
+                    <td>5.5</td>
+                    <td>7.0</td>
+                    <td style="color: var(--accent-blue);">+27%</td>
+                </tr>
+                <tr>
+                    <td>Admin Hours/Week</td>
+                    <td>12,000</td>
+                    <td>8,400</td>
+                    <td style="color: #10b981;">-30%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-grid">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h2>Throughput: Manual vs. Robotic</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <div class="pathway-card">
+                <span class="badge">Pathway A</span>
+                <span class="pathway-title">Logistics AI & Scheduling</span>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                    RPA for intelligent slotting and route optimization. Highest immediate ROI.
+                </p>
+                <div style="margin-top: 15px; font-size: 12px; color: #fff;">
+                    <strong>Impact:</strong> £12M/Year
+                </div>
+            </div>
+            
+            <div class="pathway-card">
+                <span class="badge">Pathway B</span>
+                <span class="pathway-title">Clinic Service AMRs</span>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                    Autonomous Mobile Robots for supplies and sanitation. Reduces staff burnout.
+                </p>
+                <div style="margin-top: 15px; font-size: 12px; color: #fff;">
+                    <strong>Impact:</strong> £3M/Year
+                </div>
+            </div>
+
+            <div class="pathway-card">
+                <span class="badge">Pathway C</span>
+                <span class="pathway-title">Therapeutic Robotics</span>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                    Exoskeletons and gait trainers for neuro-rehab. Strategic market differentiator.
+                </p>
+                <div style="margin-top: 15px; font-size: 12px; color: #fff;">
+                    <strong>Impact:</strong> Strategic Growth
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <table width="100%" style="color: var(--text-muted); font-size: 14px; border-spacing: 0 10px; border-collapse: separate;">
+            <tr>
+                <td style="color: var(--accent-purple); font-weight: bold; padding: 10px;">Phase 1 (Year 1)</td>
+                <td>Launch Pathway A (Logistics AI) & Pilot Pathway C in 5 urban hubs.</td>
+            </tr>
+            <tr>
+                <td style="color: var(--accent-purple); font-weight: bold; padding: 10px;">Phase 2 (Year 2)</td>
+                <td>Deploy Service AMRs to top 20 clinics. Expand AI scheduling network-wide.</td>
+            </tr>
+            <tr>
+                <td style="color: var(--accent-purple); font-weight: bold; padding: 10px;">Phase 3 (Years 3-5)</td>
+                <td>Full Therapeutic Robotics integration & Autonomous Vehicle pilots.</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Global defaults for charts to match theme
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Line Chart: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [5, 14, 28, 45, 62],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#7c3aed',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Bar Chart: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Pat. Visits/Day', 'Admin Processing', 'Clinic Utilization'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [65, 40, 70],
+                    backgroundColor: 'rgba(148, 163, 184, 0.2)',
+                    borderColor: 'rgba(148, 163, 184, 0.5)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI Enabled',
+                    data: [90, 85, 92],
+                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                    borderColor: '#3b82f6',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    beginAtZero: true,
+                    max: 100
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
