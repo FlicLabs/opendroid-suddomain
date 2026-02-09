@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hargrove Robotics Research Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .report-title span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .full-width { grid-column: span 12; }
+        .half-width { grid-column: span 6; }
+        .third-width { grid-column: span 4; }
+
+        h2, h3 {
+            margin-top: 0;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Financial Dashboard Styles */
+        .metric-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .metric-box {
+            text-align: center;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            flex: 1;
+            margin: 0 10px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-box:first-child { margin-left: 0; }
+        .metric-box:last-child { margin-right: 0; }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .badge-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Hargrove <span>Robotics Analysis</span></h1>
+            <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Experiential Manufacturing & Logistics Portfolio</p>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        
+        <!-- Executive Summary -->
+        <div class="card full-width">
+            <h3>Executive Summary</h3>
+            <p>Hargrove, a key division of Encore, faces high labor costs and tight turnaround times in large-scale event production. The strongest automation levers are <strong>Automated Fabrication</strong> (CNC/Robotic Arms), <strong>Autonomous Event Layout</strong> (Printing Robots), and <strong>Robotic Warehousing</strong>. These initiatives project a potential annual net margin increase of over $2M with payback periods under 12 months.</p>
+        </div>
+
+        <!-- Financial Dashboard & Charts -->
+        <div class="card half-width">
+            <h3>Pathway A: Fabrication ROI Model</h3>
+            <div class="metric-container">
+                <div class="metric-box">
+                    <span class="metric-value">$2.0M</span>
+                    <span class="metric-label">Annual Savings</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">9 Mo</span>
+                    <span class="metric-label">Payback Period</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">+40%</span>
+                    <span class="metric-label">Throughput Lift</span>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card half-width">
+            <h3>Throughput Comparison</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">Comparison of manual fabrication vs. robotic-assisted fabrication output (units per week).</p>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pathways Table -->
+        <div class="card full-width">
+            <h3>Comparative Pathway Analysis</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Value Driver</th>
+                        <th>Annual Benefit</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pathway A: Fabrication</strong></td>
+                        <td>Lanham Mfg Facility</td>
+                        <td>Labor Reduction & Speed</td>
+                        <td><span class="badge badge-high">$2.0M - $2.5M</span></td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pathway B: Layout Bots</strong></td>
+                        <td>On-Site Convention</td>
+                        <td>Accuracy & Setup Time</td>
+                        <td><span class="badge badge-med">$0.6M - $0.8M</span></td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pathway C: Logistics</strong></td>
+                        <td>Warehousing</td>
+                        <td>Asset Mgmt & Safety</td>
+                        <td><span class="badge badge-med">$0.5M - $0.7M</span></td>
+                        <td>Low/Mod</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card third-width">
+            <h3>Phase 1: Pilot</h3>
+            <ul>
+                <li>Deploy 2 robotic sanding arms in wood shop.</li>
+                <li>Test layout robot on 1 major DC trade show.</li>
+                <li><strong>Goal:</strong> Validate 30% speed increase.</li>
+            </ul>
+        </div>
+        <div class="card third-width">
+            <h3>Phase 2: Scale</h3>
+            <ul>
+                <li>Roll out automated painting lines.</li>
+                <li>Integrate AMRs in shipping dept.</li>
+                <li><strong>Goal:</strong> Reduce OT labor by 50%.</li>
+            </ul>
+        </div>
+        <div class="card third-width">
+            <h3>Phase 3: Integration</h3>
+            <ul>
+                <li>Full CAD-to-Robot workflow.</li>
+                <li>Drone inventory audits.</li>
+                <li><strong>Goal:</strong> "Lights Out" manufacturing capability.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [-0.8, 1.5, 3.2, 4.9, 6.8], // Starts negative due to Capex
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Wall Panels', 'Custom Counters', 'Paint Jobs', 'Crate Packing'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [120, 45, 200, 300],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Process',
+                        data: [180, 85, 350, 420],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        labels: { color: '#cbd5e1' }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
