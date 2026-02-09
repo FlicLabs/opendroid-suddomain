@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAH Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-glow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        body {
+            background-color: var(--deep-space);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: var(--accent-glow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Financial Dashboard Table Styling */
+        .financial-dashboard {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            margin-top: 20px;
+        }
+
+        .financial-dashboard th {
+            text-align: left;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 0 20px;
+        }
+
+        .financial-dashboard td {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .financial-dashboard tr td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            color: var(--electric-purple);
+        }
+
+        .financial-dashboard tr td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+
+        .metric-big {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid var(--electric-purple);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">CONFIDENTIAL REPORT</div>
+    </header>
+
+    <div class="card">
+        <h1>Federation of American Hospitals</h1>
+        <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 800px;">
+            Strategic analysis for the investor-owned hospital sector. This portfolio identifies automation levers to combat rising labor costs and maximize shareholder value through operational efficiency and throughput acceleration.
+        </p>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2>Pathway A: Logistics Automation</h2>
+            <p>Deployment of Autonomous Mobile Robots (AMRs) for non-clinical tasks.</p>
+            <ul>
+                <li>Reduction of transport/support labor by 20-30%.</li>
+                <li>Return of 1-2 nursing hours per shift to patient care.</li>
+                <li>Predictive supply chain integration.</li>
+            </ul>
+            <div style="margin-top: 20px;">
+                <span class="metric-big">$350k</span>
+                <span class="metric-label">Annual Savings / Facility</span>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Pathway B: Surgical Standardization</h2>
+            <p>Network-wide robotic surgery platforms (Ortho/Soft Tissue).</p>
+            <ul>
+                <li>Volume-based purchasing leverage.</li>
+                <li>Increased OR throughput (1-2 extra cases/day).</li>
+                <li>Market differentiation for high-margin service lines.</li>
+            </ul>
+            <div style="margin-top: 20px;">
+                <span class="metric-big">$2.5M+</span>
+                <span class="metric-label">Incremental Revenue / Center</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Financial Impact Dashboard (Per Facility Model)</h2>
+        <table class="financial-dashboard">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Robotic Optimization</th>
+                    <th>Net Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Logistics Labor Cost</td>
+                    <td>$1.2M / yr</td>
+                    <td>$850k / yr</td>
+                    <td style="color: #4ade80;">▼ $350k Saving</td>
+                </tr>
+                <tr>
+                    <td>Surgical Throughput</td>
+                    <td>4 Cases / Day</td>
+                    <td>5.5 Cases / Day</td>
+                    <td style="color: #4ade80;">▲ 37% Vol Increase</td>
+                </tr>
+                <tr>
+                    <td>Initial Capital Outlay</td>
+                    <td>$0</td>
+                    <td>$450k (Fleet)</td>
+                    <td style="color: #f87171;">▼ Capex Impact</td>
+                </tr>
+                <tr>
+                    <td>5-Year Net Benefit</td>
+                    <td>--</td>
+                    <td>$1.5M Cumulative</td>
+                    <td style="color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);">▲ Strong ROI</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Analysis: Manual vs Robotic</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [-0.45, 0.1, 0.55, 1.0, 1.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Daily Cases', 'Nurse Hours (Care)', 'Supply Turns'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [4, 6.5, 12],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI Process',
+                    data: [6, 8.5, 18],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4,
+                    boxShadow: '0 0 20px #7c3aed'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
