@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Droids - Spectrum Health Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a; /* Deep Space Blue */
+        color: #e2e8f0;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Header & Logo */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #7c3aed; /* Electric Purple */
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+    }
+
+    .report-title {
+        font-size: 18px;
+        color: #94a3b8;
+        font-weight: 400;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    h1, h2, h3 {
+        color: #f8fafc;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-left: 4px solid #7c3aed;
+        padding-left: 15px;
+    }
+
+    h3 {
+        font-size: 18px;
+        color: #a78bfa; /* Light Purple */
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    p, li {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        display: block;
+        margin-bottom: 5px;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 13px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Dashboard & Charts */
+    .dashboard-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-section {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 300px !important;
+    }
+
+    /* Standard Table for HTML section */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #e2e8f0;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+        color: #a78bfa;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    tr:hover {
+        background-color: rgba(124, 58, 237, 0.1);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Spectrum Health Companies &bull; Robotics Portfolio</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Spectrum Health Companies is positioned to combat the senior living labor crisis through strategic robotics integration. By focusing on asset-light logistics optimization and facility-based support robots, the organization can shift human capital from low-value transport tasks to high-value resident interaction. The primary ROI drivers are <strong>Facility AMRs</strong> and <strong>AI-Driven Home Care Logistics</strong>.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-value">£90k</span>
+            <span class="metric-label">Gross Savings Per Site</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">1.5 FTE</span>
+            <span class="metric-label">Labor Reallocated</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">8 Mo</span>
+            <span class="metric-label">ROI Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">+40%</span>
+            <span class="metric-label">Home Care Efficiency</span>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="glass-card">
+        <h2>Comparative Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A: AMRs</td>
+                    <td>Senior Living Facilities</td>
+                    <td>Labor Substitution (Runners)</td>
+                    <td>Low (Mature Tech)</td>
+                </tr>
+                <tr>
+                    <td>Pathway B: Logistics AI</td>
+                    <td>Home Care Division</td>
+                    <td>Route & Schedule Op.</td>
+                    <td>Moderate (Integration)</td>
+                </tr>
+                <tr>
+                    <td>Pathway C: Social Bots</td>
+                    <td>Memory Care Units</td>
+                    <td>Quality of Life / Marketing</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="dashboard-section">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Net Savings (Projected)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Daily Tasks Throughput: Manual vs. Robotic</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Strategy -->
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap transitions Spectrum Health from a standard care provider to a <strong>Tech-Enabled Living Platform</strong>. This modernization creates a moat against staffing volatility and positions the company as a premium choice for families prioritizing safety and innovation.</p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£ Millions)',
+                data: [0.3, 0.9, 1.8, 3.2, 5.1],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#cbd5e1' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    const throughputChart = new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Meal Delivery', 'Laundry Transport', 'Waste Removal'],
+            datasets: [
+                {
+                    label: 'Manual Process (Tasks/Hr)',
+                    data: [12, 8, 15],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Assist (Tasks/Hr)',
+                    data: [28, 22, 35],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: { color: '#cbd5e1' }
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
