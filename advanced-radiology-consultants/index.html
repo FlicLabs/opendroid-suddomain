@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARC Robotics Research</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #fff;
+        letter-spacing: 2px;
+    }
+
+    .logo span {
+        color: #7c3aed;
+    }
+
+    .title-section h1 {
+        font-size: 36px;
+        margin: 0;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .title-section p {
+        color: #7c3aed;
+        font-weight: 600;
+        margin-top: 10px;
+        letter-spacing: 1px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: #7c3aed;
+    }
+
+    .card h2 {
+        color: #7c3aed;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .card h3 {
+        font-size: 22px;
+        margin: 10px 0;
+        color: #fff;
+    }
+
+    .card p, .card li {
+        color: #94a3b8;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .card ul {
+        padding-left: 20px;
+    }
+
+    /* Financial Dashboard */
+    .dashboard {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 60px;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 28px;
+        color: #fff;
+    }
+
+    /* HTML Table for Metrics */
+    .metrics-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 15px;
+        margin-bottom: 40px;
+    }
+
+    .metric-cell {
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        width: 25%;
+    }
+
+    .metric-label {
+        color: #94a3b8;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .metric-value {
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        display: block;
+    }
+
+    .metric-sub {
+        color: #4ade80;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .chart-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .chart-wrapper {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        position: relative;
+        height: 300px;
+    }
+
+    .roadmap {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .roadmap::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(124, 58, 237, 0.3);
+        z-index: 0;
+    }
+
+    .step {
+        background: #0f172a;
+        border: 1px solid #7c3aed;
+        z-index: 1;
+        padding: 15px 25px;
+        border-radius: 30px;
+        text-align: center;
+        width: 28%;
+        box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+    }
+    
+    .step h4 {
+        margin: 0;
+        color: #fff;
+    }
+    
+    .step p {
+        margin: 5px 0 0 0;
+        font-size: 12px;
+        color: #94a3b8;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="title-section">
+            <h1>Advanced Radiology Consultants</h1>
+            <p>ROBOTICS & AUTOMATION PORTFOLIO</p>
+        </div>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid">
+        <div class="card" style="grid-column: span 2;">
+            <h2>Executive Summary</h2>
+            <p>Advanced Radiology Consultants (ARC) is positioned to transform from a diagnostic service provider to an automated intelligence hub. By leveraging Robotic Process Automation (RPA) for administrative friction and AI-driven software robotics for image acquisition, ARC can decouple revenue growth from labor constraints. The projected outcome is a 20% increase in network throughput and a massive reduction in administrative overhead.</p>
+        </div>
+        <div class="card">
+            <h2>Current Profile</h2>
+            <ul>
+                <li><strong>Volume:</strong> ~350,000 Annual Exams</li>
+                <li><strong>Bottlenecks:</strong> Staffing shortages, Scheduling gaps, Authorization denials</li>
+                <li><strong>Opportunity:</strong> High-margin throughput expansion</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pathways -->
+    <div class="grid">
+        <div class="card">
+            <h2>Pathway A</h2>
+            <h3>Admin RPA</h3>
+            <p>Implementation of software robots to handle insurance verification, coding, and scheduling.</p>
+            <p style="color: #4ade80; font-weight: bold;">Impact: £2M/yr Savings</p>
+        </div>
+        <div class="card">
+            <h2>Pathway B</h2>
+            <h3>Acquisition AI</h3>
+            <p>AI interfacing with MRI/CT scanners to reconstruct images with fewer samples, reducing scan time.</p>
+            <p style="color: #4ade80; font-weight: bold;">Impact: +30% Capacity</p>
+        </div>
+        <div class="card">
+            <h2>Pathway C</h2>
+            <h3>Tele-Robotics</h3>
+            <p>Robotic ultrasound arms allowing remote expert manipulation and local patient support.</p>
+            <p style="color: #4ade80; font-weight: bold;">Impact: Labor Solution</p>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h2>Financial Impact Dashboard</h2>
+            <p style="color:#94a3b8;">Projected ROI based on Pathway A & B Integration</p>
+        </div>
+
+        <table class="metrics-table">
+            <tr>
+                <td class="metric-cell">
+                    <span class="metric-label">Annual Net Benefit</span>
+                    <span class="metric-value">£4.4M</span>
+                    <span class="metric-sub">Incremental Margin</span>
+                </td>
+                <td class="metric-cell">
+                    <span class="metric-label">Payback Period</span>
+                    <span class="metric-value">0.7 Yrs</span>
+                    <span class="metric-sub">Rapid ROI</span>
+                </td>
+                <td class="metric-cell">
+                    <span class="metric-label">Throughput Lift</span>
+                    <span class="metric-value">+15,000</span>
+                    <span class="metric-sub">Additional Exams</span>
+                </td>
+                <td class="metric-cell">
+                    <span class="metric-label">5-Year NPV</span>
+                    <span class="metric-value">£18M+</span>
+                    <span class="metric-sub">Cumulative Value</span>
+                </td>
+            </tr>
+        </table>
+
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="roadmap">
+        <div class="step">
+            <h4>Phase 1</h4>
+            <p>Admin RPA & Pilot AI</p>
+        </div>
+        <div class="step">
+            <h4>Phase 2</h4>
+            <p>Network-wide Acquisition AI</p>
+        </div>
+        <div class="step">
+            <h4>Phase 3</h4>
+            <p>Tele-Robotic Ultrasound</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [3.5, 7.8, 12.2, 16.9, 21.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } },
+                title: { display: true, text: 'Cumulative Financial Benefit', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['MRI Scans', 'CT Scans', 'Ultrasound'],
+            datasets: [
+                {
+                    label: 'Manual Baseline (Daily)',
+                    data: [20, 35, 18],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/AI Assisted (Daily)',
+                    data: [28, 45, 24],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } },
+                title: { display: true, text: 'Daily Scan Throughput Per Machine', color: '#fff' }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
