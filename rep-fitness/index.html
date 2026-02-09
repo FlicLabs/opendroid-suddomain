@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REP Fitness Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 20%);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            font-size: 1.8rem;
+        }
+
+        .report-title span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card h3 {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            grid-column: span 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .metric-sub {
+            font-size: 0.9rem;
+            color: #4ade80; /* Green for positive */
+            margin-top: 8px;
+        }
+
+        /* Chart Cards */
+        .chart-card {
+            grid-column: span 6;
+            height: 350px;
+            position: relative;
+        }
+
+        /* Table Card */
+        .table-card {
+            grid-column: span 12;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        /* Status Pills */
+        .status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-high { background: rgba(124, 58, 237, 0.2); color: #d8b4fe; }
+        .status-mid { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .metric-card { grid-column: span 6; }
+            .chart-card { grid-column: span 12; }
+        }
+        @media (max-width: 768px) {
+            .metric-card { grid-column: span 12; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>REP Fitness</h1>
+            <span>Robotics & Automation Feasibility Study</span>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard Top Row -->
+    <div class="grid-container">
+        <div class="card metric-card">
+            <h3>Projected ROI (Year 1)</h3>
+            <div>
+                <div class="metric-value">103%</div>
+                <div class="metric-sub">Payback in ~14 Months</div>
+            </div>
+        </div>
+        <div class="card metric-card">
+            <h3>Annual Net Savings</h3>
+            <div>
+                <div class="metric-value">$3.6M</div>
+                <div class="metric-sub">Post-Implementation</div>
+            </div>
+        </div>
+        <div class="card metric-card">
+            <h3>Picking Efficiency</h3>
+            <div>
+                <div class="metric-value">+250%</div>
+                <div class="metric-sub">Throughput Velocity</div>
+            </div>
+        </div>
+        <div class="card metric-card">
+            <h3>Freight Savings</h3>
+            <div>
+                <div class="metric-value">35%</div>
+                <div class="metric-sub">Via Auto-Dimensioning</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-container">
+        <div class="card chart-card">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="card chart-card">
+            <h3>Fulfillment Throughput (Units/Hour)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="grid-container">
+        <div class="card table-card">
+            <h3>Opportunity Pathways Matrix</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Technology Scope</th>
+                        <th>Primary Value Driver</th>
+                        <th>Annual Benefit</th>
+                        <th>Payback Period</th>
+                        <th>Implementation Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">Pathway A</td>
+                        <td>Heavy Duty AMRs (Warehouse)</td>
+                        <td>Labor Reduction & Safety</td>
+                        <td>$2.0M - $2.5M</td>
+                        <td>14 Months</td>
+                        <td><span class="status status-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Pathway B</td>
+                        <td>Automated Packaging Lines</td>
+                        <td>Freight & Dimensional Weight</td>
+                        <td>$1.5M</td>
+                        <td>9 Months</td>
+                        <td><span class="status status-high">Immediate</span></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Pathway C</td>
+                        <td>Inventory Drone Swarms</td>
+                        <td>Accuracy & Loss Prevention</td>
+                        <td>$0.5M</td>
+                        <td>18 Months</td>
+                        <td><span class="status status-mid">Phase 2</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+        
+        // 1. Cumulative Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        const gradient1 = ctx1.createLinearGradient(0, 0, 0, 400);
+        gradient1.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradient1.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($ Millions)',
+                    data: [3.6, 7.5, 11.2, 15.5, 20.1],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradient1,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Comparison Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Heavy Item Picking', 'Packaging Speed', 'Inventory Counts'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [40, 60, 20], // Abstract efficiency units
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    },
+                    {
+                        label: 'Robotic Automation',
+                        data: [140, 280, 500],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 6,
+                        barPercentage: 0.6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
