@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DCOL Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #94a3b8;
+    }
+
+    h2 {
+        margin: 5px 0 0 0;
+        font-size: 28px;
+        color: #f8fafc;
+    }
+
+    /* Glass Cards */
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        color: #7c3aed;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background-color: #7c3aed;
+        border-radius: 50%;
+        margin-right: 10px;
+        box-shadow: 0 0 10px #7c3aed;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    /* Dashboard Metrics */
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+    
+    .metric-label {
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    .positive-change {
+        color: #4ade80;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        font-size: 12px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    td {
+        padding: 15px 12px;
+        font-size: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-purple {
+        color: #a78bfa;
+        font-weight: 600;
+    }
+
+    /* Charts Container */
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    /* Specific Sections */
+    .pathway-tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: rgba(124, 58, 237, 0.2);
+        color: #c4b5fd;
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    ul {
+        padding-left: 20px;
+        color: #cbd5e1;
+    }
+    
+    li {
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 768px) {
+        .grid-2, .grid-3 {
+            grid-template-columns: 1fr;
+        }
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .report-title {
+            text-align: left;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Consultation Report</h1>
+            <h2>Diagnostic Clinic of Longview</h2>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <div class="card-header">Executive Summary</div>
+        <p>
+            Diagnostic Clinic of Longview (DCOL) faces the optimization challenge of managing patient flow and diagnostic turnaround times without the centralized resources of a massive health system. The strongest automation levers are <strong>Robotic Process Automation (RPA)</strong> for revenue cycle, <strong>Automated Laboratory Systems</strong>, and <strong>Autonomous Mobile Robots (AMRs)</strong> for internal logistics. These initiatives can unlock millions in retained earnings through operational efficiency and accelerated diagnostic throughput.
+        </p>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="card">
+        <div class="card-header">Financial Dashboard: Pathway A (RPA)</div>
+        <div class="grid-3">
+            <div>
+                <div class="metric-label">Annual Net Benefit</div>
+                <div class="metric-value">$3.65M</div>
+                <div class="positive-change">▲ 22% Margin Lift</div>
+            </div>
+            <div>
+                <div class="metric-label">Admin Cost Reduction</div>
+                <div class="metric-value">$2.5M</div>
+                <div class="positive-change">▼ 25% Reduction</div>
+            </div>
+            <div>
+                <div class="metric-label">ROI Payback Period</div>
+                <div class="metric-value">5.2 Mo</div>
+                <div class="positive-change">Rapid Liquidity</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">5-Year Cumulative Savings</div>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Daily Throughput (Visits/Day)</div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="card">
+        <div class="card-header">Robotics Opportunity Pathways</div>
+        <div class="grid-3">
+            <!-- Pathway A -->
+            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px;">
+                <span class="pathway-tag">Pathway A: High Value</span>
+                <h3 style="margin-top:0; color:#fff;">Admin RPA</h3>
+                <p style="font-size:13px; color:#cbd5e1;">Software robotics for scheduling, coding, and prior authorizations.</p>
+                <div style="margin-top:15px; font-size:12px; font-weight:bold; color:#a78bfa;">Est. Impact: $4M/Yr</div>
+            </div>
+
+            <!-- Pathway B -->
+            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px;">
+                <span class="pathway-tag">Pathway B: Diagnostic</span>
+                <h3 style="margin-top:0; color:#fff;">Lab Automation</h3>
+                <p style="font-size:13px; color:#cbd5e1;">Pre-analytical sorting and track-based sample processing.</p>
+                <div style="margin-top:15px; font-size:12px; font-weight:bold; color:#a78bfa;">Est. Impact: $1.2M/Yr</div>
+            </div>
+
+            <!-- Pathway C -->
+            <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px;">
+                <span class="pathway-tag">Pathway C: Logistics</span>
+                <h3 style="margin-top:0; color:#fff;">AMR Fleet</h3>
+                <p style="font-size:13px; color:#cbd5e1;">Autonomous transport of samples from exam rooms to central lab.</p>
+                <div style="margin-top:15px; font-size:12px; font-weight:bold; color:#a78bfa;">Est. Impact: $400k/Yr</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <div class="card-header">Comparative ROI Matrix</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit (Mid)</th>
+                    <th>Payback Period</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight-purple">Pathway A: RPA</td>
+                    <td>Cycle Velocity</td>
+                    <td>$3.5M - $4.0M</td>
+                    <td>< 6 Months</td>
+                    <td style="color: #4ade80;">Low</td>
+                </tr>
+                <tr>
+                    <td class="highlight-purple">Pathway B: Lab</td>
+                    <td>Throughput</td>
+                    <td>$0.8M - $1.2M</td>
+                    <td>12-18 Months</td>
+                    <td style="color: #fbbf24;">Moderate</td>
+                </tr>
+                <tr>
+                    <td class="highlight-purple">Pathway C: Logistics</td>
+                    <td>Staff Utilization</td>
+                    <td>$0.25M - $0.4M</td>
+                    <td>18-24 Months</td>
+                    <td style="color: #4ade80;">Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($ Millions)',
+                data: [3.6, 6.8, 9.5, 12.4, 15.8],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Admin Processing', 'Lab Sample Flow', 'Patient Throughput'],
+            datasets: [
+                {
+                    label: 'Manual (Current)',
+                    data: [100, 100, 100], // Normalized baseline
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                },
+                {
+                    label: 'Robotic/Automated',
+                    data: [135, 140, 120], // Percentage lift
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { 
+                    labels: { color: '#cbd5e1' },
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { display: false },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
