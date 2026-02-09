@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Aquarium Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        --accent: #7c3aed;
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h1, h2, h3 {
+        font-weight: 600;
+    }
+
+    h1 { font-size: 2.5rem; margin: 0; }
+    h2 { color: var(--accent); margin-top: 0; }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: var(--glass-border);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+    }
+
+    .metric-big {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Financial Dashboard Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: var(--text-main);
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid var(--accent);
+        color: var(--accent);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 16px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 0.95rem;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .roi-positive {
+        color: #4ade80;
+        font-weight: bold;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .badge-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border: 1px solid #7c3aed; }
+    .badge-med { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid #38bdf8; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>National Aquarium</h1>
+            <p style="color: var(--text-muted);">Robotics Opportunity Analysis & ROI Portfolio</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </header>
+
+    <!-- Executive Summary Cards -->
+    <div class="grid">
+        <div class="card">
+            <span class="badge badge-high">HIGHEST IMPACT</span>
+            <h2>Tank Cleaning Automation</h2>
+            <p style="color: var(--text-muted);">Deploying crawler robots for acrylic and concrete scrubbing to reduce diver fatigue and liability.</p>
+            <div class="metric-big">40%</div>
+            <div class="metric-label">Reduction in Manual Dive Hours</div>
+        </div>
+        <div class="card">
+            <span class="badge badge-med">STRATEGIC</span>
+            <h2>Sensing AUVs</h2>
+            <p style="color: var(--text-muted);">Autonomous Underwater Vehicles for 3D volumetric water quality mapping and dead-zone detection.</p>
+            <div class="metric-big">24/7</div>
+            <div class="metric-label">Environmental Monitoring</div>
+        </div>
+        <div class="card">
+            <span class="badge badge-med">REVENUE</span>
+            <h2>Telepresence</h2>
+            <p style="color: var(--text-muted);">Remote robotic avatars for hospital and school virtual field trips, generating new margin.</p>
+            <div class="metric-big">$100k+</div>
+            <div class="metric-label">Potential New Revenue</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid" style="grid-template-columns: 2fr 1fr;">
+        <div class="card">
+            <h2>Financial Dashboard: Pathway A</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Baseline</th>
+                        <th>Robotic Scenario</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Annual Cleaning Cost</td>
+                        <td>$400,000</td>
+                        <td>$225,000</td>
+                        <td class="roi-positive">+$175,000 Saved</td>
+                    </tr>
+                    <tr>
+                        <td>Capital Expenditure</td>
+                        <td>$0 (Sunk)</td>
+                        <td>$80,000</td>
+                        <td>One-time</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td>N/A</td>
+                        <td>~6 Months</td>
+                        <td class="roi-positive">Rapid ROI</td>
+                    </tr>
+                    <tr>
+                        <td>5-Year Net Benefit</td>
+                        <td>Baseline</td>
+                        <td>$800,000+</td>
+                        <td class="roi-positive">High Value</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Throughput Chart -->
+        <div class="card">
+            <h2>Cleaning Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Savings Chart -->
+    <div class="card">
+        <h2>5-Year Cumulative Savings Projection (Pathway A)</h2>
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </div>
+
+    <footer style="margin-top: 60px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: var(--text-muted); font-size: 0.9rem;">
+        <p>Generated by OPEN DROIDS Research Division. Confidential Analysis.</p>
+    </footer>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 0 (CapEx)', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Cash Flow (USD)',
+                data: [-80000, 95000, 270000, 445000, 620000, 795000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e2e8f0' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Diver Team', 'Robotic Crawler'],
+            datasets: [{
+                label: 'Sq. Ft. Cleaned per Hour',
+                data: [400, 1200],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    '#7c3aed'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.5)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
