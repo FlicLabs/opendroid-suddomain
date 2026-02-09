@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature's Way Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 60%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Header & Logo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #7c3aed;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid #7c3aed;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #a78bfa;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        /* Metric Highlights */
+        .metric-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        /* Dashboard Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            color: #e2e8f0;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.5);
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="text-align: right; color: #94a3b8; font-size: 0.9rem;">
+            Client: Nature's Way<br>
+            Project: Robotics ROI Analysis
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Nature's Way is positioned to transition from traditional GMP manufacturing to an AI-driven Industry 4.0 model. By targeting bottlenecks in gummy/softgel packaging and warehousing, the company can unlock significant throughput gains. The dominant ROI driver is <strong>Pathway A (Production Automation)</strong>, projected to deliver a 25-30% uplift in line velocity and over £8M in annual incremental benefits per facility.</p>
+    </div>
+
+    <!-- Pathways Grid -->
+    <div class="grid-3">
+        <div class="glass-card">
+            <h3>01. Production AI</h3>
+            <p><strong>Scope:</strong> High-speed pick & place + Computer Vision.</p>
+            <p><strong>Impact:</strong> Eliminates manual sorting bottlenecks; increases speed from 150 to 220 units/min.</p>
+            <div class="metric-big">£12M</div>
+            <div class="metric-label">Potential Revenue Lift</div>
+        </div>
+        <div class="glass-card">
+            <h3>02. Logistics AMRs</h3>
+            <p><strong>Scope:</strong> Autonomous Mobile Robots for pallet handling.</p>
+            <p><strong>Impact:</strong> 30% reduction in labor costs; 24/7 material staging capability.</p>
+            <div class="metric-big">-30%</div>
+            <div class="metric-label">Labor Cost Reduction</div>
+        </div>
+        <div class="glass-card">
+            <h3>03. Lab Automation</h3>
+            <p><strong>Scope:</strong> HPTLC & Liquid Handling Robotics.</p>
+            <p><strong>Impact:</strong> Reduces testing lead time from 3 days to 4 hours, accelerating inventory turn.</p>
+            <div class="metric-big">4 hrs</div>
+            <div class="metric-label">Reduced Lead Time</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard & Projections</h2>
+        <div class="grid-2">
+            
+            <!-- Table Section -->
+            <div>
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">Comparative Pathways</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Pathway A</th>
+                            <th>Pathway B</th>
+                            <th>Pathway C</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Annual Benefit</td>
+                            <td style="color: #4ade80;">£8-12M</td>
+                            <td>£2-4M</td>
+                            <td>£1-2M</td>
+                        </tr>
+                        <tr>
+                            <td>Payback Period</td>
+                            <td>1.5 Years</td>
+                            <td>2.5 Years</td>
+                            <td>3.0 Years</td>
+                        </tr>
+                        <tr>
+                            <td>Primary Driver</td>
+                            <td>Throughput</td>
+                            <td>Safety/Labor</td>
+                            <td>Compliance</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Profile</td>
+                            <td>Low</td>
+                            <td>Low</td>
+                            <td>Moderate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Throughput Chart -->
+            <div>
+                 <h3 style="text-align: center;">Throughput Analysis (Units/Year)</h3>
+                 <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Cumulative Savings Chart -->
+        <div style="margin-top: 40px;">
+            <h3 style="text-align: center;">5-Year Cumulative Net Benefit (Projected)</h3>
+            <div class="chart-container" style="height: 300px;">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="grid-3">
+            <div>
+                <h3 style="color: #fff;">Year 1</h3>
+                <p style="color: #7c3aed; font-weight: bold;">Pilot & Retrofit</p>
+                <p>Retrofit two primary gummy lines with vision systems. Integrate MES data.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Year 2</h3>
+                <p style="color: #7c3aed; font-weight: bold;">Logistics Scale</p>
+                <p>Deploy 15 AMRs for raw material handling. Expand packaging automation.</p>
+            </div>
+            <div>
+                <h3 style="color: #fff;">Year 3</h3>
+                <p style="color: #7c3aed; font-weight: bold;">Optimization</p>
+                <p>Full Lab automation. AI-driven predictive maintenance dashboard.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Throughput Analysis
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Baseline', 'Robotic Implementation'],
+            datasets: [{
+                label: 'Units Per Year (Millions)',
+                data: [50, 65],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(124, 58, 237, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 1)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#fff' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Cumulative Savings
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [3.5, 9.0, 16.5, 25.0, 35.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#fff' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
