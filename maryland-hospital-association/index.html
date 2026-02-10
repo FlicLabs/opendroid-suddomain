@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MHA Robotics Research Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --accent-purple: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.4);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #fff;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #fff, var(--accent-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: var(--accent-purple);
+        font-size: 1.5rem;
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        color: #fff;
+        border-left: 3px solid var(--accent-purple);
+        padding-left: 10px;
+        margin-top: 25px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        display: block;
+        text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .metric-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.95rem;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    th {
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    tr:hover td {
+        background: rgba(124, 58, 237, 0.05);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .chart-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .chart-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+    
+    .badge-purple { background: rgba(124, 58, 237, 0.2); color: #d8b4fe; border: 1px solid var(--accent-purple); }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right; color: var(--text-muted); font-size: 0.9rem;">
+            Client: Maryland Hospital Association<br>
+            Date: Oct 2023
+        </div>
+    </header>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <span class="metric-value">$180M</span>
+            <span class="metric-label">5-Year Est. Savings</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">60+</span>
+            <span class="metric-label">Member Hospitals</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">~14 Mo</span>
+            <span class="metric-label">Avg. Payback Period</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-value">20%</span>
+            <span class="metric-label">Labor Cost Reduction</span>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary: MHA & Global Budget Revenue</h2>
+        <p>
+            The Maryland Hospital Association (MHA) operates within the unique US "Total Cost of Care" model. Revenue is capped. Therefore, value is derived strictly from operational efficiency and cost avoidance rather than volume growth.
+        </p>
+        <p>
+            Our analysis indicates that <strong>Pathway A (Intra-Logistics AMRs)</strong> offers the most immediate relief for the critical nursing shortage, potentially liberating thousands of clinical hours annually across the network.
+        </p>
+    </div>
+
+    <!-- Graphical Analysis -->
+    <div class="chart-row">
+        <div class="card">
+            <h2>Financial Projection (Cumulative)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Efficiency</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Pathways -->
+    <div class="card">
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Intra-Logistics Automation (AMRs)</h3>
+        <p>Deployment of fleet-based autonomous robots for linen, meds, and lab transport. Directly addresses the Global Budget mandate by reducing travel nurse dependency.</p>
+
+        <h3>Pathway B: Statewide Tele-Robotics</h3>
+        <p>Virtual specialist rounding (Stroke/ICU) in rural member hospitals to prevent unnecessary transfers and retain care locally.</p>
+
+        <h3>Pathway C: Centralized Shared Services</h3>
+        <p>Off-site robotic pharmacy compounding hubs shared by multiple small community hospitals to reduce waste and overhead.</p>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h2>Comparative ROI Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Logistics</th>
+                    <th>Pathway B: Tele-Presence</th>
+                    <th>Pathway C: Shared Services</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>All Inpatient Facilities</td>
+                    <td>Rural / Community</td>
+                    <td>Regional Hubs</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>Labor Retention (Nursing)</td>
+                    <td>Transfer Avoidance</td>
+                    <td>Supply Chain Efficiency</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>$40M - $60M</td>
+                    <td>$10M - $15M</td>
+                    <td>$8M - $12M</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback</strong></td>
+                    <td><span class="badge badge-purple">High Speed</span> ~1 Year</td>
+                    <td>~2 Years</td>
+                    <td>~3 Years</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk</strong></td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Moderate</td>
+                    <td>High (Logistics)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($ Millions)',
+                data: [15, 45, 85, 130, 180],
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderColor: '#7c3aed',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Task Completion', 'Staff Availability', 'Patient Turnover'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [60, 45, 50],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [95, 85, 75],
+                    backgroundColor: '#7c3aed',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
