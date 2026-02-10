@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoist Fitness Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .glass-header {
+            background: rgba(124, 58, 237, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .logo span {
+            color: #7c3aed;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { font-size: 1.5rem; color: #7c3aed; margin-top: 0; }
+        h3 { font-size: 1.2rem; margin-bottom: 15px; border-left: 4px solid #7c3aed; padding-left: 10px; }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, rgba(0,0,0,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            color: #7c3aed;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(124, 58, 237, 0.05);
+        }
+
+        .highlight-text {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-header">
+        <div class="container">
+            <div class="logo">OPEN <span>DROIDS</span></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="glass-card" style="text-align: center; border: 1px solid rgba(124, 58, 237, 0.3);">
+            <h1>Hoist Fitness Systems</h1>
+            <p style="font-size: 1.1rem; color: #a5b4fc;">Robotics Analysis & ROI Portfolio</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-value">35%</div>
+                <div class="metric-label">Throughput Increase</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">$615k</div>
+                <div class="metric-label">Annual Net Savings (Yr 2)</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">1.2 Yrs</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-value">60%</div>
+                <div class="metric-label">Defect Reduction</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="glass-card">
+                <h3>5-Year Cumulative Net Savings</h3>
+                <div class="chart-wrapper">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Analysis (Units/Shift)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Hoist Fitness Systems is a prominent manufacturer of premium strength training equipment. The heavy manufacturing nature of strength equipment involving steel cutting, welding, powder coating, and assembly presents significant opportunities for robotic automation. The most substantial Return on Investment lies in automated robotic welding cells, Autonomous Mobile Robots (AMRs) for heavy material handling, and AI-driven quality control.</p>
+        </div>
+
+        <div class="glass-card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <h3>Pathway A: Automated Welding Cells</h3>
+            <p>Deployment of collaborative welding robots and 6-axis industrial arms. This increases arc-on time from 25% (manual) to 85% (robotic) and significantly reduces defects.</p>
+
+            <h3>Pathway B: Autonomous Mobile Robots (AMR)</h3>
+            <p>Implementation of heavy-duty AMRs to transport raw steel bundles and finished frames. This reduces forklift dependency and improves facility safety.</p>
+
+            <h3>Pathway C: AI Finishing & QC</h3>
+            <p>Automated powder coating and computer vision inspection to ensure uniform coating thickness and detect weld defects before shipping.</p>
+        </div>
+
+        <!-- Financial Table -->
+        <div class="glass-card">
+            <h2>Pathway A: Financial ROI Model</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Manual Process (Baseline)</th>
+                        <th>Robotic Automation</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Labor Cost (Annual)</td>
+                        <td>$750,000 (10 FTEs)</td>
+                        <td>$120,000 (2 Tenders)</td>
+                        <td><span class="highlight-text">-$630,000 Cost</span></td>
+                    </tr>
+                    <tr>
+                        <td>Operational Expenses</td>
+                        <td>$0 (Included in Labor)</td>
+                        <td>$15,000 (Maint/Power)</td>
+                        <td>+$15,000 Cost</td>
+                    </tr>
+                    <tr>
+                        <td>Throughput (Units/Shift)</td>
+                        <td>~40 Units</td>
+                        <td>~56 Units</td>
+                        <td><span class="highlight-text">+40% Output</span></td>
+                    </tr>
+                    <tr>
+                        <td>Defect Rate</td>
+                        <td>5%</td>
+                        <td>< 1%</td>
+                        <td>Quality Gain</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Net Annual Benefit (Yr 2)</strong></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><strong>~$615,000</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="glass-card">
+            <h2>Strategic Implementation</h2>
+            <p><strong>Year 1:</strong> Pilot one dual-station welding cell for high-volume SKUs. Validate fixture designs.<br>
+            <strong>Year 2:</strong> Expand to 4 welding cells and deploy AMRs for logistics.<br>
+            <strong>Year 3:</strong> Full integration of AI Quality Control and IIoT dashboard.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 5-Year Savings Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        const gradient1 = ctx1.createLinearGradient(0, 0, 0, 400);
+        gradient1.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        gradient1.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($)',
+                    data: [-135000, 480000, 1150000, 1850000, 2600000], // Example trajectory: Yr1 loss due to capex, then rapid gain
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradient1,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#7c3aed',
+                        bodyColor: '#fff',
+                        borderColor: 'rgba(255,255,255,0.1)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value / 1000 + 'k';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Throughput Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Welding', 'Assembly', 'Painting', 'Packaging'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [25, 30, 40, 45],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Augmented',
+                        data: [85, 45, 60, 55],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        title: { display: true, text: 'Units Per Hour Efficiency' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
