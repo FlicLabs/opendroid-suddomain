@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northgate Country Club - Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4 {
+        margin-top: 0;
+        font-weight: 700;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: #7c3aed;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #7c3aed;
+        margin-bottom: 5px;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Financial Dashboard Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #7c3aed;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #a78bfa;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-size: 15px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-positive {
+        color: #4ade80;
+        font-weight: 600;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .accent-text {
+        color: #a78bfa;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: #94a3b8;">CLIENT ENTITY</div>
+            <div style="font-weight: 600;">NORTHGATE COUNTRY CLUB</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Strategy Summary</h2>
+        <p style="line-height: 1.6; color: #cbd5e1;">
+            Northgate Country Club is positioned to transition from a labor-heavy maintenance model to a technology-augmented supervision model. By leveraging autonomous turf management and hospitality robotics, Northgate can realize a <span class="accent-text">20-30% reduction in operating expenses</span> while solving critical labor shortage issues and ensuring consistent championship-level course conditions.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h3 style="margin-bottom: 20px; border-left: 4px solid #7c3aed; padding-left: 15px;">FINANCIAL DASHBOARD: PATHWAY A (TURF)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Current Manual Operations</th>
+                    <th>Robotic Operations</th>
+                    <th>Net Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Labor (FTEs)</td>
+                    <td>$400,000 (8 FTEs)</td>
+                    <td>$120,000 (2 FTEs)</td>
+                    <td class="highlight-positive">+$280,000 Savings</td>
+                </tr>
+                <tr>
+                    <td>Fuel & Energy</td>
+                    <td>$50,000 (Diesel)</td>
+                    <td>$7,000 (Electric)</td>
+                    <td class="highlight-positive">+$43,000 Savings</td>
+                </tr>
+                <tr>
+                    <td>Fleet Cost (Annualized)</td>
+                    <td>$20,000 (Maintenance)</td>
+                    <td>$90,000 (Lease/SaaS)</td>
+                    <td style="color: #f87171;">-$70,000 Cost</td>
+                </tr>
+                <tr>
+                    <td><strong>TOTAL ANNUAL OPEX</strong></td>
+                    <td><strong>$470,000</strong></td>
+                    <td><strong>$217,000</strong></td>
+                    <td class="highlight-positive"><strong>$253,000 Net Benefit</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Daily Acreage Coverage Efficiency</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Cards -->
+    <div class="grid-3">
+        <div class="glass-card" style="border-top: 4px solid #7c3aed;">
+            <div class="metric-value">18mo</div>
+            <div class="metric-label">Payback Period</div>
+            <h4 style="margin-top: 15px;">Turf Automation</h4>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">Deployment of GPS-RTK mowers for fairways and automated range pickers. Highest ROI potential.</p>
+        </div>
+        <div class="glass-card" style="border-top: 4px solid #a78bfa;">
+            <div class="metric-value">+40%</div>
+            <div class="metric-label">Service Speed</div>
+            <h4 style="margin-top: 15px;">Hospitality Bots</h4>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">Food runners in the dining room allow staff to focus on member interaction.</p>
+        </div>
+        <div class="glass-card" style="border-top: 4px solid #c4b5fd;">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">Consistency</div>
+            <h4 style="margin-top: 15px;">Facilities</h4>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">Automated scrubbing and pool cleaning ensures pristine conditions daily.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [180000, 390000, 610000, 840000, 1100000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Throughput (Acres/Hour efficiency)
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Roughs', 'Fairways', 'Range', 'Detail Trim'],
+            datasets: [
+                {
+                    label: 'Manual Crew Efficiency',
+                    data: [65, 70, 50, 40],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderColor: '#94a3b8',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Efficiency',
+                    data: [95, 98, 90, 45],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
