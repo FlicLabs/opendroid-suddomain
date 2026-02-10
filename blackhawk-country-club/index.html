@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackhawk Country Club - Robotics Consultation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 40px;
+            display: inline-block;
+            border: 1px solid var(--accent-purple);
+            padding: 8px 16px;
+            border-radius: 4px;
+            background: rgba(124, 58, 237, 0.1);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .col-span-12 { grid-column: span 12; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-6 { grid-column: span 6; }
+        .col-span-4 { grid-column: span 4; }
+        
+        @media (max-width: 1024px) {
+            .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--glass-border);
+            color: #e2e8f0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .status-med { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .status-low { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-logo">OPEN DROIDS</div>
+
+    <div class="grid-container">
+        
+        <!-- Header Section -->
+        <div class="card col-span-12">
+            <h3 style="color: var(--accent-purple); margin-top: 0;">CLIENT PORTFOLIO</h3>
+            <h1>Blackhawk Country Club</h1>
+            <p style="color: var(--text-muted); max-width: 800px; line-height: 1.6;">
+                Strategic analysis for automated turf management and hospitality robotics. 
+                Focus on neutralizing California labor cost inflation while maintaining Tier-1 agronomic standards.
+            </p>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="card col-span-4">
+            <div class="metric-label">Projected Annual Savings (Net)</div>
+            <div class="metric-value">£360,000</div>
+            <div style="color: #34d399; font-size: 0.9rem;">▲ Pathway A Implementation</div>
+        </div>
+
+        <div class="card col-span-4">
+            <div class="metric-label">Labor Reduction</div>
+            <div class="metric-value">50%</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">In Mowing Operations</div>
+        </div>
+
+        <div class="card col-span-4">
+            <div class="metric-label">Fuel Cost Reduction</div>
+            <div class="metric-value">90%</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Diesel to Electric Conversion</div>
+        </div>
+
+        <!-- Main Chart: 5-Year Savings -->
+        <div class="card col-span-8">
+            <h3>5-Year Cumulative Net Savings (USD Millions)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Secondary Chart: Throughput -->
+        <div class="card col-span-4">
+            <h3>Mowing Efficiency Comparison</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard Table -->
+        <div class="card col-span-12">
+            <h3>Pathway Opportunity Matrix</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Core Value Driver</th>
+                        <th>Annual Benefit</th>
+                        <th>Payback Period</th>
+                        <th>Impact Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600;">A. Autonomous Turf</td>
+                        <td>Labor & Fuel Reduction</td>
+                        <td>£360k+</td>
+                        <td>12-18 Months</td>
+                        <td><span class="status-badge status-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">B. F&B Robotics</td>
+                        <td>Service Speed & Turnover</td>
+                        <td>£80k</td>
+                        <td>6-9 Months</td>
+                        <td><span class="status-badge status-med">MEDIUM</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">C. Facility Ops</td>
+                        <td>Cleaning Consistency</td>
+                        <td>£40k</td>
+                        <td>12 Months</td>
+                        <td><span class="status-badge status-low">COMPLEMENTARY</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [0.15, 0.51, 0.92, 1.35, 1.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Crew', 'Autonomous Fleet'],
+                datasets: [{
+                    label: 'Acres Per Week Capacity',
+                    data: [180, 260],
+                    backgroundColor: ['rgba(148, 163, 184, 0.5)', '#7c3aed'],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
