@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epoch Hospitality Robotics Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root {
+        --bg-color: #0f172a;
+        --accent-purple: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.3);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                          radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 40%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: var(--accent-purple);
+        text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        color: var(--accent-purple);
+        margin-top: 40px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    p {
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-muted);
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        color: var(--accent-purple);
+        border-bottom: 1px solid var(--glass-border);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .tag-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; }
+    .tag-med { background: rgba(56, 189, 248, 0.2); color: #bae6fd; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Epoch Hospitality LLC</h1>
+            <p style="margin:0; font-size: 0.9rem; color: var(--accent-purple);">Robotics Opportunities Portfolio & ROI Analysis</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Epoch Hospitality LLC is positioned to transition from a labor-dependent operational model to a technology-augmented workflow. By integrating autonomous mobile robots (AMRs) for dining and material transport, alongside automated cleaning solutions, Epoch can address critical labor shortages and rising costs.</p>
+        <p>The dominant ROI drivers are <strong>(1) Dining Hall Efficiency</strong>, <strong>(2) Facility Maintenance Automation</strong>, and <strong>(3) Back-of-House Logistics</strong>. Projected models indicate net positive cash flow by Month 14.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Net Annual Benefit (Per Site)</div>
+            <div class="metric-value">£68,985</div>
+            <div class="metric-label">Post-Automation</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Server Floor Time</div>
+            <div class="metric-value">+35%</div>
+            <div class="metric-label">Efficiency Uplift</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">6-9 Mo</div>
+            <div class="metric-label">Dining Automation</div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h2>Comparative Pathway Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A: Dining AI</strong></td>
+                    <td>Dining Rooms</td>
+                    <td>Labor Augmentation</td>
+                    <td>£60k - £70k</td>
+                    <td><span class="tag tag-high">Low Risk</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B: Cleaning Fleet</strong></td>
+                    <td>Lobbies & Halls</td>
+                    <td>Hygiene Consistency</td>
+                    <td>£20k - £30k</td>
+                    <td><span class="tag tag-med">Low-Mod</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C: Logistics</strong></td>
+                    <td>BOH Corridors</td>
+                    <td>Injury Reduction</td>
+                    <td>£15k - £25k</td>
+                    <td><span class="tag tag-med">Moderate</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Interactive Charts -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h2>Manual vs. Robotic Throughput</h2>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Strategic Positioning -->
+    <div class="glass-card" style="margin-top: 30px;">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap positions Epoch Hospitality as a <strong>Tech-Enabled Premium Provider</strong>. This strategy insulates the organization against labor volatility while creating a high-visibility marketing differentiator for prospective residents and their families.</p>
+    </div>
+</div>
+
+<script>
+    // Global Chart Config
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Chart
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    const savingsChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (GBP)',
+                data: [68000, 250000, 580000, 1050000, 1724625],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#0f172a',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    padding: 12,
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '£' + value/1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    const throughputChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Tables Served/Hr', 'Steps Taken (Staff)', 'Response Time (Min)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [12, 15000, 15],
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: 6,
+                    borderWidth: 1,
+                    borderColor: 'rgba(255, 255, 255, 0.2)'
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [22, 6500, 6],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom', labels: { padding: 20 } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
