@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biome Analytics Research Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* BASE STYLES */
+        body {
+            background-color: #0f172a; /* Deep Space Blue */
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        /* GLASSMORPHISM CARD UTILITY */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* HEADER & LOGO */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            text-align: right;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* FINANCIAL DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(124, 58, 237, 0.1) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #7c3aed; /* Electric Purple */
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.4);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #cbd5e1;
+        }
+
+        /* CHARTS CONTAINER */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-box {
+            position: relative;
+            height: 300px;
+        }
+
+        /* TABLE STYLING */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e2e8f0;
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 2px solid rgba(124, 58, 237, 0.5);
+            color: #7c3aed;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; }
+        .status-med { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+
+        /* TEXT CONTENT STYLES */
+        .content-section p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #7c3aed;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            CONSULTATION REPORT: BIOME ANALYTICS<br>
+            <span style="color: #7c3aed;">Robotics & Automation Portfolio</span>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard Metrics -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Projected Net Benefit</div>
+            <div class="metric-value">$4.0M</div>
+            <div class="metric-label">Annual Recurring Impact</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Onboarding Velocity</div>
+            <div class="metric-value">300%</div>
+            <div class="metric-label">Increase via RPA</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">&lt; 6 Mo</div>
+            <div class="metric-label">Pathway A Implementation</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Analyst Efficiency</div>
+            <div class="metric-value">70%</div>
+            <div class="metric-label">Labor Reduction</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <!-- Chart 1: Cumulative Savings -->
+        <div class="glass-card chart-box">
+            <h3>5-Year Cumulative Net Value</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <!-- Chart 2: Throughput Comparison -->
+        <div class="glass-card chart-box">
+            <h3>Data Onboarding Throughput (Clients/Year)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="glass-card content-section">
+        <h2>Executive Summary</h2>
+        <p>
+            Biome Analytics is uniquely positioned to leverage <span class="highlight">"Software Robotics"</span> and RPA to solve its most critical bottleneck: data ingestion. By automating the ETL process, Biome can accelerate revenue recognition by 60 days per contract. Furthermore, the development of a <span class="highlight">Surgical Robotics Optimization Module</span> creates a powerful new product line that audits physical robotics programs (Da Vinci, Mako) for hospital clients, validating ROI and driving subscription upsells.
+        </p>
+    </div>
+
+    <!-- Comparative Pathways Table -->
+    <div class="glass-card">
+        <h2>Strategic Pathways Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Benefit (Mid)</th>
+                    <th>Payback</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A: RPA Logistics</td>
+                    <td>Data Onboarding & ETL</td>
+                    <td>$2.0M - $4.0M</td>
+                    <td>Immediate</td>
+                    <td><span class="status-pill status-high">Critical</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway B: Surgical Module</td>
+                    <td>New Product (Upsell)</td>
+                    <td>$1.5M - $3.0M</td>
+                    <td>12 Months</td>
+                    <td><span class="status-pill status-med">Strategic</span></td>
+                </tr>
+                <tr>
+                    <td>Pathway C: Gen AI Insights</td>
+                    <td>Customer Retention</td>
+                    <td>Intangible</td>
+                    <td>18 Months</td>
+                    <td><span class="status-pill status-med">Support</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings Line Chart
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Value ($M)',
+                    data: [1.2, 3.5, 6.8, 10.5, 15.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#7c3aed'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Bar Chart
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Analysts', 'RPA Assisted'],
+                datasets: [{
+                    label: 'Clients Onboarded Per Year',
+                    data: [12, 48],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)', 
+                        '#7c3aed'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
