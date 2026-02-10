@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDMG Robotics Portfolio Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+        color: #fff;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #7c3aed;
+        margin-bottom: 40px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 2px solid #7c3aed;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        text-align: center;
+        padding: 30px 20px;
+        background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+        border: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #94a3b8;
+    }
+
+    .chart-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #7c3aed;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .highlight {
+        color: #7c3aed;
+        font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+        .chart-section {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="logo">OPEN DROIDS</div>
+
+    <div class="glass-card">
+        <h1 style="margin-top: 0; font-size: 2rem;">Hotel Development & Management Group LLC</h1>
+        <h3 style="color: #94a3b8; font-weight: 400;">Robotics Analysis & ROI Model</h3>
+        <p>HDMG is positioned to leverage automation to stabilize operating expenses in a volatile labor market. The primary ROI drivers are autonomous floor care, guest delivery logistics, and AI-driven energy management.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <span class="metric-value">$450k+</span>
+            <span class="metric-label">5-Year Net Benefit (Est)</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">9-12</span>
+            <span class="metric-label">Months Payback Period</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">18%</span>
+            <span class="metric-label">Reduction in Housekeeping Costs</span>
+        </div>
+        <div class="glass-card metric-card">
+            <span class="metric-value">10k</span>
+            <span class="metric-label">Labor Hours Saved Annually</span>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-section">
+        <div class="glass-card">
+            <h3 style="color: #7c3aed; margin-top: 0;">5-Year Cumulative Savings (USD)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: #7c3aed; margin-top: 0;">Housekeeping Efficiency (Rooms/Day)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="glass-card">
+        <h2 style="color: #7c3aed;">Strategic Pathways Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Primary Value Driver</th>
+                    <th>Annual Benefit (Per Prop)</th>
+                    <th>Payback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">A: Housekeeping Robotics</td>
+                    <td>High-traffic hallways & lobbies</td>
+                    <td>Labor Hours & Injury Reduction</td>
+                    <td>$45k - $60k</td>
+                    <td>9 Months</td>
+                </tr>
+                <tr>
+                    <td class="highlight">B: Guest Delivery</td>
+                    <td>Front Desk & Room Service</td>
+                    <td>Guest Experience & Staff Focus</td>
+                    <td>$15k (Soft Costs)</td>
+                    <td>18-24 Months</td>
+                </tr>
+                <tr>
+                    <td class="highlight">C: Energy AI</td>
+                    <td>Portfolio-wide HVAC/BMS</td>
+                    <td>Utility Cost Reduction</td>
+                    <td>$20k - $40k</td>
+                    <td>6-12 Months</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2 style="color: #7c3aed;">Implementation Roadmap</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="margin-top:0; color:#fff;">Phase 1: Pilot</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">Months 1-3. Deploy 2 floor cleaning units at flagship property. Test elevator integration for delivery bots.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="margin-top:0; color:#fff;">Phase 2: Rollout</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">Months 4-12. Scale cleaning robots to all 100+ room properties. Integrate Energy AI during renovation cycles.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="margin-top:0; color:#fff;">Phase 3: Optimize</h4>
+                <p style="font-size: 0.9rem; color: #94a3b8;">Year 2+. Data map analysis for route optimization. F&B runner deployment in resort assets.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($)',
+                    data: [50000, 140000, 240000, 350000, 480000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Only', 'Robotic Augmented'],
+                datasets: [{
+                    label: 'Rooms Cleaned Per Attendant/Day',
+                    data: [14, 17],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)',
+                        'rgba(124, 58, 237, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#7c3aed'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
