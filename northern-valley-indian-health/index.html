@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIH Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #7c3aed;
+        letter-spacing: 1px;
+    }
+
+    .report-title {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #94a3b8;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #fff;
+        margin-top: 0;
+    }
+
+    p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    /* Dashboard Metrics */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-box {
+        background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #7c3aed;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 5px;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #94a3b8;
+    }
+
+    /* Charts Layout */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 30px;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid #7c3aed;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .highlight-text {
+        color: #7c3aed;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client: Northern Valley Indian Health</div>
+    </div>
+
+    <!-- Executive Summary Card -->
+    <div class="glass-card">
+        <h1>Northern Valley Indian Health</h1>
+        <p>Strategic analysis regarding the implementation of Robotic Process Automation (RPA), Dental Robotics, and Telepresence systems to optimize rural healthcare delivery across Glenn, Colusa, and Butte counties.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-box">
+            <div class="metric-value">$3.5M+</div>
+            <div class="metric-label">5-Year Net Benefit</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-value">4-6 MO</div>
+            <div class="metric-label">Payback Period</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-value">+4,000</div>
+            <div class="metric-label">Annual Visit Capacity</div>
+        </div>
+        <div class="metric-box">
+            <div class="metric-value">40%</div>
+            <div class="metric-label">Admin Time Reduction</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Monthly Throughput (Visits)</h2>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Comparison Table -->
+    <div class="glass-card">
+        <h2>Pathway Comparison Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Annual Benefit (Est.)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight-text">A. Admin RPA</td>
+                    <td>Scheduling & Billing</td>
+                    <td>$400k - $500k</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td class="highlight-text">B. Dental Robotics</td>
+                    <td>Sterilization & Assist</td>
+                    <td>$400k - $600k</td>
+                    <td>Low-Moderate</td>
+                </tr>
+                <tr>
+                    <td class="highlight-text">C. Telepresence</td>
+                    <td>Specialist Access</td>
+                    <td>$100k (Indirect)</td>
+                    <td>Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Strategic Insight -->
+    <div class="glass-card" style="border-left: 4px solid #7c3aed;">
+        <h3>Strategic Positioning</h3>
+        <p>By automating administrative burdens and dental sterilization workflows, Northern Valley Indian Health can shift focus from operational maintenance to patient care. This creates a <strong>"Technologically Enabled Tribal Health"</strong> model that solves rural staffing shortages through efficiency rather than headcount.</p>
+    </div>
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (USD)',
+                data: [770000, 1450000, 2150000, 2850000, 3550000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '$' + value / 1000000 + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Patient Intake', 'Dental Procedures', 'Billing Cycles'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [100, 80, 60], // Index values for visual comparison
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic/Automated',
+                    data: [160, 115, 180], // Index values showing lift
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    display: false
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
