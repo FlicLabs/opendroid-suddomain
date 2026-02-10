@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briotix Health Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        color: #e2e8f0;
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        margin: 0;
+        font-size: 20px;
+        color: #fff;
+    }
+
+    .report-title p {
+        margin: 5px 0 0;
+        color: #94a3b8;
+        font-size: 14px;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-left: 4px solid #7c3aed;
+        padding-left: 10px;
+    }
+
+    h3 {
+        color: #fff;
+        margin-top: 25px;
+        font-size: 16px;
+    }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+        font-size: 15px;
+    }
+
+    /* Dashboard Metrics */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        display: block;
+        margin-bottom: 5px;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        font-size: 12px;
+        color: #a78bfa;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* HTML Tables for Financial Data */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    th {
+        background: rgba(124, 58, 237, 0.2);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    th:first-child { border-top-left-radius: 8px; }
+    th:last-child { border-top-right-radius: 8px; }
+
+    td {
+        color: #cbd5e1;
+        font-size: 14px;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* Chart Containers */
+    .chart-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .chart-container {
+        flex: 1;
+        min-width: 300px;
+        height: 300px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 15px;
+    }
+
+    .highlight {
+        color: #7c3aed;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <h1>Research Portfolio: Briotix Health</h1>
+            <p>Robotics & Automation Strategy</p>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Briotix Health is positioned to revolutionize the industrial injury prevention market by transitioning from manual consultation to a <strong>"Workforce Bionics"</strong> integration model. By deploying industrial exoskeletons and AI-driven computer vision ergonomics, Briotix can drastically reduce client workers' compensation liabilities while creating scalable, recurring revenue streams.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard (Projected)</h2>
+        
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <span class="metric-value">50%</span>
+                <span class="metric-label">Injury Reduction</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">£130k</span>
+                <span class="metric-label">Net Client Savings/Site</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">6 Mo</span>
+                <span class="metric-label">ROI Payback Period</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-value">4x</span>
+                <span class="metric-label">Assessment Speed</span>
+            </div>
+        </div>
+
+        <div class="chart-row">
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="glass-card">
+        <h2>Opportunity Pathways Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Exoskeletons</th>
+                    <th>Pathway B: AI Ergonomics</th>
+                    <th>Pathway C: Telepresence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Industrial Sites (High Risk)</td>
+                    <td>All Sites (Scalability)</td>
+                    <td>Remote / Satellite Sites</td>
+                </tr>
+                <tr>
+                    <td><strong>Primary Value</strong></td>
+                    <td>Direct Injury Prevention</td>
+                    <td>Labor Efficiency</td>
+                    <td>Service Continuity</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>£150k - £300k (per site)</td>
+                    <td>£50k - £80k (Internal)</td>
+                    <td>£20k - £40k</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td>Moderate (Adoption)</td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Financial Model Detail -->
+    <div class="glass-card">
+        <h2>Financial Model: Exoskeleton Fleet (Pathway A)</h2>
+        <p>Based on a standard industrial client site with 500 manual laborers and a historical injury rate of 5 major MSDs per year.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Manual Baseline</th>
+                    <th>Robotic Enabled</th>
+                    <th>Variance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Injury Cost (Claims)</td>
+                    <td>£300,000</td>
+                    <td>£120,000</td>
+                    <td class="highlight">- £180,000</td>
+                </tr>
+                <tr>
+                    <td>Program/Hardware Cost</td>
+                    <td>£0</td>
+                    <td>£50,000</td>
+                    <td style="color: #ff6b6b;">+ £50,000</td>
+                </tr>
+                <tr>
+                    <td>Productivity Loss Days</td>
+                    <td>120 Days</td>
+                    <td>45 Days</td>
+                    <td class="highlight">- 75 Days</td>
+                </tr>
+                <tr>
+                    <td><strong>Net Financial Impact</strong></td>
+                    <td><strong>-£300,000</strong></td>
+                    <td><strong>-£170,000</strong></td>
+                    <td class="highlight"><strong>+ £130,000 Savings</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Client Savings (GBP)',
+                data: [130000, 280000, 450000, 650000, 900000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } },
+                title: { display: true, text: '5-Year Cumulative Net Savings', color: '#fff' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput/Assessment Efficiency
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Ergonomist', 'AI/Computer Vision'],
+            datasets: [{
+                label: 'Assessments Per Day',
+                data: [8, 32],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Daily Assessment Throughput', color: '#fff' }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
