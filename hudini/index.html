@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hudini Robotics Research | OPEN DROIDS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: #fff;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            margin-top: 0;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        h2 { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Custom Table Styling for Financial Dashboard */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e2e8f0;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-high { background: rgba(124, 58, 237, 0.2); color: #d8b4fe; border: 1px solid rgba(124, 58, 237, 0.5); }
+        .badge-med { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.5); }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .roadmap-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            background: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="font-size: 0.9rem; color: #94a3b8;">Consultation & Research</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h1>Hudini Healthcare Robotics</h1>
+        <p style="font-size: 1.1rem; line-height: 1.6; color: #cbd5e1;">
+            Hudini is positioned to become the "Central Nervous System" for hospital robotics. By leveraging its existing integration with EHR and bedside tablets, Hudini can shift from a digital engagement platform to a physical orchestration engine. The primary opportunity lies in <strong>Patient-Initiated Robotic Concierge</strong> services, reducing nurse burnout by offloading non-clinical fetching tasks to autonomous mobile robots (AMRs).
+        </p>
+    </div>
+
+    <div class="grid-2">
+        <!-- Organizational Profile -->
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                <li><strong>Model:</strong> Digital Transformation & Middleware Integrator</li>
+                <li><strong>Scale:</strong> Global deployment (Healthcare & Hospitality)</li>
+                <li><strong>Core Tech:</strong> Unified interface connecting EHR, BMS, & POS</li>
+                <li><strong>Economics:</strong> SaaS Licensing + Integration Fees</li>
+                <li><strong>Key Opportunity:</strong> Automating the "Last 100 Feet" of logistics</li>
+            </ul>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="glass-card" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="grid-2">
+                <div class="metric-card">
+                    <div class="metric-value">£4.0M</div>
+                    <div class="metric-label">5-Year Net Savings (Per Facility)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">6 Mo</div>
+                    <div class="metric-label">ROI Payback Period</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">960k</div>
+                    <div class="metric-label">Annual Labor Reclaimed (GBP)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">15%</div>
+                    <div class="metric-label">Nurse Time Saved</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Pathways -->
+    <h2 style="margin-left: 10px;">Opportunity Pathways</h2>
+    <div class="grid-3">
+        <div class="glass-card">
+            <h3 style="color: #d8b4fe;">Pathway A: Concierge</h3>
+            <p style="font-size: 0.9rem;">Patient-initiated delivery via tablet. Integration with third-party AMRs (Relay/Aethon) for snacks, blankets, and toiletries.</p>
+            <div class="badge badge-high">Highest ROI</div>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: #bae6fd;">Pathway B: Sanitization</h3>
+            <p style="font-size: 0.9rem;">Automated discharge workflow. EHR checkout triggers UVC cleaning robots to sanitize rooms before housekeeping enters.</p>
+            <div class="badge badge-med">Operational Efficiency</div>
+        </div>
+        <div class="glass-card">
+            <h3 style="color: #bae6fd;">Pathway C: Logistics</h3>
+            <p style="font-size: 0.9rem;">Staff-initiated courier robots for secure transport of lab samples and pharmacy medications, replacing pneumatic tubes.</p>
+            <div class="badge badge-med">Quality Control</div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard & ROI Analysis</h2>
+        
+        <div class="grid-2">
+            <!-- Table -->
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Pathway A (Robotics)</th>
+                            <th>Manual Baseline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cost Per Retrieval</td>
+                            <td style="color: #4ade80;">£0.50 (Robot)</td>
+                            <td style="color: #f87171;">£8.00 (Nurse Labor)</td>
+                        </tr>
+                        <tr>
+                            <td>Avg Response Time</td>
+                            <td>15 Minutes</td>
+                            <td>45 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Capacity</td>
+                            <td>45,000 Deliveries</td>
+                            <td>Limited by Staffing</td>
+                        </tr>
+                        <tr>
+                            <td>Ops Cost (Year 1)</td>
+                            <td>£150,000</td>
+                            <td>£1,200,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Throughput Chart -->
+            <div>
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Savings Chart -->
+        <div style="margin-top: 2rem;">
+            <h3 style="font-size: 1rem; color: #94a3b8; text-transform: uppercase;">5-Year Cumulative Net Savings (GBP)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h2>Implementation Roadmap</h2>
+        <div class="roadmap-step">
+            <div class="step-number">1</div>
+            <div>
+                <h3 style="margin: 0 0 5px 0;">Pilot & Integration (Year 1)</h3>
+                <p style="margin: 0; color: #cbd5e1;">Build API bridge between Hudini Core and Robot Fleet Manager. Deploy in 1 flagship hospital.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">2</div>
+            <div>
+                <h3 style="margin: 0 0 5px 0;">Commercial Rollout (Year 2)</h3>
+                <p style="margin: 0; color: #cbd5e1;">Offer "Robotic Concierge" as a premium SaaS module. Pilot discharge sanitization automation.</p>
+            </div>
+        </div>
+        <div class="roadmap-step">
+            <div class="step-number">3</div>
+            <div>
+                <h3 style="margin: 0 0 5px 0;">Ecosystem Orchestration (Year 3+)</h3>
+                <p style="margin: 0; color: #cbd5e1;">Establish vendor-neutral platform allowing hospitals to mix robot brands under one Hudini interface.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart.js Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Throughput Chart (Bar)
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Nursing', 'Robotic Fleet'],
+            datasets: [{
+                label: 'Deliveries Per Day (Capacity)',
+                data: [35, 120],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#7c3aed'],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Daily Delivery Capacity (200 Bed Facility)' }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // 2. Cumulative Savings Chart (Line)
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [810000, 1620000, 2430000, 3240000, 4050000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true, 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: {
+                        callback: function(value) { return '£' + value / 1000000 + 'M'; }
+                    }
+                },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
