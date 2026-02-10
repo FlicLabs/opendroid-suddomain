@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visit Anaheim Robotics Portfolio | OPEN DROIDS</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --accent: #7c3aed;
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 1px solid var(--accent);
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+        color: var(--accent);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    td {
+        color: var(--text-main);
+        font-size: 0.95rem;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .section-title {
+        color: var(--accent);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        display: block;
+        font-weight: 700;
+    }
+
+    .highlight-text {
+        color: #fff;
+        font-weight: 500;
+    }
+</style>
+</head>
+<body>
+
+    <div class="logo">OPEN DROIDS</div>
+
+    <h1>Visit Anaheim: Smart District Transformation</h1>
+    <p style="color: var(--text-muted); max-width: 800px; margin-bottom: 50px;">
+        Strategic portfolio analysis for deploying autonomous logistics, sanitation, and security robotics within the Anaheim Convention Center ecosystem.
+    </p>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-container">
+        <div class="card">
+            <div class="metric-label">Projected Net Annual Benefit</div>
+            <div class="metric-value">$4.35M</div>
+            <div style="color: #4ade80; font-size: 0.9rem;">▲ Combined Efficiency & Revenue</div>
+        </div>
+        <div class="card">
+            <div class="metric-label">Labor Efficiency Gain</div>
+            <div class="metric-value">35%</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Target by Year 3</div>
+        </div>
+        <div class="card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">9 Months</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">Pathway A (Sanitation)</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-container">
+        <div class="card">
+            <span class="section-title">5-Year Cumulative Savings (USD)</span>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <span class="section-title">Turnover Throughput: Manual vs. Robotic</span>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Analysis Table -->
+    <div class="card" style="margin-top: 30px;">
+        <span class="section-title">Pathway Comparative Analysis</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Primary Value Driver</th>
+                    <th>Est. Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight-text">Pathway A: Logistics & Sanitation</td>
+                    <td>Exhibit Halls, BOH</td>
+                    <td>Labor Reduction</td>
+                    <td>$3.5M+</td>
+                    <td style="color: #4ade80;">Low</td>
+                </tr>
+                <tr>
+                    <td class="highlight-text">Pathway B: Concierge AI</td>
+                    <td>Lobbies, Transit</td>
+                    <td>Visitor Experience</td>
+                    <td>Indirect</td>
+                    <td style="color: #facc15;">Moderate</td>
+                </tr>
+                <tr>
+                    <td class="highlight-text">Pathway C: Auto-Security</td>
+                    <td>Perimeter, Parking</td>
+                    <td>Risk Mitigation</td>
+                    <td>$0.8M</td>
+                    <td style="color: #facc15;">Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctx1 = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [1.2, 3.8, 7.5, 12.1, 17.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctx2 = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Hall Cleanup', 'Setup Speed', 'Security Patrols', 'Inquiries Handled'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [60, 50, 40, 30],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [95, 85, 90, 80],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
