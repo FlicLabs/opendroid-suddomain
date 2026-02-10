@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thrive Alabama Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-purple);
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 32px;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-purple);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Grid Layouts */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        /* Pathway Cards */
+        .pathway-card {
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #d8b4fe;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        /* Financial Dashboard */
+        .metric-card {
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        .metric-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Implementation Timeline */
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .timeline-year {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-purple);
+            min-width: 100px;
+        }
+
+        .timeline-content h4 {
+            margin: 0 0 5px 0;
+            color: var(--text-primary);
+        }
+
+        .timeline-content p {
+            margin: 0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">OPEN <span>DROIDS</span></div>
+            <div style="text-align: right; color: var(--text-secondary); font-size: 12px;">
+                CLIENT: THRIVE ALABAMA<br>
+                DOC ID: RES-2024-TA
+            </div>
+        </div>
+
+        <!-- Title Section -->
+        <div style="margin-bottom: 40px;">
+            <h1>Healthcare Robotics Opportunities Portfolio</h1>
+            <p>Analysis of automation levers for FQHC operational efficiency, 340B optimization, and patient access.</p>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p>Thrive Alabama faces the dual challenge of managing complex chronic conditions for underserved populations while adhering to strict grant reporting and compliance. The strongest robotics automation levers are (1) Automated Pharmacy Dispensing, (2) High-Throughput Laboratory Automation, and (3) Telepresence Robotics. The dominant ROI driver is the optimization of the 340B pharmacy program.</p>
+        </div>
+
+        <!-- Pathways Grid -->
+        <div class="grid-3">
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY A</span>
+                <h3 style="color: var(--text-primary);">Pharmacy Automation</h3>
+                <p>AI-driven dispensing and adherence packaging. Optimizes 340B inventory and frees pharmacists for clinical counseling.</p>
+                <div style="margin-top: 15px; border-top: 1px solid var(--glass-border); padding-top: 10px;">
+                    <strong style="color: var(--success); font-size: 12px;">ROI: 12-18 Months</strong>
+                </div>
+            </div>
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY B</span>
+                <h3 style="color: var(--text-primary);">Lab Diagnostics</h3>
+                <p>Automated sample processing for HIV/STI screenings. Reduces turnaround time from days to hours.</p>
+                <div style="margin-top: 15px; border-top: 1px solid var(--glass-border); padding-top: 10px;">
+                    <strong style="color: #94a3b8; font-size: 12px;">ROI: 24-36 Months</strong>
+                </div>
+            </div>
+            <div class="card pathway-card">
+                <span class="badge">PATHWAY C</span>
+                <h3 style="color: var(--text-primary);">Telepresence</h3>
+                <p>Mobile robots in rural satellite clinics to connect patients with Huntsville-based specialists.</p>
+                <div style="margin-top: 15px; border-top: 1px solid var(--glass-border); padding-top: 10px;">
+                    <strong style="color: var(--success); font-size: 12px;">ROI: ~12 Months</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h2>Financial Dashboard (Pathway A - Pharmacy)</h2>
+            <div class="grid-3">
+                <div class="metric-card">
+                    <div class="metric-value">+45%</div>
+                    <div class="metric-label">Prescription Throughput</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">~15%</div>
+                    <div class="metric-label">Adherence Improvement</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">High</div>
+                    <div class="metric-label">340B Compliance Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2">
+            <div class="card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Throughput: Manual vs. Robotic</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative View Table -->
+        <div class="card">
+            <h2>Comparative View of Pathways</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: Pharmacy</th>
+                        <th>Pathway B: Lab Auto</th>
+                        <th>Pathway C: Telepresence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Scope</td>
+                        <td>Central Pharmacy & Clinics</td>
+                        <td>Central Lab</td>
+                        <td>Rural Satellite Clinics</td>
+                    </tr>
+                    <tr>
+                        <td>Value Driver</td>
+                        <td>340B Revenue & Efficiency</td>
+                        <td>Turnaround Speed</td>
+                        <td>Specialist Access</td>
+                    </tr>
+                    <tr>
+                        <td>Payback</td>
+                        <td>12-18 Months</td>
+                        <td>24-36 Months</td>
+                        <td>12 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Risk</td>
+                        <td>Low (Mature Tech)</td>
+                        <td>Low-Moderate</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <div class="timeline-item">
+                <div class="timeline-year">YR 1</div>
+                <div class="timeline-content">
+                    <h4>Pharmacy Automation Pilot</h4>
+                    <p>Install robotic dispensing units in Huntsville hub. Launch adherence packaging for complex patients.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">YR 2</div>
+                <div class="timeline-content">
+                    <h4>Lab Integration</h4>
+                    <p>Deploy automated benchtop analyzers. Integrate lab/pharmacy data for population health.</p>
+                </div>
+            </div>
+            <div class="timeline-item" style="border-bottom: none;">
+                <div class="timeline-year">YR 3</div>
+                <div class="timeline-content">
+                    <h4>Rural Telepresence</h4>
+                    <p>Deploy mobile robots to Florence and Albertville. Full network specialist integration.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart.js Configuration Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+        // 1. Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($M)',
+                    data: [0.2, 0.8, 1.6, 2.5, 3.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Daily Fills', 'Adherence Packs', 'Patient Consults'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [300, 20, 40],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderWidth: 0,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [450, 80, 75],
+                        backgroundColor: '#7c3aed',
+                        borderWidth: 0,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
