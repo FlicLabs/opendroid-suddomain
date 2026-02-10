@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go City Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--deep-space);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--electric-purple);
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { font-size: 1.25rem; color: var(--electric-purple); margin-bottom: 15px; margin-top: 0; }
+        h3 { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        p, li { line-height: 1.6; color: #e2e8f0; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            color: var(--electric-purple);
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">Consultation Report: Go City</div>
+    </div>
+
+    <!-- Title Section -->
+    <div style="text-align: center; margin-bottom: 50px;">
+        <h1 style="background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Healthcare & Travel Robotics Portfolio</h1>
+        <p style="color: var(--text-muted);">Executive Automation Analysis & ROI Projections</p>
+    </div>
+
+    <!-- Go City Analysis -->
+    <div class="card">
+        <h2>Go City: Automation & AI Architecture</h2>
+        <p>Go City transforms the travel experience through digital bundling. The primary opportunity lies in deploying "Software Robotics" (AI Agents) to handle itinerary planning and customer support, alongside physical "Smart Gate" automation at high-volume partner attractions.</p>
+        
+        <div class="dashboard-grid" style="margin-top: 30px;">
+            <div class="card metric-card">
+                <div class="metric-label">Projected Net Benefit (Year 1)</div>
+                <div class="metric-value">£17.5M</div>
+                <div class="metric-label" style="color: #4ade80;">▲ Driven by AI Support Deflection</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">Support Ticket Reduction</div>
+                <div class="metric-value">65%</div>
+                <div class="metric-label">Via Conversational AI Agents</div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-label">ROI Payback Period</div>
+                <div class="metric-value">4.5 Mo</div>
+                <div class="metric-label">High Velocity Return</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <!-- Cumulative Savings Chart -->
+        <div class="card">
+            <h3>5-Year Cumulative Net Benefit</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Throughput Chart -->
+        <div class="card">
+            <h3>Customer Interaction Throughput (Daily)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h3>Pathway Comparison Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Technology Scope</th>
+                    <th>Annual Benefit (Mid)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A</strong></td>
+                    <td>Intelligent Concierge AI Agents</td>
+                    <td>£15M - £20M</td>
+                    <td><span style="color: #4ade80;">Low</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B</strong></td>
+                    <td>Smart Physical Access Gates</td>
+                    <td>£2M - £5M</td>
+                    <td><span style="color: #facc15;">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C</strong></td>
+                    <td>Backend Finance RPA</td>
+                    <td>£1M - £3M</td>
+                    <td><span style="color: #4ade80;">Low</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card">
+        <h3>Implementation Roadmap</h3>
+        <div style="display: flex; gap: 20px; margin-top: 20px;">
+            <div style="flex: 1; border-left: 2px solid var(--electric-purple); padding-left: 20px;">
+                <strong style="color: var(--electric-purple);">Phase 1 (Months 1-12)</strong>
+                <p>Deploy AI Concierge in London/NY. Train models on historical support data. Pilot entry hardware.</p>
+            </div>
+            <div style="flex: 1; border-left: 2px solid #475569; padding-left: 20px;">
+                <strong style="color: white;">Phase 2 (Months 12-24)</strong>
+                <p>Roll out Smart Gates to top 20 global attractions. Integrate Dynamic Pricing RPA.</p>
+            </div>
+            <div style="flex: 1; border-left: 2px solid #475569; padding-left: 20px;">
+                <strong style="color: white;">Phase 3 (Months 24+)</strong>
+                <p>Full ecosystem autonomy. Real-time capacity management and hyper-personalized automated upselling.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [17.5, 38.0, 65.5, 98.0, 135.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Support', 'AI Concierge', 'Hybrid Model'],
+            datasets: [{
+                label: 'Interactions Per Hour',
+                data: [45, 850, 1200],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.2)',
+                    'rgba(124, 58, 237, 0.6)',
+                    '#7c3aed'
+                ],
+                borderWidth: 0,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
