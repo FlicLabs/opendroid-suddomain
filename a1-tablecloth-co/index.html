@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A1 Tablecloth Co. Robotics Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        color: #7c3aed;
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    h3 {
+        color: #fff;
+        font-size: 18px;
+        border-left: 4px solid #7c3aed;
+        padding-left: 12px;
+        margin-top: 30px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* Financial Dashboard Styles */
+    .metric-card {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.6));
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 800;
+        color: #fff;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #94a3b8;
+        text-transform: uppercase;
+    }
+
+    .metric-sub {
+        font-size: 12px;
+        color: #4ade80;
+    }
+
+    /* Table Styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #e2e8f0;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #7c3aed;
+        color: #7c3aed;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    tr:hover td {
+        background: rgba(124, 58, 237, 0.05);
+    }
+
+    .highlight-green {
+        color: #4ade80;
+        font-weight: bold;
+    }
+
+    /* Chart Containers */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .footer {
+        text-align: center;
+        color: #64748b;
+        font-size: 12px;
+        margin-top: 50px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: 600;">A1 Tablecloth Co.</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary Card -->
+    <div class="card">
+        <h1>Robotics Analysis & ROI Model</h1>
+        <p style="font-size: 18px; line-height: 1.6; color: #cbd5e1; margin-top: 15px;">
+            A1 Tablecloth Co. is poised to transition from a manual-labor-intensive laundry operation to a high-throughput, automated industrial facility. The implementation of AI-driven sorting and robotic finishing creates an opportunity to increase processing capacity by <span style="color: #7c3aed; font-weight: bold;">375%</span> while reducing operational risks.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-3">
+        <div class="metric-card">
+            <div class="metric-label">Annual Savings</div>
+            <div class="metric-value">£425k</div>
+            <div class="metric-sub">Post-Implementation Pathway A</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Throughput Lift</div>
+            <div class="metric-value">+275%</div>
+            <div class="metric-sub">Pounds Per Operator Hour</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">1.6 Yrs</div>
+            <div class="metric-sub">Sorting Automation</div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>5-Year Cumulative Savings</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Throughput Comparison (PPOH)</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h2>Pathway Comparison Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Automated Sorting</th>
+                    <th>Pathway B: Robotic Finishing</th>
+                    <th>Pathway C: Logistics AGVs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Soil Room (Dirty Side)</td>
+                    <td>Ironing Lines (Clean Side)</td>
+                    <td>Plant Floor Logistics</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>Labor Reduction & Safety</td>
+                    <td>Quality Consistency</td>
+                    <td>Workflow Continuity</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td class="highlight-green">£400k - £500k</td>
+                    <td>£150k - £250k</td>
+                    <td>£50k - £80k</td>
+                </tr>
+                <tr>
+                    <td><strong>Payback</strong></td>
+                    <td>1.6 Years</td>
+                    <td>2.5 Years</td>
+                    <td>3.5 Years</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Low</td>
+                    <td>Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Strategy Section -->
+    <div class="card">
+        <h2>Strategic Roadmap</h2>
+        <div class="grid-3">
+            <div>
+                <h3>Year 1</h3>
+                <p style="color: #cbd5e1;"><strong>Pathway A Pilot.</strong> Installation of AI-vision sorting systems during Q1 (low season). Immediate labor reallocation.</p>
+            </div>
+            <div>
+                <h3>Year 2</h3>
+                <p style="color: #cbd5e1;"><strong>Pathway B Scale.</strong> Retrofit Ironing Lines 1 & 2 with robotic spreader-feeders to handle increased volume.</p>
+            </div>
+            <div>
+                <h3>Years 3-4</h3>
+                <p style="color: #cbd5e1;"><strong>Pathway C Logistics.</strong> Deploy fleet of 3-5 AGVs for autonomous clean-cake transport and dock loading.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Generated by OPEN DROIDS Research Systems | A1 Tablecloth Co. Confidential
+    </div>
+</div>
+
+<script>
+    // Global Default Configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 5-Year Savings Line Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [425000, 860000, 1310000, 1780000, 2280000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '£' + value/1000 + 'k'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Sort', 'Robotic Sort'],
+            datasets: [{
+                label: 'Pounds Per Operator Hour (PPOH)',
+                data: [400, 1500],
+                backgroundColor: ['#334155', '#7c3aed'],
+                borderRadius: 8,
+                barPercentage: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    beginAtZero: true
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
