@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAFHC Robotics Research Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --deep-space: #0f172a;
+        --electric-purple: #7c3aed;
+        --purple-glow: rgba(124, 58, 237, 0.4);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: var(--deep-space);
+        color: var(--text-primary);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 1) 0%, transparent 20%);
+    }
+
+    h1, h2, h3 {
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+
+    .header-logo {
+        color: var(--electric-purple);
+        font-weight: 900;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px var(--purple-glow);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .report-header {
+        border-bottom: 1px solid var(--electric-purple);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .report-title {
+        font-size: 2.5rem;
+        margin: 0;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .sub-title {
+        color: var(--electric-purple);
+        font-size: 1.2rem;
+        margin-top: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Grid Layouts */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid var(--purple-glow);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        margin-top: 5px;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    @media (max-width: 900px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: var(--text-secondary);
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid var(--electric-purple);
+        color: var(--electric-purple);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Pathway Badges */
+    .pathway-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .badge-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+    .badge-b { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .badge-c { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-logo">OPEN DROIDS</div>
+
+    <!-- Executive Header -->
+    <div class="glass-card">
+        <div class="report-header">
+            <h1 class="report-title">East Arkansas Family Health Center Inc.</h1>
+            <div class="sub-title">Robotics Analysis & ROI Portfolio</div>
+        </div>
+        <p>
+            Strategic integration of automation to modernize rural healthcare delivery in the Mississippi Delta. 
+            Focus areas include Automated Pharmacy Dispensing, Telepresence Clinical Access, and Backend Revenue Cycle Automation.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">$500k+</div>
+            <div class="metric-label">5-Year Net Benefit</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">1.5 Yrs</div>
+            <div class="metric-label">ROI Payback (Pharmacy)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">+25%</div>
+            <div class="metric-label">Patient Throughput</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">99.9%</div>
+            <div class="metric-label">Dispensing Accuracy</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="content-grid">
+        <div class="glass-card">
+            <h3>Cumulative Savings Projection (5 Years)</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Prescription Throughput Comparison</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="glass-card">
+        <h3>Strategic Pathways Comparative View</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Primary Value Driver</th>
+                    <th>Annual Benefit (Est.)</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="pathway-badge badge-a">Pathway A: Pharmacy</span></td>
+                    <td>Central High-Volume Sites</td>
+                    <td>Direct Cost & Safety</td>
+                    <td>$130k - $170k</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td><span class="pathway-badge badge-b">Pathway B: Telepresence</span></td>
+                    <td>Remote Satellites</td>
+                    <td>Access & Reach</td>
+                    <td>$60k - $90k</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td><span class="pathway-badge badge-c">Pathway C: RPA Admin</span></td>
+                    <td>Administrative HQ</td>
+                    <td>Cash Flow Velocity</td>
+                    <td>$50k</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="glass-card">
+        <h3>Implementation Roadmap</h3>
+        <div style="display: flex; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h4 style="color: var(--electric-purple);">Year 1: Optimization</h4>
+                <p>Vendor selection for pharmacy robotics. Installation at West Memphis. Staff training on MTM workflow.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h4 style="color: var(--electric-purple);">Year 2: Expansion</h4>
+                <p>Deployment of telepresence robots to Lepanto and satellite clinics. RPA integration for Medicaid billing.</p>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <h4 style="color: var(--electric-purple);">Year 3: Network Integration</h4>
+                <p>Expansion of pharmacy automation to Helena. Establishment of Central Command Center.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($)',
+                data: [45000, 150000, 280000, 410000, 560000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Bar Chart
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Process', 'Robotic Process'],
+            datasets: [{
+                label: 'Scripts Per Hour',
+                data: [45, 150],
+                backgroundColor: ['rgba(148, 163, 184, 0.5)', 'rgba(124, 58, 237, 0.8)'],
+                borderColor: ['#94a3b8', '#7c3aed'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
