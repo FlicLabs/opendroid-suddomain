@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJFHC Robotics Research - Open Droids</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        /* Dashboard Grid */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a5b4fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #cbd5e1;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            color: #7c3aed;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-logo">OPEN DROIDS | Research Division</div>
+
+    <div class="glass-card">
+        <h1>Central Jersey Family Health Consortium</h1>
+        <p style="font-size: 1.1rem; color: #cbd5e1;">
+            A strategic analysis of automation opportunities within a regional maternal and child health network. 
+            Focus areas include Robotic Process Automation (RPA) for data interoperability and logistics automation for service delivery.
+        </p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Impact Dashboard</h2>
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-label">Net Annual Benefit</div>
+                <div class="metric-value">£275k</div>
+                <div class="metric-label">Pathway A (Mid-Case)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">FTE Hours Saved</div>
+                <div class="metric-value">10,400</div>
+                <div class="metric-label">Per Year (Approx)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">ROI Payback</div>
+                <div class="metric-value">4 Mo</div>
+                <div class="metric-label">Post-Implementation</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Accuracy Lift</div>
+                <div class="metric-value">99.8%</div>
+                <div class="metric-label">Data Registry Compliance</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2-col">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings (GBP)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Processing Throughput (Records/Day)</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Comparative Pathway Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: RPA & Data</th>
+                    <th>Pathway B: Telepresence</th>
+                    <th>Pathway C: Logistics</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>Admin & Registries</td>
+                    <td>Education & Home Visits</td>
+                    <td>Supply Distribution</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Driver</strong></td>
+                    <td>Labor Cost & Accuracy</td>
+                    <td>Service Reach</td>
+                    <td>Inventory Optimization</td>
+                </tr>
+                <tr>
+                    <td><strong>Annual Benefit</strong></td>
+                    <td>£275,000</td>
+                    <td>£100,000</td>
+                    <td>£50,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Risk Profile</strong></td>
+                    <td style="color: #4ade80;">Low</td>
+                    <td style="color: #fbbf24;">Moderate</td>
+                    <td style="color: #fbbf24;">Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Roadmap</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <strong style="color: #fff;">Year 1: Digital Foundation</strong><br>
+                <span style="color: #cbd5e1;">Deploy RPA for Perinatal Risk Assessment (PRA) data entry and state reporting compliance.</span>
+            </li>
+            <li style="margin-bottom: 15px; border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <strong style="color: #fff;">Year 2: Service Expansion</strong><br>
+                <span style="color: #cbd5e1;">Pilot telepresence robots in remote partner clinics for specialist consultation and nurse training.</span>
+            </li>
+            <li style="border-left: 3px solid #7c3aed; padding-left: 15px;">
+                <strong style="color: #fff;">Year 3: Logistics Automation</strong><br>
+                <span style="color: #cbd5e1;">Implement smart inventory warehousing for maternal supplies and explore drone delivery for rural counties.</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [150000, 425000, 700000, 975000, 1250000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#cbd5e1' }
+                },
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#cbd5e1' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Entry', 'Robotic Automation'],
+            datasets: [{
+                label: 'Records Processed / Day',
+                data: [45, 350],
+                backgroundColor: ['rgba(255, 255, 255, 0.3)', '#7c3aed'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#7c3aed'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#cbd5e1' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#cbd5e1', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
