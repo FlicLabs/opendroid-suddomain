@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rendr Robotics Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --accent-purple: #7c3aed;
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+    }
+
+    .title h1 {
+        font-size: 32px;
+        margin: 0;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .glass-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    h2 {
+        color: var(--accent-purple);
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin: 10px 0;
+    }
+
+    p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    /* Dashboard Metrics */
+    .metric-card {
+        text-align: center;
+        padding: 20px;
+        border-left: 4px solid var(--accent-purple);
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+    }
+
+    th {
+        color: var(--accent-purple);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Charts */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="title">
+            <h1>Rendr: Robotics & Automation Portfolio</h1>
+        </div>
+    </div>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Rendr operates a high-volume, value-based care model serving the Asian-American community in NYC. Automation opportunities lie in Bilingual RPA, Lab Automation, and Service Robotics. The primary goal is reducing administrative overhead (est. $15M/year savings) and increasing panel capacity.</p>
+        </div>
+        <div class="glass-card">
+            <h2>Organizational Profile</h2>
+            <table style="margin-top:0;">
+                <tr>
+                    <td><strong>Scale</strong></td>
+                    <td>100+ Locations, 200+ Providers</td>
+                </tr>
+                <tr>
+                    <td><strong>Reach</strong></td>
+                    <td>200,000+ Annual Patients</td>
+                </tr>
+                <tr>
+                    <td><strong>Focus</strong></td>
+                    <td>Value-Based Care (Medicare/Medicaid)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="glass-card">
+        <h2>Financial Dashboard (Pathway A: RPA Integration)</h2>
+        <div class="grid-3">
+            <div class="metric-card">
+                <div class="metric-value">$13M</div>
+                <div class="metric-label">Net Annual Benefit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">9 Mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$60M</div>
+                <div class="metric-label">5-Year Cumulative Net</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Pathways Table -->
+    <div class="glass-card">
+        <h2>Comparative Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Bilingual RPA</th>
+                    <th>Pathway B: Lab Automation</th>
+                    <th>Pathway C: Service Bots</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scope</td>
+                    <td>Network-wide (Software)</td>
+                    <td>Central Hub (Hardware)</td>
+                    <td>Flagship Clinics</td>
+                </tr>
+                <tr>
+                    <td>Value Driver</td>
+                    <td>Admin Efficiency</td>
+                    <td>Cost Per Test</td>
+                    <td>Patient Flow</td>
+                </tr>
+                <tr>
+                    <td>Annual Benefit</td>
+                    <td>$12M - $15M</td>
+                    <td>$4M - $6M</td>
+                    <td>$1M - $2M</td>
+                </tr>
+                <tr>
+                    <td>Risk Profile</td>
+                    <td>Low</td>
+                    <td>Moderate</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-2">
+        <div class="glass-card">
+            <h2>5-Year Cumulative Savings (Millions)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h2>Throughput Analysis (Patients/Day)</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [8, 21, 35, 48, 60],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Admin', 'Robotic/AI Assisted'],
+            datasets: [{
+                label: 'Patients Managed Per FTE',
+                data: [1200, 1650],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Grey for Manual
+                    'rgba(124, 58, 237, 0.8)'   // Electric Purple for Robotic
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    'rgba(124, 58, 237, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
