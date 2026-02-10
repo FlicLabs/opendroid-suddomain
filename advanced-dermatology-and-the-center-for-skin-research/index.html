@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Droids Research: Advanced Dermatology</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #7c3aed;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.2rem; margin: 0; }
+        h2 { font-size: 1.5rem; margin-top: 0; color: #a78bfa; }
+        h3 { font-size: 1.1rem; margin-bottom: 15px; color: #e2e8f0; }
+
+        p {
+            line-height: 1.6;
+            color: #94a3b8;
+            margin-bottom: 16px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container { grid-template-columns: 1fr; }
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            background: rgba(124, 58, 237, 0.1);
+            color: #a78bfa;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .tag-high { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .tag-med { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+        .tag-low { background: rgba(255, 255, 255, 0.1); color: #94a3b8; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-header">
+        <div>
+            <h1>Advanced Dermatology</h1>
+            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 5px;">Center for Skin Research</div>
+        </div>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+    </div>
+
+    <!-- Executive Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Projected Annual Lift</div>
+            <div class="metric-value">£2.5M</div>
+            <div style="color: #4ade80; font-size: 0.8rem;">▲ 35% Increase</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Procedural Throughput</div>
+            <div class="metric-value">+40%</div>
+            <div style="color: #38bdf8; font-size: 0.8rem;">Robotic Efficiency</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Diagnostic Time</div>
+            <div class="metric-value">-75%</div>
+            <div style="color: #a78bfa; font-size: 0.8rem;">Automated Imaging</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Period</div>
+            <div class="metric-value">9 Mo</div>
+            <div style="color: #94a3b8; font-size: 0.8rem;">Est. Payback</div>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Advanced Dermatology and the Center for Skin Research faces critical bottlenecks in procedural throughput and diagnostic wait times. By integrating robotic hair restoration, automated whole-body imaging, and digital pathology, the organization can shift from a labor-intensive model to a scalable, technology-augmented platform. The dominant ROI driver is the Robotic Aesthetics pathway, offering high margins and reduced clinician fatigue.</p>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-container">
+        <div class="glass-card" style="margin-bottom: 0;">
+            <h3>5-Year Cumulative Net Benefit (£ Millions)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card" style="margin-bottom: 0;">
+            <h3>Throughput Analysis (Patients/Day)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Comparative Pathways Table -->
+    <div class="glass-card">
+        <h2>Robotics Opportunity Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit (Mid)</th>
+                    <th>Payback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">A: Robotic Aesthetics</td>
+                    <td>Cosmetic Wing</td>
+                    <td>Throughput & Margin</td>
+                    <td>£1.17M</td>
+                    <td><span class="tag tag-high">9-12 Months</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">B: Auto-Imaging</td>
+                    <td>General Medical</td>
+                    <td>Accuracy & Speed</td>
+                    <td>£400k</td>
+                    <td><span class="tag tag-med">18 Months</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #fff;">C: Lab Automation</td>
+                    <td>Pathology</td>
+                    <td>Turnaround Time</td>
+                    <td>£150k</td>
+                    <td><span class="tag tag-low">24 Months</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Financial Drill Down -->
+    <div class="glass-card">
+        <h2>Financial Model: Aesthetic Robotics (Pathway A)</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div>
+                <h3 style="color: #94a3b8; border-bottom: 1px solid #334155; padding-bottom: 10px;">Network Baseline</h3>
+                <ul style="list-style: none; padding: 0; color: #cbd5e1;">
+                    <li style="margin-bottom: 10px;"><strong>Volume:</strong> 150 cases/year</li>
+                    <li style="margin-bottom: 10px;"><strong>Revenue/Case:</strong> £8,000</li>
+                    <li style="margin-bottom: 10px;"><strong>Staff Cost:</strong> £1,500/case</li>
+                    <li style="margin-bottom: 10px;"><strong>Total Revenue:</strong> £1.2M</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: #7c3aed; border-bottom: 1px solid #7c3aed; padding-bottom: 10px;">Automation Scenario</h3>
+                <ul style="list-style: none; padding: 0; color: #fff;">
+                    <li style="margin-bottom: 10px;"><strong>Volume:</strong> 250 cases/year (+66%)</li>
+                    <li style="margin-bottom: 10px;"><strong>Revenue/Case:</strong> £9,500 (Premium)</li>
+                    <li style="margin-bottom: 10px;"><strong>Staff Cost:</strong> £500/case (-66%)</li>
+                    <li style="margin-bottom: 10px;"><strong>Net Benefit:</strong> ~£800k incremental</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap positions Advanced Dermatology as a regional leader in <strong>Tech-Enabled Skin Longevity</strong>. By reducing reliance on manual labor for high-repetition tasks (graft harvesting, mole mapping), the practice increases valuation multiples and creates a scalable model ready for private equity expansion.</p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit',
+                data: [0.8, 2.1, 3.8, 5.9, 8.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Hair Transplant', 'Mole Mapping', 'Pathology'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [1, 24, 50],
+                    backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                    borderColor: 'rgba(148, 163, 184, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic/AI Process',
+                    data: [2.5, 75, 120],
+                    backgroundColor: 'rgba(56, 189, 248, 0.6)',
+                    borderColor: '#38bdf8',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1' } } },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: { 
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
