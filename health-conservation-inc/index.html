@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Conservation Inc. - Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 0 20px 0;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .metric-big {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+            letter-spacing: 1px;
+        }
+
+        /* Layouts */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-purple);
+            border-bottom: 1px solid var(--glass-border);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Roadmap Timeline */
+        .timeline-item {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">OPEN DROIDS</div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">CONFIDENTIAL RESEARCH</div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="hero-grid">
+            <div class="glass-card">
+                <h2>Health Conservation Inc.</h2>
+                <h1>Robotics Opportunities Portfolio</h1>
+                <p>Strategic analysis for reducing occupational hazards and maximizing workforce longevity through advanced automation, active exoskeletons, and autonomous hazard monitoring systems.</p>
+                <div style="margin-top: 20px; display: flex; gap: 20px;">
+                    <div>
+                        <div class="metric-big">500k</div>
+                        <div class="metric-label">Covered Lives</div>
+                    </div>
+                    <div>
+                        <div class="metric-big">£60M</div>
+                        <div class="metric-label">Addressable Injury Costs</div>
+                    </div>
+                    <div>
+                        <div class="metric-big">50%</div>
+                        <div class="metric-label">Projected Injury Reduction</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <h3>Executive Profile</h3>
+                <p><strong>Sector:</strong> Occupational Health & Safety</p>
+                <p><strong>Focus:</strong> Industrial Preventative Care</p>
+                <p><strong>Markets:</strong> Logistics, Manufacturing, Energy</p>
+                <p><strong>Primary Lever:</strong> Active Exoskeletons & IoT</p>
+                <div style="margin-top: 15px;">
+                    <span class="badge">High Growth</span>
+                    <span class="badge" style="margin-left: 5px">ROI Driven</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways Section -->
+        <h2 style="margin-bottom: 20px; margin-top: 40px;">Opportunity Pathways</h2>
+        <div class="pathways-grid">
+            <!-- Pathway A -->
+            <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Pathway A</h3>
+                    <span class="badge">Highest Value</span>
+                </div>
+                <p style="color: #fff; margin-top: 5px;"><strong>Active Exoskeleton Fleet</strong></p>
+                <p>Deployment of smart, connected active exoskeletons for lumbar/shoulder support in high-risk manual labor zones.</p>
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+                <p><strong style="color:var(--accent-purple)">Impact:</strong> 40-60% reduction in MSDs. £15M incremental revenue via HaaS model.</p>
+            </div>
+
+            <!-- Pathway B -->
+            <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Pathway B</h3>
+                    <span class="badge" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;">Strategic</span>
+                </div>
+                <p style="color: #fff; margin-top: 5px;"><strong>Autonomous Monitoring</strong></p>
+                <p>Aerial and ground drones equipped with multispectral sensors for chemical leak detection and thermal anomaly inspection.</p>
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+                <p><strong style="color:var(--accent-blue)">Impact:</strong> Replaces dangerous manual inspections. Continuous 24/7 compliance monitoring.</p>
+            </div>
+
+            <!-- Pathway C -->
+            <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Pathway C</h3>
+                    <span class="badge" style="background: rgba(255, 255, 255, 0.1); color: #fff;">Efficiency</span>
+                </div>
+                <p style="color: #fff; margin-top: 5px;"><strong>Remote Triage Kiosks</strong></p>
+                <p>Unstaffed AI-diagnostic pods for remote sites, capable of vitals collection and telepresence clinician connection.</p>
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+                <p><strong>Impact:</strong> 20-30% reduction in offsite medical transports.</p>
+            </div>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <h2 style="margin-bottom: 20px;">Financial Intelligence Dashboard</h2>
+        <div class="dashboard-grid">
+            <!-- Charts Column -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div class="glass-card">
+                    <h3>5-Year Cumulative Net Savings</h3>
+                    <div style="height: 250px;">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3>Safety Incident Reduction (Per 100 FTE)</h3>
+                    <div style="height: 200px;">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Column -->
+            <div class="glass-card">
+                <h3>Pathway Comparison Matrix</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Factor</th>
+                                <th>Pathway A</th>
+                                <th>Pathway B</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Scope</strong></td>
+                                <td>Manual Labor</td>
+                                <td>Hazmat Sites</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Driver</strong></td>
+                                <td>Injury Prev.</td>
+                                <td>Compliance</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Benefit</strong></td>
+                                <td>£12-15M</td>
+                                <td>£5-8M</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payback</strong></td>
+                                <td style="color: #4ade80;">6-9 Mo</td>
+                                <td>18-24 Mo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Risk</strong></td>
+                                <td>Low</td>
+                                <td>Moderate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h3>Implementation Roadmap</h3>
+                    <div class="timeline-item">
+                        <strong style="color: #fff;">Year 1: Pilot Phase</strong>
+                        <p style="margin: 5px 0 0 0;">Deploy 100 exoskeletons at 3 flagship logistics sites. Establish ergonomic baselines.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong style="color: #fff;">Year 2-3: Scale & Kiosks</strong>
+                        <p style="margin: 5px 0 0 0;">Expand to 20% of workforce. Launch remote triage kiosks in offshore locations.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <strong style="color: #fff;">Year 3-5: Autonomous Fleet</strong>
+                        <p style="margin: 5px 0 0 0;">Integrate hazmat drones and unify data into a central Health Command Center.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Chart.js Logic -->
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (£ Millions)',
+                    data: [12, 28, 45, 65, 90],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Safety Incidents (Manual vs Robotic)
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Logistics', 'Heavy Mfg', 'Mining'],
+                datasets: [
+                    {
+                        label: 'Current Incident Rate (Manual)',
+                        data: [4.5, 6.2, 8.1],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Projected Rate (Robotic)',
+                        data: [1.2, 2.5, 3.8],
+                        backgroundColor: '#7c3aed',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8' },
+                        title: { display: true, text: 'Incidents per 100 FTE', color: '#64748b' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
