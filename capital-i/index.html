@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital I Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --accent-color: #7c3aed;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --text-color: #e2e8f0;
+        --heading-color: #ffffff;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.2) 0%, transparent 40%),
+                          radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 40%);
+        color: var(--text-color);
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+    }
+
+    h1, h2, h3 {
+        color: var(--heading-color);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
+    .header-branding {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .report-title {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .full-width { grid-column: span 12; }
+    .half-width { grid-column: span 6; }
+    .third-width { grid-column: span 4; }
+
+    /* Dashboard Metrics */
+    .metric-value {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        font-size: 0.875rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        color: #94a3b8;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    td {
+        padding: 16px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    
+    .status-pill {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .status-high { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; }
+    .status-mid { background: rgba(56, 189, 248, 0.2); color: #bae6fd; }
+    .status-stable { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    .highlight-text {
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .grid-container { display: flex; flex-direction: column; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-branding">
+        <div class="report-title">Capital I Robotics Analysis</div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Dashboard -->
+    <div class="grid-container">
+        <div class="card third-width">
+            <div class="metric-label">Projected Annual Uplift</div>
+            <div class="metric-value">£6.7M</div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">Combined revenue & cost savings from logistics & surgical automation.</p>
+        </div>
+        <div class="card third-width">
+            <div class="metric-label">Surgical Volume Growth</div>
+            <div class="metric-value">+18%</div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">Driven by expanded robotic fleet and reduced length of stay.</p>
+        </div>
+        <div class="card third-width">
+            <div class="metric-label">Logistics ROI Payback</div>
+            <div class="metric-value">1.4 Yrs</div>
+            <p style="color: #94a3b8; font-size: 0.9rem;">Rapid breakeven for autonomous service robot fleet.</p>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-container">
+        <div class="card half-width">
+            <h3>5-Year Cumulative Savings & Revenue</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card half-width">
+            <h3>Annual Surgical Throughput (Cases)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Matrix -->
+    <div class="grid-container">
+        <div class="card full-width">
+            <h3>Strategic Opportunity Matrix</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Core Technology</th>
+                        <th>Primary Value Driver</th>
+                        <th>Annual Impact</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="highlight-text">Pathway A</span></td>
+                        <td>Surgical Robotics (Da Vinci/Mako)</td>
+                        <td>High-Margin Volume Growth</td>
+                        <td>£12M - £18M</td>
+                        <td><span class="status-mid">Moderate</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">Pathway B</span></td>
+                        <td>Autonomous Mobile Robots (AMR)</td>
+                        <td>Labor & Logistics Efficiency</td>
+                        <td>£1.2M - £2M</td>
+                        <td><span class="status-stable">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">Pathway C</span></td>
+                        <td>Automated Pharmacy Dispensing</td>
+                        <td>Safety & Inventory Control</td>
+                        <td>£0.5M - £1M</td>
+                        <td><span class="status-stable">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Strategic Summary -->
+    <div class="grid-container">
+        <div class="card half-width">
+            <h3>Implementation Roadmap</h3>
+            <ul style="padding-left: 20px; line-height: 1.8; color: #cbd5e1;">
+                <li><strong>Year 1:</strong> Acquire 2 Ortho systems & Pilot 5 Logistics Robots.</li>
+                <li><strong>Year 2:</strong> Scale Logistics to 15 units; Data Integration.</li>
+                <li><strong>Year 3:</strong> Central Pharmacy Automation & Command Center.</li>
+            </ul>
+        </div>
+        <div class="card half-width">
+            <h3>Strategic Positioning</h3>
+            <p style="line-height: 1.6; color: #cbd5e1;">
+                Capital I transitions from a standard regional provider to a <span class="highlight-text">Smart Health System</span>. This automation strategy insulates operations from labor shortages while attracting top surgical talent through superior technological infrastructure.
+            </p>
+        </div>
+    </div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [3.5, 9.2, 16.5, 24.0, 32.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Current Baseline', 'Year 1 (Auto)', 'Year 2 (Auto)', 'Year 3 (Auto)'],
+            datasets: [
+                {
+                    label: 'Manual/Legacy Volume',
+                    data: [12000, 12200, 12300, 12400],
+                    backgroundColor: '#1e293b'
+                },
+                {
+                    label: 'Robotic Assisted Uplift',
+                    data: [0, 1200, 2100, 2800],
+                    backgroundColor: '#38bdf8'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    stacked: true,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' } 
+                },
+                x: { 
+                    stacked: true,
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' } 
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
