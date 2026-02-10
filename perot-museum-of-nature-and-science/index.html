@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perot Museum Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 0;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-top: 25px;
+        }
+
+        p, li {
+            color: var(--text-muted);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-purple);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Charts Area */
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .tag-high { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .tag-med { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-logo">OPEN DROIDS</div>
+    
+    <!-- Executive Summary Card -->
+    <div class="card">
+        <h1>Perot Museum of Nature and Science</h1>
+        <p><strong>Robotics Analysis & ROI Model</strong></p>
+        <p>The Perot Museum, a 180,000 sq ft cultural institution with ~1M annual visitors, faces operational challenges in facility maintenance, security, and peak-time visitor flow. The most immediate automation opportunities lie in autonomous facility management (cleaning/security) and AI-driven visitor engagement. Implementing these robotics pathways creates a cleaner environment, reduces labor overhead, and modernizes the brand experience.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-label">Annual Labor Savings (Est.)</div>
+            <div class="metric-value">$112,500</div>
+            <div class="metric-label">Via Pathway A (Cleaning/Security)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Efficiency Gain</div>
+            <div class="metric-value">5x</div>
+            <div class="metric-label">Cleaning Coverage Speed</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">1.4 Years</div>
+            <div class="metric-label">Based on Lease vs. FTE Cost</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <h3>5-Year Cumulative Net Benefit ($)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3>Throughput Comparison (Sq Ft/Hour)</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="card">
+        <h2>Organizational Profile</h2>
+        <ul>
+            <li><strong>Model:</strong> Non-profit 501(c)(3) science museum.</li>
+            <li><strong>Scale:</strong> 1M+ visitors, 5 exhibit floors, 180k sq ft.</li>
+            <li><strong>Operational Pain Points:</strong> Overnight turnaround times, vertical transportation (elevator) queues, complex architectural cleaning.</li>
+        </ul>
+
+        <h2>Robotics Opportunity Pathways</h2>
+        
+        <h3>Pathway A: Autonomous Facility Management</h3>
+        <p>Deployment of Autonomous Mobile Robots (AMRs) for floor care and telepresence security sentries.</p>
+        
+        <h3>Pathway B: STEM Education & Outreach</h3>
+        <p>Integration of "Cobots" and Boston Dynamics-style units into the TECH Truck fleet to drive grant funding and engagement.</p>
+
+        <h3>Pathway C: Visitor Experience</h3>
+        <p>Service robots for lobby queue management and wayfinding to alleviate elevator congestion.</p>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="card">
+        <h2>Comparative View of Pathways</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Factor</th>
+                    <th>Pathway A: Ops & Facility</th>
+                    <th>Pathway B: Education</th>
+                    <th>Pathway C: Visitor Exp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scope</td>
+                    <td>Entire Facility (Overnight)</td>
+                    <td>Classrooms / Tech Truck</td>
+                    <td>Lobby / Atrium</td>
+                </tr>
+                <tr>
+                    <td>Main Value</td>
+                    <td>Labor Reduction & Consistency</td>
+                    <td>Mission & Grant Funding</td>
+                    <td>Guest Satisfaction</td>
+                </tr>
+                <tr>
+                    <td>Annual Benefit</td>
+                    <td>~$60k - $80k (Net)</td>
+                    <td>Variable (Sponsorship)</td>
+                    <td>Intangible (Brand)</td>
+                </tr>
+                <tr>
+                    <td>Payback</td>
+                    <td><span class="tag tag-high">14-18 Months</span></td>
+                    <td><span class="tag tag-med">Immediate (Funded)</span></td>
+                    <td>3+ Years</td>
+                </tr>
+                <tr>
+                    <td>Risk Profile</td>
+                    <td>Low (Mature Tech)</td>
+                    <td>Low</td>
+                    <td>Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Strategic Positioning</h2>
+        <p>Executing this roadmap positions the Perot Museum not just as a displayer of science, but as an active user of applied robotics. This "Living Exhibit" strategy improves operational margins while reinforcing the core mission of STEM inspiration.</p>
+    </div>
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings',
+                data: [20000, 85000, 155000, 230000, 310000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Staff', 'Robotic Fleet'],
+            datasets: [{
+                label: 'Sq Ft Cleaned per Hour',
+                data: [3000, 14000],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', 
+                    'rgba(59, 130, 246, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)', 
+                    '#3b82f6'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: {
+                    ticks: { color: '#94a3b8' },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
