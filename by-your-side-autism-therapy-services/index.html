@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BY YOUR SIDE - Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        --accent: #7c3aed;
+        --text-main: #ffffff;
+        --text-muted: #94a3b8;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border: 2px solid var(--accent);
+        padding: 5px 15px;
+        border-radius: 4px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: var(--glass-border);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        color: var(--accent);
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 15px;
+    }
+
+    th {
+        text-align: left;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        padding: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    td {
+        padding: 15px 10px;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .badge {
+        background: rgba(124, 58, 237, 0.2);
+        color: #d8b4fe;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div>
+            <h1>BY YOUR SIDE Autism Therapy</h1>
+            <p style="color: var(--text-muted);">Robotics & Automation Feasibility Study</p>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </div>
+
+    <!-- Executive Summary Card -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h3 style="margin-top:0;">Executive Summary</h3>
+        <p style="color: var(--text-muted);">
+            BY YOUR SIDE operates in a high-touch, labor-intensive environment. This analysis identifies three key automation pathways: 
+            Socially Assistive Robotics (SAR) for clinical engagement, AI-driven logistics for fleet/scheduling optimization, and 
+            Automated Data Capture. Implementing these technologies shifts the operational model from administrative-heavy to 
+            tech-enabled clinical excellence.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-container">
+        <div class="card">
+            <div class="metric-label">Projected Annual Uplift</div>
+            <div class="metric-value">$1.2M</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Driven by 8% utilization increase</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">Admin Time Saved</div>
+            <div class="metric-value">40%</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Scheduling & Logistics automation</p>
+        </div>
+        <div class="card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">6-9 Mo</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">For primary software/logistics layer</p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid-container">
+        <div class="card full-width">
+            <h3 style="margin-top:0; margin-bottom: 20px;">5-Year Cumulative Net Savings & Revenue</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card full-width">
+            <h3 style="margin-top:0; margin-bottom: 20px;">Therapist Throughput: Manual vs. Automated</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="card">
+        <h3 style="margin-top:0;">Comparative Opportunity Pathways</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PATHWAY</th>
+                    <th>SCOPE</th>
+                    <th>MAIN DRIVER</th>
+                    <th>RISK LEVEL</th>
+                    <th>PAYBACK</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge">A: SAR ROBOTS</span></td>
+                    <td>Clinical / Direct Care</td>
+                    <td>Engagement & Consistency</td>
+                    <td>Moderate</td>
+                    <td>12-18 Months</td>
+                </tr>
+                <tr>
+                    <td><span class="badge">B: LOGISTICS AI</span></td>
+                    <td>Network Operations</td>
+                    <td>Utilization & Routing</td>
+                    <td>Low</td>
+                    <td>3-6 Months</td>
+                </tr>
+                <tr>
+                    <td><span class="badge">C: DATA AUTO</span></td>
+                    <td>Documentation</td>
+                    <td>Staff Retention / Accuracy</td>
+                    <td>Moderate</td>
+                    <td>9-12 Months</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Chart 1: 5-Year Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($M)',
+                    data: [0.8, 2.1, 3.8, 5.9, 8.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#ffffff' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Clinical Hours/Day', 'Admin Hours/Day', 'Travel Hours/Day'],
+                datasets: [
+                    {
+                        label: 'Current Manual Workflow',
+                        data: [5.5, 1.5, 1.0],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Robotic/AI Assisted Workflow',
+                        data: [6.5, 0.8, 0.7],
+                        backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#ffffff' } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#ffffff' }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
