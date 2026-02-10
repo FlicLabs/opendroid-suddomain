@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheyenne County Hospital Robotics Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 40px;
+        background-color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        color: #e2e8f0;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+    }
+
+    h1, h2, h3, h4 {
+        margin: 0 0 15px 0;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    h1 { font-size: 2.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h2 { color: #7c3aed; font-size: 1.5rem; margin-top: 30px; border-bottom: 1px solid rgba(124, 58, 237, 0.3); padding-bottom: 10px; }
+    h3 { color: #e2e8f0; font-size: 1.2rem; margin-top: 20px; }
+
+    .header-logo {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #7c3aed;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    /* Financial Dashboard Table */
+    .finance-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+    }
+
+    .finance-table th {
+        text-align: left;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .finance-table td {
+        padding: 20px 15px;
+        color: #fff;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .metric-value {
+        font-size: 1.5rem;
+        color: #38bdf8;
+    }
+
+    .metric-sub {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        display: block;
+        margin-top: 5px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    p {
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    ul {
+        color: #cbd5e1;
+        line-height: 1.6;
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-logo">OPEN DROIDS</div>
+
+    <div class="glass-card">
+        <h1>Cheyenne County Hospital</h1>
+        <p>Strategic Robotics Implementation & Automation Portfolio</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Cheyenne County Hospital operates as a critical access hub in a challenging rural environment. The strategic focus of this research highlights automation not as a replacement for labor, but as an extender of clinical reach. By implementing Telerobotics (Pathway A) and Environmental Automation (Pathway B), the hospital can retain high-acuity patients locally and reduce the burden on limited staff.</p>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>Pathway A: Telerobotics</h3>
+            <ul>
+                <li><strong>Scope:</strong> ER & Acute Care Wings</li>
+                <li><strong>Function:</strong> Remote specialist navigation</li>
+                <li><strong>Goal:</strong> Reduce patient transfers by 20%</li>
+                <li><strong>Impact:</strong> ~$160k net annual benefit</li>
+            </ul>
+        </div>
+        <div class="glass-card">
+            <h3>Pathway B: UV-C Disinfection</h3>
+            <ul>
+                <li><strong>Scope:</strong> Facility-wide hygiene</li>
+                <li><strong>Function:</strong> Autonomous room sterilization</li>
+                <li><strong>Goal:</strong> Reduce HAIs & room turnover time</li>
+                <li><strong>Impact:</strong> Staff augmentation & safety</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h2>Financial Dashboard (Pathway A Focus)</h2>
+        <table class="finance-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Automated Projection</th>
+                    <th>Net Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Annual Patient Retention</td>
+                    <td><span class="metric-value">0</span><span class="metric-sub">Transferred out</span></td>
+                    <td><span class="metric-value">30+</span><span class="metric-sub">Retained locally</span></td>
+                    <td><span class="metric-value" style="color:#7c3aed">Recaptured Rev.</span></td>
+                </tr>
+                <tr>
+                    <td>Annual Financial Impact</td>
+                    <td><span class="metric-value">-$0</span><span class="metric-sub">Status Quo</span></td>
+                    <td><span class="metric-value">$180,000</span><span class="metric-sub">Gross Revenue</span></td>
+                    <td><span class="metric-value" style="color:#34d399">+$160,000</span></td>
+                </tr>
+                <tr>
+                    <td>Avg Transfer Cost</td>
+                    <td><span class="metric-value">$5,000</span><span class="metric-sub">Per Event</span></td>
+                    <td><span class="metric-value">$0</span><span class="metric-sub">If Retained</span></td>
+                    <td><span class="metric-value" style="color:#34d399">Cost Avoidance</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grid-2">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Net Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Consultation Throughput (Daily)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Chart 1: Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (USD)',
+                data: [120000, 290000, 480000, 650000, 750000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#cbd5e1' } },
+                x: { grid: { display: false }, ticks: { color: '#cbd5e1' } }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Stroke Assessment', 'Infectious Disease', 'Cardiology Triage'],
+            datasets: [{
+                label: 'Manual Process (Hours)',
+                data: [4.5, 3.0, 5.0],
+                backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                borderRadius: 4
+            },
+            {
+                label: 'Robotic/Tele-Assist (Hours)',
+                data: [0.5, 0.8, 1.2],
+                backgroundColor: '#38bdf8',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: { 
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    ticks: { color: '#cbd5e1' },
+                    title: { display: true, text: 'Time to Intervention (Hours)', color: '#94a3b8'}
+                },
+                x: { grid: { display: false }, ticks: { color: '#cbd5e1' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
