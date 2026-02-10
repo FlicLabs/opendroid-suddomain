@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalMed Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+        margin-top: 0;
+        color: #fff;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: #7c3aed;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+
+    .report-title span {
+        color: #94a3b8;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .glass-card:hover {
+        border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .pathway-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .pathway-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(124, 58, 237, 0.05) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .pathway-card h3 {
+        color: #a78bfa;
+        font-size: 18px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        margin: 10px 0;
+        text-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-label {
+        color: #94a3b8;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid rgba(124, 58, 237, 0.5);
+        color: #a78bfa;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .badge-high { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+    .badge-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .badge-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #2563eb; }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">OPEN DROIDS</div>
+    <div class="report-title">
+        <h1>GlobalMed Telemedicine</h1>
+        <span>Robotics Analysis & ROI Model</span>
+    </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="glass-card">
+    <h2>Executive Summary</h2>
+    <p>GlobalMed is a vertically integrated provider of virtual care solutions, serving the DoD, rural health networks, and over 4,000 healthcare institutions. The primary robotics opportunity lies in transforming static telemedicine carts into <strong>Autonomous Mobile Telepresence (AMT)</strong> units. By integrating autonomous mobile robot (AMR) bases, GlobalMed can eliminate the labor burden on nursing staff, reduce time-to-consult, and significantly increase physician throughput. The dominant ROI driver is the reclamation of nursing hours currently spent on transport and setup.</p>
+</div>
+
+<!-- Pathways Grid -->
+<div class="pathway-grid">
+    <div class="pathway-card">
+        <h3>Pathway A: Autonomous Logistics</h3>
+        <p><strong>Scope:</strong> Integration of clinical stations onto AMR bases for independent navigation.</p>
+        <p><strong>Impact:</strong> Recovers 15-20 mins nursing labor per consult. 30% reduction in hardware idle time.</p>
+        <div style="margin-top: 15px;">
+            <span class="badge badge-high">ROI: High</span>
+            <span class="badge badge-low">Risk: Low</span>
+        </div>
+    </div>
+    <div class="pathway-card">
+        <h3>Pathway B: Clinical Robotics</h3>
+        <p><strong>Scope:</strong> Robotic arms (cobots) for remote ultrasound and diagnostic manipulation.</p>
+        <p><strong>Impact:</strong> Expands serviceable markets to unstaffed remote sites. Standardizes diagnostics.</p>
+        <div style="margin-top: 15px;">
+            <span class="badge badge-med">ROI: Med</span>
+            <span class="badge badge-med">Risk: High</span>
+        </div>
+    </div>
+    <div class="pathway-card">
+        <h3>Pathway C: Internal Automation</h3>
+        <p><strong>Scope:</strong> Manufacturing and supply chain robotics in Scottsdale facility.</p>
+        <p><strong>Impact:</strong> Reduces COGS by 10-15%. Accelerates production for fleet rollout.</p>
+        <div style="margin-top: 15px;">
+            <span class="badge badge-med">ROI: Med</span>
+            <span class="badge badge-low">Risk: Low</span>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Dashboard -->
+<div class="glass-card">
+    <h2 style="color: #a78bfa; border-bottom: 1px solid rgba(124,58,237,0.3); padding-bottom: 15px; margin-bottom: 25px;">Financial Dashboard: Pathway A (AMT)</h2>
+    
+    <div class="metric-grid">
+        <div class="metric-card">
+            <div class="metric-label">Client Savings / Year</div>
+            <div class="metric-value">$10.9M</div>
+            <div class="metric-label">Labor Reclamation</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Consults / Day</div>
+            <div class="metric-value">+50%</div>
+            <div class="metric-label">Throughput Uplift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">GlobalMed Revenue</div>
+            <div class="metric-value">$25M</div>
+            <div class="metric-label">Projected Annual Lift</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Payback Period</div>
+            <div class="metric-value">6-9 Mo</div>
+            <div class="metric-label">For Health Systems</div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <!-- Line Chart -->
+        <div>
+            <h4 style="text-align:center; color:#94a3b8; margin-bottom: 10px;">5-Year Cumulative Savings (Net)</h4>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <!-- Bar Chart -->
+        <div>
+            <h4 style="text-align:center; color:#94a3b8; margin-bottom: 10px;">Throughput: Manual vs. Robotic</h4>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Data Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Manual Baseline</th>
+                <th>Robotic Scenario</th>
+                <th>Delta</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nursing Labor / Consult</td>
+                <td>20 Minutes</td>
+                <td>0 Minutes</td>
+                <td style="color:#34d399;">-100% Cost</td>
+            </tr>
+            <tr>
+                <td>Daily Consults (Per Cart)</td>
+                <td>4.0 Visits</td>
+                <td>6.0 Visits</td>
+                <td style="color:#34d399;">+50% Volume</td>
+            </tr>
+            <tr>
+                <td>Hardware Idle Time</td>
+                <td>45%</td>
+                <td>15%</td>
+                <td style="color:#34d399;">+30% Efficiency</td>
+            </tr>
+            <tr>
+                <td>Cost Per Encounter</td>
+                <td>$125 (Est)</td>
+                <td>$85 (Est)</td>
+                <td style="color:#34d399;">-$40 Savings</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Implementation Roadmap -->
+<div class="glass-card">
+    <h2>Implementation Roadmap</h2>
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <div style="width: 30%; border-left: 2px solid #7c3aed; padding-left: 15px;">
+            <h4 style="color: #fff;">Phase 1: Year 1</h4>
+            <p style="color: #94a3b8; font-size: 14px;"><strong>Prototype & Pilot</strong><br>Partner with AMR chassis vendor. Launch pilot with VA/DoD partner.</p>
+        </div>
+        <div style="width: 30%; border-left: 2px solid #7c3aed; padding-left: 15px;">
+            <h4 style="color: #fff;">Phase 2: Year 2-3</h4>
+            <p style="color: #94a3b8; font-size: 14px;"><strong>Commercial Rollout</strong><br>Fleet management software update. Scale manufacturing via Pathway C.</p>
+        </div>
+        <div style="width: 30%; border-left: 2px solid #7c3aed; padding-left: 15px;">
+            <h4 style="color: #fff;">Phase 3: Year 3-5</h4>
+            <p style="color: #94a3b8; font-size: 14px;"><strong>Clinical Robotics</strong><br>FDA trials for diagnostic cobots. Predictive AI integration.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Global Options
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 5-Year Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings ($M)',
+                data: [10.9, 24.5, 42.1, 65.8, 95.0],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Throughput Comparison Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Cart', 'Robotic AMR'],
+            datasets: [{
+                label: 'Consults Per Day',
+                data: [4, 6],
+                backgroundColor: [
+                    'rgba(148, 163, 184, 0.5)', // Gray for manual
+                    'rgba(124, 58, 237, 0.8)'  // Purple for Robotic
+                ],
+                borderColor: [
+                    'rgba(148, 163, 184, 1)',
+                    '#7c3aed'
+                ],
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
