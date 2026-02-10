@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezra Medical Center - Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #0f172a;
+            --electric-purple: #7c3aed;
+            --purple-glow: rgba(124, 58, 237, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-space);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(15, 23, 42, 1) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            letter-spacing: -0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--electric-purple);
+        }
+
+        .report-title {
+            text-align: right;
+        }
+
+        .report-title h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #fff, var(--electric-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title p {
+            margin: 5px 0 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            color: var(--electric-purple);
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 0;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* Financial Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--purple-glow);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--electric-purple);
+            color: var(--electric-purple);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .tag-low { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .dashboard-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .report-title { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                OPEN <span>DROIDS</span>
+            </div>
+            <div class="report-title">
+                <h1>Ezra Medical Center</h1>
+                <p>Robotics Opportunities & ROI Analysis</p>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="glass-card">
+            <h2>Executive Summary</h2>
+            <p>Ezra Medical Center is uniquely positioned to leverage automation and robotics to optimize workflow rather than heavy surgery. By implementing AI-driven Administrative RPA and Pharmacy Robotics, the center can solve critical bottlenecks in patient volume and reimbursement. The dominant ROI driver is a 15-20% increase in patient capacity and significant reduction in revenue leakage, enabling multi-million dollar margin expansion.</p>
+        </div>
+
+        <!-- Dashboard Metrics -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-value">$1.6M</div>
+                <div class="metric-label">Annual Net Benefit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">3-5 mo</div>
+                <div class="metric-label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">+40%</div>
+                <div class="metric-label">Pharmacy Throughput</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">-25%</div>
+                <div class="metric-label">Claim Denials</div>
+            </div>
+        </div>
+
+        <!-- Pathways Grid -->
+        <div class="grid-3">
+            <div class="glass-card">
+                <h2>Pathway A: Admin RPA</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 15px;">Software robotics for scheduling and billing verification to reduce no-shows and denials.</p>
+                <div class="tag tag-high">Highest Value</div>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway B: Pharmacy</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 15px;">Automated dispensing robotics to count and bottle meds, freeing pharmacists for clinical work.</p>
+                <div class="tag tag-med">High Efficiency</div>
+            </div>
+            <div class="glass-card">
+                <h2>Pathway C: Dental</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 15px;">Intraoral scanning and chairside milling for same-day restorative procedures.</p>
+                <div class="tag tag-low">Niche Value</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2">
+            <div class="glass-card">
+                <h2>5-Year Cumulative Net Benefit</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h2>Daily Patient Throughput (Capacity)</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative Table -->
+        <div class="glass-card">
+            <h2>Comparative Financial View</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Main Value Driver</th>
+                        <th>Annual Benefit (Est.)</th>
+                        <th>Payback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pathway A: Admin RPA</td>
+                        <td>Revenue Cycle & Capacity</td>
+                        <td>$1.5M - $2.0M</td>
+                        <td>3-5 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway B: Pharmacy</td>
+                        <td>Error Reduction & Speed</td>
+                        <td>$300k - $500k</td>
+                        <td>12-18 Months</td>
+                    </tr>
+                    <tr>
+                        <td>Pathway C: Dental</td>
+                        <td>Lab Fees & Utilization</td>
+                        <td>$150k - $250k</td>
+                        <td>24 Months</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px;">
+            Generated by Open Droids Research • Confidential Analysis
+        </div>
+    </div>
+
+    <script>
+        // Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const savingsGradient = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        savingsGradient.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
+        savingsGradient.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit (USD)',
+                    data: [1.2, 2.8, 4.5, 5.9, 7.2],
+                    borderColor: '#7c3aed',
+                    backgroundColor: savingsGradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: function(value) { return '$' + value + 'M'; } }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Admin/Front Desk', 'Pharmacy Scripts', 'Dental Procedures'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [350, 400, 25],
+                        backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic/Automated',
+                        data: [450, 650, 32],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
