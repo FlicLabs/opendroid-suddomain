@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alliance Homecare Robotics Research</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #7c3aed;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        h2 {
+            color: #7c3aed;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.4);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #cbd5e1;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid #7c3aed;
+            color: #7c3aed;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .highlight-text {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .badge-a { background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border: 1px solid #7c3aed; }
+        .badge-b { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid #38bdf8; }
+        .badge-c { background: rgba(16, 185, 129, 0.2); color: #a7f3d0; border: 1px solid #10b981; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Alliance Homecare</h1>
+            <div style="color: #94a3b8; margin-top: 5px;">Robotics Opportunities Portfolio</div>
+        </div>
+        <div class="logo">OPEN DROIDS</div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2>Executive Summary</h2>
+        <p style="line-height: 1.6;">
+            Alliance Homecare operates in the high-stakes luxury care market where staff retention is the primary bottleneck. By deploying <strong>Pathway A (Wearable Robotics)</strong>, the company can reduce caregiver injury rates by ~50%, creating a distinct competitive advantage in recruitment. Secondary deployments in medication automation open new revenue streams for "step-down" care levels.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Financial Projection (Pathway A)</h2>
+            <div class="metric-value">£325K</div>
+            <div class="metric-label">Net Annual Benefit (Year 1)</div>
+            <div style="margin-top: 20px; display: flex; gap: 20px;">
+                <div>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: #a78bfa;">6 Months</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">ROI Payback Period</div>
+                </div>
+                <div>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: #a78bfa;">15+</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">Key Staff Retained/Yr</div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Cumulative Savings (5-Year)</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Comparison -->
+    <div class="card">
+        <h2>Strategic Pathways Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Scope</th>
+                    <th>Value Driver</th>
+                    <th>Annual Benefit</th>
+                    <th>Risk Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge badge-a">A: Wearables</span></td>
+                    <td>Physical Assist / Exoskeletons</td>
+                    <td>Staff Retention & Safety</td>
+                    <td>£300k - £500k</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-b">B: Med-Bots</span></td>
+                    <td>Auto-Dispensing / Telepresence</td>
+                    <td>New Revenue Streams</td>
+                    <td>£150k - £300k</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td><span class="badge badge-c">C: AI Logistics</span></td>
+                    <td>Scheduling Optimization</td>
+                    <td>Admin Efficiency</td>
+                    <td>~£100k</td>
+                    <td>Low</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Throughput Chart -->
+    <div class="grid-2">
+        <div class="card">
+            <h2>Staff Efficiency & Longevity</h2>
+            <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px;">
+                Comparison of average carer tenure and injury-free months between manual handling and exoskeleton-assisted handling.
+            </p>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #c4b5fd;">Phase 1 (Months 1-6)</strong><br>
+                    Pilot Pathway A with 10 senior Home Health Aides. Baseline data collection on fatigue.
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <strong style="color: #bae6fd;">Phase 2 (Months 7-12)</strong><br>
+                    Roll out Pathway B for "Step-Down" patients. Begin upsell of tech-monitoring tiers.
+                </li>
+                <li>
+                    <strong style="color: #a7f3d0;">Phase 3 (Year 2+)</strong><br>
+                    Full fleet deployment of exoskeletons (50 units). AI integration for scheduling.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [325000, 700000, 1150000, 1650000, 2200000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Manual vs Robotic Tenure (Longevity)
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Avg Career Tenure (Mos)', 'Injury-Free Interval (Mos)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [36, 18],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Robotic Assisted',
+                    data: [54, 42],
+                    backgroundColor: '#7c3aed',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
