@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEX Robotics Research | OPEN DROIDS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #7c3aed;
+            --accent-secondary: #3b82f6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2, h3 {
+            color: var(--text-primary);
+        }
+
+        h3 {
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-top: 0;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* Financial Dashboard Table */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            color: var(--text-primary);
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--accent-primary);
+            color: var(--accent-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-high { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-med { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">OPEN DROIDS</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Consultation & Research</div>
+        </div>
+
+        <!-- Title Section -->
+        <div style="margin-bottom: 40px;">
+            <h3>Strategic Portfolio</h3>
+            <h1>AEX Convention Services</h1>
+            <p style="color: var(--text-secondary); max-width: 800px;">
+                Robotics integration strategy focusing on autonomous drayage, venue preparation, and AI-driven logistics to optimize labor spend and accelerate move-in/move-out cycles.
+            </p>
+        </div>
+
+        <!-- Executive Metrics -->
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-value">$15M</div>
+                <div class="metric-label">5-Year Net Benefit</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">30%</div>
+                <div class="metric-label">Labor Cost Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">18 Mo</div>
+                <div class="metric-label">ROI Payback Period</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary & Profile -->
+        <div class="grid-2-col">
+            <div class="glass-card">
+                <h3>01. Executive Summary</h3>
+                <p>AEX Convention Services operates in an industry defined by rigid deadlines and fluctuating labor availability. By shifting from manual material handling to an <strong>AI-orchestrated logistics model</strong>, AEX can address its primary bottlenecks: drayage inefficiency and overtime costs.</p>
+                <p>The dominant ROI driver is <strong>Pathway A (Autonomous Material Handling)</strong>, capable of reducing temporary labor dependance and accelerating event turnaround times.</p>
+            </div>
+            <div class="glass-card">
+                <h3>02. Operational Profile</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color: #fff;">Core Model:</strong><br> General Service Contractor (GSC) for trade shows, handling drayage, install/dismantle, and decoration.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color: #fff;">Critical Bottlenecks:</strong><br> Tight move-in windows (12-48 hours), high reliance on union/temp labor, freight tracking gaps.
+                    </li>
+                    <li>
+                        <strong style="color: #fff;">Strategic Fit:</strong><br> Ideal for logistics-focused AMRs and large-scale floor cleaning robotics.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Robotics Opportunities Table -->
+        <div class="glass-card">
+            <h3>03. Robotics Opportunity Pathways</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Primary Value Driver</th>
+                        <th>Est. Annual Benefit</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A. Logistics AMRs</strong></td>
+                        <td>Autonomous drayage & pallet transport</td>
+                        <td>Labor reduction & Speed</td>
+                        <td>$3.0M - $3.5M</td>
+                        <td><span class="badge badge-high">HIGHEST</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>B. Floor Care Bots</strong></td>
+                        <td>Automated carpet cleaning & prep</td>
+                        <td>Consistency & Reallocation</td>
+                        <td>$0.5M</td>
+                        <td><span class="badge badge-med">MEDIUM</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>C. Inventory AI</strong></td>
+                        <td>Drone/Rover freight tracking</td>
+                        <td>Loss prevention & QA</td>
+                        <td>$0.75M</td>
+                        <td><span class="badge badge-med">COMPLEMENTARY</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Financial Dashboard Charts -->
+        <div class="grid-2-col">
+            <div class="glass-card">
+                <h3>Financial Projection: Cumulative Savings</h3>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3>Throughput Analysis: Pallets per Hour</h3>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Model Details -->
+        <div class="glass-card">
+            <h3>04. Financial Model (Pathway A)</h3>
+            <div class="grid-2-col">
+                <div>
+                    <h4 style="margin-bottom: 10px; color: var(--text-secondary);">Baseline Costs</h4>
+                    <p><strong>Annual Drayage Labor:</strong> ~$12M<br>
+                    <strong>Overtime Component:</strong> ~20%<br>
+                    <strong>Freight Damage/Loss:</strong> ~2-3% of revenue</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 10px; color: var(--accent-primary);">Automation Impact</h4>
+                    <p><strong>Labor Savings:</strong> ~$3.6M (30% reduction)<br>
+                    <strong>Platform Cost:</strong> ~$1.1M/year (SaaS/Lease)<br>
+                    <strong>Net Annual Benefit:</strong> ~$2.5M</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="glass-card">
+            <h3>05. Implementation Roadmap</h3>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px; border-left: 3px solid var(--accent-secondary); padding-left: 20px;">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Year 1: Pilot</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Deploy 5 AMRs at two major recurring shows. Calibrate navigation stacks with floor plans.</span>
+                </div>
+                <div style="flex: 1; min-width: 200px; border-left: 3px solid var(--accent-primary); padding-left: 20px;">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Year 2: Scale</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Expand fleet to 50% of events. Integrate freight tracking AI. Train labor supervisors.</span>
+                </div>
+                <div style="flex: 1; min-width: 200px; border-left: 3px solid #fff; padding-left: 20px;">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Year 3: Full Automation</strong>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Full fleet deployment. Premium "Fast-Track" move-in services sold to exhibitors.</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Chart 1: Cumulative Savings
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($ Millions)',
+                    data: [1.2, 3.8, 7.5, 11.2, 15.1],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Throughput Comparison
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Teams', 'Hybrid (Robotic Assist)'],
+                datasets: [{
+                    label: 'Pallets per Hour (Avg)',
+                    data: [45, 72],
+                    backgroundColor: ['rgba(255, 255, 255, 0.2)', '#3b82f6'],
+                    borderColor: ['rgba(255, 255, 255, 0.5)', '#3b82f6'],
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
