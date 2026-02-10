@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISBH Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --accent-color: #7c3aed;
+        --text-color: #ffffff;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 40px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+        background: var(--glass-bg);
+        border-radius: 16px;
+        box-shadow: var(--card-shadow);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        padding: 30px;
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+        border-color: var(--accent-color);
+    }
+
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #fff, var(--accent-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    h2 {
+        color: var(--accent-color);
+        margin-top: 0;
+        font-size: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+
+    /* Dashboard Metrics */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .metric-value {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        text-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .metric-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    th {
+        color: var(--accent-color);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .chart-box {
+        position: relative;
+        height: 350px;
+        width: 100%;
+    }
+
+    /* Pathway Grid */
+    .pathway-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .charts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; opacity: 0.6;">CLIENT PORTFOLIO</div>
+            <div>Integrated Services for Behavioral Health</div>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <div class="glass-card">
+        <h2>Executive Summary</h2>
+        <p>Integrated Services for Behavioral Health (ISBH) operates in a high-demand, resource-constrained environment spanning rural Ohio. The strategic integration of automation focuses on "software robotics" (RPA/AI) to relieve administrative bottlenecks, alongside therapeutic and residential robotics. This portfolio offers a path to reclaim over 70,000 annual clinical hours, translating to significant revenue expansion and improved community safety.</p>
+    </div>
+
+    <!-- Financial Dashboard Header -->
+    <div class="metrics-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-value">$4.6M</div>
+            <div class="metric-label">Est. Annual Net Benefit</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">20%</div>
+            <div class="metric-label">Clinical Capacity Lift</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-value">6 Mos</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (USD Millions)</h3>
+            <div class="chart-box">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Weekly Patient Throughput (Per Clinician)</h3>
+            <div class="chart-box">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Model Table -->
+    <div class="glass-card">
+        <h2>Financial Impact Model: Pathway A (Process Automation)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Baseline (Manual)</th>
+                    <th>Robotic/AI Enhanced</th>
+                    <th>Variance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Clinician Admin Load</td>
+                    <td>10-12 hrs/week</td>
+                    <td>4-6 hrs/week</td>
+                    <td style="color: #4ade80;">-50% Burden</td>
+                </tr>
+                <tr>
+                    <td>Billable Capacity</td>
+                    <td>~25 hrs/week</td>
+                    <td>~28 hrs/week</td>
+                    <td style="color: #4ade80;">+3 hrs/week</td>
+                </tr>
+                <tr>
+                    <td>Annual Revenue (Network)</td>
+                    <td>~$54M (Est.)</td>
+                    <td>~$59.1M</td>
+                    <td style="color: #4ade80;">+$5.1M</td>
+                </tr>
+                <tr>
+                    <td>Ops Cost (Software/Maint)</td>
+                    <td>$0</td>
+                    <td>$650,000</td>
+                    <td style="color: #f87171;">+$650k</td>
+                </tr>
+                <tr>
+                    <td><strong>Net Annual Benefit</strong></td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td style="color: var(--accent-color); font-weight: bold;">~$4.45M</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pathways -->
+    <div class="glass-card">
+        <h2>Strategic Pathways</h2>
+        <div class="pathway-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(124, 58, 237, 0.3);">
+                <h3 style="color: var(--accent-color);">Pathway A: Intelligent Process Automation</h3>
+                <p><strong>Focus:</strong> Admin Relief & Intake</p>
+                <p>Implementation of RPA and Conversational AI to handle triage, scheduling, and billing entry. Reclaims substantial clinical time for patient care.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                <h3 style="color: var(--accent-color);">Pathway B: Therapeutic Robotics</h3>
+                <p><strong>Focus:</strong> Clinical Augmentation</p>
+                <p>Deployment of social robots (Paro, Moxie) and VR therapy tools for autism and trauma support, extending therapy beyond human-only interaction.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                <h3 style="color: var(--accent-color);">Pathway C: Environmental Intelligence</h3>
+                <p><strong>Focus:</strong> Residential Safety</p>
+                <p>Smart sensors and automated medication dispensing for group homes. Reduces nursing travel time and improves incident response speeds.</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit ($M)',
+                data: [3.8, 8.5, 13.9, 19.8, 26.5],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#ffffff' }
+                },
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#ffffff' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Workflow', 'Robotic/AI Enhanced'],
+            datasets: [{
+                label: 'Visits Per Week',
+                data: [25, 31],
+                backgroundColor: ['rgba(255, 255, 255, 0.2)', '#7c3aed'],
+                borderColor: ['rgba(255, 255, 255, 0.5)', '#7c3aed'],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#ffffff' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#ffffff' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
