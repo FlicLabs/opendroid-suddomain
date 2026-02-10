@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecticut Renaissance | Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-purple: #7c3aed;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-purple);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Chart Containers */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .split-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .split-view {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--accent-purple);
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">OPEN DROIDS</div>
+
+    <div class="glass-card">
+        <h1>Connecticut Renaissance</h1>
+        <p style="color: var(--text-muted); line-height: 1.6;">
+            A strategic robotics and automation portfolio focusing on optimizing behavioral health operations, 
+            enhancing residential safety, and automating compliance reporting for maximum ROI.
+        </p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">Proj. Annual Savings</div>
+            <div class="metric-value">£450k+</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Admin Time Saved</div>
+            <div class="metric-value">3,000 hrs</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Medication Accuracy</div>
+            <div class="metric-value">99.9%</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="split-view">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Net Savings</h3>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card">
+            <h3>Admin Processing Capacity (Weekly Cases)</h3>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparative Table -->
+    <div class="glass-card">
+        <h3>Pathway Comparison Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Focus Area</th>
+                    <th>Implementation Risk</th>
+                    <th>ROI Speed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A: Med Automation</strong></td>
+                    <td>Residential Safety & Nursing</td>
+                    <td>Low</td>
+                    <td>12-18 Months</td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B: RPA/Admin</strong></td>
+                    <td>Compliance & Billing</td>
+                    <td>Very Low</td>
+                    <td>3-6 Months</td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C: Passive Sensing</strong></td>
+                    <td>Client Safety Monitoring</td>
+                    <td>Moderate</td>
+                    <td>18-24 Months</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Opportunities Detail -->
+    <div class="split-view">
+        <div class="glass-card">
+            <span class="badge">Immediate Priority</span>
+            <h3>Pathway A: Automated Dispensing</h3>
+            <p style="color: var(--text-muted);">
+                Implementation of secure, table-top robotic medication dispensers in halfway houses.
+                Reduces diversion risks and frees up significant nursing hours for clinical care.
+            </p>
+        </div>
+        <div class="glass-card">
+            <span class="badge">High Efficiency</span>
+            <h3>Pathway B: RPA & Compliance</h3>
+            <p style="color: var(--text-muted);">
+                "Software Robots" to bridge the gap between internal health records and state reporting portals (DIMES/DDAP), eliminating double-entry and billing lag.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (£)',
+                data: [50000, 250000, 550000, 950000, 1500000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Intake Processing', 'Billing Claims', 'State Reporting'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [40, 60, 30],
+                    backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Automated (RPA)',
+                    data: [120, 250, 400],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            },
+            plugins: {
+                legend: { labels: { color: '#94a3b8' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
