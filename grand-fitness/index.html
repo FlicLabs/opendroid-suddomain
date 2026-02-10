@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grand Fitness - Robotics ROI Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --accent-purple: #7c3aed;
+        --accent-blue: #3b82f6;
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 40px;
+        background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                          radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 60px;
+        border-bottom: var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        background: linear-gradient(to right, #fff, var(--text-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        margin: 0;
+        font-size: 2rem;
+        color: var(--text-primary);
+    }
+
+    .report-title span {
+        color: var(--accent-purple);
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .grid-layout {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        border: var(--glass-border);
+        padding: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-4 { grid-column: span 4; }
+
+    h2 {
+        font-size: 1.25rem;
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.85rem;
+        font-weight: 700;
+    }
+
+    h3 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+    }
+
+    .metric-trend {
+        font-size: 0.9rem;
+        color: #10b981; /* Green */
+        margin-top: 8px;
+        display: inline-block;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        text-align: left;
+        color: var(--accent-purple);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        padding-bottom: 12px;
+        border-bottom: var(--glass-border);
+    }
+
+    td {
+        padding: 12px 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+    }
+
+    .pathway-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 8px;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .pathway-a { border-left: 3px solid var(--accent-blue); }
+    .pathway-b { border-left: 3px solid var(--accent-purple); }
+    .pathway-c { border-left: 3px solid #10b981; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">
+            <span>Portfolio Analysis</span>
+            <h1>Grand Fitness</h1>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-layout">
+        <div class="card col-span-8">
+            <h2>Executive Summary</h2>
+            <h3>Automating the Member Experience</h3>
+            <p>Grand Fitness operates 45+ large-format clubs facing rising labor costs and hygiene demands. Our analysis identifies <strong>Autonomous Sanitation Fleets</strong> and <strong>Service Cobots</strong> as the primary drivers for ROI. By automating floor care and intra-club logistics, Grand Fitness can unlock £1.68M in annual incremental benefit while elevating the member experience to a premium tier.</p>
+        </div>
+        <div class="card col-span-4">
+            <h2>Organizational Profile</h2>
+            <table>
+                <tr>
+                    <td><strong>Scale</strong></td>
+                    <td style="color:white; text-align:right;">45 Locations</td>
+                </tr>
+                <tr>
+                    <td><strong>Members</strong></td>
+                    <td style="color:white; text-align:right;">~200,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Avg Fee</strong></td>
+                    <td style="color:white; text-align:right;">£60 / Month</td>
+                </tr>
+                <tr>
+                    <td><strong>Key Pain Point</strong></td>
+                    <td style="color:white; text-align:right;">Labor/Hygiene</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="grid-layout">
+        <div class="card col-span-4">
+            <h2>Est. Annual Net Benefit</h2>
+            <div class="metric-value">£1.68M</div>
+            <div class="metric-label">Network-Wide Incremental Value</div>
+            <div class="metric-trend">▲ 22% Margin Uplift</div>
+        </div>
+        <div class="card col-span-4">
+            <h2>ROI Payback Period</h2>
+            <div class="metric-value">9 Months</div>
+            <div class="metric-label">From Full Deployment</div>
+            <div class="metric-trend">▼ Labor Costs Reduced</div>
+        </div>
+        <div class="card col-span-4">
+            <h2>Projected 5-Year Net</h2>
+            <div class="metric-value">£12.4M</div>
+            <div class="metric-label">Cumulative Cash Flow</div>
+            <div class="metric-trend">Aggressive Scenario</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-layout">
+        <div class="card col-span-6">
+            <h2>5-Year Cumulative Savings Projection</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card col-span-6">
+            <h2>Efficiency: Manual vs. Robotic Cleaning</h2>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Comparison Table -->
+    <div class="grid-layout">
+        <div class="card col-span-12">
+            <h2>Strategic Pathways Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pathway</th>
+                        <th>Scope</th>
+                        <th>Primary Value Driver</th>
+                        <th>Annual Benefit</th>
+                        <th>Risk Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="pathway-badge pathway-a">A</span> <strong>Sanitation Fleet</strong></td>
+                        <td>All 45 Locations</td>
+                        <td>Labor Reduction (40%)</td>
+                        <td style="color: #10b981;">£2.2M</td>
+                        <td>Low (Mature Tech)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pathway-badge pathway-b">B</span> <strong>Delivery Cobots</strong></td>
+                        <td>Top 20 Clubs</td>
+                        <td>Ancillary Revenue Sales</td>
+                        <td style="color: #10b981;">£0.8M</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pathway-badge pathway-c">C</span> <strong>Maintenance AI</strong></td>
+                        <td>Integrated</td>
+                        <td>Asset Uptime & Safety</td>
+                        <td style="color: #10b981;">£0.3M</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults for Charts
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter';
+
+    // 1. Cumulative Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Benefit (£ Millions)',
+                data: [0.8, 3.2, 5.9, 8.8, 12.4],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { callback: function(value) { return '£' + value + 'M'; } }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // 2. Throughput Comparison Bar Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Cost per Sq Ft', 'Coverage Consistency', 'Availability'],
+            datasets: [
+                {
+                    label: 'Manual Labor',
+                    data: [100, 65, 30], // Normalized Metrics
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Robotic Fleet',
+                    data: [40, 98, 95], // Normalized Metrics
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', align: 'end' }
+            },
+            scales: {
+                y: {
+                    display: false,
+                    grid: { display: false }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
