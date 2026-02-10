@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldCare Robotics Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --accent-color: #7c3aed;
+            --text-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(15, 23, 42, 0.4));
+            border: 1px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            color: #e2e8f0;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .tag-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .tag-med { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .tag-low { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: bold;">WorldCare</div>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="card">
+        <h2 style="color: var(--accent-color); margin-top: 0;">Executive Summary</h2>
+        <p>WorldCare is a global leader in medical second opinions. By implementing a robotics portfolio focused on <strong>RPA (Pathway A)</strong>, <strong>Telepresence (Pathway B)</strong>, and <strong>Digital Pathology (Pathway C)</strong>, the company can transition from a service coordinator to a high-speed logistics platform. The primary ROI driver is the automation of medical record intake, reducing case turnaround time by over 80%.</p>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="dashboard-grid">
+        <div class="metric-card">
+            <div class="metric-value">£1.75M</div>
+            <div class="metric-label">Annual Net Savings (Pathway A)</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">3 Months</div>
+            <div class="metric-label">ROI Payback Period</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">5,000+</div>
+            <div class="metric-label">Addt'l Case Capacity</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>5-Year Cumulative Savings Projection</h3>
+            <div class="chart-wrapper">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Case Processing Throughput (Daily)</h3>
+            <div class="chart-wrapper">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pathways Table -->
+    <div class="card">
+        <h3 style="margin-top: 0;">Strategic Pathways Comparison</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Technology</th>
+                    <th>Primary Value</th>
+                    <th>Risk Profile</th>
+                    <th>Est. Annual Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pathway A</td>
+                    <td>RPA & AI Intake</td>
+                    <td>Speed & Margin</td>
+                    <td><span class="tag tag-high">LOW</span></td>
+                    <td>£1.75M - £2.0M</td>
+                </tr>
+                <tr>
+                    <td>Pathway B</td>
+                    <td>Telepresence Robots</td>
+                    <td>VIP Brand Experience</td>
+                    <td><span class="tag tag-med">MODERATE</span></td>
+                    <td>£500k (Indirect)</td>
+                </tr>
+                <tr>
+                    <td>Pathway C</td>
+                    <td>Digital Pathology</td>
+                    <td>Quality & Accuracy</td>
+                    <td><span class="tag tag-high">LOW</span></td>
+                    <td>£750k</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Implementation Roadmap -->
+    <div class="card">
+        <h3>Implementation Roadmap</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="color: var(--accent-color); margin: 0 0 10px 0;">Year 1: Foundation</h4>
+                <ul style="padding-left: 20px; font-size: 0.9rem; color: #cbd5e1;">
+                    <li>Deploy RPA for English records.</li>
+                    <li>Automate fax ingestion.</li>
+                    <li>Pilot Telepresence in London/Dubai.</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="color: var(--accent-color); margin: 0 0 10px 0;">Year 2: Expansion</h4>
+                <ul style="padding-left: 20px; font-size: 0.9rem; color: #cbd5e1;">
+                    <li>Integrate Digital Pathology scanners.</li>
+                    <li>Roll out AI Translation.</li>
+                    <li>Scale Telepresence to 10 hubs.</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                <h4 style="color: var(--accent-color); margin: 0 0 10px 0;">Year 3: Optimization</h4>
+                <ul style="padding-left: 20px; font-size: 0.9rem; color: #cbd5e1;">
+                    <li>Full Predictive Case Triage.</li>
+                    <li>Global Consortium Data Lake.</li>
+                    <li>Automated Quality Assurance.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Global Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. Cumulative Savings Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings (GBP Millions)',
+                    data: [1.4, 3.2, 5.1, 7.3, 9.5],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Comparison Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Intake', 'Prep', 'Triage', 'Review'],
+                datasets: [
+                    {
+                        label: 'Manual (Hours)',
+                        data: [4.5, 2.0, 1.5, 3.0],
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic/AI (Hours)',
+                        data: [0.2, 0.5, 0.1, 2.5],
+                        backgroundColor: '#7c3aed',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        title: { display: true, text: 'Hours per Case' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
