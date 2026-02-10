@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello! DMC Robotics Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #0f172a; /* Deep Space Blue */
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: #7c3aed; /* Electric Purple */
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            color: #a5b4fc;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        strong {
+            color: #fff;
+        }
+
+        /* Header Logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 8px;
+            border: 1px solid #7c3aed;
+        }
+
+        /* Dashboard Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            color: #cbd5e1;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            font-weight: 600;
+            border-bottom: 2px solid #7c3aed;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            color: #38bdf8;
+            font-size: 1.1rem;
+        }
+
+        /* Metric Grid */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #7c3aed;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .metric-card .label {
+            display: block;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .metric-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .chart-row {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .chart-col {
+            flex: 1;
+            min-width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">OPEN DROIDS</div>
+            <div style="text-align: right; color: #94a3b8;">Consultation Report: Hello! DMC</div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h1>Hello! Destination Management</h1>
+            <h3>Robotics Analysis & ROI Model</h3>
+            <p><strong>Executive Summary:</strong> Hello! Destination Management is a market leader operating across 10+ major U.S. hubs. The company traditionally relies on heavy manual labor for warehouse logistics, event setup, and transport coordination. By pivoting to an AI-orchestrated model, Hello! can unlock significant margin expansion. The strongest levers are (1) Warehouse Automation (AMRs) for inventory, (2) Autonomous Event Logistics for setup, and (3) Robotic Guest Experiences. The projected ROI is driven by a 30% reduction in variable labor costs.</p>
+        </div>
+
+        <!-- Financial Dashboard -->
+        <div class="card">
+            <h2>Financial Dashboard - Pathway A (Warehouse Automation)</h2>
+            
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <span class="label">Annual Net Benefit</span>
+                    <span class="number">$2.8M</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Payback Period</span>
+                    <span class="number">1.5 Yrs</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Labor Reduction</span>
+                    <span class="number">30%</span>
+                </div>
+                <div class="metric-card">
+                    <span class="label">Hubs Deployed</span>
+                    <span class="number">10</span>
+                </div>
+            </div>
+
+            <div class="chart-row">
+                <div class="chart-col">
+                    <h3>5-Year Cumulative Net Savings (Millions USD)</h3>
+                    <div class="chart-container">
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-col">
+                    <h3>Hourly Setup Throughput (Assets Moved)</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathways Comparison -->
+        <div class="card">
+            <h2>Robotics Opportunity Pathways</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Pathway A: Warehouse AMRs</th>
+                        <th>Pathway B: On-Site Logistics</th>
+                        <th>Pathway C: Guest Experience</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>All regional inventory hubs</td>
+                        <td>Large convention setups</td>
+                        <td>Client-specific activations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Main Value Driver</strong></td>
+                        <td><span class="metric-value">Labor & Shrinkage Reduction</span></td>
+                        <td>Safety & Speed</td>
+                        <td>Brand Differentiation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annual Benefit (Mid)</strong></td>
+                        <td><span class="metric-value">~$2.8M - $3.6M</span></td>
+                        <td>~$1.2M</td>
+                        <td>~$500k (High Margin)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Profile</strong></td>
+                        <td>Low (Mature Tech)</td>
+                        <td>Moderate</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <h2>Strategic Implementation Roadmap</h2>
+            <ul>
+                <li>
+                    <strong>Phase 1 (Year 1):</strong> Launch Pathway A Pilot in Orlando/Las Vegas. Integrate WMS with AMR fleet.
+                </li>
+                <li>
+                    <strong>Phase 2 (Year 2):</strong> Rollout Warehouse Automation to top 5 hubs. Launch Pathway C (Robotic Bartenders) for premium rentals.
+                </li>
+                <li>
+                    <strong>Phase 3 (Years 3+):</strong> Deploy Pathway B (Heavy Tug Robots) for on-site ballroom setup in partner hotels.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        // 1. 5-Year Cumulative Savings Line Chart
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        const gradientSavings = ctxSavings.createLinearGradient(0, 0, 0, 400);
+        gradientSavings.addColorStop(0, 'rgba(124, 58, 237, 0.5)'); // Electric Purple
+        gradientSavings.addColorStop(1, 'rgba(124, 58, 237, 0.0)');
+
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Savings ($M)',
+                    data: [0.5, 3.3, 6.1, 9.5, 13.8],
+                    borderColor: '#7c3aed',
+                    backgroundColor: gradientSavings,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#7c3aed',
+                    pointRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // 2. Manual vs Robotic Throughput Bar Chart
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Manual Team', 'Robotic Assisted Team'],
+                datasets: [{
+                    label: 'Assets Moved Per Hour',
+                    data: [45, 110],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.2)', // Manual
+                        '#38bdf8'  // Robotic (Cyan)
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, 0.5)',
+                        '#38bdf8'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
