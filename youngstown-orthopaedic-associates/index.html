@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOA Robotics Portfolio Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #7c3aed;
+            --accent-secondary: #38bdf8;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .report-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        h1, h2, h3 {
+            color: white;
+            font-weight: 600;
+        }
+
+        h2 {
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 15px;
+            margin-top: 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.2);
+            color: #fff;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+            color: #fff;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .tag-high { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .tag-med { background: rgba(124, 58, 237, 0.2); color: #7c3aed; }
+        .tag-low { background: rgba(255, 255, 255, 0.1); color: #94a3b8; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">OPEN DROIDS</div>
+        <div class="report-title">Client: Youngstown Orthopaedic Associates</div>
+    </div>
+
+    <!-- FINANCIAL DASHBOARD -->
+    <div class="dashboard-grid">
+        <div class="glass-card metric-card">
+            <div class="metric-label">5-Year Net Benefit</div>
+            <div class="metric-value">$4.2M+</div>
+            <div class="metric-label">Projected Cumulative</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">Surgical Volume Uplift</div>
+            <div class="metric-value">+15%</div>
+            <div class="metric-label">Year 1 Post-Implementation</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">MRI Efficiency Gain</div>
+            <div class="metric-value">30-50%</div>
+            <div class="metric-label">Reduction in Scan Time</div>
+        </div>
+        <div class="glass-card metric-card">
+            <div class="metric-label">ROI Payback Period</div>
+            <div class="metric-value">14 Mo</div>
+            <div class="metric-label">Average Across Portfolio</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT GRID -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        
+        <!-- COLUMN 1 -->
+        <div>
+            <div class="glass-card">
+                <h2>Executive Summary</h2>
+                <p style="color: var(--text-muted);">
+                    Youngstown Orthopaedic Associates (YOA) is uniquely positioned to capitalize on the industry shift of joint replacements to Ambulatory Surgery Centers (ASCs). The dominant ROI driver is the retention of high-margin surgical cases and the attraction of new patient volume through marketed technological superiority via Robotic-Assisted Joint Replacement (RAJR).
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Opportunity Pathways</h2>
+                
+                <h3 style="color: var(--accent-secondary);">Pathway A: Surgical Robotics</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Implementation of robotic-arm assisted surgery systems (Mako/ROSA) for TKA/THA in the ASC.</p>
+                
+                <h3 style="color: var(--accent-secondary);">Pathway B: Diagnostic Automation</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">AI-driven MRI workflow optimization to reduce scan times and automate scheduling.</p>
+                
+                <h3 style="color: var(--accent-secondary);">Pathway C: Robotic Rehab</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Exoskeletal gait trainers for post-op recovery to close the loop of care.</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>Visual Analysis: Throughput</h2>
+                <div class="chart-container">
+                    <canvas id="throughputChart"></canvas>
+                </div>
+                <p style="font-size: 12px; text-align: center; color: var(--text-muted); margin-top: 10px;">
+                    Comparison of Monthly Joint Cases (Manual vs. Robotic Optimized)
+                </p>
+            </div>
+        </div>
+
+        <!-- COLUMN 2 -->
+        <div>
+            <div class="glass-card">
+                <h2>Comparative Financial Model</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pathway</th>
+                            <th>Value Driver</th>
+                            <th>Annual Benefit</th>
+                            <th>Payback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-high">Surgical</span></td>
+                            <td>Market Share & Precision</td>
+                            <td>$1.5M - $2.5M</td>
+                            <td>12-18 Mo</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-med">Diagnostics</span></td>
+                            <td>Throughput Volume</td>
+                            <td>$300k - $500k</td>
+                            <td>6 Mo</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-low">Rehab</span></td>
+                            <td>Outcomes & Retention</td>
+                            <td>$150k</td>
+                            <td>24 Mo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="glass-card">
+                <h2>5-Year Cumulative Savings</h2>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Strategic Implementation</h2>
+                <ul style="color: var(--text-muted); padding-left: 20px;">
+                    <li style="margin-bottom: 10px;"><strong>Year 1:</strong> Acquire Surgical Robot for ASC. Launch "Precision Orthopedics" brand.</li>
+                    <li style="margin-bottom: 10px;"><strong>Year 2:</strong> Implement AI MRI reconstruction to handle volume surge.</li>
+                    <li style="margin-bottom: 10px;"><strong>Year 3:</strong> Deploy Robotic Gait Training for complex revision cases.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS SCRIPT -->
+    <script>
+        // Common Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        
+        // 1. Cumulative Savings Chart (Line)
+        const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+        new Chart(ctxSavings, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Cumulative Net Benefit ($ Millions)',
+                    data: [-0.8, 0.5, 1.9, 3.2, 4.5], // Initial capital outlay creates negative Y1
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+
+        // 2. Throughput Chart (Bar)
+        const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+        new Chart(ctxThroughput, {
+            type: 'bar',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                datasets: [
+                    {
+                        label: 'Manual Process',
+                        data: [30, 32, 31, 33],
+                        backgroundColor: 'rgba(148, 163, 184, 0.5)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Robotic Assisted',
+                        data: [35, 42, 48, 55], // Ramping up efficiency
+                        backgroundColor: '#38bdf8',
+                        borderRadius: 4,
+                        boxShadow: '0 0 10px #38bdf8'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
