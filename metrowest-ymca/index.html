@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetroWest YMCA Robotics Portfolio</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --accent-color: #7c3aed;
+        --accent-glow: rgba(124, 58, 237, 0.4);
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --success: #10b981;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        color: var(--text-primary);
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo span {
+        color: var(--accent-color);
+        text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .report-title {
+        text-align: right;
+    }
+
+    .report-title h1 {
+        margin: 0;
+        font-size: 18px;
+        color: var(--text-secondary);
+        font-weight: 400;
+    }
+
+    .report-title h2 {
+        margin: 5px 0 0;
+        font-size: 28px;
+        background: linear-gradient(90deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Glassmorphism Cards */
+    .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    h3 {
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-size: 14px;
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-left: 3px solid var(--accent-color);
+        padding-left: 10px;
+    }
+
+    p, li {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    li::before {
+        content: "•";
+        color: var(--accent-color);
+        position: absolute;
+        left: 0;
+    }
+
+    /* Financial Dashboard Table */
+    .dashboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .dashboard-table th {
+        text-align: left;
+        color: var(--text-secondary);
+        font-weight: 400;
+        padding: 15px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .dashboard-table td {
+        padding: 15px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 18px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .metric-value {
+        color: var(--success) !important;
+        text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .metric-cost {
+        color: #f87171 !important;
+    }
+
+    /* Chart Containers */
+    .chart-container {
+        position: relative;
+        height: 250px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        background: rgba(124, 58, 237, 0.2);
+        color: var(--accent-color);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        margin-right: 5px;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div class="report-title">
+            <h1>Healthcare Robotics Opportunities</h1>
+            <h2>MetroWest YMCA</h2>
+        </div>
+    </header>
+
+    <!-- Executive Summary & Profile -->
+    <div class="grid-2">
+        <div class="card">
+            <h3>Executive Summary</h3>
+            <p>The MetroWest YMCA is a cornerstone community health organization in Framingham, MA. The integration of robotics presents a dual opportunity: optimizing facility operations through autonomous maintenance systems and enhancing community health outcomes through accessible rehabilitation robotics.</p>
+            <div style="margin-top: 20px;">
+                <span class="tag">Autonomous Cleaning</span>
+                <span class="tag">Rehab Robotics</span>
+                <span class="tag">Community Health</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Organizational Profile</h3>
+            <ul>
+                <li><strong>Model:</strong> Non-profit wellness & community center.</li>
+                <li><strong>Scale:</strong> Serves 20k+ individuals; large aquatic & gym footprint.</li>
+                <li><strong>Bottlenecks:</strong> Facility maintenance labor, pool chemical management, rehab staffing.</li>
+                <li><strong>Partners:</strong> MetroWest Medical Center, Public Health Depts.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Financial Dashboard -->
+    <div class="card">
+        <h3>Financial Dashboard & ROI (Pathway A)</h3>
+        <div class="grid-2">
+            <div>
+                <table class="dashboard-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>Current Manual Labor Cost</td>
+                        <td class="metric-cost">$22,000 / yr</td>
+                    </tr>
+                    <tr>
+                        <td>Robotic Lease Cost</td>
+                        <td class="metric-cost">$12,000 / yr</td>
+                    </tr>
+                    <tr>
+                        <td>Labor Hours Saved</td>
+                        <td class="metric-value">900+ hrs</td>
+                    </tr>
+                    <tr>
+                        <td>Net Operational Savings</td>
+                        <td class="metric-value">$10,000 / yr</td>
+                    </tr>
+                    <tr>
+                        <td>Payback Period</td>
+                        <td class="metric-value">Immediate (Lease)</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robotics Opportunities -->
+    <div class="card">
+        <h3>Robotics Opportunity Pathways</h3>
+        <div class="grid-2">
+            <div>
+                <h4 style="color:#fff; margin-bottom:5px;">Pathway A: Autonomous Maintenance</h4>
+                <p>Deployment of autonomous floor scrubbers (e.g., Avidbots) for large gymnasiums. Reduces 15-20 weekly labor hours and ensures consistent sanitation.</p>
+            </div>
+            <div>
+                <h4 style="color:#fff; margin-bottom:5px;">Pathway B: Pool Robotics</h4>
+                <p>Robotic pool cleaners and automated chemical dosing. Reduces manual dredging and improves swimmer safety through precise chemical management.</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+            <h4 style="color:#fff; margin-bottom:5px;">Pathway C: Assistive Rehab</h4>
+            <p>Introduction of "Prescribe the Y" robotics (gait trainers/exoskeletons) to support stroke recovery, positioning the Y as a post-acute care partner.</p>
+        </div>
+    </div>
+
+    <!-- Throughput Chart -->
+    <div class="card">
+        <h3>Labor Reallocation Impact</h3>
+        <div class="grid-2">
+            <div>
+                <p>By automating low-value tasks like floor scrubbing, staff hours are reallocated to high-value member engagement and revenue-generating programs.</p>
+                <br>
+                <ul>
+                    <li><strong>Floor Care:</strong> 90% Automation</li>
+                    <li><strong>Staff Focus:</strong> Member Wellness</li>
+                    <li><strong>Facility Uptime:</strong> +15%</li>
+                </ul>
+            </div>
+            <div class="chart-container">
+                <canvas id="throughputChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Global Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = 'Inter';
+
+    // 5-Year Savings Chart
+    const ctxSavings = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctxSavings, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Cumulative Net Savings (USD)',
+                data: [10000, 22000, 35000, 49000, 65000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#7c3aed'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: '5-Year Cumulative Savings Forecast' }
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Throughput/Labor Allocation Chart
+    const ctxThroughput = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctxThroughput, {
+        type: 'bar',
+        data: {
+            labels: ['Manual Floor Care', 'Robotic Floor Care'],
+            datasets: [
+                {
+                    label: 'Cleaning Hours',
+                    data: [1000, 100],
+                    backgroundColor: '#f87171',
+                    borderRadius: 5
+                },
+                {
+                    label: 'Member Engagement Hours',
+                    data: [200, 1100],
+                    backgroundColor: '#10b981',
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Staff Hour Allocation (Annual)' }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false } },
+                y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
