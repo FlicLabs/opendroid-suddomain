@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CityVet Robotics Research | Open Droids</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        color: #e2e8f0;
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+        padding-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        color: #fff;
+        letter-spacing: 2px;
+    }
+
+    .logo span {
+        color: #7c3aed;
+    }
+
+    h1, h2, h3 {
+        color: #fff;
+    }
+
+    h1 { font-size: 2.5rem; margin: 0; }
+    h2 { font-size: 1.5rem; color: #a78bfa; margin-top: 0; }
+    h3 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .metric-card {
+        text-align: center;
+        padding: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        border-color: #7c3aed;
+    }
+
+    .metric-value {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 10px 0;
+    }
+
+    .metric-label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    /* Charts Section */
+    .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #cbd5e1;
+    }
+
+    th {
+        text-align: left;
+        padding: 16px;
+        border-bottom: 2px solid #7c3aed;
+        color: #a78bfa;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover td {
+        background: rgba(124, 58, 237, 0.1);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .badge-high { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-med { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+    .badge-low { background: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">OPEN <span>DROIDS</span></div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.8rem; color: #94a3b8;">CLIENT</div>
+            <div style="font-weight: 600;">CityVet Network</div>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h1>Financial Dashboard</h1>
+        <h3>Projected Impact: Pathway A (Inventory Automation)</h3>
+        
+        <div class="dashboard-grid">
+            <div class="glass-card metric-card">
+                <div class="metric-label">Recaptured Revenue / Year</div>
+                <div class="metric-value">$67.5K</div>
+                <div class="metric-label">Per Clinic Location</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">Payback Period</div>
+                <div class="metric-value">9-12</div>
+                <div class="metric-label">Months</div>
+            </div>
+            <div class="glass-card metric-card">
+                <div class="metric-label">5-Year Net Benefit</div>
+                <div class="metric-value">$200K+</div>
+                <div class="metric-label">Cumulative Savings</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="glass-card">
+            <h3>5-Year Cumulative Savings (Per Clinic)</h3>
+            <canvas id="savingsChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <h3>Inventory & Rx Throughput Efficiency</h3>
+            <canvas id="throughputChart"></canvas>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <h3>Comparative Opportunity Pathways</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathway</th>
+                    <th>Primary Value Driver</th>
+                    <th>Annual Benefit (Est)</th>
+                    <th>Implementation Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pathway A: Inventory Automation</strong></td>
+                    <td>Revenue Recapture (Leakage)</td>
+                    <td>$40k - $70k</td>
+                    <td><span class="badge badge-high">Low</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway B: Diagnostic AI</strong></td>
+                    <td>Clinical Throughput</td>
+                    <td>$20k - $30k</td>
+                    <td><span class="badge badge-med">Moderate</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pathway C: Sanitation Robots</strong></td>
+                    <td>Labor Hours Reduction</td>
+                    <td>$10k - $15k</td>
+                    <td><span class="badge badge-high">Low</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="glass-card">
+        <h2>Strategic Executive Summary</h2>
+        <p>
+            CityVet is uniquely positioned to leverage automation to solve the veterinary staffing crisis. By implementing <strong>Pathway A (Inventory Robotics)</strong>, the network can immediately stop revenue leakage and drug diversion, funding subsequent investments in AI-driven diagnostics.
+        </p>
+        <p style="color: #94a3b8; font-size: 0.9rem;">
+            *Analysis based on network baseline of $2.5M avg clinic revenue.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Chart 1: 5-Year Cumulative Savings
+    const ctx1 = document.getElementById('savingsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+            datasets: [{
+                label: 'Net Cumulative Benefit ($)',
+                data: [38500, 78000, 119000, 160000, 205000],
+                borderColor: '#7c3aed',
+                backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Throughput Comparison
+    const ctx2 = document.getElementById('throughputChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Rx Filling Time (min)', 'Inventory Audit (hrs/mo)', 'Missed Charges (%)'],
+            datasets: [
+                {
+                    label: 'Manual Process',
+                    data: [15, 12, 3.5],
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Robotic/Automated',
+                    data: [4, 1, 0.2],
+                    backgroundColor: '#7c3aed',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1' } }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8' }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
